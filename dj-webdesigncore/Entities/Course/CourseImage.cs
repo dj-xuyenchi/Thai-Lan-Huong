@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace dj_webdesigncore.Entities.Course
+{
+	public class CourseImage : BaseEntity
+	{
+		public byte CourseImageData { get; set; }
+		public int SortNumber { get; set; }
+		public int CourseId { get; set; }
+		public Course Course { get; set; }
+	}
+}
