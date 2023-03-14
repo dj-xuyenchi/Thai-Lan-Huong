@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace dj_webdesigncore.Entities.CourseEntity
 {
-	public class CourseImage : BaseEntity
+	public class CourseCourseType : BaseEntity
 	{
-		public string CourseImagePath { get; set; }
-		public int SortNumber { get; set; }
 		public int? CourseId { get; set; }
 		public Course? Course { get; set; }
+		public int? CourseTypeId { get; set; }
+		public CourseType? CourseType { get; set; }
 	}
 }

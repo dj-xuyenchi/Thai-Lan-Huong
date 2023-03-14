@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace dj_webdesigncore.Entities.CourseEntity
 {
-	public class CourseImage : BaseEntity
+	public class LessonCheckPoint : BaseEntity
 	{
-		public string CourseImagePath { get; set; }
+		public string LessonCheckPointName { get; set; }
 		public int SortNumber { get; set; }
-		public int? CourseId { get; set; }
-		public Course? Course { get; set; }
 	}
 }

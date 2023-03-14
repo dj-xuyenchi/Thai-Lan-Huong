@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace dj_webdesigncore.Entities.CourseEntity
 {
-	public class CourseStatus : BaseEntity
+	public class CourseLevel : BaseEntity
 	{
-		public string CourseStatusCode { get; set; }
-		public string CourseStatusName { get; set; }
+		public string LevelCode { get; set; }
+		public string LevelName { get; set; }
 	}
 }

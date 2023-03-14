@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dj_webdesigncore.Entities.User
+namespace dj_webdesigncore.Entities.UserEntity
 {
 	public class Gender:BaseEntity
 	{
