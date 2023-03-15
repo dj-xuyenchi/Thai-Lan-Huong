@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <SelectionNav class="select-navs" />
+    <SelectionNav />
+    <TopHeader />
     <v-main class="main-content">
       <router-view />
     </v-main>
@@ -10,10 +11,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import SelectionNav from "./views/MainLobby/SelectionNav.vue";
+import TopHeader from "./views/MainLobby/TopHeader.vue";
 export default defineComponent({
   name: "App",
   components: {
     SelectionNav,
+    TopHeader,
   },
   data() {
     return {
@@ -23,16 +26,9 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-.select-navs {
-  position: fixed;
-  z-index: 1;
-  width: 8%;
-}
-.select-navs:hover .main-content {
-  width: 70%;
-}
 .main-content {
-  margin-left: 2.5%;
-  width: 90%;
+  margin-left: 7vw;
+  margin-top: 8vh;
+  width: 90vw;
 }
 </style>

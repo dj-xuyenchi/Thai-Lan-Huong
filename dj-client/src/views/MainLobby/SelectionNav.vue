@@ -1,29 +1,57 @@
 <template>
-  <v-card>
-    <v-layout>
-      <v-navigation-drawer floating permanent>
-        <v-list density="compact" nav>
-          <v-list-item class="nav">
-            <v-btn stacked prepend-icon="mdi-vuetify" variant="tonal">
-              Button
-            </v-btn>
-          </v-list-item>
-          <v-list-item
-            prepend-icon="mdi-forum"
-            title="About"
-            value="about"
-          ></v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-      <v-main style="height: 100vh"></v-main>
-    </v-layout>
-  </v-card>
+  <div>
+    <v-btn
+      class="btn"
+      stacked
+      prepend-icon="mdi-vuetify"
+      variant="tonal"
+      active="true"
+      color="#187498"
+    >
+      Button
+    </v-btn>
+    <v-btn
+      class="btn"
+      stacked
+      prepend-icon="mdi-vuetify"
+      variant="tonal"
+      color="#187498"
+    >
+      Button
+    </v-btn>
+    <v-btn
+      class="btn"
+      stacked
+      prepend-icon="mdi-vuetify"
+      variant="tonal"
+      color="#187498"
+    >
+      Button
+    </v-btn>
+    <v-btn
+      class="btn"
+      stacked
+      prepend-icon="mdi-vuetify"
+      variant="tonal"
+      color="#187498"
+    >
+      Button
+    </v-btn>
+  </div>
 </template>
 <script>
 export default {};
 </script>
 <style scoped>
-.nav {
-  width: 100%;
+.btn {
+  width: 75%;
+  margin: 14px 14px 0 14px;
+}
+div {
+  /* border-right: 1px solid rgba(0, 0, 0, 0.05); */
+  width: 4vw;
+  position: fixed;
+  height: 92vh;
+  top: 8vh;
 }
 </style>
