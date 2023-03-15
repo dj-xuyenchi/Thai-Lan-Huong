@@ -1,9 +1,15 @@
 <template>
-  <v-carousel cycle height="400" hide-delimiter-background show-arrows="hover">
-    <v-carousel-item v-for="(slide, i) in slides" :key="i" :src="sources[i]">
-      <v-sheet :color="colors[i]" height="100%">
+  <v-carousel
+    class="container"
+    cycle
+    height="400"
+    hide-delimiter-background
+    show-arrows="hover"
+  >
+    <v-carousel-item v-for="(slide, i) in slides" :key="i">
+      <v-sheet height="100%" width="100%">
         <div class="d-flex fill-height justify-center align-center">
-          <div class="text-h2">{{ slide }} Slide</div>
+          <img :src="sources[i]" alt="" style="width: 100%" />
         </div>
       </v-sheet>
     </v-carousel-item>
@@ -11,26 +17,23 @@
 </template>
 <script>
 export default {
-  name: "HeaderSlider",
   data() {
     return {
-      colors: [
-        "indigo",
-        "warning",
-        "pink darken-2",
-        "red lighten-1",
-        "deep-purple accent-4",
-      ],
       slides: ["First", "Second", "Third", "Fourth", "Fifth"],
       sources: [
-        "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        "https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404__340.jpg",
+        "https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404__340.jpg",
+        "https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404__340.jpg",
+        "https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404__340.jpg",
+        "https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404__340.jpg",
+        "https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404__340.jpg",
       ],
     };
   },
 };
 </script>
+<style scoped>
+.container {
+  border-radius: 10px;
+}
+</style>
