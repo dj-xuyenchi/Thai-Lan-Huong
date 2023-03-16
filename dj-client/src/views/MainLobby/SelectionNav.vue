@@ -10,6 +10,15 @@
     <router-link to="/course" style="text-decoration: none">
       <BtnNav :path="mdiBookOpenVariant" title="Khóa Học" />
     </router-link>
+    <router-link to="/post" style="text-decoration: none">
+      <BtnNav :path="mdiBookOpenVariant" title="Bài viết" />
+    </router-link>
+    <router-link to="/blog" style="text-decoration: none">
+      <BtnNav :path="mdiBookOpenVariant" title="Blog" />
+    </router-link>
+    <router-link to="/event" style="text-decoration: none">
+      <BtnNav :path="mdiBookOpenVariant" title="Sự kiện" />
+    </router-link>
   </div>
 </template>
 <script>
@@ -34,7 +43,7 @@ export default {
   height: 92%;
   display: flex;
   top: 9%;
-  left: 1%;
+  align-items: center;
   flex-direction: column;
 }
 .active {

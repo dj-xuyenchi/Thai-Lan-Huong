@@ -46,7 +46,6 @@ h4 {
 }
 #logo {
   width: 6%;
-  margin-left: 0.8%;
   display: flex;
   justify-content: center;
   align-items: center;

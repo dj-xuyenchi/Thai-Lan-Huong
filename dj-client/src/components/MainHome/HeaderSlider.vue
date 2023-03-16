@@ -1,19 +1,21 @@
 <template>
-  <v-carousel
-    class="container"
-    cycle
-    height="400"
-    hide-delimiter-background
-    show-arrows="hover"
-  >
-    <v-carousel-item v-for="(slide, i) in slides" :key="i">
-      <v-sheet height="100%" width="100%">
-        <div class="d-flex fill-height justify-center align-center">
-          <img :src="sources[i]" alt="" style="width: 100%" />
-        </div>
-      </v-sheet>
-    </v-carousel-item>
-  </v-carousel>
+  <div style="margin-bottom: 40px">
+    <v-carousel
+      class="container"
+      cycle
+      height="400"
+      hide-delimiter-background
+      show-arrows="hover"
+    >
+      <v-carousel-item v-for="(slide, i) in slides" :key="i">
+        <v-sheet height="100%" width="100%">
+          <div class="d-flex fill-height justify-center align-center">
+            <img :src="sources[i]" alt="" style="width: 100%" />
+          </div>
+        </v-sheet>
+      </v-carousel-item>
+    </v-carousel>
+  </div>
 </template>
 <script>
 export default {

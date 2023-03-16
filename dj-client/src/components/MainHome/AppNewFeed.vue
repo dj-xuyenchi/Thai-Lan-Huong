@@ -2,7 +2,6 @@
   <div>
     <HeaderSlider />
     <CourseList />
-    <div style="height: 1000px">ss</div>
   </div>
 </template>
 
