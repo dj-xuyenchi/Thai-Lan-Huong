@@ -33,7 +33,7 @@ export default {
 </script>
 <style scoped>
 .search-input {
-  margin-left: 28vw;
+  margin-left: 26vw;
   width: 24vw;
 }
 </style>

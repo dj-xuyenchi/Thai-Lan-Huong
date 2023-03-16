@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="course-list-container">
     <span>Danh sách khóa học </span>
   </div>
 </template>
@@ -10,4 +10,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.course-list-container {
+  margin-left: 4%;
+}
+</style>

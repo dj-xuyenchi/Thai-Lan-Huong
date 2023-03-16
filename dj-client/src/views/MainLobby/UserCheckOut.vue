@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn rounded="pill" color="#EB5353"> Đăng nhập </v-btn>
+    <v-btn rounded="pill" color="#4FC3F7"> Đăng nhập </v-btn>
   </div>
 </template>
 

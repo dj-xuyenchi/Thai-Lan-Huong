@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <img class="logo-header" :src="logoHeader" />
+    <div id="logo">
+      <img class="logo-header" :src="logoHeader" />
+    </div>
     <div class="cf-title-07">
       <h4>DJ - CODING</h4>
     </div>
@@ -34,7 +36,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   align-items: center;
   display: flex;
   z-index: 2;
@@ -42,13 +44,18 @@ export default {
 }
 h4 {
 }
+#logo {
+  width: 6%;
+  margin-left: 0.8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .logo-header {
-  height: 7vh;
-  width: 7vh;
-  margin-left: 18px;
+  height: 52px;
+  width: 52px;
 }
 .cf-title-07 {
-  margin-left: 1%;
 }
 .cf-title-07 h5 {
   text-align: center;

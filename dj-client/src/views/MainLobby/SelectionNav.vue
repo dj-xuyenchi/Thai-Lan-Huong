@@ -1,66 +1,47 @@
 <template>
-  <div d-flex align-start flex-column mb-6 bg-surface-variant>
-    <router-link class="text-decoration-none" to="/home">
-      <v-btn
-        class="btn"
-        stacked
-        prepend-icon="mdi-home"
-        variant="tonal"
-        active="true"
-        color="#187498"
-      >
-        Home
-      </v-btn>
+  <div class="select-container">
+    <router-link to="/home" style="text-decoration: none">
+      <BtnNav
+        icon="mdi:mdi-minusmdiBookOpenVariant"
+        title="Home"
+        :class="active ? `active` : ``"
+      />
     </router-link>
-    <router-link class="text-decoration-none" to="/home">
-      <v-btn
-        class="btn"
-        stacked
-        prepend-icon="mdi-school"
-        variant="tonal"
-        color="#187498"
-      >
-        Khóa học
-      </v-btn>
-    </router-link>
-    <router-link class="text-decoration-none" to="/home">
-      <v-btn
-        class="btn"
-        stacked
-        prepend-icon="mdi-book"
-        variant="tonal"
-        color="#187498"
-      >
-        Bài viết
-      </v-btn>
-    </router-link>
-    <router-link class="text-decoration-none" to="/home">
-      <v-btn
-        class="btn"
-        stacked
-        prepend-icon="mdi-update"
-        variant="tonal"
-        color="#187498"
-      >
-        Câu đố
-      </v-btn>
+    <router-link to="/course" style="text-decoration: none">
+      <BtnNav :path="mdiBookOpenVariant" title="Khóa Học" />
     </router-link>
   </div>
 </template>
 <script>
-export default {};
+import BtnNav from "./BtnNav";
+import { mdiBookOpenVariant } from "@mdi/js";
+export default {
+  components: {
+    BtnNav,
+  },
+  data() {
+    return {
+      active: true,
+    };
+  },
+};
 </script>
 <style scoped>
-.btn {
-  width: 8vh;
-  height: 8vh;
-  margin: 14px 14px 0 14px;
-}
-div {
+.select-container {
   /* border-right: 1px solid rgba(0, 0, 0, 0.05); */
-  width: 6vw;
+  width: 6%;
   position: fixed;
-  height: 92vh;
-  top: 8vh;
+  height: 92%;
+  display: flex;
+  top: 9%;
+  left: 1%;
+  flex-direction: column;
+}
+.active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.router {
+  width: 74px;
+  height: 74px;
 }
 </style>

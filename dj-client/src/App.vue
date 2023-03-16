@@ -27,8 +27,8 @@ export default defineComponent({
 </script>
 <style scoped>
 .main-content {
-  margin-left: 6vw;
+  margin-left: 9%;
   margin-top: 9vh;
-  width: 92vw;
+  width: 89%;
 }
 </style>
