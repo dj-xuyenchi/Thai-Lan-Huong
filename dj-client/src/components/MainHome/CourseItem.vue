@@ -1,7 +1,13 @@
 <template>
   <div class="course-item">
     <v-hover v-slot="{ isHovering, props }">
-      <v-card class="mx-auto" v-bind="props" border="false">
+      <v-card
+        ref="gg"
+        class="mx-auto rounded-xl item-hover"
+        v-bind="props"
+        variant="none"
+        height="176"
+      >
         <img
           src="https://cmay.vn/wp-content/uploads/2022/12/1_unnamed-file.html.jpg"
           alt=""
@@ -12,7 +18,7 @@
           scrim="#036358"
           class="align-center justify-center"
         >
-          <v-btn variant="flat">Xem khóa học</v-btn>
+          <v-btn variant="flat rounded-xl">Xem khóa học</v-btn>
         </v-overlay>
       </v-card>
     </v-hover>
@@ -44,11 +50,17 @@
 </template>
 
 <script>
+import ref from "vue";
 export default {
   name: "CourseItem",
   data: () => ({
+    // v-card--variant-elevated
     overlay: false,
   }),
+  mounted() {
+    const g = this.$refs.gg;
+    console.log(g);
+  },
 };
 </script>
 
@@ -60,14 +72,20 @@ export default {
 }
 
 .course-item img {
-  height: 224;
   width: 100%;
-  border-radius: 15px;
+  height: 176px;
 }
 .course-item .course-detail {
   display: flex;
   align-items: flex-start;
   position: relative;
   width: 100%;
+  margin-top: 6px;
+}
+.item-hover:hover {
+  cursor: pointer;
+}
+.course-detail span:hover {
+  cursor: pointer;
 }
 </style>

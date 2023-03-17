@@ -5,6 +5,7 @@
     <v-main class="main-content">
       <router-view />
     </v-main>
+    <HomeFooter />
   </v-app>
 </template>
 
@@ -12,11 +13,13 @@
 import { defineComponent } from "vue";
 import SelectionNav from "./views/MainLobby/SelectionNav.vue";
 import TopHeader from "./views/MainLobby/TopHeader.vue";
+import HomeFooter from "./views/MainLobby/HomeFooter.vue";
 export default defineComponent({
   name: "App",
   components: {
     SelectionNav,
     TopHeader,
+    HomeFooter,
   },
   data() {
     return {

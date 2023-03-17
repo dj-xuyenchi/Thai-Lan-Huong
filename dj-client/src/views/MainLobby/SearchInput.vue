@@ -1,5 +1,5 @@
 <template>
-  <v-card-text class="search-input">
+  <div class="search-input">
     <v-text-field
       :loading="loading"
       density="compact"
@@ -11,7 +11,7 @@
       hide-details
       @click:append-inner="onClick"
     ></v-text-field>
-  </v-card-text>
+  </div>
 </template>
 <script>
 export default {
@@ -35,5 +35,6 @@ export default {
 .search-input {
   margin-left: 26vw;
   width: 24vw;
+  border-radius: 15px;
 }
 </style>

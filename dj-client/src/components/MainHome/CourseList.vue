@@ -10,6 +10,12 @@
       "
       >Danh sách khóa học
     </span>
+    <v-badge
+      color="info"
+      content="Free"
+      floating
+      style="font-size: 18px"
+    ></v-badge>
     <div class="course-list">
       <CourseItem class="margin-1-percent" />
       <CourseItem class="margin-1-percent" />
