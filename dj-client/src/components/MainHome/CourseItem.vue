@@ -6,12 +6,9 @@
         class="mx-auto rounded-xl item-hover"
         v-bind="props"
         variant="none"
-        height="176"
+        height="25vh"
       >
-        <img
-          src="https://cmay.vn/wp-content/uploads/2022/12/1_unnamed-file.html.jpg"
-          alt=""
-        />
+        <img :src="coursePath" alt="" />
         <v-overlay
           :model-value="isHovering"
           contained
@@ -43,20 +40,27 @@
           position: absolute;
           right: 0;
         "
-        >400.000</span
+      >
+        <font-awesome-icon
+          icon="fa-solid fa-users"
+          color="black"
+          style="margin-right: 5px"
+        />400.000</span
       >
     </div>
   </div>
 </template>
 
 <script>
-import ref from "vue";
 export default {
   name: "CourseItem",
   data: () => ({
     // v-card--variant-elevated
     overlay: false,
   }),
+  props: {
+    coursePath: String,
+  },
   mounted() {
     const g = this.$refs.gg;
     console.log(g);
@@ -73,14 +77,14 @@ export default {
 
 .course-item img {
   width: 100%;
-  height: 176px;
+  height: 25vh;
 }
 .course-item .course-detail {
   display: flex;
   align-items: flex-start;
   position: relative;
   width: 100%;
-  margin-top: 6px;
+  margin-top: 14px;
 }
 .item-hover:hover {
   cursor: pointer;

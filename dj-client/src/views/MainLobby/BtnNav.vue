@@ -1,6 +1,6 @@
 <template>
   <div class="btn">
-    <v-icon :icon="icon" />
+    <font-awesome-icon :icon="icon" color="black" />
     <p>{{ title }}</p>
   </div>
 </template>
@@ -35,5 +35,6 @@ p {
   text-transform: capitalize;
   font-size: 12px;
   font-weight: 600;
+  margin-top: 4px;
 }
 </style>

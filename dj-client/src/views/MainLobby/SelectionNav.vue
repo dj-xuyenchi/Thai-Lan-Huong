@@ -2,22 +2,22 @@
   <div class="select-container">
     <router-link to="/home" style="text-decoration: none">
       <BtnNav
-        icon="mdi:mdi-minusmdiBookOpenVariant"
+        icon="fa-solid fa-house"
         title="Home"
         :class="active ? `active` : ``"
       />
     </router-link>
     <router-link to="/course" style="text-decoration: none">
-      <BtnNav :path="mdiBookOpenVariant" title="Khóa Học" />
+      <BtnNav icon="fa-solid fa-book" title="Khóa Học" />
     </router-link>
     <router-link to="/post" style="text-decoration: none">
-      <BtnNav :path="mdiBookOpenVariant" title="Bài viết" />
+      <BtnNav icon="fa-regular fa-calendar-plus" title="Bài viết" />
     </router-link>
     <router-link to="/blog" style="text-decoration: none">
-      <BtnNav :path="mdiBookOpenVariant" title="Blog" />
+      <BtnNav icon="fa-brands fa-blogger-b" title="Blog" />
     </router-link>
     <router-link to="/event" style="text-decoration: none">
-      <BtnNav :path="mdiBookOpenVariant" title="Sự kiện" />
+      <BtnNav icon="fa-regular fa-calendar-days" title="Sự kiện" />
     </router-link>
   </div>
 </template>
