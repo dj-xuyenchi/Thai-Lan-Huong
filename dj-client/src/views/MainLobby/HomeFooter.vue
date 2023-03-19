@@ -132,9 +132,9 @@ export default {
 
 <style lang="css" scoped>
 .footer-container {
-  height: 600px;
   background-color: black;
   width: 100%;
+  display: inline-block;
 }
 .footer-container .content {
   margin-left: 15%;
