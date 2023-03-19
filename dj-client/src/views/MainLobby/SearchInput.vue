@@ -10,6 +10,7 @@
       hint="Hướng dẫn tán Crush bằng HTML CSS"
       hide-details
       @click:append-inner="onClick"
+      style="border-radius: 15px !important"
     ></v-text-field>
   </div>
 </template>
@@ -33,8 +34,6 @@ export default {
 </script>
 <style scoped>
 .search-input {
-  margin-left: 26vw;
-  width: 24vw;
-  border-radius: 15px;
+  width: 400px;
 }
 </style>

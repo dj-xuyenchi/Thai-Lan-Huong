@@ -38,11 +38,11 @@ export default {
 <style scoped>
 .select-container {
   /* border-right: 1px solid rgba(0, 0, 0, 0.05); */
-  width: 6%;
+  width: 116px;
   position: fixed;
   height: 92%;
   display: flex;
-  top: 9%;
+  top: 92px;
   align-items: center;
   flex-direction: column;
 }

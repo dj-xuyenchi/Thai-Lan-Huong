@@ -71,8 +71,9 @@ export default {
 <style lang="css" scoped>
 .course-item {
   margin-top: 14px;
-  width: 24.25%;
+  width: 25%;
   margin-bottom: 36px;
+  padding: 0 14px 0 14px;
 }
 
 .course-item img {

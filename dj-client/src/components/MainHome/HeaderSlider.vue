@@ -1,7 +1,7 @@
 <template>
   <div style="margin-bottom: 40px">
     <v-carousel
-      class="container"
+      class="container rounded-xl"
       cycle
       height="480"
       hide-delimiter-background

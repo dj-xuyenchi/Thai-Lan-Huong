@@ -10,7 +10,14 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /* import specific icons */
-import { faHouse, faBook, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHouse,
+  faBook,
+  faUsers,
+  faPhone,
+  faEnvelope,
+  faLocationDot,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarPlus,
   faCalendarDays,
@@ -23,7 +30,10 @@ library.add(
   faCalendarPlus,
   faBloggerB,
   faCalendarDays,
-  faUsers
+  faUsers,
+  faEnvelope,
+  faPhone,
+  faLocationDot
 );
 loadFonts();
 createApp(App)

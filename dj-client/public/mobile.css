@@ -1,0 +1,39 @@
+@media screen and (max-width:739px) {
+    .select-container {
+        display: none !important;
+    }
+
+    #main-body {
+        margin-left: 1% !important;
+    }
+
+    .search-input {
+        width: 200px !important;
+    }
+
+    #menu-top-mobile {
+        display: block !important;
+        margin-left: 2%;
+        z-index: 1;
+    }
+
+    #logo {
+        display: none !important;
+    }
+
+    .cf-title-07 {
+        display: none !important;
+    }
+
+    .course-item {
+        width: 100% !important;
+    }
+
+    .course-item .item-hover {
+        height: 400px !important;
+    }
+
+    .course-item img {
+        height: 400px !important;
+    }
+}

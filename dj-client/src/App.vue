@@ -2,9 +2,11 @@
   <v-app>
     <SelectionNav />
     <TopHeader />
-    <v-main class="main-content">
-      <router-view />
-    </v-main>
+    <div id="main-body">
+      <v-main class="main-content">
+        <router-view />
+      </v-main>
+    </div>
     <HomeFooter />
   </v-app>
 </template>
@@ -30,8 +32,10 @@ export default defineComponent({
 </script>
 <style scoped>
 .main-content {
-  margin-left: 6%;
-  margin-top: 9vh;
-  width: 93%;
+  width: 99%;
+}
+#main-body {
+  margin-left: 116px;
+  margin-top: 92px;
 }
 </style>
