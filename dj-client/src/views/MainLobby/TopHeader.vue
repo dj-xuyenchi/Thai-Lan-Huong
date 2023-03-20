@@ -14,7 +14,12 @@
 
         <v-list>
           <v-list-item class="item-nav" v-for="(item, i) in items" :key="i">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <router-link
+              :to="item.link"
+              style="text-decoration: none; color: black"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </router-link>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -45,11 +50,11 @@ export default {
   data() {
     return {
       items: [
-        { title: "Home" },
-        { title: "Khóa Học" },
-        { title: "Bài Viết" },
-        { title: "Block" },
-        { title: "Sự Kiện" },
+        { title: "Home", link: "/home" },
+        { title: "Khóa Học", link: "/course" },
+        { title: "Bài Viết", link: "/post" },
+        { title: "Blog", link: "/blog" },
+        { title: "Sự Kiện", link: "/event" },
       ],
     };
   },

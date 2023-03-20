@@ -22,7 +22,12 @@ import {
   faCalendarPlus,
   faCalendarDays,
 } from "@fortawesome/free-regular-svg-icons";
-import { faBloggerB } from "@fortawesome/free-brands-svg-icons";
+import {
+  faBloggerB,
+  faFacebook,
+  faYoutube,
+  faTiktok,
+} from "@fortawesome/free-brands-svg-icons";
 /* add icons to the library */
 library.add(
   faHouse,
@@ -33,7 +38,10 @@ library.add(
   faUsers,
   faEnvelope,
   faPhone,
-  faLocationDot
+  faLocationDot,
+  faFacebook,
+  faYoutube,
+  faTiktok
 );
 loadFonts();
 createApp(App)

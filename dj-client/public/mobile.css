@@ -30,10 +30,10 @@
     }
 
     .course-item .item-hover {
-        height: 400px !important;
+        height: 200px !important;
     }
 
     .course-item img {
-        height: 400px !important;
+        height: 200px !important;
     }
 }
