@@ -1,41 +1,41 @@
 <template>
-  <v-sheet width="300" class="mx-auto">
-    <v-form fast-fail @submit.prevent>
-      <v-text-field
-        v-model="fullname"
-        label="First name"
-        :rules="fullnameRules"
-      ></v-text-field>
-
-      <v-text-field
-        v-model="phone"
-        label="Last name"
-        :rules="phoneRules"
-      ></v-text-field>
-
-      <v-btn type="submit" block class="mt-2">Submit</v-btn>
-    </v-form>
-  </v-sheet>
+  <div class="mx-auto advice-footer">
+    <form style="width: 100%">
+      <input require type="text" name="" value="" placeholder="Họ và tên" />
+      <input
+        type="text"
+        name=""
+        require
+        value=""
+        placeholder="Số điện thoại"
+        style="margin-top: 8px"
+      />
+      <v-btn width="100" type="submit" block class="mt-2">Gửi liên hệ</v-btn>
+    </form>
+  </div>
 </template>
 <script>
 export default {
   name: "FormContact",
-  data: () => ({
-    fullname: "",
-    fullnameRules: [
-      (value) => {
-        if (value?.length > 3) return true;
-
-        return "Tên phải trên 3 ký tự.";
-      },
-    ],
-    phone: "",
-    phoneRules: [
-      (value) => {
-        if (/[^a-zA-Z]/.test(value)) return true;
-        return "Số điện thoại không đúng.";
-      },
-    ],
-  }),
+  data: () => {
+    return {
+      fullName: "",
+    };
+  },
 };
 </script>
+<style>
+.advice-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.advice-footer input {
+  border-radius: 15px;
+  background-color: #b3e5fc;
+  height: 36px;
+  padding-left: 10px;
+  width: 50%;
+  margin-left: 25%;
+}
+</style>

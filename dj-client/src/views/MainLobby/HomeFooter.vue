@@ -11,7 +11,7 @@
           <div style="height: 60px; display: flex; align-items: center">
             <span
               style="
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 600;
                 color: white;
                 font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
@@ -52,21 +52,22 @@
           >
             <span
               style="
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 600;
                 color: white;
                 font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
                   sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
                   'Segoe UI Symbol';
                 margin-left: 8px;
+                display: block;
               "
             >
               Tư vấn học 1 : 1</span
             >
-            <FormContact />
           </div>
+          <FormContact />
         </li>
-        <li class="footer-item-detail">
+        <li class="footer-item-detail" style="text-align: center">
           <div
             style="
               height: 60px;
@@ -77,7 +78,7 @@
           >
             <span
               style="
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 600;
                 color: white;
                 font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
@@ -126,8 +127,7 @@
           <div style="width: 100%">
             <h2 style="color: white">Group Facebook</h2>
             <iframe
-              src="https://www.facebook.com/plugins/group.php?href=https%3A%2F%2Fwww.facebook.com%2Fgroups%2F731193178473217%2F&width=280&show_metadata=true&appId=932156381257868&height=0"
-              width="100%"
+              src="https://www.facebook.com/plugins/group.php?href=https%3A%2F%2Fwww.facebook.com%2Fgroups%2F731193178473217%2F&show_metadata=true&width=300&appId=932156381257868&height=0"
               height="260"
               style="border: none; overflow: hidden"
               scrolling="no"
@@ -152,7 +152,7 @@ export default {
 
 <style lang="css" scoped>
 .footer-container {
-  background-color: black;
+  background-color: #01579b;
   width: 100%;
   display: inline-block;
 }
@@ -168,7 +168,7 @@ export default {
 }
 #footer-item-container span {
   color: white;
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 300;
 }
 #footer-item-container .footer-item-detail img {
@@ -181,7 +181,7 @@ export default {
   margin: 0 8px 0 8px;
 }
 .footer-item-detail .footer-icon {
-  width: 40px !important;
+  width: 48px !important;
   padding: 0 4px 0 4px;
 }
 </style>
