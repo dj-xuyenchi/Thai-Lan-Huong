@@ -61,10 +61,6 @@ export default {
   props: {
     coursePath: String,
   },
-  mounted() {
-    const g = this.$refs.gg;
-    console.log(g);
-  },
 };
 </script>
 

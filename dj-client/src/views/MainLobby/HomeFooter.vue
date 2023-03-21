@@ -184,4 +184,30 @@ export default {
   width: 48px !important;
   padding: 0 4px 0 4px;
 }
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+  .course-item {
+    width: 50% !important;
+  }
+  .footer-item-detail {
+    display: none !important;
+  }
+  .tl-mode {
+    display: block !important;
+    width: 50% !important;
+  }
+}
+@media screen and (max-width: 739px) {
+  .footer-item-detail {
+    display: none !important;
+  }
+
+  .tl-mode {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .user-check {
+    display: none !important;
+  }
+}
 </style>

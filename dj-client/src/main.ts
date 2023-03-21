@@ -17,10 +17,13 @@ import {
   faPhone,
   faEnvelope,
   faLocationDot,
+  faHeart,
+  faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarPlus,
   faCalendarDays,
+  faComment,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   faBloggerB,
@@ -41,7 +44,10 @@ library.add(
   faLocationDot,
   faFacebook,
   faYoutube,
-  faTiktok
+  faTiktok,
+  faHeart,
+  faComment,
+  faCheck
 );
 loadFonts();
 createApp(App)

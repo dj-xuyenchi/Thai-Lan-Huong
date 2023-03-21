@@ -3,7 +3,13 @@ import LobbyMain from "../views/MainLobby/LobbyMain.vue";
 import LoginUser from "../components/Login/LoginUser.vue";
 import AppNewFeedVue from "@/components/MainHome/AppNewFeed.vue";
 import CourseMonitor from "@/components/Course/CourseMonitor.vue";
+import CourseDetail from "@/components/Course/CourseDetail.vue";
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: "",
+    name: "",
+    component: LobbyMain,
+  },
   {
     path: "/home",
     name: "home",
@@ -15,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "course",
-        component: CourseMonitor,
+        component: CourseDetail,
       },
     ],
   },

@@ -1,13 +1,13 @@
 <template>
   <div class="select-container">
-    <router-link to="lobby" style="text-decoration: none">
+    <router-link to="/home/lobby" style="text-decoration: none">
       <BtnNav
         icon="fa-solid fa-house"
         title="Home"
         :class="active ? `active` : ``"
       />
     </router-link>
-    <router-link to="course" style="text-decoration: none">
+    <router-link to="/home/course" style="text-decoration: none">
       <BtnNav icon="fa-solid fa-book" title="Khóa Học" />
     </router-link>
     <router-link to="post" style="text-decoration: none">
@@ -54,6 +54,11 @@ export default {
   height: 74px;
 }
 @media screen and (max-width: 739px) {
+  .select-container {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 1023px) and (min-width: 740px) {
   .select-container {
     display: none !important;
   }

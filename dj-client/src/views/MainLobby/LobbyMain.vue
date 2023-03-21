@@ -35,4 +35,9 @@ export default {
     margin-left: 1% !important;
   }
 }
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+  #main-body {
+    margin-left: 1% !important;
+  }
+}
 </style>

@@ -31,6 +31,7 @@
         width: 100%;
         position: absolute;
       "
+      class="search-input-container"
     >
       <SearchInput />
     </div>
@@ -50,8 +51,8 @@ export default {
   data() {
     return {
       items: [
-        { title: "Home", link: "/home" },
-        { title: "Khóa Học", link: "/course" },
+        { title: "Home", link: "/home/lobby" },
+        { title: "Khóa Học", link: "/home/course" },
         { title: "Bài Viết", link: "/post" },
         { title: "Blog", link: "/blog" },
         { title: "Sự Kiện", link: "/event" },
@@ -112,5 +113,42 @@ export default {
 .item-nav:hover {
   cursor: pointer;
   background-color: #e8ebed;
+}
+@media screen and (max-width: 739px) {
+  #menu-top-mobile {
+    display: block !important;
+    margin-left: 2%;
+    z-index: 1;
+  }
+  #logo {
+    display: none !important;
+  }
+
+  .cf-title-07 {
+    display: none !important;
+  }
+  .search-input-container {
+    justify-content: unset !important;
+  }
+  .user-check {
+    width: 35% !important;
+  }
+}
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+  #menu-top-mobile {
+    display: block !important;
+    margin-left: 2%;
+    z-index: 1;
+  }
+  #logo {
+    display: none !important;
+  }
+
+  .cf-title-07 {
+    display: none !important;
+  }
+  .search-input-container {
+    justify-content: unset !important;
+  }
 }
 </style>

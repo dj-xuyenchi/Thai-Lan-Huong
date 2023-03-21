@@ -3,6 +3,7 @@
     <HeaderSlider />
     <CourseList />
     <PostList />
+    <BlogList />
   </div>
 </template>
 
@@ -10,13 +11,14 @@
 import HeaderSlider from "./HeaderSlider.vue";
 import CourseList from "./CourseList.vue";
 import PostList from "./PostList.vue";
+import BlogList from "./BlogList.vue";
 export default {
   name: "AppNewFeed",
-  components: { HeaderSlider, CourseList, PostList },
+  components: { HeaderSlider, CourseList, PostList, BlogList },
   data() {
     return {};
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped></style>

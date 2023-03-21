@@ -87,4 +87,28 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 }
+@media screen and (max-width: 739px) {
+  .course-item {
+    width: 100% !important;
+  }
+
+  .course-item .item-hover {
+    height: 200px !important;
+  }
+
+  .course-item img {
+    height: 200px !important;
+  }
+}
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+  .course-item {
+    width: 50% !important;
+  }
+}
+
+@media screen and (max-width: 1370px) and (min-width: 1023px) {
+  .course-item {
+    width: 33.33% !important;
+  }
+}
 </style>
