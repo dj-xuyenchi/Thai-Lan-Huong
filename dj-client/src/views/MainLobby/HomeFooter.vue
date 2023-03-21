@@ -41,7 +41,7 @@
             </li>
           </ul>
         </li>
-        <li class="footer-item-detail">
+        <li class="footer-item-detail tl-mode">
           <div
             style="
               height: 60px;
@@ -67,7 +67,7 @@
           </div>
           <FormContact />
         </li>
-        <li class="footer-item-detail" style="text-align: center">
+        <li class="footer-item-detail tl-mode" style="text-align: center">
           <div
             style="
               height: 60px;

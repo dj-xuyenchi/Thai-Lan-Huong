@@ -28,7 +28,15 @@
     .course-item {
         width: 50% !important;
     }
+    .footer-item-detail {
+        display: none !important;
+    }
+    .tl-mode{
+        display: block !important;
+        width: 50% !important;
+    }
 }
+
 
 @media screen and (max-width:1370px) and (min-width:1023px) {
     .course-item {

@@ -10,7 +10,7 @@
         placeholder="Số điện thoại"
         style="margin-top: 8px"
       />
-      <v-btn width="100" type="submit" block class="mt-2">Gửi liên hệ</v-btn>
+      <button type="submit" class="mt-2">Gửi liên hệ</button>
     </form>
   </div>
 </template>
@@ -35,7 +35,18 @@ export default {
   background-color: #b3e5fc;
   height: 36px;
   padding-left: 10px;
-  width: 50%;
-  margin-left: 25%;
+  width: 75%;
+  margin-left: 12.5%;
+}
+.advice-footer button {
+  width: 75%;
+  background-color: #b3e5fc;
+  border-radius: 15px;
+  margin-left: 12.5%;
+  height: 36px;
+}
+.advice-footer button:hover {
+  cursor: pointer;
+  background-color: #4fc3f7;
 }
 </style>

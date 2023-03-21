@@ -36,4 +36,17 @@
     .course-item img {
         height: 200px !important;
     }
+
+    .footer-item-detail {
+        display: none !important;
+    }
+
+    .tl-mode {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .user-check {
+        display: none !important;
+    }
 }

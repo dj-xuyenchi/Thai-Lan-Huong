@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="user-check">
     <v-btn width="100%" rounded="pill" color="#4FC3F7"> Đăng nhập </v-btn>
   </div>
 </template>
