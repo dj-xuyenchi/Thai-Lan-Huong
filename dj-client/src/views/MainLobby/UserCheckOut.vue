@@ -1,6 +1,8 @@
 <template>
   <div class="user-check">
-    <v-btn width="100%" rounded="pill" color="#4FC3F7"> Đăng nhập </v-btn>
+    <router-link to="/login" style="text-decoration: none; color: black">
+      <v-btn width="100%" rounded="pill" color="#4FC3F7"> Đăng nhập </v-btn>
+    </router-link>
   </div>
 </template>
 
