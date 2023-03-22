@@ -73,18 +73,27 @@
         </div>
       </div>
       <div class="course-lesson">
-        <v-list-group value="Actions">
-          <template v-slot:activator="{ props }">
-            <v-list-item v-bind="props" title="Actions"></v-list-item>
-          </template>
-          <v-list-item
-            v-for="([title, icon], i) in cruds"
-            :key="i"
-            :value="title"
-            :title="title"
-            :prepend-icon="icon"
-          ></v-list-item>
-        </v-list-group>
+        <h2 style="font-weight: 700; font-size: 20px">Danh sách bài học.</h2>
+        <ul style="display: inline; margin-bottom: 12px">
+          <li style="display: inline">
+            <span style="font-weight: 550; margin-right: 4px">12</span
+            ><span style="font-size: 14px; margin-right: 12px">Học phần.</span>
+          </li>
+          <li style="display: inline">
+            <span style="font-weight: 550; margin-right: 4px">12</span
+            ><span style="font-size: 14px; margin-right: 12px">Bài học.</span>
+          </li>
+          <li style="display: inline">
+            <span style="font-weight: 550; margin-right: 4px"
+              >15 giờ 40 phút</span
+            ><span style="font-size: 14px; margin-right: 12px"
+              >Thời lượng.</span
+            >
+          </li>
+        </ul>
+        <LessonList titleLesson="1. Java Basic" class="list-lesson-detail" />
+        <LessonList titleLesson="1. Java Basic" class="list-lesson-detail" />
+        <LessonList titleLesson="1. Java Basic" class="list-lesson-detail" />
       </div>
     </div>
     <div class="course-detail-right"></div>
@@ -92,21 +101,13 @@
 </template>
 
 <script>
+import LessonList from "./LessonList.vue";
 export default {
   name: "CourseDetail",
+  components: { LessonList },
   props: {
     courseTitle: String,
     courseSubTitle: String,
-  },
-  data() {
-    return {
-      cruds: [
-        ["Create", "mdi-plus-outline"],
-        ["Read", "mdi-file-outline"],
-        ["Update", "mdi-update"],
-        ["Delete", "mdi-delete"],
-      ],
-    };
   },
 };
 </script>
@@ -117,11 +118,11 @@ export default {
   margin-left: 2.5%;
 }
 .course-detail-container .course-detail-left {
-  width: 60%;
+  width: 65%;
   float: left;
 }
 .course-detail-container .course-detail-right {
-  width: 40%;
+  width: 35%;
   float: left;
 }
 .course-detail-container .detail-header {
@@ -147,5 +148,21 @@ export default {
   font-size: 14px;
   font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.list-lesson-detail {
+  margin: 8px 0 8px 0;
+}
+.course-lesson {
+  margin-bottom: 24px;
+}
+@media screen and (max-width: 739px) {
+  .require-profit .require-profit-detail {
+    width: 100% !important;
+  }
+}
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+  .require-profit .require-profit-detail {
+    width: 100% !important;
+  }
 }
 </style>
