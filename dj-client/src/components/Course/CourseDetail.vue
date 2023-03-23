@@ -74,7 +74,7 @@
       </div>
       <div class="course-lesson">
         <h2 style="font-weight: 700; font-size: 20px">Danh sách bài học.</h2>
-        <ul style="display: inline; margin-bottom: 12px">
+        <ul style="display: block; margin: 8px 0 24px 0">
           <li style="display: inline">
             <span style="font-weight: 550; margin-right: 4px">12</span
             ><span style="font-size: 14px; margin-right: 12px">Học phần.</span>
@@ -91,12 +91,36 @@
             >
           </li>
         </ul>
-        <LessonList titleLesson="1. Java Basic" class="list-lesson-detail" />
-        <LessonList titleLesson="1. Java Basic" class="list-lesson-detail" />
-        <LessonList titleLesson="1. Java Basic" class="list-lesson-detail" />
+        <LessonList
+          titleLesson="1. Java Basic (4 bài học)"
+          class="list-lesson-detail"
+        />
+        <LessonList
+          titleLesson="1. Java Basic (4 bài học)"
+          class="list-lesson-detail"
+        />
+        <LessonList
+          titleLesson="1. Java Basic (4 bài học)"
+          class="list-lesson-detail"
+        />
       </div>
     </div>
-    <div class="course-detail-right"></div>
+    <div class="course-detail-right">
+      <div class="intro-content">
+        <iframe
+          width="100%"
+          height="292"
+          src="https://www.youtube.com/embed/6jZVsr7q-tE"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          style="border-radius: 15px"
+        ></iframe>
+        <h2 style="text-align: center; margin: 12px 0 12px 0">Miễn Phí</h2>
+        <v-btn width="40%" rounded="pill" color="#4FC3F7"> Đăng ký học </v-btn>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -118,15 +142,23 @@ export default {
   margin-left: 2.5%;
 }
 .course-detail-container .course-detail-left {
-  width: 65%;
+  display: block;
   float: left;
+  width: 65%;
 }
 .course-detail-container .course-detail-right {
   width: 35%;
+  display: flex;
   float: left;
+  align-items: center;
+  justify-content: center;
 }
 .course-detail-container .detail-header {
   margin-bottom: 28px;
+}
+.course-detail-container .course-detail-right .intro-content {
+  width: 80%;
+  text-align: center;
 }
 .course-detail-container .detail-header .require-profit {
   margin-top: 28px;
@@ -159,10 +191,22 @@ export default {
   .require-profit .require-profit-detail {
     width: 100% !important;
   }
+  .course-detail-container .course-detail-right {
+    display: none !important;
+  }
+  .course-detail-container .course-detail-left {
+    width: 100% !important;
+  }
 }
 @media screen and (max-width: 1023px) and (min-width: 740px) {
   .require-profit .require-profit-detail {
     width: 100% !important;
+  }
+  .course-detail-container .course-detail-left {
+    width: 100% !important;
+  }
+  .course-detail-container .course-detail-right {
+    display: none !important;
   }
 }
 </style>

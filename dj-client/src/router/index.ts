@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import LobbyMain from "../views/MainLobby/LobbyMain.vue";
-import LoginUser from "../components/Login/LoginUser.vue";
+import LogIn from "../views/Door/LogIn.vue";
 import AppNewFeedVue from "@/components/MainHome/AppNewFeed.vue";
-import CourseMonitor from "@/components/Course/CourseMonitor.vue";
 import CourseDetail from "@/components/Course/CourseDetail.vue";
+import StudyMain from "@/components/StudyMonitor/StudyMain.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -28,7 +28,12 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     name: "login",
-    component: LoginUser,
+    component: LogIn,
+  },
+  {
+    path: "/study",
+    name: "study",
+    component: StudyMain,
   },
 ];
 
