@@ -37,15 +37,15 @@
               <font-awesome-icon
                 v-bind="props"
                 icon="fa-solid fa-ellipsis"
-                color="#e7e7e7"
+                color="#808990"
                 class="more-option-content"
               />
             </template>
             <v-list style="border-radius: 15px">
               <v-list-item
-                class="option-more-item"
                 v-for="(item, i) in items"
                 :key="i"
+                class="option-more-item"
               >
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item>
@@ -54,10 +54,110 @@
         </li>
       </ul>
     </div>
-    <span class="show-comment-child"
-      >Xem thêm 2 câu trả lời
-      <font-awesome-icon icon="fa-solid fa-chevron-down" />
+    <span class="show-comment-child" @click="showResponComment">
+      <span v-if="commentRespon == false"
+        >Xem thêm 2 câu trả lời
+        <font-awesome-icon
+          icon="fa-solid fa-chevron-down"
+          style="margin-left: 4px"
+      /></span>
+      <span v-else
+        >Ẩn câu trả lời
+        <font-awesome-icon
+          icon="fa-solid fa-chevron-up"
+          style="margin-left: 4px"
+      /></span>
     </span>
+    <v-list style="border-radius: 15px" v-if="commentRespon == true">
+      <v-list-item
+        class="option-more-item"
+        v-for="(item, i) in commentChild"
+        :key="i"
+      >
+        <div style="margin-left: 6%; margin-top: 1%">
+          <img
+            style="width: 40px; height: 40px; float: left; border-radius: 50%"
+            :src="require('../../assets/user-avatar/3.jpg')"
+          />
+          <div
+            style="
+              border-radius: 15px;
+              display: inline-block;
+              color: black;
+              background-color: #f2f3f5;
+              margin: 0px 4px 4px 8px;
+            "
+          >
+            <span
+              style="
+                padding: 6px 12px 8px 12px;
+                font-weight: 450;
+                font-size: 16px;
+                display: block;
+              "
+              >{{ item.userName }}</span
+            >
+            <span
+              style="
+                padding: 0px 12px 8px 12px;
+                font-size: 16px;
+                display: block;
+              "
+              >Tuyệt CC</span
+            >
+          </div>
+          <div class="comment-option-container">
+            <ul class="comment-option">
+              <li class="more-option-content">Thích</li>
+              <li class="more-option-content">Phản hồi</li>
+              <li style="font-weight: 400">1 Ngày trước</li>
+              <li>
+                <v-menu :close-on-content-click="false">
+                  <template v-slot:activator="{ props }">
+                    <font-awesome-icon
+                      v-bind="props"
+                      icon="fa-solid fa-ellipsis"
+                      color="#808990"
+                      class="more-option-content"
+                    />
+                  </template>
+                  <v-list style="border-radius: 15px">
+                    <v-list-item
+                      v-for="(item, i) in items"
+                      :key="i"
+                      class="option-more-item"
+                    >
+                      <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </v-list-item>
+      <div style="display: flex; justify-content: center">
+        <div
+          style="
+            width: 90%;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+          "
+        >
+          <img
+            style="width: 40px; height: 40px; float: left"
+            :src="require('../../assets/logo-web.png')"
+          />
+          <v-text-field
+            style="width: 90%; float: left; margin-left: 12px"
+            color="primary"
+            variant="underlined"
+            placeholder="Thắc mắc của bạn là gì."
+          ></v-text-field>
+        </div>
+      </div>
+    </v-list>
   </div>
 </template>
 
@@ -73,8 +173,21 @@ export default {
         userName: "Mộc Quế Anh",
         commentContent: "Hí hí hí",
       },
+      {
+        id: 2,
+        likeCount: 20,
+        userName: "Hương Mộc Trà",
+        commentContent: "Hí hí hí",
+      },
     ],
+    commentRespon: false,
   }),
+  methods: {
+    showResponComment() {
+      this.commentRespon = !this.commentRespon;
+      console.log(this.commentRespon);
+    },
+  },
 };
 </script>
 
@@ -89,7 +202,7 @@ export default {
   color: black;
 }
 .comment-option-container .comment-option {
-  margin-left: 8px;
+  margin-left: 18px;
 }
 .comment-option-container {
   margin-left: 6%;
@@ -105,7 +218,7 @@ export default {
 .show-comment-child {
   font-size: 12px;
   font-weight: bold;
-  margin-left: 8%;
+  margin-left: 10%;
 }
 .show-comment-child:hover {
   cursor: pointer;

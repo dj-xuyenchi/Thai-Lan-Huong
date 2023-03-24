@@ -24,6 +24,7 @@ import {
   faPlus,
   faEllipsis,
   faChevronDown,
+  faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarPlus,
@@ -59,7 +60,8 @@ library.add(
   faList,
   faPlus,
   faEllipsis,
-  faChevronDown
+  faChevronDown,
+  faChevronUp
 );
 loadFonts();
 createApp(App)

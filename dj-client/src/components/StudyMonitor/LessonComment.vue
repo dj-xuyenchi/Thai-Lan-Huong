@@ -47,6 +47,8 @@
           </div>
         </div>
         <CommentItem />
+        <CommentItem />
+        <CommentItem />
       </v-card>
     </v-menu>
   </div>
