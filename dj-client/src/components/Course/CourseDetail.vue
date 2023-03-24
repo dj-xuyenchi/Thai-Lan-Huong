@@ -109,7 +109,7 @@
       <div class="intro-content">
         <iframe
           width="100%"
-          height="292"
+          height="200"
           src="https://www.youtube.com/embed/6jZVsr7q-tE"
           title="YouTube video player"
           frameborder="0"

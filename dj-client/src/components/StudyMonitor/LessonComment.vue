@@ -15,7 +15,7 @@
           Thảo luận
         </v-btn>
       </template>
-      <v-card height="70vh" width="700">
+      <v-card height="70vh" width="700" style="border-radius: 15px">
         <v-list>
           <v-list-item
             prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
