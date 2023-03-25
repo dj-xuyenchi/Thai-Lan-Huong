@@ -29,5 +29,10 @@ namespace dj_xuyenchi.Controllers
 			})
 			.ToArray();
 		}
-	}
+        [HttpGet("home")]
+        public string getHome()
+        {
+			return "ádasd";
+        }
+    }
 }

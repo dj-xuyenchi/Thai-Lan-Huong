@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import store from "./store/store";
 import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
@@ -67,5 +68,6 @@ loadFonts();
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(router)
+  .use(store)
   .use(vuetify)
   .mount("#app");
