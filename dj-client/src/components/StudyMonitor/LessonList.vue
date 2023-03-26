@@ -15,7 +15,7 @@
           Danh sách bài học
         </v-btn>
       </template>
-      <v-card height="70vh" width="30vw">
+      <v-card height="70vh" width="30vw" style="border-radius: 15px">
         <v-list>
           <v-list-item
             prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
@@ -55,6 +55,7 @@
         <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
         <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
         <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
+        <div style="height: 12px"></div>
       </v-card>
     </v-menu>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 4px 8px 4px 8px">
-    <v-card class="mx-auto" width="100%">
+    <v-card class="mx-auto" width="100%" style="border-radius: 15px">
       <v-list v-model:opened="open">
         <v-list-group :value="titleLesson">
           <template v-slot:activator="{ props }">
