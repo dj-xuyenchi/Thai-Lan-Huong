@@ -174,6 +174,7 @@ namespace dj_actionlayer.Business.AuthBusiness
 
                     //roles
                 }),
+                // Thời gian token có hiệu lực
                 Expires = DateTime.UtcNow.AddSeconds(10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha512Signature)
             };
@@ -192,6 +193,7 @@ namespace dj_actionlayer.Business.AuthBusiness
                 IsUsed = false,
                 IsRevoked = false,
                 IssuedAt = DateTime.Now,
+                // Thời gian refresh token có hiệu lực
                 ExpiredAt = DateTime.Now.AddSeconds(30)
             };
 
