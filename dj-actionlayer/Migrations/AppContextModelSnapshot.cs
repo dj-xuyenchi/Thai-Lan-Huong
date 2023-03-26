@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
-using AppContext = dj_actionlayer.DAO.AppContext;
 
 #nullable disable
 
 namespace dj_actionlayer.Migrations
 {
-    [DbContext(typeof(AppContext))]
+    [DbContext(typeof(DAO.AppContext))]
     partial class AppContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -559,6 +558,42 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("gender");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ExpiredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("IssuedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("JwtId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("refresh_token");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.User", b =>
                 {
                     b.Property<int>("Id")
@@ -827,6 +862,17 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("PostStatus");
 
                     b.Navigation("UserCreate");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.RefreshToken", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.User", b =>

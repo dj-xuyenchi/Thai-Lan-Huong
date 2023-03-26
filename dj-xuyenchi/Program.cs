@@ -25,7 +25,7 @@ namespace dj_xuyenchi
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();
-
+			
 
 			app.MapControllers();
 

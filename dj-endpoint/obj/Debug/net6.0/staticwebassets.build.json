@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "2mUHK4+V2wrxUMDmPCEhriaI3pdHiiVUPRcHadZcH2E=",
+  "Source": "dj-endpoint",
+  "BasePath": "_content/dj-endpoint",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
