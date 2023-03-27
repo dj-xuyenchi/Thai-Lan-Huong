@@ -18,6 +18,8 @@ namespace dj_actionlayer.DAO
 		//{
 		//	this.urlDb = urlDb;
 		//}
+		// Auth
+		public DbSet<RefreshToken> refresh_token { get; set; }
 
 		// Course Entities
 		public DbSet<Course> course { get; set; }
