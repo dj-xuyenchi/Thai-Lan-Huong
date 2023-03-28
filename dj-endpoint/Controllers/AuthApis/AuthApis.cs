@@ -16,7 +16,7 @@ namespace dj_endpoint.Controllers.AuthApis
         }
 
         [HttpGet("getlogin")]
-        public IActionResult Login(string userName,string password)
+        public IActionResult Login(string userName, string password)
         {
             var result = authBusiness.Login(userName, password);
             return Ok(result);

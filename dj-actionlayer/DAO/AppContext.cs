@@ -48,7 +48,8 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserLikePost> user_like_post { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(Settings.DBConnectHosting());
-		}
+			//optionsBuilder.UseSqlServer(Settings.DBConnectHosting());
+            optionsBuilder.UseSqlServer(Settings.DBConnect());
+        }
 	}
 }

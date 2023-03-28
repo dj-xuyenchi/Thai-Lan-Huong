@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig, AxiosInstance } from "axios";
 export class HTTPSingleton {
   private static instance: HTTPSingleton;
   private static config: AxiosRequestConfig = {
-    baseURL: "https://localhost:44375/",
+    baseURL: "https://localhost:44307/",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",

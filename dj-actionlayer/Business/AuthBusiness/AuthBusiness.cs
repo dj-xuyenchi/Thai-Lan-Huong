@@ -166,11 +166,11 @@ namespace dj_actionlayer.Business.AuthBusiness
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Role,  _context.user_role.Find(user.UserRoleId).UserRoleCode),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("UserName", user.UserName),
                     new Claim("Id", user.Id.ToString()),
+                    new Claim(ClaimTypes.Role,  _context.user_role.Find(user.UserRoleId).UserRoleCode),
+                             new Claim("LoginTime", DateTime.Now.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    
 
                     //roles
                 }),

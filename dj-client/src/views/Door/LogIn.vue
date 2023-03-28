@@ -1,11 +1,10 @@
 <template>
-  <div class="py-4">
+  <div class="py-4" style="margin-top: 60px">
     <v-img
       class="mx-auto mb-10"
-      max-width="108"
-      :src="require('../../assets/logo-web.png')"
+      max-width="300"
+      :src="require('../../assets/logo-namngang.png')"
     ></v-img>
-
     <v-card
       class="mx-auto pa-12 pb-8"
       elevation="8"
@@ -13,7 +12,6 @@
       rounded="lg"
     >
       <div class="text-subtitle-1 text-medium-emphasis">Tên đăng nhập</div>
-
       <v-text-field
         v-model="userName"
         density="compact"
@@ -21,12 +19,10 @@
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
       ></v-text-field>
-
       <div
         class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
       >
         Mật khẩu
-
         <a
           class="text-caption text-decoration-none text-blue"
           href="#"
@@ -36,7 +32,6 @@
           Quên mật khẩu?</a
         >
       </div>
-
       <v-text-field
         v-model="password"
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -47,12 +42,18 @@
         variant="outlined"
         @click:append-inner="visible = !visible"
       ></v-text-field>
-
-      <v-card class="mb-12" color="surface-variant" variant="tonal">
+      <v-checkbox label="Lưu thông tin đăng nhập."></v-checkbox>
+      <v-card
+        class="mb-6"
+        color="surface-variant"
+        variant="tonal"
+        style="text-align: center"
+        v-if="isValidUser"
+      >
         <v-card-text class="text-medium-emphasis text-caption">
-          Warning: After 3 consecutive failed login attempts, you account will
-          be temporarily locked for three hours. If you must login now, you can
-          also click "Forgot login password?" below to reset the login password.
+          <span style="color: red">
+            Tên tài khoản hoặc mật khẩu không chính xác.
+          </span>
         </v-card-text>
       </v-card>
       <v-btn
@@ -62,9 +63,31 @@
         size="large"
         variant="tonal"
         @click="checkLogin()"
+        :disabled="dialog"
+        :loading="dialog"
       >
         Đăng nhập
       </v-btn>
+
+      <div
+        style="
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <v-img
+          max-width="60"
+          :src="require('../../assets/google.png')"
+          style="padding: 0px 8px 0px 8px"
+        ></v-img>
+        <v-img
+          max-width="60"
+          :src="require('../../assets/fb.png')"
+          style="padding: 0px 8px 0px 8px"
+        ></v-img>
+      </div>
       <v-card-text class="text-center">
         <a
           class="text-blue text-decoration-none"
@@ -79,15 +102,36 @@
   </div>
 </template>
 <script>
+import AuthApis from "../../apis/AuthApis/AuthApis.ts";
 export default {
   data: () => ({
     visible: false,
     userName: "",
     password: "",
+    dialog: false,
+    isUnValidUser: false,
   }),
   methods: {
-    checkLogin() {
-      console.log(this.userName);
+    async checkLogin() {
+      this.dialog = true;
+      const login = await AuthApis.getLogin(this.userName, this.password);
+      console.log(login);
+
+      if (login.success === true) {
+        console.log(login);
+        document.cookie = `token=${login.data.accessToken}`;
+        document.cookie = `refreshToken=${login.data.refreshToken}`;
+        const cok = document.cookie;
+        console.log(cok);
+      }
+      this.isUnValidUser = true;
+    },
+  },
+  watch: {
+    dialog(val) {
+      if (!val) return;
+
+      setTimeout(() => (this.dialog = false), 4000);
     },
   },
 };
