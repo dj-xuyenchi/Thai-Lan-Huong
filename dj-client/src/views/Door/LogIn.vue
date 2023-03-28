@@ -2,8 +2,8 @@
   <div class="py-4">
     <v-img
       class="mx-auto mb-10"
-      max-width="228"
-      src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-v3-slim-text-light.svg"
+      max-width="108"
+      :src="require('../../assets/logo-web.png')"
     ></v-img>
 
     <v-card
@@ -12,11 +12,12 @@
       max-width="448"
       rounded="lg"
     >
-      <div class="text-subtitle-1 text-medium-emphasis">Account</div>
+      <div class="text-subtitle-1 text-medium-emphasis">Tên đăng nhập</div>
 
       <v-text-field
+        v-model="userName"
         density="compact"
-        placeholder="Email address"
+        placeholder="Email, Sdt hoặc tên đăng nhập."
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
       ></v-text-field>
@@ -24,7 +25,7 @@
       <div
         class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
       >
-        Password
+        Mật khẩu
 
         <a
           class="text-caption text-decoration-none text-blue"
@@ -32,15 +33,16 @@
           rel="noopener noreferrer"
           target="_blank"
         >
-          Forgot login password?</a
+          Quên mật khẩu?</a
         >
       </div>
 
       <v-text-field
+        v-model="password"
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
         density="compact"
-        placeholder="Enter your password"
+        placeholder="Nhập mật khẩu"
         prepend-inner-icon="mdi-lock-outline"
         variant="outlined"
         @click:append-inner="visible = !visible"
@@ -53,11 +55,16 @@
           also click "Forgot login password?" below to reset the login password.
         </v-card-text>
       </v-card>
-      <router-link to="/home/lobby" style="text-decoration: none">
-        <v-btn block class="mb-8" color="blue" size="large" variant="tonal">
-          Đăng nhập
-        </v-btn>
-      </router-link>
+      <v-btn
+        block
+        class="mb-8"
+        color="blue"
+        size="large"
+        variant="tonal"
+        @click="checkLogin()"
+      >
+        Đăng nhập
+      </v-btn>
       <v-card-text class="text-center">
         <a
           class="text-blue text-decoration-none"
@@ -75,7 +82,14 @@
 export default {
   data: () => ({
     visible: false,
+    userName: "",
+    password: "",
   }),
+  methods: {
+    checkLogin() {
+      console.log(this.userName);
+    },
+  },
 };
 </script>
 
