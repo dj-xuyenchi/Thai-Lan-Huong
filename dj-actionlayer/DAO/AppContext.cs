@@ -48,8 +48,7 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserLikePost> user_like_post { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=dj_coding;Integrated Security=True;encrypt=true;trustservercertificate=true;");
-	//		optionsBuilder.UseSqlServer(urlDb);
+			optionsBuilder.UseSqlServer(Settings.DBConnectHosting());
 		}
 	}
 }

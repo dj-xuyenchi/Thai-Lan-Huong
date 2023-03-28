@@ -17,6 +17,9 @@ namespace dj_actionlayer.Business.HomeBusiness
         {
             return _context.course.ToList();
         }
-      
+        public List<Gender> getALlGender()
+        {
+            return _context.gender.ToList();
+        }
     }
 }
