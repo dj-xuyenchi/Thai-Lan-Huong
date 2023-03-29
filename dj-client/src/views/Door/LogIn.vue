@@ -48,7 +48,7 @@
         color="surface-variant"
         variant="tonal"
         style="text-align: center"
-        v-if="isValidUser"
+        v-if="isUnValidUser"
       >
         <v-card-text class="text-medium-emphasis text-caption">
           <span style="color: red">
@@ -115,25 +115,23 @@ export default {
     async checkLogin() {
       this.dialog = true;
       const login = await AuthApis.getLogin(this.userName, this.password);
-      console.log(login);
 
-      if (login.success === true) {
-        console.log(login);
-        document.cookie = `token=${login.data.accessToken}`;
-        document.cookie = `refreshToken=${login.data.refreshToken}`;
-        const cok = document.cookie;
-        console.log(cok);
+      if (login.success === false) {
+        this.dialog = false;
+        // document.cookie = `token=${login.data.accessToken}`;
+        //  document.cookie = `refreshToken=${login.data.refreshToken}`;
+        //  const cok = document.cookie;
+        //  console.log(cok);
+        this.isUnValidUser = true;
       }
-      this.isUnValidUser = true;
     },
   },
-  watch: {
-    dialog(val) {
-      if (!val) return;
-
-      setTimeout(() => (this.dialog = false), 4000);
-    },
-  },
+  // watch: {
+  //   dialog(val) {
+  //     if (!val) return;
+  //     setTimeout(() => (this.dialog = false), 4000);
+  //   },
+  // },
 };
 </script>
 
