@@ -23,13 +23,13 @@ namespace dj_actionlayer.Business.AuthBusiness
             {
                 return new LoginResponse<TokenModel>
                 {
-                    Success = false,
+                    Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                     Message = "Invalid username/password"
                 };
             }
             return new LoginResponse<TokenModel>
             {
-                Success = true,
+                Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.SUCCESS,
                 Message = "Authenticate success",
                 Data = GenToken(user)
             };
@@ -65,7 +65,7 @@ namespace dj_actionlayer.Business.AuthBusiness
                     {
                         return new LoginResponse<TokenModel>
                         {
-                            Success = false,
+                            Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                             Message = "Invalid token"
                         };
                     }
@@ -79,7 +79,7 @@ namespace dj_actionlayer.Business.AuthBusiness
                 {
                     return new LoginResponse<TokenModel>
                     {
-                        Success = false,
+                        Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                         Message = "Access token has not yet expired"
                     };
                 }
@@ -90,7 +90,7 @@ namespace dj_actionlayer.Business.AuthBusiness
                 {
                     return new LoginResponse<TokenModel>
                     {
-                        Success = false,
+                        Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                         Message = "Refresh token does not exist"
                     };
                 }
@@ -100,7 +100,7 @@ namespace dj_actionlayer.Business.AuthBusiness
                 {
                     return new LoginResponse<TokenModel>
                     {
-                        Success = false,
+                        Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                         Message = "Refresh token has been used"
                     };
                 }
@@ -108,7 +108,7 @@ namespace dj_actionlayer.Business.AuthBusiness
                 {
                     return new LoginResponse<TokenModel>
                     {
-                        Success = false,
+                        Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                         Message = "Refresh token has been revoked"
                     };
                 }
@@ -119,7 +119,7 @@ namespace dj_actionlayer.Business.AuthBusiness
                 {
                     return new LoginResponse<TokenModel>
                     {
-                        Success = false,
+                        Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                         Message = "Token doesn't match"
                     };
                 }
@@ -136,7 +136,7 @@ namespace dj_actionlayer.Business.AuthBusiness
 
                 return new LoginResponse<TokenModel>
                 {
-                    Success = true,
+                    Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.SUCCESS,
                     Message = "Renew token success",
                     Data = token
                 };
@@ -145,7 +145,7 @@ namespace dj_actionlayer.Business.AuthBusiness
             {
                 return new LoginResponse<TokenModel>
                 {
-                    Success = false,
+                    Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                     Message = "Something went wrong"
                 };
             }

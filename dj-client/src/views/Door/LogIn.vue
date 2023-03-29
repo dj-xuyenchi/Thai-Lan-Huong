@@ -18,19 +18,12 @@
         placeholder="Email, Sdt hoặc tên đăng nhập."
         prepend-inner-icon="mdi-email-outline"
         variant="outlined"
+        :rules="[rules.minUser]"
       ></v-text-field>
       <div
         class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
       >
         Mật khẩu
-        <a
-          class="text-caption text-decoration-none text-blue"
-          href="#"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Quên mật khẩu?</a
-        >
       </div>
       <v-text-field
         v-model="password"
@@ -41,7 +34,9 @@
         prepend-inner-icon="mdi-lock-outline"
         variant="outlined"
         @click:append-inner="visible = !visible"
+        :rules="[rules.minPass]"
       ></v-text-field>
+
       <v-checkbox label="Lưu thông tin đăng nhập."></v-checkbox>
       <v-card
         class="mb-6"
@@ -52,13 +47,13 @@
       >
         <v-card-text class="text-medium-emphasis text-caption">
           <span style="color: red">
-            Tên tài khoản hoặc mật khẩu không chính xác.
+            {{ loginStatus }}
           </span>
         </v-card-text>
       </v-card>
       <v-btn
         block
-        class="mb-8"
+        class="mb-4"
         color="blue"
         size="large"
         variant="tonal"
@@ -68,7 +63,16 @@
       >
         Đăng nhập
       </v-btn>
-
+      <div style="text-align: center" class="mb-4">
+        <a
+          class="text-caption text-decoration-none text-blue"
+          href="#"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Quên mật khẩu?</a
+        >
+      </div>
       <div
         style="
           width: 100%;
@@ -110,19 +114,35 @@ export default {
     password: "",
     dialog: false,
     isUnValidUser: false,
+    rules: {
+      minUser: (value) => value.length >= 8 || "Tài khoản lớn hơn 8 ký tự",
+      minPass: (v) => v.length >= 8 || "Mật khẩu lớn hơn 8 ký tự",
+    },
+    loginStatus: "",
   }),
   methods: {
     async checkLogin() {
-      this.dialog = true;
-      const login = await AuthApis.getLogin(this.userName, this.password);
-
-      if (login.success === false) {
-        this.dialog = false;
-        // document.cookie = `token=${login.data.accessToken}`;
-        //  document.cookie = `refreshToken=${login.data.refreshToken}`;
-        //  const cok = document.cookie;
-        //  console.log(cok);
+      if (this.userName.trim().length < 8 || this.password.trim().length < 8) {
+        this.loginStatus = "Tài khoản hoặc mật khẩu chưa đúng.";
         this.isUnValidUser = true;
+        return;
+      }
+      this.dialog = true;
+      this.isUnValidUser = false;
+      const login = await AuthApis.getLogin(this.userName, this.password);
+      if (login.success === false) {
+        this.loginStatus = "Tài khoản hoặc mật khẩu không chính xác.";
+        this.dialog = false;
+        this.isUnValidUser = true;
+      }
+      if (login.success === true) {
+        this.dialog = false;
+        const now = new Date();
+        now.setMonth(now.getMonth() + 3);
+        document.cookie = `token=${login.data.accessToken}; expires=${now}`;
+        document.cookie = `refreshToken=${login.data.refreshToken}; expires=${now}`;
+        this.isUnValidUser = false;
+        this.$router.push({ path: "/home/lobby" });
       }
     },
   },

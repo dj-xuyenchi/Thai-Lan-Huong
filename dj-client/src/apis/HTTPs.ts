@@ -8,13 +8,11 @@ export class HTTPSingleton {
     headers: {
       "Content-Type": "application/json",
       // Lỗi CORS do dòng dưới không hiểu vì sao bật thì bị
-      // "Access-Control-Allow-Origin": "*",
-      // "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
     },
     timeout: 1000000,
     responseType: "json",
-    xsrfCookieName: "XSRF-TOKEN",
-    xsrfHeaderName: "X-XSRF-TOKEN",
   };
   private HTTP: AxiosInstance;
   private constructor() {

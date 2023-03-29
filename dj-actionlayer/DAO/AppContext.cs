@@ -49,7 +49,8 @@ namespace dj_actionlayer.DAO
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			//optionsBuilder.UseSqlServer(Settings.DBConnectHosting());
-            optionsBuilder.UseSqlServer(Settings.DBConnect());
+			//optionsBuilder.UseSqlServer(Settings.DBConnect());
+			optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
 	}
 }
