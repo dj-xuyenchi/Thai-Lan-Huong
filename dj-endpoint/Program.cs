@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,17 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//var devCorsPolicy = "devCorsPolicy";
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(devCorsPolicy, builder =>
-//    {
-//        //builder.WithOrigins("http://localhost:800").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-//        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-//        //builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
-//        //builder.SetIsOriginAllowed(origin => true);
-//    });
-//});
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -51,14 +42,22 @@ builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy("ADMINANDMEMBER", policy =>
         policy.RequireClaim(
-             ClaimTypes.Role, new string[] {"ADMIN","MEMBER"}
+             ClaimTypes.Role, new string[] { "ADMIN", "MEMBER" }
             )
     );
     option.AddPolicy("MEMBER", policy => policy.RequireClaim(
         ClaimTypes.Role, "MEMBER"
         ));
 });
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:8080",
+                                              "http://www.contoso.com").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                      });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -66,9 +65,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+    app.UseCors(MyAllowSpecificOrigins);
 }
-
+app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -130,12 +130,12 @@ export default {
       this.dialog = true;
       this.isUnValidUser = false;
       const login = await AuthApis.getLogin(this.userName, this.password);
-      if (login.success === false) {
+      if (login.success !== 0) {
         this.loginStatus = "Tài khoản hoặc mật khẩu không chính xác.";
         this.dialog = false;
         this.isUnValidUser = true;
       }
-      if (login.success === true) {
+      if (login.success === 0) {
         this.dialog = false;
         const now = new Date();
         now.setMonth(now.getMonth() + 3);

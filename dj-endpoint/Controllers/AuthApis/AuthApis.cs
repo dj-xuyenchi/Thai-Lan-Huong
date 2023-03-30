@@ -1,6 +1,7 @@
 ﻿
 using dj_actionlayer.Business.AuthBusiness;
 using dj_webdesigncore.AuthModel;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dj_endpoint.Controllers.AuthApis
@@ -14,7 +15,6 @@ namespace dj_endpoint.Controllers.AuthApis
         {
             this.authBusiness = new AuthBusiness();
         }
-
         [HttpGet("getlogin")]
         public IActionResult Login(string userName, string password)
         {
