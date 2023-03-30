@@ -100,9 +100,9 @@
           target="_blank"
         >
           Đăng ký thành viên <v-icon icon="mdi-chevron-right"></v-icon>
-          <span>{{ name }}</span>
+          <span>{{ getUserNameLogIn }}</span>
         </a>
-          <button type="" @click="setName({ nam: `sd` })">clcik</button>
+        <button type="" @click="updateUserName">clcik</button>
       </v-card-text>
     </v-card>
   </div>
@@ -111,6 +111,7 @@
 import AuthApis from "../../apis/AuthApis/AuthApis.ts";
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
 export default {
   data: () => ({
     visible: false,
@@ -125,12 +126,11 @@ export default {
     loginStatus: "",
   }),
   computed: {
-    ...mapGetters(["name"]),
+    ...mapGetters(["getUserNameLogIn"]),
   },
   methods: {
-    ...mapMutations([
-      "setName", //also supports payload `this.nameOfMutation(amount)`
-    ]),
+    ...mapMutations(["setUserNameLogIn"]),
+    ...mapActions(["updateUserName"]),
     async checkLogin() {
       if (this.userName.trim().length < 8 || this.password.trim().length < 8) {
         this.loginStatus = "Tài khoản hoặc mật khẩu chưa đúng.";
@@ -140,12 +140,12 @@ export default {
       this.dialog = true;
       this.isUnValidUser = false;
       const login = await AuthApis.getLogin(this.userName, this.password);
-      if (login.success === false) {
+      if (login.success !== 0) {
         this.loginStatus = "Tài khoản hoặc mật khẩu không chính xác.";
         this.dialog = false;
         this.isUnValidUser = true;
       }
-      if (login.success === true) {
+      if (login.success === 0) {
         this.dialog = false;
         const now = new Date();
         now.setMonth(now.getMonth() + 3);
