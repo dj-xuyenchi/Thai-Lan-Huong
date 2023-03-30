@@ -100,13 +100,17 @@
           target="_blank"
         >
           Đăng ký thành viên <v-icon icon="mdi-chevron-right"></v-icon>
+          <span>{{ name }}</span>
         </a>
+          <button type="" @click="setName({ nam: `sd` })">clcik</button>
       </v-card-text>
     </v-card>
   </div>
 </template>
 <script>
 import AuthApis from "../../apis/AuthApis/AuthApis.ts";
+import { mapGetters } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   data: () => ({
     visible: false,
@@ -120,7 +124,13 @@ export default {
     },
     loginStatus: "",
   }),
+  computed: {
+    ...mapGetters(["name"]),
+  },
   methods: {
+    ...mapMutations([
+      "setName", //also supports payload `this.nameOfMutation(amount)`
+    ]),
     async checkLogin() {
       if (this.userName.trim().length < 8 || this.password.trim().length < 8) {
         this.loginStatus = "Tài khoản hoặc mật khẩu chưa đúng.";
@@ -130,12 +140,12 @@ export default {
       this.dialog = true;
       this.isUnValidUser = false;
       const login = await AuthApis.getLogin(this.userName, this.password);
-      if (login.success !== 0) {
+      if (login.success === false) {
         this.loginStatus = "Tài khoản hoặc mật khẩu không chính xác.";
         this.dialog = false;
         this.isUnValidUser = true;
       }
-      if (login.success === 0) {
+      if (login.success === true) {
         this.dialog = false;
         const now = new Date();
         now.setMonth(now.getMonth() + 3);
@@ -146,12 +156,6 @@ export default {
       }
     },
   },
-  // watch: {
-  //   dialog(val) {
-  //     if (!val) return;
-  //     setTimeout(() => (this.dialog = false), 4000);
-  //   },
-  // },
 };
 </script>
 
