@@ -6,10 +6,10 @@ export class HTTPSingleton {
     baseURL: "https://api.dj-xuyenchi.edu.vn/",
     // baseURL: "https://localhost:44307/",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
       // Lỗi CORS do dòng dưới không hiểu vì sao bật thì bị
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+      // "Access-Control-Allow-Origin": "*",
+      // "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
     },
     timeout: 1000000,
     responseType: "json",
