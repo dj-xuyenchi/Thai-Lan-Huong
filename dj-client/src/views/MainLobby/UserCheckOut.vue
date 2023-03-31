@@ -1,5 +1,5 @@
 <template>
-  <div class="user-check" v-if="showSignIn">
+  <div class="user-check" v-if="!getIsLogIn">
     <router-link to="/login" style="text-decoration: none; color: black">
       <v-btn width="100%" rounded="pill" color="#4FC3F7"> Đăng nhập </v-btn>
     </router-link>
@@ -15,13 +15,14 @@
           v-bind="props"
         ></v-list-item>
       </template>
-      <v-card class="mx-auto" max-width="300">
+      <v-card class="mx-auto" max-width="600">
         <v-list density="compact">
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
             :value="item"
             active-color="primary"
+            @click="item.event()"
           >
             <template v-slot:prepend>
               <v-icon :icon="item.icon"></v-icon>
@@ -39,6 +40,7 @@
 import AuthApis from "../../apis/AuthApis/AuthApis.ts";
 import TokenModel from "@/entities/AuthEntities/TokenModel";
 import { mapGetters } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   name: "UserCheckOut",
   data() {
@@ -49,35 +51,64 @@ export default {
         click: "mdi-chevron-down",
       },
       items: [
-        { text: "Real-Time", icon: "mdi-clock" },
-        { text: "Audience", icon: "mdi-account" },
-        { text: "Conversions", icon: "mdi-flag" },
+        {
+          text: "Thông tin cá nhân",
+          icon: "mdi-account",
+          event: () => {
+            this.$router.push({ path: "/user/1" });
+          },
+        },
+        {
+          text: "Khóa học đăng ký",
+          icon: "mdi-bookshelf",
+          event: () => {
+            this.$router.push({ path: "/user/1" });
+          },
+        },
+        {
+          text: "Đăng xuất",
+          icon: "mdi-logout",
+          event: () => {
+            document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+            document.cookie =
+              "refreshToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+            this.setIsLogIn(false);
+            this.$router.push({ path: "/home/lobby" });
+          },
+        },
       ],
     };
   },
-  created() {
+  computed: {
+    ...mapGetters(["getIsLogIn"]),
+  },
+  mounted() {
     const cookie = document.cookie;
     console.log(cookie);
     const listCookie = cookie.split(";");
-    const tokenModel = {};
+    const tokenModel = {
+      AccessToken: "",
+      RefreshToken: "",
+    };
     for (const cookie of listCookie) {
-      console.log(cookie);
       if (cookie.includes("token=")) {
         tokenModel.AccessToken = cookie.split("=")[1];
       }
       if (cookie.includes("refreshToken=")) {
-        tokenModel.RefreshToken = cookie.split("=")[1];
+        tokenModel.RefreshToken = cookie.substring(14, cookie.length);
       }
     }
     this.isLogin(tokenModel);
-    this.isLogin = true;
-  },
-  computed: {
-    ...mapGetters(["getUserNameLogIn"]),
   },
   methods: {
+    ...mapMutations(["setIsLogIn"]),
     async isLogin(tokenModel) {
-      const refreshToken = await AuthApis.refreshToken(tokenModel);
+      const loginStatus = await AuthApis.refreshToken(tokenModel);
+      console.log(loginStatus);
+      if (loginStatus.success == 0) {
+        console.log(123);
+        this.setIsLogIn(true);
+      }
     },
   },
 };

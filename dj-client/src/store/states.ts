@@ -3,6 +3,10 @@ export default {
     AccessToken: "",
     RefreshToken: "",
   },
-  userNameLogIn: "Thái Lan Hương",
-  isLogin: false,
+  userLogIn: {
+    id: "string",
+    UserName: "string",
+    UserRole: "string",
+  },
+  isLogIn: false,
 };

@@ -5,4 +5,7 @@ export default {
   getUserNameLogIn: (state: any) => {
     return state.userNameLogIn;
   },
+  getIsLogIn: (state: any) => {
+    return state.isLogIn;
+  },
 };
