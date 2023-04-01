@@ -8,7 +8,7 @@
         variant="none"
         height="25vh"
       >
-        <img :src="coursePath" alt="" />
+        <img :src="`data:image/jpeg;base64,` + courseData" alt="" />
         <v-overlay
           :model-value="isHovering"
           contained
@@ -28,7 +28,7 @@
           font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
             'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
         "
-        >HTML - CSS Cơ bản</span
+        >{{ courseName }}</span
       >
       <span
         style="
@@ -45,7 +45,7 @@
           icon="fa-solid fa-users"
           color="black"
           style="margin-right: 5px"
-        />400.000</span
+        />{{ studentCount }}</span
       >
     </div>
   </div>
@@ -59,7 +59,9 @@ export default {
     overlay: false,
   }),
   props: {
-    coursePath: String,
+    courseData: String,
+    courseName: String,
+    studentCount: Number,
   },
 };
 </script>

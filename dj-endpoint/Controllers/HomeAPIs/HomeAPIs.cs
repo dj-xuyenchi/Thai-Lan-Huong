@@ -1,4 +1,4 @@
-﻿using dj_actionlayer.Business.HomeBusiness;
+﻿using dj_actionlayer.Business.Home;
 using dj_actionlayer.DAO;
 using dj_webdesigncore.Entities.UserEntity;
 using Microsoft.AspNetCore.Authorization;

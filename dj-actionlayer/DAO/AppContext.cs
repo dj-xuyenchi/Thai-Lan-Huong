@@ -13,7 +13,6 @@ namespace dj_actionlayer.DAO
 {
 	public class AppContext : DbContext
 	{
-		private readonly string urlDb;
 		//protected AppContext(String urlDb)
 		//{
 		//	this.urlDb = urlDb;
@@ -22,6 +21,8 @@ namespace dj_actionlayer.DAO
 		public DbSet<RefreshToken> refresh_token { get; set; }
 
 		// Course Entities
+		public DbSet<ChapterLesson> chapter_lesson { get; set; }
+		public DbSet<CourseChapter> course_chapter { get; set; }	
 		public DbSet<Course> course { get; set; }
 		public DbSet<CourseCourseType> course_course_type { get; set; }
 		public DbSet<CourseImage> course_image { get; set; }
@@ -35,6 +36,11 @@ namespace dj_actionlayer.DAO
 		public DbSet<Post> post { get; set; }
 		public DbSet<PostStatus> post_status { get; set; }
 		// User Entities
+		public DbSet<Ward> wards { get; set; }
+        public DbSet<District> districts { get; set; }
+        public DbSet<Province> provinces { get; set; }
+        public DbSet<AdministrativeRegion> administrative_regions { get; set; }
+        public DbSet<AdministrativeUnits> administrative_units { get; set; }
 		public DbSet<User> user { get; set; }
 		public DbSet<Gender> gender { get; set; }
 		public DbSet<UserRole> user_role { get; set; }
@@ -49,8 +55,8 @@ namespace dj_actionlayer.DAO
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			//optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-			//optionsBuilder.UseSqlServer(Settings.DBConnect());
-			optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
+			optionsBuilder.UseSqlServer(Settings.DBConnect());
+			//optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
 		}
 	}
 }

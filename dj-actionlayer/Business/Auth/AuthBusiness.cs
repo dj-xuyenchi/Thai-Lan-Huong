@@ -12,7 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dj_actionlayer.Business.AuthBusiness
+namespace dj_actionlayer.Business.Auth
 {
     public class AuthBusiness : BaseBusiness
     {

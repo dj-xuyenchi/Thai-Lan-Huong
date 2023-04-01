@@ -7,13 +7,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
 
+using AppContext = dj_actionlayer.DAO.AppContext;
+
 #nullable disable
 
 namespace dj_actionlayer.Migrations
 {
-    [DbContext(typeof(DAO.AppContext))]
-    [Migration("20230328052300_cc")]
-    partial class cc
+    [DbContext(typeof(AppContext))]
+    [Migration("20230401190400_create")]
+    partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -241,6 +243,38 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("user_like_post");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.ChapterLesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("AddLessonToChapterDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ChapterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseChapterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseChapterId");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("chapter_lesson");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -252,6 +286,9 @@ namespace dj_actionlayer.Migrations
                     b.Property<string>("CourseCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("CourseImageData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("CourseLevelId")
                         .HasColumnType("int");
@@ -283,6 +320,41 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("CourseStatusId");
 
                     b.ToTable("course");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseChapter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("ChapterCreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ChapterLessonCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ChapterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChapterTotalTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("course_chapter");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseType", b =>
@@ -319,9 +391,9 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CourseImagePath")
+                    b.Property<byte[]>("CourseImageData")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("SortNumber")
                         .HasColumnType("int");
@@ -539,6 +611,97 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("post_status");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.AdministrativeRegion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("code_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("code_name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("administrative_regions");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.AdministrativeUnits", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("code_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("code_name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("full_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("full_name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("short_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("short_name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("administrative_units");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.District", b =>
+                {
+                    b.Property<string>("code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("administrative_unit_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("code_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("full_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("full_name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("province_code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("code");
+
+                    b.HasIndex("administrative_unit_id");
+
+                    b.HasIndex("province_code");
+
+                    b.ToTable("districts");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Gender", b =>
                 {
                     b.Property<int>("Id")
@@ -558,6 +721,41 @@ namespace dj_actionlayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("gender");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>
+                {
+                    b.Property<string>("code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("administrative_region_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("administrative_unit_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("code_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("full_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("full_name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("code");
+
+                    b.HasIndex("administrative_region_id");
+
+                    b.HasIndex("administrative_unit_id");
+
+                    b.ToTable("provinces");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.RefreshToken", b =>
@@ -607,15 +805,20 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DistrictCode")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int?>("GenderId")
                         .HasColumnType("int");
 
                     b.Property<string>("NumberPhone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserAvatarPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ProvinceCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("UserAvatarData")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("UserEmail")
                         .HasColumnType("nvarchar(max)");
@@ -642,13 +845,22 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("UserStatusId")
                         .HasColumnType("int");
 
+                    b.Property<string>("WardCode")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("DistrictCode");
+
                     b.HasIndex("GenderId");
+
+                    b.HasIndex("ProvinceCode");
 
                     b.HasIndex("UserRoleId");
 
                     b.HasIndex("UserStatusId");
+
+                    b.HasIndex("WardCode");
 
                     b.ToTable("user");
                 });
@@ -693,6 +905,41 @@ namespace dj_actionlayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("user_status");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Ward", b =>
+                {
+                    b.Property<string>("code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("administrative_unit_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("code_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("district_code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("full_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("full_name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name_en")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("code");
+
+                    b.HasIndex("administrative_unit_id");
+
+                    b.HasIndex("district_code");
+
+                    b.ToTable("wards");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", b =>
@@ -797,6 +1044,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.ChapterLesson", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseChapter", "CourseChapter")
+                        .WithMany()
+                        .HasForeignKey("CourseChapterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseChapter");
+
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.Course", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseLevel", "CourseLevel")
@@ -810,6 +1076,17 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("CourseLevel");
 
                     b.Navigation("CourseStatus");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseChapter", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseType", b =>
@@ -866,6 +1143,36 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("UserCreate");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.District", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeUnits", "AdministrativeUnit")
+                        .WithMany()
+                        .HasForeignKey("administrative_unit_id");
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("province_code");
+
+                    b.Navigation("AdministrativeUnit");
+
+                    b.Navigation("Province");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeRegion", "AdministrativeRegion")
+                        .WithMany()
+                        .HasForeignKey("administrative_region_id");
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeUnits", "AdministrativeUnit")
+                        .WithMany()
+                        .HasForeignKey("administrative_unit_id");
+
+                    b.Navigation("AdministrativeRegion");
+
+                    b.Navigation("AdministrativeUnit");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.RefreshToken", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
@@ -879,9 +1186,17 @@ namespace dj_actionlayer.Migrations
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.User", b =>
                 {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.District", "District")
+                        .WithMany()
+                        .HasForeignKey("DistrictCode");
+
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.Gender", "Gender")
                         .WithMany()
                         .HasForeignKey("GenderId");
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.Province", "Province")
+                        .WithMany()
+                        .HasForeignKey("ProvinceCode");
 
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.UserRole", "Role")
                         .WithMany()
@@ -891,11 +1206,36 @@ namespace dj_actionlayer.Migrations
                         .WithMany()
                         .HasForeignKey("UserStatusId");
 
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.Ward", "Ward")
+                        .WithMany()
+                        .HasForeignKey("WardCode");
+
+                    b.Navigation("District");
+
                     b.Navigation("Gender");
+
+                    b.Navigation("Province");
 
                     b.Navigation("Role");
 
                     b.Navigation("UserStatus");
+
+                    b.Navigation("Ward");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Ward", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeUnits", "AdministrativeUnit")
+                        .WithMany()
+                        .HasForeignKey("administrative_unit_id");
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.District", "District")
+                        .WithMany()
+                        .HasForeignKey("district_code");
+
+                    b.Navigation("AdministrativeUnit");
+
+                    b.Navigation("District");
                 });
 #pragma warning restore 612, 618
         }

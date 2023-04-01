@@ -10,6 +10,7 @@ namespace dj_webdesigncore.Entities.CourseEntity
 	{
 		public string CourseCode { get; set; }
 		public string CourseName { get; set; }
+		public byte[]? CourseImageData { get; set; }
 		public int? CourseLevelId { get; set; }
 		public CourseLevel? CourseLevel { get;set; }
 		public int LessonCount { get; set; }

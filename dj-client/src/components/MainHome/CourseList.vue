@@ -12,16 +12,20 @@
           icon="fa-solid fa-users"
           color="black"
           style="margin-right: 5px"
-        /><span style="color: #36ea7c; font-weight: 550">20.012+</span> Học viên
-        đã học</span
+        /><span style="color: #36ea7c; font-weight: 550"
+          >{{ studentStudyed }}+</span
+        >
+        Học viên đã học</span
       >
       <span style="color: #82919b; font-size: 14px"
         ><font-awesome-icon
           icon="fa-solid fa-users"
           color="black"
           style="margin-right: 5px"
-        /><span style="color: #4fc3f7; font-weight: 550">20.012+</span> Học viên
-        đang học</span
+        /><span style="color: #4fc3f7; font-weight: 550"
+          >{{ studentStudying }}+</span
+        >
+        Học viên đang học</span
       >
     </div>
     <span
@@ -43,25 +47,11 @@
     ></v-badge>
     <div class="course-list">
       <CourseItem
-        coursePath="https://bizflyportal.mediacdn.vn/thumb_wm/1000,100/bizflyportal/images/htm16157917934978.jpg"
-      />
-      <CourseItem
-        coursePath="https://dizibrand.com/wp-content/uploads/2021/02/Java-Dizibrand-1.jpg"
-      />
-      <CourseItem
-        coursePath="https://mona.media/wp-content/uploads/2022/10/c.png"
-      />
-      <CourseItem
-        coursePath="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5VIqdj8xIQYxiV8_0ceQ-RkZI3mFL84GGZg&usqp=CAU"
-      />
-      <CourseItem
-        coursePath="https://support.cloud365.vn/images/img-sql-cloud-server/sql_cloud.png"
-      />
-      <CourseItem
-        coursePath="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_kLAPvFOhN0XhbWuzbqBTuUbZYC93RAHO9ohRxK8u86aOVeQUl3A3kCnqkPMGtwyJsY4&usqp=CAU"
-      />
-      <CourseItem
-        coursePath="https://www.freecodecamp.org/news/content/images/2022/11/What-is.png"
+        v-for="(item, index) in courseList"
+        :key="index"
+        :courseData="item.courseImageData"
+        :studentCount="item.studentCount"
+        :courseName="item.courseName"
       />
     </div>
   </div>
@@ -69,10 +59,29 @@
 
 <script>
 import CourseItem from "./CourseItem.vue";
+import HomeApi from "../../apis/APIHome/HomeAPI.ts";
 export default {
   name: "CourseList",
   components: {
     CourseItem,
+  },
+  data() {
+    return {
+      courseList: [],
+      studentStudying: 0,
+      studentStudyed: 0,
+    };
+  },
+  mounted() {
+    this.getLoobyData();
+  },
+  methods: {
+    async getLoobyData() {
+      const data = await HomeApi.getLobbyData();
+      this.courseList = data.data.listActiveCourse.courseDTOs;
+      this.studentStudyed = data.data.listActiveCourse.studyedStudent;
+      this.studentStudying = data.data.listActiveCourse.studyingStudent;
+    },
   },
 };
 </script>

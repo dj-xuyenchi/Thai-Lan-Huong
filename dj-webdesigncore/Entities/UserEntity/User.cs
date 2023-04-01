@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace dj_webdesigncore.Entities.UserEntity
 	{
 		public string? UserName { get; set; }
 		public string UserPass { get; set; }
-		public string UserAvatarPath { get; set; }
+		public byte[]? UserAvatarData { get; set; }
 		public string? UserEmail { get; set; }
 		public string? UserFacebook { get; set; }
 		public string? UserFisrtName { get; set; }
@@ -23,6 +24,15 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public int? UserRoleId { get; set; }
 		public  UserRole? Role { get; set; }
 		public int? UserStatusId { get; set; }
-		public UserStatus? UserStatus { get; set; }
+        public string? WardCode { get; set; }
+        [ForeignKey("WardCode")]
+        public Ward? Ward { get; set; }
+        public string? DistrictCode { get; set; }
+        [ForeignKey("DistrictCode")]
+        public District? District { get; set; }
+        public string? ProvinceCode { get; set; }
+        [ForeignKey("ProvinceCode")]
+        public Province? Province { get; set; }
+        public UserStatus? UserStatus { get; set; }
 	}
 }

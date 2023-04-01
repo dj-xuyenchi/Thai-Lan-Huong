@@ -1,5 +1,5 @@
 ﻿
-using dj_actionlayer.Business.AuthBusiness;
+using dj_actionlayer.Business.Auth;
 using dj_webdesigncore.AuthModel;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

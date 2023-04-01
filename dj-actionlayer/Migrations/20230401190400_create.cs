@@ -5,10 +5,44 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dj_actionlayer.Migrations
 {
-    public partial class cc : Migration
+    public partial class create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "administrative_regions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code_name_en = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_administrative_regions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "administrative_units",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    full_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    full_name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    short_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    short_name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code_name_en = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_administrative_units", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "course_level",
                 columns: table => new
@@ -136,6 +170,34 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "provinces",
+                columns: table => new
+                {
+                    code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    full_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    full_name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    administrative_unit_id = table.Column<int>(type: "int", nullable: true),
+                    administrative_region_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_provinces", x => x.code);
+                    table.ForeignKey(
+                        name: "FK_provinces_administrative_regions_administrative_region_id",
+                        column: x => x.administrative_region_id,
+                        principalTable: "administrative_regions",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_provinces_administrative_units_administrative_unit_id",
+                        column: x => x.administrative_unit_id,
+                        principalTable: "administrative_units",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "course",
                 columns: table => new
                 {
@@ -143,6 +205,7 @@ namespace dj_actionlayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CourseCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     CourseLevelId = table.Column<int>(type: "int", nullable: true),
                     LessonCount = table.Column<int>(type: "int", nullable: false),
                     TimeLessonTotal = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -196,42 +259,55 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "user",
+                name: "districts",
+                columns: table => new
+                {
+                    code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    full_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    full_name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    province_code = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    administrative_unit_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_districts", x => x.code);
+                    table.ForeignKey(
+                        name: "FK_districts_administrative_units_administrative_unit_id",
+                        column: x => x.administrative_unit_id,
+                        principalTable: "administrative_units",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_districts_provinces_province_code",
+                        column: x => x.province_code,
+                        principalTable: "provinces",
+                        principalColumn: "code");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "course_chapter",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserPass = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserAvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserFacebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserFisrtName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    GenderId = table.Column<int>(type: "int", nullable: true),
-                    UserRoleId = table.Column<int>(type: "int", nullable: true),
-                    UserStatusId = table.Column<int>(type: "int", nullable: true)
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    ChapterName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChapterTotalTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChapterLessonCount = table.Column<int>(type: "int", nullable: false),
+                    ChapterCreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SortNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user", x => x.Id);
+                    table.PrimaryKey("PK_course_chapter", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_user_gender_GenderId",
-                        column: x => x.GenderId,
-                        principalTable: "gender",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_user_user_role_UserRoleId",
-                        column: x => x.UserRoleId,
-                        principalTable: "user_role",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_user_user_status_UserStatusId",
-                        column: x => x.UserStatusId,
-                        principalTable: "user_status",
-                        principalColumn: "Id");
+                        name: "FK_course_chapter_course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "course",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -264,7 +340,7 @@ namespace dj_actionlayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CourseImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     SortNumber = table.Column<int>(type: "int", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -276,6 +352,120 @@ namespace dj_actionlayer.Migrations
                         column: x => x.CourseId,
                         principalTable: "course",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "wards",
+                columns: table => new
+                {
+                    code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    full_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    full_name_en = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    code_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    district_code = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    administrative_unit_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_wards", x => x.code);
+                    table.ForeignKey(
+                        name: "FK_wards_administrative_units_administrative_unit_id",
+                        column: x => x.administrative_unit_id,
+                        principalTable: "administrative_units",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_wards_districts_district_code",
+                        column: x => x.district_code,
+                        principalTable: "districts",
+                        principalColumn: "code");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "chapter_lesson",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ChapterId = table.Column<int>(type: "int", nullable: false),
+                    CourseChapterId = table.Column<int>(type: "int", nullable: false),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    SortNumber = table.Column<int>(type: "int", nullable: false),
+                    AddLessonToChapterDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_chapter_lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_chapter_lesson_course_chapter_CourseChapterId",
+                        column: x => x.CourseChapterId,
+                        principalTable: "course_chapter",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_chapter_lesson_lesson_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "user",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserPass = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserAvatarData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserFacebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserFisrtName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumberPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GenderId = table.Column<int>(type: "int", nullable: true),
+                    UserRoleId = table.Column<int>(type: "int", nullable: true),
+                    UserStatusId = table.Column<int>(type: "int", nullable: true),
+                    WardCode = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DistrictCode = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ProvinceCode = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_districts_DistrictCode",
+                        column: x => x.DistrictCode,
+                        principalTable: "districts",
+                        principalColumn: "code");
+                    table.ForeignKey(
+                        name: "FK_user_gender_GenderId",
+                        column: x => x.GenderId,
+                        principalTable: "gender",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_user_provinces_ProvinceCode",
+                        column: x => x.ProvinceCode,
+                        principalTable: "provinces",
+                        principalColumn: "code");
+                    table.ForeignKey(
+                        name: "FK_user_user_role_UserRoleId",
+                        column: x => x.UserRoleId,
+                        principalTable: "user_role",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_user_user_status_UserStatusId",
+                        column: x => x.UserStatusId,
+                        principalTable: "user_status",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_user_wards_WardCode",
+                        column: x => x.WardCode,
+                        principalTable: "wards",
+                        principalColumn: "code");
                 });
 
             migrationBuilder.CreateTable(
@@ -509,6 +699,16 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_chapter_lesson_CourseChapterId",
+                table: "chapter_lesson",
+                column: "CourseChapterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_chapter_lesson_LessonId",
+                table: "chapter_lesson",
+                column: "LessonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_comment_lesson_CommentLessonParentId",
                 table: "comment_lesson",
                 column: "CommentLessonParentId");
@@ -549,6 +749,11 @@ namespace dj_actionlayer.Migrations
                 column: "CourseStatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_course_chapter_CourseId",
+                table: "course_chapter",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_course_course_type_CourseId",
                 table: "course_course_type",
                 column: "CourseId");
@@ -562,6 +767,16 @@ namespace dj_actionlayer.Migrations
                 name: "IX_course_image_CourseId",
                 table: "course_image",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_districts_administrative_unit_id",
+                table: "districts",
+                column: "administrative_unit_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_districts_province_code",
+                table: "districts",
+                column: "province_code");
 
             migrationBuilder.CreateIndex(
                 name: "IX_lesson_LessonCheckPointId",
@@ -584,14 +799,34 @@ namespace dj_actionlayer.Migrations
                 column: "UserCreateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_provinces_administrative_region_id",
+                table: "provinces",
+                column: "administrative_region_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_provinces_administrative_unit_id",
+                table: "provinces",
+                column: "administrative_unit_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_refresh_token_UserId",
                 table: "refresh_token",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_DistrictCode",
+                table: "user",
+                column: "DistrictCode");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_GenderId",
                 table: "user",
                 column: "GenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_ProvinceCode",
+                table: "user",
+                column: "ProvinceCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_UserRoleId",
@@ -602,6 +837,11 @@ namespace dj_actionlayer.Migrations
                 name: "IX_user_UserStatusId",
                 table: "user",
                 column: "UserStatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_WardCode",
+                table: "user",
+                column: "WardCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_course_CourseId",
@@ -642,10 +882,23 @@ namespace dj_actionlayer.Migrations
                 name: "IX_user_like_post_UserId",
                 table: "user_like_post",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_wards_administrative_unit_id",
+                table: "wards",
+                column: "administrative_unit_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_wards_district_code",
+                table: "wards",
+                column: "district_code");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "chapter_lesson");
+
             migrationBuilder.DropTable(
                 name: "course_course_type");
 
@@ -668,10 +921,10 @@ namespace dj_actionlayer.Migrations
                 name: "user_like_post");
 
             migrationBuilder.DropTable(
-                name: "course_type");
+                name: "course_chapter");
 
             migrationBuilder.DropTable(
-                name: "course");
+                name: "course_type");
 
             migrationBuilder.DropTable(
                 name: "comment_lesson");
@@ -680,16 +933,19 @@ namespace dj_actionlayer.Migrations
                 name: "comment_post");
 
             migrationBuilder.DropTable(
-                name: "course_level");
-
-            migrationBuilder.DropTable(
-                name: "course_status");
+                name: "course");
 
             migrationBuilder.DropTable(
                 name: "lesson");
 
             migrationBuilder.DropTable(
                 name: "post");
+
+            migrationBuilder.DropTable(
+                name: "course_level");
+
+            migrationBuilder.DropTable(
+                name: "course_status");
 
             migrationBuilder.DropTable(
                 name: "lesson_check_point");
@@ -711,6 +967,21 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_status");
+
+            migrationBuilder.DropTable(
+                name: "wards");
+
+            migrationBuilder.DropTable(
+                name: "districts");
+
+            migrationBuilder.DropTable(
+                name: "provinces");
+
+            migrationBuilder.DropTable(
+                name: "administrative_regions");
+
+            migrationBuilder.DropTable(
+                name: "administrative_units");
         }
     }
 }

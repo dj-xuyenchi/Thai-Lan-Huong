@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-namespace dj_actionlayer.Business.HomeBusiness
+namespace dj_actionlayer.Business.Home
 {
     public class HomeBusiness : BaseBusiness
     {

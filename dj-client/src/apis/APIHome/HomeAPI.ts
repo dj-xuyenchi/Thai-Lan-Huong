@@ -1,8 +1,8 @@
 import { HTTP } from "../HTTPs";
 class HomeAPI {
-  getString(): Promise<any> {
+  getLobbyData(): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get("/WeatherForecast/home")
+      HTTP.get("/lobby/lobbyhomedata")
         .then((response) => {
           resolve(response.data);
         })
