@@ -153,6 +153,35 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("user_course");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLessonCheckpoint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OpenLessonDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_lesson_checkpoint");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLikeCommentLesson", b =>
                 {
                     b.Property<int>("Id")
@@ -251,9 +280,6 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime>("AddLessonToChapterDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ChapterId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CourseChapterId")
                         .HasColumnType("int");
 
@@ -280,6 +306,9 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("ChapterCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("CourseCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -296,6 +325,10 @@ namespace dj_actionlayer.Migrations
 
                     b.Property<int?>("CourseStatusId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CourseSubTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DoneCount")
                         .HasColumnType("int");
@@ -352,6 +385,58 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("course_chapter");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseProfit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseProfitId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("CourseProfitId");
+
+                    b.ToTable("course_course_profit");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseRequire", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseRequireId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("CourseRequireId");
+
+                    b.ToTable("course_course_require");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseType", b =>
@@ -423,6 +508,46 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("course_level");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseProfit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CourseProfitCreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CourseProfitName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("course_profit");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseRequire", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CourseRequireCreateDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CourseRequireName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("course_require");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -490,7 +615,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("LessonTypeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateDateTime")
+                    b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VideoTime")
@@ -996,6 +1121,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLessonCheckpoint", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLikeCommentLesson", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", "CommentLesson")
@@ -1084,6 +1228,44 @@ namespace dj_actionlayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseProfit", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseProfit", "CourseProfit")
+                        .WithMany()
+                        .HasForeignKey("CourseProfitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("CourseProfit");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseRequire", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseRequire", "CourseRequire")
+                        .WithMany()
+                        .HasForeignKey("CourseRequireId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("CourseRequire");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseType", b =>

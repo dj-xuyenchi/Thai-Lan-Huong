@@ -3,11 +3,10 @@
     <div class="course-detail-left">
       <div class="detail-header">
         <h1 style="font-weight: 700; font-size: 30px">
-          Khóa học Java từ cơ bản đến Spring
+          {{ courseTitle }}
         </h1>
         <h5 style="font-weight: 400">
-          Chúng ta sẽ cùng nhau học ngôn ngữ lập trình JAVA và xây dựng 1 ứng
-          dụng Web API Spring Boot.
+          {{ courseSubTitle }}
         </h5>
         <div class="require-profit">
           <div class="require-profit-detail">
@@ -15,58 +14,26 @@
               Sau khóa học bạn sẽ có khả năng.
             </h2>
             <ul class="list-require-profit">
-              <li>
+              <li v-for="(item, index) in courseProfit" :key="index">
                 <font-awesome-icon
                   icon="fa-solid fa-check"
                   class="react-icon"
                   style="margin-right: 12px"
                   color="#29b6f6"
-                />Biết cách tạo 1 class JAVA.
-              </li>
-              <li>
-                <font-awesome-icon
-                  icon="fa-solid fa-check"
-                  class="react-icon"
-                  style="margin-right: 12px"
-                  color="#29b6f6"
-                />Hiểu cách tạo và chạy 1 project JAVA.
-              </li>
-              <li>
-                <font-awesome-icon
-                  icon="fa-solid fa-check"
-                  class="react-icon"
-                  style="margin-right: 12px"
-                  color="#29b6f6"
-                />Sử dụng được các IDE lập trình JAVA.
+                />{{ item.courseProfitName }}
               </li>
             </ul>
           </div>
           <div class="require-profit-detail">
             <h2 style="font-weight: 700; font-size: 20px">Yêu cầu học tập.</h2>
             <ul class="list-require-profit">
-              <li>
+              <li v-for="(item, index) in courseRequire" :key="index">
                 <font-awesome-icon
                   icon="fa-solid fa-check"
                   class="react-icon"
                   style="margin-right: 12px"
                   color="#29b6f6"
-                />Máy tính hệ điều hành Window 7, 8, 10, 11.
-              </li>
-              <li>
-                <font-awesome-icon
-                  icon="fa-solid fa-check"
-                  class="react-icon"
-                  style="margin-right: 12px"
-                  color="#29b6f6"
-                />Kết nối mạng.
-              </li>
-              <li>
-                <font-awesome-icon
-                  icon="fa-solid fa-check"
-                  class="react-icon"
-                  style="margin-right: 12px"
-                  color="#29b6f6"
-                />Tối thiểu 2h học mỗi ngày.
+                />{{ item.courseRequireName }}
               </li>
             </ul>
           </div>
@@ -76,32 +43,31 @@
         <h2 style="font-weight: 700; font-size: 20px">Danh sách bài học.</h2>
         <ul style="display: block; margin: 8px 0 24px 0">
           <li style="display: inline">
-            <span style="font-weight: 550; margin-right: 4px">12</span
+            <span style="font-weight: 550; margin-right: 4px">{{
+              chapterCount
+            }}</span
             ><span style="font-size: 14px; margin-right: 12px">Học phần.</span>
           </li>
           <li style="display: inline">
-            <span style="font-weight: 550; margin-right: 4px">12</span
+            <span style="font-weight: 550; margin-right: 4px">{{
+              lessonCount
+            }}</span
             ><span style="font-size: 14px; margin-right: 12px">Bài học.</span>
           </li>
           <li style="display: inline">
-            <span style="font-weight: 550; margin-right: 4px"
-              >15 giờ 40 phút</span
+            <span style="font-weight: 550; margin-right: 4px">
+              {{ timeTotal }} </span
             ><span style="font-size: 14px; margin-right: 12px"
               >Thời lượng.</span
             >
           </li>
         </ul>
         <LessonList
-          titleLesson="1. Java Basic (4 bài học)"
+          :titleLesson="index + 1 + `. ` + item.chapterTitle"
           class="list-lesson-detail"
-        />
-        <LessonList
-          titleLesson="1. Java Basic (4 bài học)"
-          class="list-lesson-detail"
-        />
-        <LessonList
-          titleLesson="1. Java Basic (4 bài học)"
-          class="list-lesson-detail"
+          v-for="(item, index) in chapterDetail"
+          :key="index"
+          :listLesson="item.lessonDetail"
         />
       </div>
     </div>
@@ -126,12 +92,37 @@
 
 <script>
 import LessonList from "./LessonList.vue";
+import HomeApi from "../../apis/APIHome/HomeAPI.ts";
 export default {
   name: "CourseDetail",
   components: { LessonList },
-  props: {
-    courseTitle: String,
-    courseSubTitle: String,
+  data() {
+    return {
+      courseTitle: "",
+      courseSubTitle: "",
+      courseProfit: [],
+      courseRequire: [],
+      chapterDetail: [],
+      chapterCount: 0,
+      lessonCount: 0,
+      timeTotal: "",
+    };
+  },
+  mounted() {
+    this.getCourseDetail(this.$route.params.id);
+  },
+  methods: {
+    async getCourseDetail(courseId) {
+      const data = await HomeApi.getCourseDetail(courseId);
+      this.courseTitle = data.data.courseTitle;
+      this.courseSubTitle = data.data.courseSubTitle;
+      this.courseProfit = data.data.courseProfit;
+      this.courseRequire = data.data.courseRequire;
+      this.timeTotal = data.data.timeTotal;
+      this.chapterCount = data.data.chapterCount;
+      this.lessonCount = data.data.lessonCount;
+      this.chapterDetail = data.data.chapterDetail;
+    },
   },
 };
 </script>

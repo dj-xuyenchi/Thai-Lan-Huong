@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
         component: AppNewFeedVue,
       },
       {
-        path: "course",
+        path: "course/:id",
         component: CourseDetail,
       },
     ],

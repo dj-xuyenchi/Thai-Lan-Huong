@@ -15,7 +15,12 @@
           scrim="#036358"
           class="align-center justify-center"
         >
-          <v-btn variant="flat rounded-xl">Xem khóa học</v-btn>
+          <router-link
+            :to="`/home/course/` + courseId"
+            style="text-decoration: none"
+          >
+            <v-btn variant="flat rounded-xl">Xem khóa học</v-btn>
+          </router-link>
         </v-overlay>
       </v-card>
     </v-hover>
@@ -62,6 +67,7 @@ export default {
     courseData: String,
     courseName: String,
     studentCount: Number,
+    courseId: Number,
   },
 };
 </script>

@@ -16,10 +16,14 @@ namespace dj_endpoint.Controllers.HomeAPIs
             this._lobby = new LobbyBusiness();
         }
         [HttpGet("lobbyhomedata")]
-
         public IActionResult getLobbyData()
         {
             return Ok(_lobby.LobbyContent());
+        }
+        [HttpGet("lobbycoursedetail")]
+        public IActionResult getCourseDetail(int? courseId,int? userId)
+        {
+            return Ok(_lobby.CourseDetailContent(courseId, userId));
         }
     }
 }

@@ -58,6 +58,34 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "course_profit",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseProfitName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseProfitCreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_course_profit", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "course_require",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseRequireName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseRequireCreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_course_require", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "course_status",
                 columns: table => new
                 {
@@ -205,9 +233,11 @@ namespace dj_actionlayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CourseCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourseName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseSubTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourseImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     CourseLevelId = table.Column<int>(type: "int", nullable: true),
                     LessonCount = table.Column<int>(type: "int", nullable: false),
+                    ChapterCount = table.Column<int>(type: "int", nullable: false),
                     TimeLessonTotal = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegisterCount = table.Column<int>(type: "int", nullable: false),
                     DoneCount = table.Column<int>(type: "int", nullable: false),
@@ -238,7 +268,7 @@ namespace dj_actionlayer.Migrations
                     LessonDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     YoutubeUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LessonTypeId = table.Column<int>(type: "int", nullable: true),
                     LessonCheckPointId = table.Column<int>(type: "int", nullable: true),
                     VideoTime = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -306,6 +336,60 @@ namespace dj_actionlayer.Migrations
                         name: "FK_course_chapter_course_CourseId",
                         column: x => x.CourseId,
                         principalTable: "course",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "course_course_profit",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    CourseProfitId = table.Column<int>(type: "int", nullable: false),
+                    SortNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_course_course_profit", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_course_course_profit_course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "course",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_course_course_profit_course_profit_CourseProfitId",
+                        column: x => x.CourseProfitId,
+                        principalTable: "course_profit",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "course_course_require",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    CourseRequireId = table.Column<int>(type: "int", nullable: false),
+                    SortNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_course_course_require", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_course_course_require_course_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "course",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_course_course_require_course_require_CourseRequireId",
+                        column: x => x.CourseRequireId,
+                        principalTable: "course_require",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -388,7 +472,6 @@ namespace dj_actionlayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ChapterId = table.Column<int>(type: "int", nullable: false),
                     CourseChapterId = table.Column<int>(type: "int", nullable: false),
                     LessonId = table.Column<int>(type: "int", nullable: false),
                     SortNumber = table.Column<int>(type: "int", nullable: false),
@@ -754,6 +837,26 @@ namespace dj_actionlayer.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_course_course_profit_CourseId",
+                table: "course_course_profit",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_course_course_profit_CourseProfitId",
+                table: "course_course_profit",
+                column: "CourseProfitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_course_course_require_CourseId",
+                table: "course_course_require",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_course_course_require_CourseRequireId",
+                table: "course_course_require",
+                column: "CourseRequireId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_course_course_type_CourseId",
                 table: "course_course_type",
                 column: "CourseId");
@@ -900,6 +1003,12 @@ namespace dj_actionlayer.Migrations
                 name: "chapter_lesson");
 
             migrationBuilder.DropTable(
+                name: "course_course_profit");
+
+            migrationBuilder.DropTable(
+                name: "course_course_require");
+
+            migrationBuilder.DropTable(
                 name: "course_course_type");
 
             migrationBuilder.DropTable(
@@ -922,6 +1031,12 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_chapter");
+
+            migrationBuilder.DropTable(
+                name: "course_profit");
+
+            migrationBuilder.DropTable(
+                name: "course_require");
 
             migrationBuilder.DropTable(
                 name: "course_type");

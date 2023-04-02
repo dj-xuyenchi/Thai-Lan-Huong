@@ -21,6 +21,10 @@ namespace dj_actionlayer.DAO
 		public DbSet<RefreshToken> refresh_token { get; set; }
 
 		// Course Entities
+		public DbSet<CourseProfit> course_profit { get; set; }
+		public DbSet<CourseCourseProfit> course_course_profit { get; set; }
+		public DbSet<CourseCourseRequire> course_course_require { get; set; }
+		public DbSet<CourseRequire> course_require { get; set; }
 		public DbSet<ChapterLesson> chapter_lesson { get; set; }
 		public DbSet<CourseChapter> course_chapter { get; set; }	
 		public DbSet<Course> course { get; set; }
@@ -46,6 +50,7 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserRole> user_role { get; set; }
 		public DbSet<UserStatus> user_status { get; set; }
 		// Business Entities
+		public DbSet<UserLessonCheckpoint> user_lesson_checkpoint { get; set; }
 		public DbSet<CommentLesson> comment_lesson { get; set; }
 		public DbSet<CommentPost> comment_post { get; set; }
 		public DbSet<UserCourse> user_course { get; set; }

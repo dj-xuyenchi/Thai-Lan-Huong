@@ -8,7 +8,7 @@ namespace dj_webdesigncore.Entities.CourseEntity
 {
     public class ChapterLesson : BaseEntity
     {
-        public int ChapterId { get; set; }
+        public int CourseChapterId { get; set; }
         public CourseChapter CourseChapter { get; set; }
         public int LessonId { get; set; }
         public Lesson Lesson { get; set; } 

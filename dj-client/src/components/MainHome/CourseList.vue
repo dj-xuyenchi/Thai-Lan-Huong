@@ -52,6 +52,7 @@
         :courseData="item.courseImageData"
         :studentCount="item.studentCount"
         :courseName="item.courseName"
+        :courseId="item.courseId"
       />
     </div>
   </div>

@@ -10,5 +10,7 @@ namespace dj_webdesigncore.Enums.ApiEnums
     {
         SECCESSFULLY =1,
         FAILED =2,
+        PARAMNULL=3,
+        NOTFOUND=4
     }
 }
