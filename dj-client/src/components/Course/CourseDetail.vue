@@ -114,9 +114,11 @@ export default {
     ...mapGetters(["getUserLogIn"]),
   },
   mounted() {
-    //const userId = this.getUserLogIn();
-    //  console.log(userId);
-    this.getCourseDetail(this.$route.params.id, 1);
+    if (this.getUserLogIn.id == -1) {
+      this.getCourseDetail(this.$route.params.id, -1);
+    } else {
+      this.getCourseDetail(this.$route.params.id, this.getUserLogIn.id);
+    }
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),

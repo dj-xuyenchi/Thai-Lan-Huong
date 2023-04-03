@@ -14,8 +14,8 @@ using AppContext = dj_actionlayer.DAO.AppContext;
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230402114037_updateuserlesson")]
-    partial class updateuserlesson
+    [Migration("20230403182024_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,6 +183,31 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_lesson_checkpoint");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLessonNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("NoteTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SortNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserLessonCheckpointId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserLessonCheckpointId");
+
+                    b.ToTable("user_lesson_note");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLikeCommentLesson", b =>
@@ -604,9 +629,6 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("LessonCheckPointId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LessonDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -625,37 +647,11 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("YoutubeUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("LessonCheckPointId");
 
                     b.HasIndex("LessonTypeId");
 
                     b.ToTable("lesson");
-                });
-
-            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.LessonCheckPoint", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("LessonCheckPointName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SortNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("lesson_check_point");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.LessonType", b =>
@@ -677,6 +673,132 @@ namespace dj_actionlayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("lesson_type");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ExpecOutput")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Explain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Input")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Problem")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProblemDetail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Suggest")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("practice_lesson");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.QuestionLesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AnswerA")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerB")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AnswerD")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("question_lesson");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.TestCase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ExpecOutput")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Input")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PracticeLessonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PracticeLessonId");
+
+                    b.ToTable("test_case");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.VideoLesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LessonLinkUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("video_lesson");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.PostEntity.Post", b =>
@@ -945,6 +1067,9 @@ namespace dj_actionlayer.Migrations
                     b.Property<byte[]>("UserAvatarData")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<byte[]>("UserAvatarData40x40")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("UserEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -1143,6 +1268,17 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLessonNote", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.UserLessonCheckpoint", "UserLessonCheckpoint")
+                        .WithMany()
+                        .HasForeignKey("UserLessonCheckpointId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserLessonCheckpoint");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLikeCommentLesson", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", "CommentLesson")
@@ -1297,17 +1433,44 @@ namespace dj_actionlayer.Migrations
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.Lesson", b =>
                 {
-                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.LessonCheckPoint", "LessonCheckPoint")
-                        .WithMany()
-                        .HasForeignKey("LessonCheckPointId");
-
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.LessonType", "LessonType")
                         .WithMany()
                         .HasForeignKey("LessonTypeId");
 
-                    b.Navigation("LessonCheckPoint");
-
                     b.Navigation("LessonType");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.QuestionLesson", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.TestCase", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", "PracticeLesson")
+                        .WithMany()
+                        .HasForeignKey("PracticeLessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PracticeLesson");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.VideoLesson", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.PostEntity.Post", b =>

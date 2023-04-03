@@ -128,20 +128,6 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "lesson_check_point",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LessonCheckPointName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SortNumber = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_lesson_check_point", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "lesson_type",
                 columns: table => new
                 {
@@ -167,6 +153,24 @@ namespace dj_actionlayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_post_status", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "practice_lesson",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProblemDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Input = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpecOutput = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Explain = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Suggest = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_practice_lesson", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -266,26 +270,40 @@ namespace dj_actionlayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LessonName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LessonDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    YoutubeUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LessonTypeId = table.Column<int>(type: "int", nullable: true),
-                    LessonCheckPointId = table.Column<int>(type: "int", nullable: true),
                     VideoTime = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_lesson", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_lesson_lesson_check_point_LessonCheckPointId",
-                        column: x => x.LessonCheckPointId,
-                        principalTable: "lesson_check_point",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_lesson_lesson_type_LessonTypeId",
                         column: x => x.LessonTypeId,
                         principalTable: "lesson_type",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "test_case",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PracticeLessonId = table.Column<int>(type: "int", nullable: false),
+                    Input = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpecOutput = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_test_case", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_test_case_practice_lesson_PracticeLessonId",
+                        column: x => x.PracticeLessonId,
+                        principalTable: "practice_lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -436,6 +454,51 @@ namespace dj_actionlayer.Migrations
                         column: x => x.CourseId,
                         principalTable: "course",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "question_lesson",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    Question = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnswerA = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnswerB = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnswerC = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnswerD = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_question_lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_question_lesson_lesson_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "video_lesson",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    LessonLinkUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_video_lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_video_lesson_lesson_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -668,6 +731,34 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "user_lesson_checkpoint",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    OpenLessonDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsDone = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_lesson_checkpoint", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_lesson_checkpoint_lesson_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_user_lesson_checkpoint_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user_like_comment_lesson",
                 columns: table => new
                 {
@@ -882,11 +973,6 @@ namespace dj_actionlayer.Migrations
                 column: "province_code");
 
             migrationBuilder.CreateIndex(
-                name: "IX_lesson_LessonCheckPointId",
-                table: "lesson",
-                column: "LessonCheckPointId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_lesson_LessonTypeId",
                 table: "lesson",
                 column: "LessonTypeId");
@@ -912,9 +998,19 @@ namespace dj_actionlayer.Migrations
                 column: "administrative_unit_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_question_lesson_LessonId",
+                table: "question_lesson",
+                column: "LessonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_refresh_token_UserId",
                 table: "refresh_token",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_test_case_PracticeLessonId",
+                table: "test_case",
+                column: "PracticeLessonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_user_DistrictCode",
@@ -957,6 +1053,16 @@ namespace dj_actionlayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_lesson_checkpoint_LessonId",
+                table: "user_lesson_checkpoint",
+                column: "LessonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_lesson_checkpoint_UserId",
+                table: "user_lesson_checkpoint",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_user_like_comment_lesson_CommentLessonId",
                 table: "user_like_comment_lesson",
                 column: "CommentLessonId");
@@ -987,6 +1093,11 @@ namespace dj_actionlayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_video_lesson_LessonId",
+                table: "video_lesson",
+                column: "LessonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_wards_administrative_unit_id",
                 table: "wards",
                 column: "administrative_unit_id");
@@ -1015,10 +1126,19 @@ namespace dj_actionlayer.Migrations
                 name: "course_image");
 
             migrationBuilder.DropTable(
+                name: "question_lesson");
+
+            migrationBuilder.DropTable(
                 name: "refresh_token");
 
             migrationBuilder.DropTable(
+                name: "test_case");
+
+            migrationBuilder.DropTable(
                 name: "user_course");
+
+            migrationBuilder.DropTable(
+                name: "user_lesson_checkpoint");
 
             migrationBuilder.DropTable(
                 name: "user_like_comment_lesson");
@@ -1028,6 +1148,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_like_post");
+
+            migrationBuilder.DropTable(
+                name: "video_lesson");
 
             migrationBuilder.DropTable(
                 name: "course_chapter");
@@ -1040,6 +1163,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_type");
+
+            migrationBuilder.DropTable(
+                name: "practice_lesson");
 
             migrationBuilder.DropTable(
                 name: "comment_lesson");
@@ -1061,9 +1187,6 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_status");
-
-            migrationBuilder.DropTable(
-                name: "lesson_check_point");
 
             migrationBuilder.DropTable(
                 name: "lesson_type");

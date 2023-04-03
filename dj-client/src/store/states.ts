@@ -1,10 +1,14 @@
 export default {
+  AI: {
+    name: "Thái Lan Hương",
+    avartar: "",
+  },
   userCheckIn: {
     AccessToken: "",
     RefreshToken: "",
   },
   userLogIn: {
-    id: null,
+    id: 1,
     UserName: "",
     UserRole: "",
   },

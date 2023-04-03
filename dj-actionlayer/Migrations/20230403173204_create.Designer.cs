@@ -3,18 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
-using AppContext = dj_actionlayer.DAO.AppContext;
 
+using AppContext = dj_actionlayer.DAO.AppContext;
 #nullable disable
 
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20230403173204_create")]
+    partial class create
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,31 +182,6 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_lesson_checkpoint");
-                });
-
-            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLessonNote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("NoteTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SortNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserLessonCheckpointId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserLessonCheckpointId");
-
-                    b.ToTable("user_lesson_note");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLikeCommentLesson", b =>
@@ -1064,9 +1041,6 @@ namespace dj_actionlayer.Migrations
                     b.Property<byte[]>("UserAvatarData")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<byte[]>("UserAvatarData40x40")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("UserEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -1263,17 +1237,6 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("Lesson");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLessonNote", b =>
-                {
-                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.UserLessonCheckpoint", "UserLessonCheckpoint")
-                        .WithMany()
-                        .HasForeignKey("UserLessonCheckpointId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserLessonCheckpoint");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserLikeCommentLesson", b =>

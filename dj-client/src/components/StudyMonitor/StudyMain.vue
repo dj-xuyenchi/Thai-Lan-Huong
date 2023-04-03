@@ -33,6 +33,9 @@ import StudyFooter from "./StudyFooter.vue";
 import LessonComment from "./LessonComment.vue";
 import LessonList from "./LessonList.vue";
 import VideoLesson from "./VideoLesson.vue";
+import HomeApi from "../../apis/APIHome/HomeAPI.ts";
+import { mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "StudyMain",
   components: {
@@ -41,6 +44,32 @@ export default {
     LessonComment,
     LessonList,
     VideoLesson,
+  },
+  mounted() {
+    if (this.getUserLogIn.id == -1) {
+      this.$router.push({ path: "/login" });
+    } else {
+      //  this.getCourseDetail(this.$route.params.id, this.getUserLogIn.id);
+    }
+  },
+  computed: {
+    ...mapGetters(["getUserLogIn"]),
+  },
+  methods: {
+    ...mapMutations(["setIsLoadedData"]),
+    // async getCourseDetail(courseId, userId) {
+    //   this.setIsLoadedData(true);
+    //   const data = await HomeApi.getCourseDetail(courseId, userId);
+    //   this.courseTitle = data.data.courseTitle;
+    //   this.courseSubTitle = data.data.courseSubTitle;
+    //   this.courseProfit = data.data.courseProfit;
+    //   this.courseRequire = data.data.courseRequire;
+    //   this.timeTotal = data.data.timeTotal;
+    //   this.chapterCount = data.data.chapterCount;
+    //   this.lessonCount = data.data.lessonCount;
+    //   this.chapterDetail = data.data.chapterDetail;
+    //   this.setIsLoadedData(false);
+    // },
   },
 };
 </script>

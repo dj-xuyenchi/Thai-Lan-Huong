@@ -90,7 +90,7 @@ namespace dj_actionlayer.Business.Lobby
                         }
                         Lesson lesson = _context.lesson.Find(item1.LessonId);
                         lessonDetailDTO.LessonName = lesson.LessonName;
-                        lessonDetailDTO.LessonVideoPath = lesson.YoutubeUrl;
+                        lessonDetailDTO.LessonId = lesson.Id;
                         lessonDetailDTO.LessonTime = lesson.VideoTime;
                         switch (lesson.LessonTypeId)
                         {

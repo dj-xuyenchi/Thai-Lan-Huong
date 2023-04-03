@@ -1,5 +1,4 @@
-﻿using dj_actionlayer.Business.Home;
-using dj_actionlayer.DAO;
+﻿using dj_actionlayer.DAO;
 using dj_webdesigncore.Entities.UserEntity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,17 +14,18 @@ namespace dj_endpoint.Controllers.HomeAPIs
     [Authorize(Policy = "ADMINANDMEMBER")]
     public class HomeAPIs : BaseApi
     {
-        private readonly HomeBusiness homeBusiness;
+   //     private readonly HomeBusiness homeBusiness;
 
         public HomeAPIs()
         {
-            homeBusiness = new HomeBusiness();
+  //          homeBusiness = new HomeBusiness();
         }
         [HttpGet("khoahoc")]
 
         public IActionResult LayDanhSachKhoaHoc()
         {
-            return Ok(homeBusiness.getALl());
+            return null;
+    //        return Ok(homeBusiness.getALl());
         }
     }
 

@@ -9,7 +9,7 @@ namespace dj_webdesigncore.DTOs.Lobby
 {
     public class LessonDetailDTO
     {
-        public string LessonVideoPath { get; set; }
+        public int LessonId { get; set; }
         public string LessonName { get; set; }
         public string LessonTime { get; set; }
         public bool IsDone { get; set; }

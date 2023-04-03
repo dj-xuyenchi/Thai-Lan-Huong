@@ -21,9 +21,10 @@
               ? `mdi-file-outline`
               : `mdi-pencil`
           "
-          :disabled="!item.IsDone"
+          :disabled="!item.isDone"
           :to="item.lesson"
           style="position: relative"
+          :href="`http://localhost:8080/study/` + item.lessonId"
         >
           <span
             style="
