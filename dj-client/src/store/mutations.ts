@@ -5,10 +5,13 @@ export default {
   setUserCheckIn(state: any, tokenModel: TokenModel) {
     state.userCheckIn = tokenModel;
   },
-  setUserNameLogIn(state: any, userNameLogIn: LoginAccount) {
-    state.userNameLogIn = userNameLogIn;
+  setUserLogIn(state: any, userLogIn: LoginAccount) {
+    state.userLogIn = userLogIn;
   },
   setIsLogIn(state: any, isLogIn: boolean) {
     state.isLogIn = isLogIn;
+  },
+  setIsLoadedData(state: any, isLoadedData: boolean) {
+    state.isLoadedData = isLoadedData;
   },
 };

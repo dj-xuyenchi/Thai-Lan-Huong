@@ -93,6 +93,8 @@
 <script>
 import LessonList from "./LessonList.vue";
 import HomeApi from "../../apis/APIHome/HomeAPI.ts";
+import { mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "CourseDetail",
   components: { LessonList },
@@ -108,12 +110,19 @@ export default {
       timeTotal: "",
     };
   },
+  computed: {
+    ...mapGetters(["getUserLogIn"]),
+  },
   mounted() {
-    this.getCourseDetail(this.$route.params.id);
+    //const userId = this.getUserLogIn();
+    //  console.log(userId);
+    this.getCourseDetail(this.$route.params.id, 1);
   },
   methods: {
-    async getCourseDetail(courseId) {
-      const data = await HomeApi.getCourseDetail(courseId);
+    ...mapMutations(["setIsLoadedData"]),
+    async getCourseDetail(courseId, userId) {
+      this.setIsLoadedData(true);
+      const data = await HomeApi.getCourseDetail(courseId, userId);
       this.courseTitle = data.data.courseTitle;
       this.courseSubTitle = data.data.courseSubTitle;
       this.courseProfit = data.data.courseProfit;
@@ -122,6 +131,7 @@ export default {
       this.chapterCount = data.data.chapterCount;
       this.lessonCount = data.data.lessonCount;
       this.chapterDetail = data.data.chapterDetail;
+      this.setIsLoadedData(false);
     },
   },
 };

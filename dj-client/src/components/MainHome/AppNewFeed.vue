@@ -13,6 +13,7 @@ import CourseList from "./CourseList.vue";
 import PostList from "./PostList.vue";
 import BlogList from "./BlogList.vue";
 import HomeAPI from "../../apis/APIHome/HomeAPI";
+import { mapMutations } from "vuex";
 export default {
   name: "AppNewFeed",
   components: { HeaderSlider, CourseList, PostList, BlogList },
@@ -21,7 +22,9 @@ export default {
       data1: "123",
     };
   },
-  methods: {},
+  methods: {
+    ...mapMutations(["setIsLoadedData"]),
+  },
 };
 </script>
 

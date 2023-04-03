@@ -4,9 +4,10 @@ export default {
     RefreshToken: "",
   },
   userLogIn: {
-    id: "string",
-    UserName: "string",
-    UserRole: "string",
+    id: null,
+    UserName: "",
+    UserRole: "",
   },
   isLogIn: false,
+  isLoadedData: false,
 };

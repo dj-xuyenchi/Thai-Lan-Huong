@@ -11,9 +11,9 @@ class HomeAPI {
         });
     });
   }
-  getCourseDetail(courseId: number): Promise<any> {
+  getCourseDetail(courseId: number, userId: number): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get(`/lobby/lobbycoursedetail?courseId=${courseId}`)
+      HTTP.get(`/lobby/lobbycoursedetail?courseId=${courseId}&userId=${userId}`)
         .then((response) => {
           resolve(response.data);
         })

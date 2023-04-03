@@ -21,7 +21,7 @@
               ? `mdi-file-outline`
               : `mdi-pencil`
           "
-          disabled="true"
+          :disabled="!item.IsDone"
           :to="item.lesson"
           style="position: relative"
         >

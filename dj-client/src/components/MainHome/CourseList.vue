@@ -61,6 +61,7 @@
 <script>
 import CourseItem from "./CourseItem.vue";
 import HomeApi from "../../apis/APIHome/HomeAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "CourseList",
   components: {
@@ -77,11 +78,14 @@ export default {
     this.getLoobyData();
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     async getLoobyData() {
+      this.setIsLoadedData(true);
       const data = await HomeApi.getLobbyData();
       this.courseList = data.data.listActiveCourse.courseDTOs;
       this.studentStudyed = data.data.listActiveCourse.studyedStudent;
       this.studentStudying = data.data.listActiveCourse.studyingStudent;
+      this.setIsLoadedData(false);
     },
   },
 };
