@@ -1,0 +1,26 @@
+Hello!
+Thanks for buying this teamplate.
+
+It's really easy to customize:
+1. Place your logo in composition "Logo 01"
+2. Place your foto or video in composition "Foto/Video_01" - "Foto/Video_08"
+3. Edit text in composition "Text 01" - "Text 08"
+4. Edit colors in composition "Color Comp"
+4. After that - render composition "Final Comp"
+
+
+
+
+The placeholder photo used in this template is licensed under Creative Commons Attribution 3.0 and the original version can be found:https://unsplash.com/
+
+Great soundtrack you can find: https://motionarray.com/stock-music/inspiring-hip-hop-50761
+Fonts I've used in the project: https://www.fontsquirrel.com/fonts/oswald
+
+
+If you have any questions - please, contact me via personal page:
+https://vk.com/borisbaranov01 or JR44Boris@gmail.com
+
+Thats all
+Hope you like it and again - thanks for buying.
+
+Boris
