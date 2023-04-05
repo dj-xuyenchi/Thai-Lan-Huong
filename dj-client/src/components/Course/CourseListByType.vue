@@ -1,5 +1,5 @@
 <template>
-  <div class="post-container">
+  <div class="course-list-by-type-container">
     <span
       style="
         color: #242424;
@@ -21,9 +21,10 @@
 </template>
 
 <script>
+import CourseItemMonitor from "./CourseItemMonitor";
 export default {
-  name: "PostMonitor",
-  components: {},
+  name: "CourseListByType",
+  components: { CourseItemMonitor },
   props: {
     title: String,
   },

@@ -119,6 +119,9 @@ export default {
   position: absolute;
   right: 2vw;
 }
+.v-list-item__overlay:focus-visible {
+  opacity: 0;
+}
 .login:hover {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.5);

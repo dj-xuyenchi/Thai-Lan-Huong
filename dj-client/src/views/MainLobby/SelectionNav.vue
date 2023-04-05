@@ -7,7 +7,7 @@
         :class="active ? `active` : ``"
       />
     </router-link>
-    <router-link to="/home/course" style="text-decoration: none">
+    <router-link to="/home/courselist" style="text-decoration: none">
       <BtnNav icon="fa-solid fa-book" title="Khóa Học" />
     </router-link>
     <router-link to="post" style="text-decoration: none">

@@ -4,6 +4,7 @@ import LogIn from "../views/Door/LogIn.vue";
 import AppNewFeedVue from "@/components/MainHome/AppNewFeed.vue";
 import CourseDetail from "@/components/Course/CourseDetail.vue";
 import StudyMain from "@/components/StudyMonitor/StudyMain.vue";
+import CourseMonitor from "@/components/Course/CourseMonitor.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -22,6 +23,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "course/:id",
         component: CourseDetail,
+      },
+      {
+        path: "courselist",
+        component: CourseMonitor,
       },
     ],
   },

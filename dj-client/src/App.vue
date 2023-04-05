@@ -1,13 +1,12 @@
 <template>
   <v-app>
+    <img
+      :src="require(`./assets/loadingkapoo.gif`)"
+      alt=""
+      style="z-index: 5; position: fixed; top: 30%; left: 40%; height: 200px"
+      v-if="getIsLoadedData"
+    />
     <v-list-item :disabled="getIsLoadedData" style="padding: unset">
-      <v-progress-circular
-        :size="50"
-        color="primary"
-        indeterminate
-        v-if="getIsLoadedData"
-        style="z-index: 5; position: fixed; top: 40%; left: 50%"
-      ></v-progress-circular>
       <v-main>
         <router-view />
       </v-main>
