@@ -20,6 +20,8 @@ namespace dj_webdesigncore.Entities.CourseEntity
 		public int RegisterCount { get; set; }
 		public int DoneCount { get; set; }
 		public int? CourseStatusId { get; set; }
-		public CourseStatus? CourseStatus { get; set; }                   
+		public CourseStatus? CourseStatus { get; set; }         
+		public int CourseTypeId { get; set; }
+		public CourseType CourseType { get; set; }
 	}
 }

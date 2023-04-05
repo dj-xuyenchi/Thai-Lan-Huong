@@ -32,7 +32,6 @@ namespace dj_actionlayer.DAO
 		public DbSet<ChapterLesson> chapter_lesson { get; set; }
 		public DbSet<CourseChapter> course_chapter { get; set; }	
 		public DbSet<Course> course { get; set; }
-		public DbSet<CourseCourseType> course_course_type { get; set; }
 		public DbSet<CourseImage> course_image { get; set; }
 		public DbSet<CourseLevel> course_level { get; set; }
 		public DbSet<CourseStatus> course_status { get; set; }

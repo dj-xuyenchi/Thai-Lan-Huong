@@ -20,6 +20,11 @@ namespace dj_endpoint.Controllers.HomeAPIs
         {
             return Ok(_lobby.LobbyContent());
         }
+        [HttpGet("lobbycourselist")]
+        public IActionResult getCourseList()
+        {
+            return Ok(_lobby.CourseListContent());
+        }
         [HttpGet("lobbycoursedetail")]
         public IActionResult getCourseDetail(int? courseId,int? userId)
         {

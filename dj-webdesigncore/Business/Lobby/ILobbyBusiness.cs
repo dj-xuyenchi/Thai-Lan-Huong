@@ -11,6 +11,7 @@ namespace dj_webdesigncore.Business.Lobby
     public interface ILobbyBusiness
     {
         ResponData<LobbyDTO> LobbyContent();
-        ResponData<CourseDetailDTO> CourseDetailContent(int? courseId,int? userId);
+        ResponData<CourseDetailDTO> CourseDetailContent(int? courseId, int? userId);
+        ResponData<List<CourseListDTO>> CourseListContent();
     }
 }

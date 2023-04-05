@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
 using AppContext = dj_actionlayer.DAO.AppContext;
-
 #nullable disable
 
 namespace dj_actionlayer.Migrations
@@ -355,6 +354,9 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CourseTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("DoneCount")
                         .HasColumnType("int");
 
@@ -373,6 +375,8 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("CourseLevelId");
 
                     b.HasIndex("CourseStatusId");
+
+                    b.HasIndex("CourseTypeId");
 
                     b.ToTable("course");
                 });
@@ -462,29 +466,6 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("CourseRequireId");
 
                     b.ToTable("course_course_require");
-                });
-
-            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CourseTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("CourseTypeId");
-
-                    b.ToTable("course_course_type");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseImage", b =>
@@ -1350,9 +1331,15 @@ namespace dj_actionlayer.Migrations
                         .WithMany()
                         .HasForeignKey("CourseStatusId");
 
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseType", "CourseType")
+                        .WithMany()
+                        .HasForeignKey("CourseTypeId");
+
                     b.Navigation("CourseLevel");
 
                     b.Navigation("CourseStatus");
+
+                    b.Navigation("CourseType");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseChapter", b =>
@@ -1402,21 +1389,6 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("CourseRequire");
-                });
-
-            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseCourseType", b =>
-                {
-                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId");
-
-                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseType", "CourseType")
-                        .WithMany()
-                        .HasForeignKey("CourseTypeId");
-
-                    b.Navigation("Course");
-
-                    b.Navigation("CourseType");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.CourseImage", b =>

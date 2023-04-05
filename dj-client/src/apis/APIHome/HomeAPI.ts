@@ -22,5 +22,16 @@ class HomeAPI {
         });
     });
   }
+  getCourseList(courseId: number, userId: number): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/lobby/lobbycourselist`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 export default new HomeAPI();

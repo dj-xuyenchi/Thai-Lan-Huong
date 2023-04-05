@@ -127,6 +127,50 @@ namespace dj_actionlayer.Business.Lobby
             }
         }
 
+        public ResponData<List<CourseListDTO>> CourseListContent()
+        {
+            ResponData<List<CourseListDTO>> result = new ResponData<List<CourseListDTO>>();
+            try
+            {
+                List<CourseListDTO> courseListDTOs= new List<CourseListDTO>();
+                var listCourseType = _context.course_type.ToList();
+                foreach(var courseType in listCourseType )
+                {
+                    CourseListDTO courseListDTO= new CourseListDTO();
+                    List<CourseDTO> courseDTOs = new List<CourseDTO>();
+                  
+                    var courseListOfType = _context.course.Where(x=>x.CourseTypeId==courseType.Id).ToList();
+                    courseListDTO.CourseType = courseType.CourseTypeName;
+                    if (courseListOfType.Count == 0)
+                    {
+                        courseListDTO.IsEmpty = true;
+                        continue;
+                    }
+                    foreach(var course in courseListOfType )
+                    {
+                        CourseDTO courseDTO = new CourseDTO();
+                        courseDTO.CourseId = course.Id;
+                        courseDTO.CourseImageData = course.CourseImageData;
+                        courseDTO.CourseName = course.CourseName;
+                        courseDTO.StudentCount = _context.user_course.Where(x => x.CourseId == course.Id).ToList().Count;
+                        courseDTOs.Add(courseDTO);
+                    }
+                    courseListDTO.CourseListByType = courseDTOs;
+                    courseListDTOs.Add(courseListDTO);
+                }
+                result.Data = courseListDTOs;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+        }
+
         public ResponData<LobbyDTO> LobbyContent()
         {
             ResponData<LobbyDTO> result = new ResponData<LobbyDTO>();
