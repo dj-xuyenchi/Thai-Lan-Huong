@@ -20,15 +20,19 @@
       ></v-badge>
     </div>
 
-    <CourseListByType title="Khóa học Back End" />
-    <CourseListByType title="Khóa học Front End" />
-    <CourseListByType title="Khóa học CSDL" />
+    <CourseListByType
+      v-for="(item, index) in listCourse"
+      :key="index"
+      :title="item.courseType"
+      :listCourse="item.courseListByType"
+    />
   </div>
 </template>
 
 <script>
 import CourseListByType from "./CourseListByType";
 import HomeApi from "../../apis/APIHome/HomeAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "CourseMonitor",
   components: { CourseListByType },
@@ -41,9 +45,11 @@ export default {
     this.getCourseList();
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     async getCourseList() {
       this.setIsLoadedData(true);
       const data = await HomeApi.getCourseList();
+      this.listCourse = data.data;
       this.setIsLoadedData(false);
     },
   },

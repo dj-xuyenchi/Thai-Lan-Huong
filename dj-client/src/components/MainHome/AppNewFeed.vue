@@ -18,9 +18,7 @@ export default {
   name: "AppNewFeed",
   components: { HeaderSlider, CourseList, PostList, BlogList },
   data: () => {
-    return {
-      data1: "123",
-    };
+    return {};
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),

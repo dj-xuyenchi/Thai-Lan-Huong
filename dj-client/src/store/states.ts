@@ -3,6 +3,7 @@ export default {
     name: "Thái Lan Hương",
     avartar: "",
   },
+  activeMenu: 1,
   userCheckIn: {
     AccessToken: "",
     RefreshToken: "",

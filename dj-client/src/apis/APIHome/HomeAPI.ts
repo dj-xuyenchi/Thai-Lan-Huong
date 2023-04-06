@@ -22,7 +22,7 @@ class HomeAPI {
         });
     });
   }
-  getCourseList(courseId: number, userId: number): Promise<any> {
+  getCourseList(): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
       HTTP.get(`/lobby/lobbycourselist`)
         .then((response) => {

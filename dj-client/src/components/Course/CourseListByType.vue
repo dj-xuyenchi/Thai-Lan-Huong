@@ -9,14 +9,18 @@
         font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
           'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
       "
-      >{{ title }}
+      >Khóa học {{ title }}
     </span>
-    <CourseItemMonitor
-      :courseData="require(`../../../src/assets/course/bec#.jpeg`)"
-      studentCount="10"
-      courseName="Java Spring"
-      courseId="item.courseId"
-    />
+    <div class="course-list">
+      <CourseItemMonitor
+        v-for="(item, index) in listCourse"
+        :courseData="item.courseImageData"
+        :key="index"
+        :studentCount="item.studentCount"
+        :courseName="item.courseName"
+        :courseId="item.courseId"
+      />
+    </div>
   </div>
 </template>
 
@@ -27,6 +31,7 @@ export default {
   components: { CourseItemMonitor },
   props: {
     title: String,
+    listCourse: [],
   },
 };
 </script>
@@ -35,5 +40,10 @@ export default {
 .course-list-by-type-container {
   margin-left: 3%;
   width: 92%;
+}
+.course-list-by-type-container .course-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 </style>
