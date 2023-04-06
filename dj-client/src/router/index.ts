@@ -6,11 +6,12 @@ import CourseDetail from "@/components/Course/CourseDetail.vue";
 import StudyMain from "@/components/StudyMonitor/StudyMain.vue";
 import CourseMonitor from "@/components/Course/CourseMonitor.vue";
 import PostMonitor from "@/components/Post/PostMonitor.vue";
+import ForwardToHome from "../views/ForwardToHome.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
     name: "",
-    component: LobbyMain,
+    component: ForwardToHome,
   },
   {
     path: "/home",
