@@ -1,37 +1,49 @@
 <template>
-  <div class="content-header-container">
-    <h1
-      style="
-        font-size: 32px;
-        line-height: 46px;
-        color: #222;
-        font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 24px;
-        font-family: 'Roboto';
-      "
-    >
-      Cách tán crush bằng HTML CSS.
+  <div class="content-container">
+    <h1>
+      Cách tán crush bằng HTML CSS Cách tán crush bằng HTML CSS Cách tán crush
+      bằng HTML CSS.
     </h1>
     <v-list-item
-      lines="two"
+      lines="one"
       prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
       title="Jane Smith"
-      style="padding: unset; position: relative"
-      ><div style="position: absolute; right: 10%; top: 30%">
-        ss
-      </div></v-list-item
+      style="padding: unset; position: relative; margin-bottom: 20px"
     >
+      <template v-slot:append>
+        <v-btn
+          variant="text"
+          :class="fav ? 'text-red' : ''"
+          icon="mdi-heart"
+          @click="fav = !fav"
+        ></v-btn>
+        <span>Bạn và 2.123 người khác</span>
+      </template>
+    </v-list-item>
   </div>
 </template>
 
 <script>
 export default {
   name: "ContentHeader",
+  data: () => ({
+    fav: true,
+    menu: false,
+    message: false,
+    hints: true,
+  }),
 };
 </script>
 
 <style lang="css" scoped>
-.content-header-container {
+.content-container {
+}
+.content-container h1 {
+  font-size: 32px;
+  line-height: 150%;
+  font-family: serif;
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-family: Arial;
 }
 </style>

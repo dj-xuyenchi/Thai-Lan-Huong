@@ -9,7 +9,7 @@ export default {
     return state.isLogIn;
   },
   getIsLoadedData: (state: any) => {
-    return state.isLoadedData;
+    return state;
   },
   getActiveMenu: (state: any) => {
     return state.activeMenu;
