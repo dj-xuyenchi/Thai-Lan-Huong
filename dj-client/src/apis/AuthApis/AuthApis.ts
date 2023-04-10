@@ -1,9 +1,9 @@
 import TokenModel from "@/entities/AuthEntities/TokenModel";
 import { HTTP } from "../HTTPs";
 class AuthApis {
-  getLogin(userName: string, password: string): Promise<any> {
+  getLogin(requestLogin: object): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get(`/login/getlogin?userName=${userName}&password=${password}`)
+      HTTP.post(`/login/getlogin`, requestLogin)
         .then((response) => {
           resolve(response.data);
         })

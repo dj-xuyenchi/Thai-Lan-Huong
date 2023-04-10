@@ -37,7 +37,10 @@
         :rules="[rules.minPass]"
       ></v-text-field>
 
-      <v-checkbox label="Lưu thông tin đăng nhập."></v-checkbox>
+      <v-checkbox
+        v-model="isSave"
+        label="Lưu thông tin đăng nhập."
+      ></v-checkbox>
       <v-card
         class="mb-6"
         color="surface-variant"
@@ -102,7 +105,6 @@
           Đăng ký thành viên <v-icon icon="mdi-chevron-right"></v-icon>
           <span>{{ getUserNameLogIn }}</span>
         </a>
-        <button type="" @click="updateUserName">clcik</button>
       </v-card-text>
     </v-card>
   </div>
@@ -117,6 +119,7 @@ export default {
     visible: false,
     userName: "",
     password: "",
+    isSave: false,
     dialog: false,
     isUnValidUser: false,
     rules: {
@@ -125,11 +128,8 @@ export default {
     },
     loginStatus: "",
   }),
-  computed: {
-    ...mapGetters(["getUserNameLogIn"]),
-  },
+  computed: {},
   methods: {
-    ...mapMutations(["setUserNameLogIn"]),
     ...mapActions(["updateUserName"]),
     async checkLogin() {
       if (this.userName.trim().length < 8 || this.password.trim().length < 8) {
@@ -139,7 +139,11 @@ export default {
       }
       this.dialog = true;
       this.isUnValidUser = false;
-      const login = await AuthApis.getLogin(this.userName, this.password);
+      const requestLogin = {
+        UserName: this.userName,
+        Password: this.password,
+      };
+      const login = await AuthApis.getLogin(requestLogin);
       if (login.success !== 0) {
         this.loginStatus = "Tài khoản hoặc mật khẩu không chính xác.";
         this.dialog = false;
@@ -147,11 +151,19 @@ export default {
       }
       if (login.success === 0) {
         this.dialog = false;
-        const now = new Date();
-        now.setMonth(now.getMonth() + 3);
-        document.cookie = `token=${login.data.accessToken}; expires=${now}`;
-        document.cookie = `refreshToken=${login.data.refreshToken}; expires=${now}`;
+        // const now = new Date();
+        // now.setMonth(now.getMonth() + 3);
+        // document.cookie = `token=${login.data.accessToken}; expires=${now}`;
+        // document.cookie = `refreshToken=${login.data.refreshToken}; expires=${now}`;
         this.isUnValidUser = false;
+        if (this.isSave) {
+          localStorage.setItem("token", login.data.token.accessToken);
+          localStorage.setItem("refreshToken", login.data.token.refreshToken);
+          localStorage.setItem("name", login.data.name);
+          localStorage.setItem("avatar", login.data.avatar);
+          localStorage.setItem("id", login.data.id);
+          localStorage.setItem("nickName", login.data.nickName);
+        }
         this.$router.push({ path: "/home/lobby" });
       }
     },

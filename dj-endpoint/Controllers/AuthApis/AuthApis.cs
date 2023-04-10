@@ -15,10 +15,10 @@ namespace dj_endpoint.Controllers.AuthApis
         {
             this.authBusiness = new AuthBusiness();
         }
-        [HttpGet("getlogin")]
-        public IActionResult Login(string userName, string password)
+        [HttpPost("getlogin")]
+        public IActionResult Login(RequestLogin request)
         {
-            var result = authBusiness.Login(userName, password);
+            var result = authBusiness.Login(request);
             return Ok(result);
         }
         [HttpPost("refresh")]

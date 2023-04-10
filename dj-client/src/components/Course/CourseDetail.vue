@@ -75,7 +75,7 @@
       <div class="intro-content">
         <iframe
           width="100%"
-          height="300"
+          height="350"
           src="https://www.youtube.com/embed/6jZVsr7q-tE"
           title="YouTube video player"
           frameborder="0"
@@ -110,14 +110,13 @@ export default {
       timeTotal: "",
     };
   },
-  computed: {
-    ...mapGetters(["getUserLogIn"]),
-  },
+  computed: {},
   mounted() {
-    if (this.getUserLogIn.id == -1) {
+    const id = localStorage.getItem("id");
+    if (!id) {
       this.getCourseDetail(this.$route.params.id, -1);
     } else {
-      this.getCourseDetail(this.$route.params.id, this.getUserLogIn.id);
+      this.getCourseDetail(this.$route.params.id, id);
     }
   },
   methods: {

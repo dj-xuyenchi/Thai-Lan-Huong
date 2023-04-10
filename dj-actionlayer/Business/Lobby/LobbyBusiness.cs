@@ -64,7 +64,7 @@ namespace dj_actionlayer.Business.Lobby
                     foreach (var item1 in lessonOfChapter)
                     {
                         LessonDetailDTO lessonDetailDTO = new LessonDetailDTO();
-                        if (userId != null)
+                        if (userId != null||userId!=-1)
                         {
                             User user = _context.user.Find(userId);
                             if (user == null)

@@ -1,5 +1,5 @@
 <template>
-  <div class="user-check" v-if="!getIsLogIn">
+  <div class="user-check" v-if="showSignIn">
     <router-link to="/login" style="text-decoration: none; color: black">
       <v-btn width="100%" rounded="pill" color="#4FC3F7"> Đăng nhập </v-btn>
     </router-link>
@@ -8,9 +8,9 @@
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-list-item
-          prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
-          title="Dương Diệu Phương"
-          subtitle="Chiến thần FE"
+          :prepend-avatar="`data:image/jpeg;base64,` + user.avatar"
+          :title="user.name"
+          :subtitle="user.nickName"
           :append-icon="iconStatus.normal"
           v-bind="props"
         ></v-list-item>
@@ -27,7 +27,6 @@
             <template v-slot:prepend>
               <v-icon :icon="item.icon"></v-icon>
             </template>
-
             <v-list-item-title v-text="item.text"></v-list-item-title>
           </v-list-item>
         </v-list>
@@ -46,6 +45,12 @@ export default {
   data() {
     return {
       showSignIn: true,
+      user: {
+        avatar: "",
+        name: "",
+        id: "",
+        nickName: "",
+      },
       iconStatus: {
         normal: "mdi-chevron-right",
         click: "mdi-chevron-down",
@@ -72,43 +77,66 @@ export default {
             document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
             document.cookie =
               "refreshToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-            this.setIsLogIn(false);
+            localStorage.removeItem("token");
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("avatar");
+            localStorage.removeItem("name");
+            localStorage.removeItem("id");
+            localStorage.removeItem("nickName");
+            this.setShowLogin();
             this.$router.push({ path: "/home/lobby" });
           },
         },
       ],
     };
   },
-  computed: {
-    ...mapGetters(["getIsLogIn"]),
-  },
+  computed: {},
   mounted() {
-    const cookie = document.cookie;
-    console.log(cookie);
-    const listCookie = cookie.split(";");
-    const tokenModel = {
-      AccessToken: "",
-      RefreshToken: "",
-    };
-    for (const cookie of listCookie) {
-      if (cookie.includes("token=")) {
-        tokenModel.AccessToken = cookie.split("=")[1];
-      }
-      if (cookie.includes("refreshToken=")) {
-        tokenModel.RefreshToken = cookie.substring(14, cookie.length);
-      }
+    // const cookie = document.cookie;
+    // console.log(cookie);
+    // const listCookie = cookie.split(";");
+    // const tokenModel = {
+    //   AccessToken: "",
+    //   RefreshToken: "",
+    // };
+    // for (const cookie of listCookie) {
+    //   if (cookie.includes("token=")) {
+    //     tokenModel.AccessToken = cookie.split("=")[1];
+    //   }
+    //   if (cookie.includes("refreshToken=")) {
+    //     tokenModel.RefreshToken = cookie.substring(14, cookie.length);
+    //   }
+    // }
+    const token = localStorage.getItem("token");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const avatar = localStorage.getItem("avatar");
+    const id = localStorage.getItem("id");
+    const name = localStorage.getItem("name");
+    const nickName = localStorage.getItem("nickName");
+    if (token || refreshToken) {
+      this.showSignIn = false;
+      this.user = {
+        avatar: avatar,
+        name: name,
+        id: id,
+        nickName: nickName,
+      };
+      // const tokenModel = {
+      //   AccessToken: token,
+      //   RefreshToken: refreshToken,
+      // };
+      // this.isLogin(tokenModel);
+      console.log("render lai");
     }
-    this.isLogin(tokenModel);
   },
   methods: {
     ...mapMutations(["setIsLogIn"]),
     async isLogin(tokenModel) {
       const loginStatus = await AuthApis.refreshToken(tokenModel);
       console.log(loginStatus);
-      if (loginStatus.success == 0) {
-        console.log(123);
-        this.setIsLogIn(true);
-      }
+    },
+    setShowLogin() {
+      this.showSignIn = true;
     },
   },
 };

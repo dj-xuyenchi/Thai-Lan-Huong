@@ -16,22 +16,29 @@ namespace dj_actionlayer.Business.Auth
 {
     public class AuthBusiness : BaseBusiness
     {
-        public LoginResponse<TokenModel> Login(string userName, string pass)
+        public LoginResponse<AuthDataRespon> Login(RequestLogin request)
         {
-            var user = _context.user.SingleOrDefault(x => x.UserPass == pass && x.UserName == userName);
+            var user = _context.user.SingleOrDefault(x => x.UserPass == request.Password && x.UserName == request.UserName);
             if (user == null)
             {
-                return new LoginResponse<TokenModel>
+                return new LoginResponse<AuthDataRespon>
                 {
                     Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                     Message = "Invalid username/password"
                 };
             }
-            return new LoginResponse<TokenModel>
+            return new LoginResponse<AuthDataRespon>
             {
                 Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.SUCCESS,
                 Message = "Authenticate success",
-                Data = GenToken(user)
+                Data = new AuthDataRespon
+                {
+                    id= user.Id,
+                    avatar=user.UserAvatarData40x40,
+                    nickName = "Chiến thần Front End",
+                    name= user.UserLastName + " "+ user.UserFisrtName,
+                    Token = GenToken(user)
+                }
             };
         }
         public LoginResponse<TokenModel> RenewToken(TokenModel model)
