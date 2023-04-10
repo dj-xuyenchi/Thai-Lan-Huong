@@ -1,8 +1,9 @@
 <template>
   <v-app>
-    <!-- <div
+    <div
+      v-if="getIsLoadedData"
       style="
-        z-index: 5;
+        z-index: 3;
         position: fixed;
         display: flex;
         justify-content: center;
@@ -15,17 +16,15 @@
         :src="require(`./assets/loadingkapoo.gif`)"
         alt=""
         style="height: 150px"
-        v-if="getIsLoadedData"
       />
       <img
         :src="require(`./assets/loading.gif`)"
         alt=""
         style="position: absolute; top: 45%"
-        v-if="getIsLoadedData"
       />
-    </div> -->
-    <v-list-item style="padding: unset">
-      <!-- <v-list-item :disabled="getIsLoadedData" style="padding: unset"> -->
+    </div>
+    <!-- <v-list-item style="padding: unset"> -->
+    <v-list-item :disabled="getIsLoadedData" style="padding: unset">
       <v-main>
         <router-view />
       </v-main>

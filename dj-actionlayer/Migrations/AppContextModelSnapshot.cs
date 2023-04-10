@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
 using AppContext = dj_actionlayer.DAO.AppContext;
+
 #nullable disable
 
 namespace dj_actionlayer.Migrations
@@ -354,7 +355,7 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CourseTypeId")
+                    b.Property<int>("CourseTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("DoneCount")
@@ -787,11 +788,22 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CommentCount")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatePost")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("PostAvatar")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PostMiniAvatar")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("PostStatusId")
                         .HasColumnType("int");
@@ -813,6 +825,39 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserCreateId");
 
                     b.ToTable("post");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.PostEntity.PostSentence", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<byte[]>("ImageData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ImageTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sentence")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SentenceType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("post_sentence");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.PostEntity.PostStatus", b =>
@@ -1333,7 +1378,9 @@ namespace dj_actionlayer.Migrations
 
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseType", "CourseType")
                         .WithMany()
-                        .HasForeignKey("CourseTypeId");
+                        .HasForeignKey("CourseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CourseLevel");
 
@@ -1455,6 +1502,17 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("PostStatus");
 
                     b.Navigation("UserCreate");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.PostEntity.PostSentence", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.PostEntity.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.District", b =>

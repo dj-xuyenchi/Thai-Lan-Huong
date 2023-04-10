@@ -30,12 +30,50 @@
       >
     </div>
     <div style="margin-left: 14px; margin-top: 20px">
-      <div class="post-action">s</div>
+      <div class="post-action">
+        <div style="margin-top: 180px">
+          <font-awesome-icon icon="fa-brands fa-facebook" class="react-icon" />
+        </div>
+        <div>
+          <font-awesome-icon icon="fa-brands fa-tiktok" class="react-icon" />
+        </div>
+        <div>
+          <font-awesome-icon icon="fa-brands fa-youtube" class="react-icon" />
+        </div>
+        <v-tooltip text="Trở lại danh sách bài viết.">
+          <template v-slot:activator="{ props }">
+            <div style="margin-top: 12px" v-bind="props">
+              <font-awesome-icon
+                icon="fa-solid fa-chevron-left"
+                class="react-icon"
+              />
+            </div>
+          </template>
+        </v-tooltip>
+      </div>
       <div class="post-content">
         <ContentHeader />
         <PostContentBody />
       </div>
-      <div class="post-shortlink">d</div>
+      <div class="post-shortlink">
+        <h4
+          style="
+            font-size: 18px;
+            line-height: 1.6;
+            font-family: `Merriweather`, serif;
+            color: #222;
+            font-weight: bold;
+          "
+        >
+          Xem nhiều
+        </h4>
+        <div style="border-bottom: 1px solid red; width: 12%"></div>
+        <MostViewPost />
+        <MostViewPost />
+        <MostViewPost />
+        <MostViewPost />
+        <MostViewPost />
+      </div>
     </div>
   </div>
 </template>
@@ -43,9 +81,10 @@
 <script>
 import ContentHeader from "./ContentHeader.vue";
 import PostContentBody from "./PostContentBody.vue";
+import MostViewPost from "./MostViewPost.vue";
 export default {
   name: "PostMonitor",
-  components: { ContentHeader, PostContentBody },
+  components: { ContentHeader, PostContentBody, MostViewPost },
   props: {
     title: String,
   },
@@ -101,15 +140,39 @@ export default {
 .post-container {
 }
 .post-container .post-action {
-  float: left;
   width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  flex-direction: column;
 }
 .post-container .post-content {
   width: 55%;
   float: left;
 }
+.post-container .post-action div {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
+  color: black;
+}
+
+.post-container .post-action div:hover {
+  cursor: pointer;
+  background-color: #e8ebed;
+}
+.post-container .post-action .react-icon {
+  font-size: 26px;
+  color: #93908a;
+}
 .post-container .post-shortlink {
-  width: 40%;
+  width: 38%;
+  margin-left: 2%;
   float: left;
 }
 </style>

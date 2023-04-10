@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
 
 using AppContext = dj_actionlayer.DAO.AppContext;
+
 #nullable disable
 
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230405093853_create")]
+    [Migration("20230410090116_create")]
     partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -357,7 +358,7 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CourseTypeId")
+                    b.Property<int>("CourseTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("DoneCount")
@@ -1336,7 +1337,9 @@ namespace dj_actionlayer.Migrations
 
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.CourseType", "CourseType")
                         .WithMany()
-                        .HasForeignKey("CourseTypeId");
+                        .HasForeignKey("CourseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CourseLevel");
 

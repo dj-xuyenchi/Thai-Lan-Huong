@@ -246,7 +246,7 @@ namespace dj_actionlayer.Migrations
                     RegisterCount = table.Column<int>(type: "int", nullable: false),
                     DoneCount = table.Column<int>(type: "int", nullable: false),
                     CourseStatusId = table.Column<int>(type: "int", nullable: true),
-                    CourseTypeId = table.Column<int>(type: "int", nullable: true)
+                    CourseTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -265,7 +265,8 @@ namespace dj_actionlayer.Migrations
                         name: "FK_course_course_type_CourseTypeId",
                         column: x => x.CourseTypeId,
                         principalTable: "course_type",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

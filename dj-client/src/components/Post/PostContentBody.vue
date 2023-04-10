@@ -18,15 +18,18 @@
     <SentenceItem
       sentence="Một giáo viên trung học ở bang Florida, Mỹ, bị sa thải vì cho học sinh tự viết cáo phó trước khi tham gia diễn tập phản ứng với xả súng."
     />
+    <FooterPost />
   </div>
 </template>
 
 <script>
 import SentenceItem from "./SentenceItem.vue";
 import ImageItem from "./ImageItem.vue";
+import FooterPost from "./FooterPost.vue";
+
 export default {
   name: "PostContentBody",
-  components: { SentenceItem, ImageItem },
+  components: { SentenceItem, ImageItem, FooterPost },
 };
 </script>
 
