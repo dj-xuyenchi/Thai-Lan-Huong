@@ -32,7 +32,24 @@ namespace dj_actionlayer.Business.Study
                 {
                     commentCout++;
                     CommentDetailDTO commentDetail = new CommentDetailDTO();
-                    commentDetail.CommentDate = (DateTime.Now - comment.CreateDateTime).Days.ToString();
+                    int dateDiff = (DateTime.Now - comment.CreateDateTime).Days;
+                    if (dateDiff == 0)
+                    {
+                        int hourDiff = (DateTime.Now - comment.CreateDateTime).Hours;
+                        if (hourDiff == 0)
+                        {
+                            commentDetail.CommentDate = (DateTime.Now - comment.CreateDateTime).Minutes.ToString() + " phút trước";
+                        }
+                        else
+                        {
+                            commentDetail.CommentDate = hourDiff.ToString() + " giờ trước";
+
+                        }
+                    }
+                    else
+                    {
+                        commentDetail.CommentDate = dateDiff.ToString() + " ngày trước";
+                    }
                     commentDetail.Comment = comment.Comment;
                     commentDetail.UserName = _context.user.Find(comment.UserId).UserFisrtName;
                     commentDetail.LikeCount = comment.LikeCount;
@@ -43,7 +60,24 @@ namespace dj_actionlayer.Business.Study
                     foreach (var subComment in listSubComment)
                     {
                         SubComment sub = new SubComment();
-                        sub.CommentDate = (DateTime.Now - subComment.CreateDateTime).Days.ToString();
+                        int dateDiffSub = (DateTime.Now - subComment.CreateDateTime).Days;
+                        if (dateDiffSub == 0)
+                        {
+                            int hourDiffSub = (DateTime.Now - subComment.CreateDateTime).Hours;
+                            if (hourDiffSub == 0)
+                            {
+                                sub.CommentDate = (DateTime.Now - subComment.CreateDateTime).Minutes.ToString()+" phút trước";
+                            }
+                            else
+                            {
+                                sub.CommentDate = hourDiffSub.ToString() + " giờ trước";
+
+                            }
+                        }
+                        else
+                        {
+                            sub.CommentDate = dateDiffSub.ToString()+" ngày trước";
+                        }
                         sub.Comment = subComment.Comment;
                         sub.UserName = _context.user.Find(subComment.UserId).UserFisrtName;
                         sub.LikeCount = subComment.LikeCount;
@@ -63,7 +97,7 @@ namespace dj_actionlayer.Business.Study
             }
             catch (Exception ex)
             {
-                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
                 return result;
             }

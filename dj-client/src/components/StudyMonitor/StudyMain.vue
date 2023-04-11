@@ -33,8 +33,6 @@ import StudyFooter from "./StudyFooter.vue";
 import LessonComment from "./LessonComment.vue";
 import LessonList from "./LessonList.vue";
 import VideoLesson from "./VideoLesson.vue";
-import HomeApi from "../../apis/APIHome/HomeAPI.ts";
-import { mapMutations } from "vuex";
 import { mapGetters } from "vuex";
 export default {
   name: "StudyMain",
@@ -45,30 +43,7 @@ export default {
     LessonList,
     VideoLesson,
   },
-  mounted() {
-    const token = localStorage.getItem("token");
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (!token || !refreshToken) {
-      this.$router.push({ path: "/login" });
-    }
-  },
   computed: {},
-  methods: {
-    ...mapMutations(["setIsLoadedData"]),
-    // async getCourseDetail(courseId, userId) {
-    //   this.setIsLoadedData(true);
-    //   const data = await HomeApi.getCourseDetail(courseId, userId);
-    //   this.courseTitle = data.data.courseTitle;
-    //   this.courseSubTitle = data.data.courseSubTitle;
-    //   this.courseProfit = data.data.courseProfit;
-    //   this.courseRequire = data.data.courseRequire;
-    //   this.timeTotal = data.data.timeTotal;
-    //   this.chapterCount = data.data.chapterCount;
-    //   this.lessonCount = data.data.lessonCount;
-    //   this.chapterDetail = data.data.chapterDetail;
-    //   this.setIsLoadedData(false);
-    // },
-  },
 };
 </script>
 

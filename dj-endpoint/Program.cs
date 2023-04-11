@@ -51,6 +51,7 @@ builder.Services.AddAuthorization(option =>
     option.AddPolicy("ADMIN", policy => policy.RequireClaim(
      ClaimTypes.Role, "ADMIN"
      ));
+    
 });
 builder.Services.AddCors(options =>
 {

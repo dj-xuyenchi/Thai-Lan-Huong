@@ -12,7 +12,7 @@ namespace dj_endpoint.Controllers.StudyAPIs
 
         public StudyAPIs()
         {
-            _study = new StudyBusiness();
+            this._study = new StudyBusiness();
         }
         [HttpGet("getcommentoflesson")]
         public IActionResult getCommentOfLesson(int? lessonId)

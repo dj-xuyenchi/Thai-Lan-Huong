@@ -15,7 +15,7 @@ namespace dj_webdesigncore.Entities.BusinessEntity
 		public int? UserId { get; set; }
 		public User? User { get; set; }
 		public string Comment { get; set; }
-		public string CommentImagePath { get; set; }
+		public string? CommentImagePath { get; set; }
 		public int? CommentLessonParentId { get; set; }
 		public CommentLesson? CommentLessonParent { get; set; }
 		public int LikeCount { get; set; }

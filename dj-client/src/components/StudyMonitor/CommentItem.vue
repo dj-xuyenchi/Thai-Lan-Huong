@@ -2,7 +2,7 @@
   <div style="margin: 2% 5% 2% 5%">
     <img
       style="width: 6%; height: 40px; float: left; border-radius: 50%"
-      :src="require('../../assets/user-avatar/2.jpg')"
+      :src="`data:image/jpeg;base64,` + data.userAvatar"
     />
     <div
       style="
@@ -20,17 +20,19 @@
           font-size: 16px;
           display: block;
         "
-        >Thái Lan Hương.</span
+        >{{ data.userName }}</span
       >
-      <span style="padding: 0px 12px 8px 12px; font-size: 16px; display: block"
-        >Tuyệt vời ông mặt trời</span
+
+      <span
+        style="padding: 0px 12px 8px 12px; font-size: 16px; display: block"
+        >{{ data.comment }}</span
       >
     </div>
     <div class="comment-option-container">
       <ul class="comment-option">
-        <li class="more-option-content">Thích</li>
+        <li class="more-option-content">{{ data.likeCount }} lượt thích</li>
         <li class="more-option-content">Phản hồi</li>
-        <li style="font-weight: 400">4 Ngày trước</li>
+        <li style="font-weight: 400">{{ data.commentDate }}</li>
         <li>
           <v-menu :close-on-content-click="false">
             <template v-slot:activator="{ props }">
@@ -56,7 +58,7 @@
     </div>
     <span class="show-comment-child" @click="showResponComment">
       <span v-if="commentRespon == false"
-        >Xem thêm 2 câu trả lời
+        >Xem thêm {{ data.subComment.length }} câu trả lời
         <font-awesome-icon
           icon="fa-solid fa-chevron-down"
           style="margin-left: 4px"
@@ -71,13 +73,13 @@
     <v-list style="border-radius: 15px" v-if="commentRespon == true">
       <v-list-item
         class="option-more-item"
-        v-for="(item, i) in commentChild"
+        v-for="(item, i) in data.subComment"
         :key="i"
       >
         <div style="margin-left: 6%; margin-top: 1%">
           <img
             style="width: 40px; height: 40px; float: left; border-radius: 50%"
-            :src="require('../../assets/user-avatar/3.jpg')"
+            :src="`data:image/jpeg;base64,` + item.userAvatar"
           />
           <div
             style="
@@ -103,14 +105,18 @@
                 font-size: 16px;
                 display: block;
               "
-              >Tuyệt CC</span
+              >{{ item.comment }}</span
             >
           </div>
           <div class="comment-option-container">
             <ul class="comment-option">
-              <li class="more-option-content">Thích</li>
+              <li class="more-option-content">
+                {{ item.likeCount }} lượt thích
+              </li>
               <li class="more-option-content">Phản hồi</li>
-              <li style="font-weight: 400">1 Ngày trước</li>
+              <li style="font-weight: 400">
+                {{ item.commentDate }}
+              </li>
               <li>
                 <v-menu :close-on-content-click="false">
                   <template v-slot:activator="{ props }">
@@ -187,6 +193,9 @@ export default {
       this.commentRespon = !this.commentRespon;
       console.log(this.commentRespon);
     },
+  },
+  props: {
+    data: Object,
   },
 };
 </script>

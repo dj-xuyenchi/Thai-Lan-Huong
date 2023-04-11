@@ -19,7 +19,7 @@
         <v-list>
           <v-list-item
             :prepend-avatar="getAIProfile.avatar"
-            title="4.142 bình luận"
+            :title="commentCount + ` bình luận`"
             subtitle="Nếu phát hiện bình luận span hoặc vi phạm quy tác report giúp tớ nha."
           >
           </v-list-item>
@@ -46,9 +46,7 @@
             ></v-text-field>
           </div>
         </div>
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
+        <CommentItem v-for="(item, i) in commentList" :key="i" :data="item" />
       </v-card>
     </v-menu>
   </div>
@@ -57,6 +55,8 @@
 <script>
 import CommentItem from "./CommentItem";
 import { mapGetters } from "vuex";
+import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "LessonComment",
   components: { CommentItem },
@@ -65,9 +65,24 @@ export default {
     menu: false,
     message: false,
     hints: true,
+    commentList: [],
+    commentCount: 0,
   }),
   computed: {
     ...mapGetters(["getAIProfile"]),
+  },
+  mounted() {
+    const token = localStorage.getItem("token");
+    const refreshToken = localStorage.getItem("refreshToken");
+    this.getComment(this.$route.params.id, token);
+  },
+  methods: {
+    ...mapMutations(["setIsLoadedData"]),
+    async getComment(lessonId, token) {
+      const data = await StudyAPI.getLobbyData(lessonId, token);
+      this.commentList = data.data.listComment;
+      this.commentCount = data.data.commentCount;
+    },
   },
 };
 </script>
