@@ -11,9 +11,8 @@ namespace dj_webdesigncore.Business.Study
     public interface IStudyBusiness
     {
         ResponData<StudyDTO<VideoLessonDTO>> VideoLessonContent(int? lessonId, int? userId);
-
         ResponData<StudyDTO<TheoryLessonDTO>> TheoryLessonContent(int? lessonId, int? userId);
-
         ResponData<StudyDTO<PracticeLessonDTO>> PracticeLessonContent(int? lessonId,int? userId);
+        ResponData<CommentDTO> CommentOfLesson(int? lessonId);
     }
 }

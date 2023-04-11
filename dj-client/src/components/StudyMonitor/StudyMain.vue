@@ -46,15 +46,13 @@ export default {
     VideoLesson,
   },
   mounted() {
-    if (this.getUserLogIn.id == -1) {
+    const token = localStorage.getItem("token");
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!token || !refreshToken) {
       this.$router.push({ path: "/login" });
-    } else {
-      //  this.getCourseDetail(this.$route.params.id, this.getUserLogIn.id);
     }
   },
-  computed: {
-    ...mapGetters(["getUserLogIn"]),
-  },
+  computed: {},
   methods: {
     ...mapMutations(["setIsLoadedData"]),
     // async getCourseDetail(courseId, userId) {

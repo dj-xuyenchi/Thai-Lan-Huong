@@ -9,7 +9,7 @@ namespace dj_endpoint.Controllers.HomeAPIs
     [Route("/lobby")]
     public class LobbyApis : BaseApi
     {
-        private  ILobbyBusiness _lobby;
+        private readonly ILobbyBusiness _lobby;
 
         public LobbyApis()
         {

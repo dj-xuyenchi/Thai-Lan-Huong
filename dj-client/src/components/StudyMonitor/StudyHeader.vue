@@ -6,6 +6,8 @@
           icon="fa-solid fa-chevron-left"
           color="white"
           style="font-size: 20px"
+          @click="backToCourse()"
+          class="icon-back"
         />
         <img
           style="height: 40px; margin-left: 12px"
@@ -36,6 +38,16 @@
 <script>
 export default {
   name: "StudyHeader",
+  props: {
+    courseId: Number,
+  },
+  methods: {
+    backToCourse() {
+      this.$router.push({
+        path: "/home/course/" + this.$route.params.idCourse,
+      });
+    },
+  },
 };
 </script>
 
@@ -49,6 +61,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.study-header-container .icon-back:hover {
+  cursor: pointer;
 }
 .study-header-container .study-header-item {
   width: 100%;

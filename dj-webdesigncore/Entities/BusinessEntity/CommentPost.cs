@@ -18,8 +18,8 @@ namespace dj_webdesigncore.Entities.BusinessEntity
 		public int? CommentPostParentId { get; set; }
 		public CommentPost? CommentPostParent { get; set; }
 		public DateTime CreateDateTime { get; set; }
-		public DateTime UpdateDateTime { get; set; }
-		public DateTime DeleteDateTime { get; set; }
+		public DateTime? UpdateDateTime { get; set; }
+		public DateTime? DeleteDateTime { get; set; }
 		public bool IsDeleted { get; set; }
 		public int LikeCount { get; set; }
 	}

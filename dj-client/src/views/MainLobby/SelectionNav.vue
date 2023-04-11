@@ -45,7 +45,6 @@
 <script>
 import BtnNav from "./BtnNav";
 import { mdiBookOpenVariant } from "@mdi/js";
-
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
 export default {

@@ -24,7 +24,9 @@
           :disabled="!item.isDone"
           :to="item.lesson"
           style="position: relative"
-          :href="`http://localhost:8080/study/` + item.lessonId"
+          :href="
+            `http://localhost:8080/study/` + item.lessonId + `/` + idCourse
+          "
         >
           <span
             style="
@@ -59,6 +61,7 @@ export default {
   props: {
     titleLesson: String,
     listLesson: Array,
+    idCourse: Number,
   },
 };
 </script>

@@ -18,7 +18,7 @@
       <v-card height="70vh" width="700" style="border-radius: 15px">
         <v-list>
           <v-list-item
-            prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
+            :prepend-avatar="getAIProfile.avatar"
             title="4.142 bình luận"
             subtitle="Nếu phát hiện bình luận span hoặc vi phạm quy tác report giúp tớ nha."
           >
@@ -56,6 +56,7 @@
 
 <script>
 import CommentItem from "./CommentItem";
+import { mapGetters } from "vuex";
 export default {
   name: "LessonComment",
   components: { CommentItem },
@@ -65,6 +66,9 @@ export default {
     message: false,
     hints: true,
   }),
+  computed: {
+    ...mapGetters(["getAIProfile"]),
+  },
 };
 </script>
 

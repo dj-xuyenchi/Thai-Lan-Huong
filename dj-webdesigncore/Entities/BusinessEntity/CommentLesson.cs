@@ -20,7 +20,7 @@ namespace dj_webdesigncore.Entities.BusinessEntity
 		public CommentLesson? CommentLessonParent { get; set; }
 		public int LikeCount { get; set; }
 		public DateTime CreateDateTime { get; set; }
-		public DateTime UpdateDateTime { get; set; }
-		public DateTime DeleteDateTime { get; set; }
+		public DateTime? UpdateDateTime { get; set; }
+		public DateTime? DeleteDateTime { get; set; }
 	}
 }

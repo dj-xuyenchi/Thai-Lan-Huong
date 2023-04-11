@@ -61,7 +61,6 @@ export default {
   },
   mounted() {
     const g = this.$refs.gg;
-    console.log(g);
   },
 };
 </script>

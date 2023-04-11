@@ -68,6 +68,7 @@
           v-for="(item, index) in chapterDetail"
           :key="index"
           :listLesson="item.lessonDetail"
+          :idCourse="this.$route.params.id"
         />
       </div>
     </div>

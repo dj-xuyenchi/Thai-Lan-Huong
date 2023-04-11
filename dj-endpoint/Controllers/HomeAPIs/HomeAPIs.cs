@@ -21,7 +21,6 @@ namespace dj_endpoint.Controllers.HomeAPIs
   //          homeBusiness = new HomeBusiness();
         }
         [HttpGet("khoahoc")]
-
         public IActionResult LayDanhSachKhoaHoc()
         {
             return null;

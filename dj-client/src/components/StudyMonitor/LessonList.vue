@@ -18,7 +18,7 @@
       <v-card height="70vh" width="30vw" style="border-radius: 15px">
         <v-list>
           <v-list-item
-            prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
+            :prepend-avatar="getAIProfile.avatar"
             title="Khóa học JAVA cơ bản đến Spring"
             subtitle="Cập nhật 23/12/2023"
           >
@@ -63,6 +63,7 @@
 
 <script>
 import LessonListStudy from "./LessonListStudy.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "LessonList",
   components: { LessonListStudy },
@@ -72,6 +73,9 @@ export default {
     message: false,
     hints: true,
   }),
+  computed: {
+    ...mapGetters(["getAIProfile"]),
+  },
 };
 </script>
 
