@@ -7,26 +7,25 @@
         alt=""
       />
     </div>
-    <router-link
-      to="event"
-      style="text-decoration: none; color: black; margin-left: 8px"
-    >
-      <span
-        style="
-          font-family: `Merriweather`, serif;
-          font-size: 14px;
-          line-height: 160%;
-        "
-        class="mostviewpost-title"
-        >Hot Girl Hoàng Công Chất lộ clip cùng bạn trai 90 múi.<v-icon
-          size="small"
-          color="#93908a"
-          icon="mdi-message-text"
-          style="margin-left: 8px"
-        ></v-icon
-        ><span style="margin-left: 4px; color: #29b6f6">81</span></span
-      >
-    </router-link>
+    <div style="width: 160px; margin-left: 8px">
+      <router-link to="event" style="text-decoration: none; color: black">
+        <span
+          style="
+            font-family: `Merriweather`, serif;
+            font-size: 14px;
+            line-height: 160%;
+          "
+          class="mostviewpost-title"
+          >Hot Girl Hoàng Công Chất lộ clip cùng bạn trai 90 múi.<v-icon
+            size="small"
+            color="#93908a"
+            icon="mdi-message-text"
+            style="margin-left: 8px"
+          ></v-icon
+          ><span style="margin-left: 4px; color: #29b6f6">81</span></span
+        >
+      </router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -39,7 +38,7 @@ export default {
 .mostviewpost-container {
   margin: 12px 0 8px 0;
   display: flex;
-  width: 40%;
+  width: 100%;
 }
 .mostviewpost-container .mostviewpost-title:hover {
   cursor: pointer;
