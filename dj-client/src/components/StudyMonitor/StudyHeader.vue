@@ -22,14 +22,14 @@
             font: system-ui, `Segoe UI`, Roboto, Helvetica, Arial, sans-serif,
               `Apple Color Emoji`, `Segoe UI Emoji`, `Segoe UI Symbol`;
           "
-          >Khóa học lập trình JAVA cơ bản đến Spring.</span
+          >{{ courseName }}</span
         >
       </div>
     </div>
     <div class="study-header-item">
       <div style="color: white; text-align: right">
         <span>Hoàn thành: </span>
-        <span style="margin-right: 2.5%">69/96 </span>
+        <span style="margin-right: 2.5%">{{ courseProcess }}</span>
       </div>
     </div>
   </div>
@@ -39,7 +39,8 @@
 export default {
   name: "StudyHeader",
   props: {
-    courseId: Number,
+    courseName: String,
+    courseProcess: String,
   },
   methods: {
     backToCourse() {

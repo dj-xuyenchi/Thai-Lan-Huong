@@ -25,7 +25,7 @@
           :to="item.lesson"
           style="position: relative"
           :href="
-            `http://localhost:8081/study/` + item.lessonId + `/` + idCourse
+            `https://dj-xuyenchi.edu.vn/study/` + item.lessonId + `/` + idCourse
           "
         >
           <span

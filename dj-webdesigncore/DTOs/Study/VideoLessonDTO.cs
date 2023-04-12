@@ -10,6 +10,5 @@ namespace dj_webdesigncore.DTOs.Study
     public class VideoLessonDTO 
     {
         public string VideoUrl { get; set; }
-        public List<ChapterDetailDTO> ChapterDetail { get; set; }
     }
 }

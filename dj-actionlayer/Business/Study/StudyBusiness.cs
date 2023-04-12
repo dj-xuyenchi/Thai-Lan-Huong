@@ -1,8 +1,11 @@
 ﻿using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.DTOs;
+using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Study;
+using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +69,7 @@ namespace dj_actionlayer.Business.Study
                             int hourDiffSub = (DateTime.Now - subComment.CreateDateTime).Hours;
                             if (hourDiffSub == 0)
                             {
-                                sub.CommentDate = (DateTime.Now - subComment.CreateDateTime).Minutes.ToString()+" phút trước";
+                                sub.CommentDate = (DateTime.Now - subComment.CreateDateTime).Minutes.ToString() + " phút trước";
                             }
                             else
                             {
@@ -75,7 +78,7 @@ namespace dj_actionlayer.Business.Study
                         }
                         else
                         {
-                            sub.CommentDate = dateDiffSub.ToString()+" ngày trước";
+                            sub.CommentDate = dateDiffSub.ToString() + " ngày trước";
                         }
                         sub.Comment = subComment.Comment;
                         sub.UserName = _context.user.Find(subComment.UserId).UserFisrtName;
@@ -102,6 +105,56 @@ namespace dj_actionlayer.Business.Study
             }
         }
 
+        public async Task<List<ChapterDetailDTO>> LessonListOfUser(int? userId, int? courseId)
+        {
+            List<ChapterDetailDTO> chapterDetailResult = new List<ChapterDetailDTO>();
+            List<CourseChapter> chapterOfCourse = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x => x.SortNumber).ToList();
+            foreach (var item in chapterOfCourse)
+            {
+                ChapterDetailDTO chapterDetailDTO = new ChapterDetailDTO();
+                chapterDetailDTO.ChapterTitle = item.ChapterName;
+                chapterDetailDTO.LessonCount = item.ChapterLessonCount;
+                List<LessonDetailDTO> lessonDetailDTOResult = new List<LessonDetailDTO>();
+                List<ChapterLesson> lessonOfChapter = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).OrderBy(x => x.SortNumber).ToList();
+                foreach (var item1 in lessonOfChapter)
+                {
+                    LessonDetailDTO lessonDetailDTO = new LessonDetailDTO();
+                    User user = await _context.user.FindAsync(userId);
+                    UserLessonCheckpoint checkPoint = _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).SingleOrDefault();
+                    if (checkPoint != null)
+                    {
+                        lessonDetailDTO.IsDone = true;
+                    }
+                    else
+                    {
+                        lessonDetailDTO.IsDone = false;
+                    }
+                    Lesson lesson = await _context.lesson.FindAsync(item1.LessonId);
+                    lessonDetailDTO.LessonName = lesson.LessonName;
+                    lessonDetailDTO.LessonId = lesson.Id;
+                    lessonDetailDTO.LessonTime = lesson.VideoTime;
+                    switch (lesson.LessonTypeId)
+                    {
+                        case 1:
+                            lessonDetailDTO.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
+                            break;
+                        case 2:
+                            lessonDetailDTO.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.PRACTICE;
+                            break;
+                        case 3:
+                            lessonDetailDTO.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.QUESTION;
+                            break;
+                        default:
+                            break;
+                    }
+                    lessonDetailDTOResult.Add(lessonDetailDTO);
+                }
+                chapterDetailDTO.LessonDetail = lessonDetailDTOResult;
+                chapterDetailResult.Add(chapterDetailDTO);
+            }
+            return chapterDetailResult;
+        }
+
         public async Task<ResponData<StudyDTO<PracticeLessonDTO>>> PracticeLessonContent(int? lessonId, int? userId)
         {
             throw new NotImplementedException();
@@ -112,7 +165,7 @@ namespace dj_actionlayer.Business.Study
             throw new NotImplementedException();
         }
 
-        public async Task<ResponData<StudyDTO<VideoLessonDTO>>> VideoLessonContent(int? lessonId, int? userId)
+        public async Task<ResponData<StudyDTO<VideoLessonDTO>>> VideoLessonContent(int? lessonId, int? userId, int? courseId)
         {
             ResponData<StudyDTO<VideoLessonDTO>> result = new ResponData<StudyDTO<VideoLessonDTO>>();
             if (lessonId == null)
@@ -124,6 +177,12 @@ namespace dj_actionlayer.Business.Study
             if (userId == null)
             {
                 result.Messenger = "Lấy dữ liệu thất bại không nhận được userId!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
+                return result;
+            }
+            if (courseId == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không nhận được courseId!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
                 return result;
             }
@@ -145,9 +204,12 @@ namespace dj_actionlayer.Business.Study
                 }
                 StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
                 VideoLessonDTO videoLesson = new VideoLessonDTO();
-                //       videoLesson
-                //      studyData.StudyDetail = 
-                //      result.Data = studyData;
+                videoLesson.VideoUrl= _context.video_lesson.Where(x=>x.LessonId==lessonId).SingleOrDefault().LessonLinkUrl;
+                studyData.StudyDetail = videoLesson;
+                Course course = await _context.course.FindAsync(courseId);
+                studyData.CourseName = course.CourseName;
+                studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
+                result.Data = studyData;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;

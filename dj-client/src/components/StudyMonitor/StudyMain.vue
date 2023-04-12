@@ -1,6 +1,6 @@
 <template>
   <div class="study-main-container">
-    <StudyHeader />
+    <StudyHeader :courseName="lessonData.courseName" courseProcess="1%/100%" />
     <VideoLesson />
     <div
       style="
@@ -11,7 +11,10 @@
       "
     >
       <LessonComment />
-      <LessonList style="margin-left: 12px" />
+      <LessonList
+        style="margin-left: 12px"
+        :chapterList="lessonData.chapterDetail"
+      />
       <div style="position: absolute; right: 5%; top: 0">
         <v-btn color="#4FC3F7" v-bind="props">
           <font-awesome-icon
@@ -34,6 +37,8 @@ import LessonComment from "./LessonComment.vue";
 import LessonList from "./LessonList.vue";
 import VideoLesson from "./VideoLesson.vue";
 import { mapGetters } from "vuex";
+import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "StudyMain",
   components: {
@@ -43,7 +48,37 @@ export default {
     LessonList,
     VideoLesson,
   },
+  data() {
+    return {
+      lessonData: Object,
+    };
+  },
   computed: {},
+  mounted() {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("id");
+    this.getVideoLesson(
+      this.$route.params.id,
+      userId,
+      this.$route.params.idCourse,
+      token
+    );
+  },
+  methods: {
+    ...mapMutations(["setIsLoadedData"]),
+    async getVideoLesson(lessonId, userId, courseId, token) {
+      this.setIsLoadedData(true);
+      const data = await StudyAPI.getVideoLesson(
+        lessonId,
+        userId,
+        courseId,
+        token
+      );
+      this.lessonData = data.data;
+      console.log(this.lessonData);
+      this.setIsLoadedData(false);
+    },
+  },
 };
 </script>
 

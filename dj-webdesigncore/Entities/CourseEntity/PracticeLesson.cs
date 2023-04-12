@@ -14,6 +14,7 @@ namespace dj_webdesigncore.Entities.CourseEntity
         public string ExpecOutput { get; set;}
         public string Explain { get; set;}
         public string Suggest { get; set; }
-        
+        public int LessonId { get; set; }
+        public Lesson Lesson { get; set; }
     }
 }

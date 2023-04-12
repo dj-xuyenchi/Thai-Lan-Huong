@@ -34,27 +34,12 @@
           </v-list-item>
         </v-list>
         <v-divider></v-divider>
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
-        <LessonListStudy titleLesson="1. Java Basic (4 bài học)" />
+        <LessonListStudy
+          v-for="(item, i) in chapterList"
+          :key="i"
+          :listLesson="item.lessonDetail"
+          :titleLesson="i + 1 + `. ` + item.chapterTitle"
+        />
         <div style="height: 12px"></div>
       </v-card>
     </v-menu>
@@ -73,6 +58,7 @@ export default {
     message: false,
     hints: true,
   }),
+  props: { chapterList: [] },
   computed: {
     ...mapGetters(["getAIProfile"]),
   },

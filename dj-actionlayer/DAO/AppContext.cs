@@ -1,4 +1,5 @@
-﻿using dj_webdesigncore.Entities.BusinessEntity;
+﻿using dj_webdesigncore.Entities;
+using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.PostEntity;
 using dj_webdesigncore.Entities.UserEntity;
@@ -53,6 +54,8 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserRole> user_role { get; set; }
 		public DbSet<UserStatus> user_status { get; set; }
 		// Business Entities
+		public DbSet<Trophic> trophic { get; set; }
+		public DbSet<UserTrophic> user_trophic { get; set; }
 		public DbSet<UserLessonNote> user_lesson_note { get; set; }
 		public DbSet<UserLessonCheckpoint> user_lesson_checkpoint { get; set; }
 		public DbSet<CommentLesson> comment_lesson { get; set; }
@@ -63,9 +66,9 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserLikePost> user_like_post { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+		//	optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
 		//	optionsBuilder.UseSqlServer(Settings.DBConnect());
-		//	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
+			optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
 		}
 	}
 }

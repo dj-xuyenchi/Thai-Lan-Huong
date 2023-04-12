@@ -12,6 +12,7 @@ namespace dj_webdesigncore.DTOs.Study
         public T StudyDetail { get; set; }
         public string CourseName { get; set; }
         public string CourseProcess { get; set; }
-        public List<LessonDetailDTO> LessonDetail { get; set; }
+        public List<ChapterDetailDTO> ChapterDetail { get; set; }
+
     }
 }

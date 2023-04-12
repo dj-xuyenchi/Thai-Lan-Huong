@@ -36,7 +36,6 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CommentImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CommentLessonParentId")
@@ -45,7 +44,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeleteDateTime")
+                    b.Property<DateTime?>("DeleteDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("LessonId")
@@ -54,7 +53,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateDateTime")
+                    b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -89,7 +88,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeleteDateTime")
+                    b.Property<DateTime?>("DeleteDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -101,7 +100,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateDateTime")
+                    b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -116,6 +115,27 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("comment_post");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.Trophic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("TrophicCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrophicName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("trophic");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserCourse", b =>
@@ -674,6 +694,9 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Problem")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -687,6 +710,8 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
 
                     b.ToTable("practice_lesson");
                 });
@@ -1215,6 +1240,32 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("wards");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserTrophic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("TakeTrophicDatetime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TrophicId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrophicId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_trophic");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", "CommentLessonParent")
@@ -1456,6 +1507,17 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("LessonType");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
+                        .WithMany()
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.QuestionLesson", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
@@ -1608,6 +1670,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("AdministrativeUnit");
 
                     b.Navigation("District");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserTrophic", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.Trophic", "Trophic")
+                        .WithMany()
+                        .HasForeignKey("TrophicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trophic");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

@@ -19,5 +19,12 @@ namespace dj_endpoint.Controllers.StudyAPIs
         {
             return Ok(await _study.CommentOfLesson(lessonId));
         }
+
+        [HttpGet("getvideolesson")]
+        public async Task<IActionResult> getVideoLesson(int? lessonId, int? userId, int? courseId)
+        {
+          //  switch()
+            return Ok(await _study.VideoLessonContent(lessonId,userId,courseId));
+        }
     }
 }

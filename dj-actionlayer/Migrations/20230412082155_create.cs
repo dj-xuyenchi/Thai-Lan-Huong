@@ -174,6 +174,20 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "trophic",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrophicCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TrophicName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_trophic", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user_role",
                 columns: table => new
                 {
@@ -607,12 +621,12 @@ namespace dj_actionlayer.Migrations
                     LessonId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CommentImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CommentImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CommentLessonParentId = table.Column<int>(type: "int", nullable: true),
                     LikeCount = table.Column<int>(type: "int", nullable: false),
                     CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeleteDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleteDateTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -641,10 +655,13 @@ namespace dj_actionlayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PostTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostAvatar = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PostMiniAvatar = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     UserCreateId = table.Column<int>(type: "int", nullable: true),
                     CreatePost = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatePost = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LikeCount = table.Column<int>(type: "int", nullable: false),
+                    CommentCount = table.Column<int>(type: "int", nullable: false),
                     PostStatusId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -743,6 +760,33 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "user_trophic",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    TrophicId = table.Column<int>(type: "int", nullable: false),
+                    TakeTrophicDatetime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_user_trophic", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_user_trophic_trophic_TrophicId",
+                        column: x => x.TrophicId,
+                        principalTable: "trophic",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_user_trophic_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user_like_comment_lesson",
                 columns: table => new
                 {
@@ -779,8 +823,8 @@ namespace dj_actionlayer.Migrations
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommentPostParentId = table.Column<int>(type: "int", nullable: true),
                     CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeleteDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleteDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     LikeCount = table.Column<int>(type: "int", nullable: false)
                 },
@@ -802,6 +846,30 @@ namespace dj_actionlayer.Migrations
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "post_sentence",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostId = table.Column<int>(type: "int", nullable: false),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sentence = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortNumber = table.Column<int>(type: "int", nullable: false),
+                    SentenceType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_post_sentence", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_post_sentence_post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "post",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -988,6 +1056,11 @@ namespace dj_actionlayer.Migrations
                 column: "UserCreateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_post_sentence_PostId",
+                table: "post_sentence",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_provinces_administrative_region_id",
                 table: "provinces",
                 column: "administrative_region_id");
@@ -1098,6 +1171,16 @@ namespace dj_actionlayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_user_trophic_TrophicId",
+                table: "user_trophic",
+                column: "TrophicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_user_trophic_UserId",
+                table: "user_trophic",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_video_lesson_LessonId",
                 table: "video_lesson",
                 column: "LessonId");
@@ -1128,6 +1211,9 @@ namespace dj_actionlayer.Migrations
                 name: "course_image");
 
             migrationBuilder.DropTable(
+                name: "post_sentence");
+
+            migrationBuilder.DropTable(
                 name: "question_lesson");
 
             migrationBuilder.DropTable(
@@ -1152,6 +1238,9 @@ namespace dj_actionlayer.Migrations
                 name: "user_like_post");
 
             migrationBuilder.DropTable(
+                name: "user_trophic");
+
+            migrationBuilder.DropTable(
                 name: "video_lesson");
 
             migrationBuilder.DropTable(
@@ -1174,6 +1263,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "comment_post");
+
+            migrationBuilder.DropTable(
+                name: "trophic");
 
             migrationBuilder.DropTable(
                 name: "course");

@@ -8,14 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
 
 using AppContext = dj_actionlayer.DAO.AppContext;
-
 #nullable disable
 
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230410094436_create2")]
-    partial class create2
+    [Migration("20230412082155_create")]
+    partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,7 +38,6 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CommentImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CommentLessonParentId")
@@ -48,7 +46,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeleteDateTime")
+                    b.Property<DateTime?>("DeleteDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("LessonId")
@@ -57,7 +55,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<int>("LikeCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateDateTime")
+                    b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -92,7 +90,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DeleteDateTime")
+                    b.Property<DateTime?>("DeleteDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -104,7 +102,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("PostId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateDateTime")
+                    b.Property<DateTime?>("UpdateDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -119,6 +117,27 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("comment_post");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.Trophic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("TrophicCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrophicName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("trophic");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserCourse", b =>
@@ -1218,6 +1237,32 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("wards");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserTrophic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("TakeTrophicDatetime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TrophicId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrophicId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("user_trophic");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", "CommentLessonParent")
@@ -1611,6 +1656,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("AdministrativeUnit");
 
                     b.Navigation("District");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserTrophic", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.Trophic", "Trophic")
+                        .WithMany()
+                        .HasForeignKey("TrophicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trophic");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

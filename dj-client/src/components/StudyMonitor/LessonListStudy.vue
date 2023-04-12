@@ -11,11 +11,18 @@
             ></v-list-item>
           </template>
           <v-list-item
-            v-for="([title, icon, time], i) in listLesson"
+            v-for="(item, i) in listLesson"
             :key="i"
-            :value="title"
-            :title="Number(i + 1) + title"
-            :prepend-icon="icon"
+            :value="item.id"
+            :title="Number(i + 1) + `. ` + item.lessonName"
+            :prepend-icon="
+              item.lessonType == 1
+                ? `mdi-play`
+                : item.lessonType == 2
+                ? `mdi-file-outline`
+                : `mdi-pencil`
+            "
+            :disabled="!item.isDone"
             style="position: relative"
           >
             <span
@@ -41,7 +48,7 @@ export default {
   data() {
     return {
       open: ["Lesson"],
-      listLesson: [
+      listLesson1: [
         [". Cài đặt môi trường", "mdi-play", "12:03"],
         [". Cài đặt IDE", "mdi-file-outline", "12:03"],
         [". Hello World", "mdi-pencil", "12:03"],
@@ -51,6 +58,7 @@ export default {
   },
   props: {
     titleLesson: String,
+    listLesson: [],
   },
 };
 </script>
