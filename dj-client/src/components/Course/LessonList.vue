@@ -22,9 +22,8 @@
               : `mdi-pencil`
           "
           :disabled="!item.isDone"
-          :to="item.lesson"
           style="position: relative"
-          :href="`/study/` + item.lessonId + `/` + idCourse"
+          :to="`/study/` + item.lessonId + `/` + idCourse"
         >
           <span
             style="
