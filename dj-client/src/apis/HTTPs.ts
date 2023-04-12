@@ -4,7 +4,8 @@ export class HTTPSingleton {
   private static instance: HTTPSingleton;
   private static config: AxiosRequestConfig = {
     // baseURL: "https://api.dj-xuyenchi.edu.vn/",
-    baseURL: "https://localhost:44307/",
+    // baseURL: "https://localhost:44307/",
+    baseURL: "https://localhost:7117/",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",

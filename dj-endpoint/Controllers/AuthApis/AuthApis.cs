@@ -16,16 +16,14 @@ namespace dj_endpoint.Controllers.AuthApis
             this.authBusiness = new AuthBusiness();
         }
         [HttpPost("getlogin")]
-        public IActionResult Login(RequestLogin request)
+        public async Task<IActionResult> Login(RequestLogin request)
         {
-            var result = authBusiness.Login(request);
-            return Ok(result);
+            return Ok(await authBusiness.Login(request));
         }
         [HttpPost("refresh")]
-        public IActionResult RefreshToken(TokenModel tokenModel)
+        public async Task<IActionResult> RefreshToken(TokenModel tokenModel)
         {
-            var result = authBusiness.RenewToken(tokenModel);
-            return Ok(result);
+            return Ok(await authBusiness.RenewToken(tokenModel));
         }
     }
 }

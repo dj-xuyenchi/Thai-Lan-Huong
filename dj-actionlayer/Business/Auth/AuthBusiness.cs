@@ -1,5 +1,6 @@
 ﻿using dj_actionlayer.DAO;
 using dj_webdesigncore.AuthModel;
+using dj_webdesigncore.Business.Auth;
 using dj_webdesigncore.Entities.UserEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,9 +15,9 @@ using System.Threading.Tasks;
 
 namespace dj_actionlayer.Business.Auth
 {
-    public class AuthBusiness : BaseBusiness
+    public class AuthBusiness : BaseBusiness,IAuthBusiness
     {
-        public LoginResponse<AuthDataRespon> Login(RequestLogin request)
+        public async Task<LoginResponse<AuthDataRespon>> Login(RequestLogin request)
         {
             var user = _context.user.SingleOrDefault(x => x.UserPass == request.Password && x.UserName == request.UserName);
             if (user == null)
@@ -37,11 +38,11 @@ namespace dj_actionlayer.Business.Auth
                     avatar=user.UserAvatarData40x40,
                     nickName = "Chiến thần Front End",
                     name= user.UserLastName + " "+ user.UserFisrtName,
-                    Token = GenToken(user)
+                    Token =await GenToken(user)
                 }
             };
         }
-        public LoginResponse<TokenModel> RenewToken(TokenModel model)
+        public async Task<LoginResponse<TokenModel>> RenewToken(TokenModel model)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var secretKeyBytes = Encoding.UTF8.GetBytes(Settings.SecretKey());
@@ -81,7 +82,7 @@ namespace dj_actionlayer.Business.Auth
                 //check 3: Check accessToken expire?
                 var utcExpireDate = long.Parse(tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
 
-                var expireDate = ConvertUnixTimeToDateTime(utcExpireDate);
+                var expireDate = await ConvertUnixTimeToDateTime(utcExpireDate);
                 if (expireDate > DateTime.UtcNow)
                 {
                     return new LoginResponse<TokenModel>
@@ -139,7 +140,7 @@ namespace dj_actionlayer.Business.Auth
 
                 //create new token
                 var user = _context.user.SingleOrDefault(nd => nd.Id == storedToken.UserId);
-                var token = GenToken(user);
+                var token = await GenToken(user);
 
                 return new LoginResponse<TokenModel>
                 {
@@ -157,14 +158,13 @@ namespace dj_actionlayer.Business.Auth
                 };
             }
         }
-        private DateTime ConvertUnixTimeToDateTime(long utcExpireDate)
+        public async Task<DateTime> ConvertUnixTimeToDateTime(long utcExpireDate)
         {
             var dateTimeInterval = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             dateTimeInterval.AddSeconds(utcExpireDate).ToUniversalTime();
-
             return dateTimeInterval;
         }
-        private TokenModel GenToken(User user)
+        public async Task<TokenModel> GenToken(User user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -174,7 +174,7 @@ namespace dj_actionlayer.Business.Auth
             {
                 Subject = new ClaimsIdentity(new[] {
                     new Claim("Id", user.Id.ToString()),
-                    new Claim(ClaimTypes.Role,  _context.user_role.Find(user.UserRoleId).UserRoleCode),
+                    new Claim(ClaimTypes.Role, _context.user_role.Find(user.UserRoleId).UserRoleCode),
                              new Claim("LoginTime", DateTime.Now.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     
@@ -188,7 +188,7 @@ namespace dj_actionlayer.Business.Auth
 
             var token = jwtTokenHandler.CreateToken(tokenDescription);
             var accessToken = jwtTokenHandler.WriteToken(token);
-            var refreshToken = GenerateRefreshToken();
+            var refreshToken =await GenerateRefreshToken();
 
             //Lưu database
             var refreshTokenEntity = new RefreshToken
@@ -204,8 +204,8 @@ namespace dj_actionlayer.Business.Auth
                 ExpiredAt = DateTime.Now.AddDays(1)
             };
 
-            _context.Add(refreshTokenEntity);
-            _context.SaveChanges();
+           await _context.AddAsync(refreshTokenEntity);
+            await _context.SaveChangesAsync();
 
             return new TokenModel
             {
@@ -213,13 +213,12 @@ namespace dj_actionlayer.Business.Auth
                 RefreshToken = refreshToken
             };
         }
-        private string GenerateRefreshToken()
+        public async Task<string> GenerateRefreshToken()
         {
             var random = new byte[32];
             using (var rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(random);
-
                 return Convert.ToBase64String(random);
             }
         }

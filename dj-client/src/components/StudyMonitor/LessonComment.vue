@@ -6,7 +6,7 @@
       v-model="menu"
     >
       <template v-slot:activator="{ props }">
-        <v-btn color="#4FC3F7" v-bind="props">
+        <v-btn color="#4FC3F7" v-bind="props" @click="handleGetComment()">
           <font-awesome-icon
             icon="fa-regular fa-comments"
             color="black"
@@ -74,7 +74,6 @@ export default {
   mounted() {
     const token = localStorage.getItem("token");
     const refreshToken = localStorage.getItem("refreshToken");
-    this.getComment(this.$route.params.id, token);
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
@@ -82,6 +81,11 @@ export default {
       const data = await StudyAPI.getLobbyData(lessonId, token);
       this.commentList = data.data.listComment;
       this.commentCount = data.data.commentCount;
+    },
+    handleGetComment() {
+      const token = localStorage.getItem("token");
+      const refreshToken = localStorage.getItem("refreshToken");
+      this.getComment(this.$route.params.id, token);
     },
   },
 };

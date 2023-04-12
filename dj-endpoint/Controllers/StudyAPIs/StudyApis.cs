@@ -15,9 +15,9 @@ namespace dj_endpoint.Controllers.StudyAPIs
             this._study = new StudyBusiness();
         }
         [HttpGet("getcommentoflesson")]
-        public IActionResult getCommentOfLesson(int? lessonId)
+        public async Task<IActionResult> getCommentOfLesson(int? lessonId)
         {
-            return Ok(_study.CommentOfLesson(lessonId));
+            return Ok(await _study.CommentOfLesson(lessonId));
         }
     }
 }

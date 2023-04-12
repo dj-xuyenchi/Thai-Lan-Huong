@@ -25,7 +25,7 @@
           :to="item.lesson"
           style="position: relative"
           :href="
-            `http://localhost:8080/study/` + item.lessonId + `/` + idCourse
+            `http://localhost:8081/study/` + item.lessonId + `/` + idCourse
           "
         >
           <span

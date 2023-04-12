@@ -14,7 +14,7 @@ namespace dj_actionlayer.Business.Lobby
 {
     public class LobbyBusiness : BaseBusiness, ILobbyBusiness
     {
-        public ResponData<CourseDetailDTO> CourseDetailContent(int? courseId, int? userId)
+        public async Task<ResponData<CourseDetailDTO>> CourseDetailContent(int? courseId, int? userId)
         {
             ResponData<CourseDetailDTO> result = new ResponData<CourseDetailDTO>();
             if (courseId == null)
@@ -127,7 +127,7 @@ namespace dj_actionlayer.Business.Lobby
             }
         }
 
-        public ResponData<List<CourseListDTO>> CourseListContent()
+        public async Task<ResponData<List<CourseListDTO>>> CourseListContent()
         {
             ResponData<List<CourseListDTO>> result = new ResponData<List<CourseListDTO>>();
             try
@@ -171,7 +171,7 @@ namespace dj_actionlayer.Business.Lobby
             }
         }
 
-        public ResponData<LobbyDTO> LobbyContent()
+        public async Task<ResponData<LobbyDTO>> LobbyContent()
         {
             ResponData<LobbyDTO> result = new ResponData<LobbyDTO>();
             try

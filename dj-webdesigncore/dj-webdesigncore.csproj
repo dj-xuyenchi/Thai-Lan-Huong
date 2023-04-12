@@ -8,4 +8,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Business\Auth\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Business\Auth\" />
+  </ItemGroup>
 </Project>

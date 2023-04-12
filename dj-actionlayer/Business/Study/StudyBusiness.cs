@@ -13,7 +13,7 @@ namespace dj_actionlayer.Business.Study
 {
     public class StudyBusiness : BaseBusiness, IStudyBusiness
     {
-        public ResponData<CommentDTO> CommentOfLesson(int? lessonId)
+        public async Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId)
         {
             ResponData<CommentDTO> result = new ResponData<CommentDTO>();
             if (lessonId == null)
@@ -71,7 +71,6 @@ namespace dj_actionlayer.Business.Study
                             else
                             {
                                 sub.CommentDate = hourDiffSub.ToString() + " giờ trước";
-
                             }
                         }
                         else
@@ -103,17 +102,17 @@ namespace dj_actionlayer.Business.Study
             }
         }
 
-        public ResponData<StudyDTO<PracticeLessonDTO>> PracticeLessonContent(int? lessonId, int? userId)
+        public async Task<ResponData<StudyDTO<PracticeLessonDTO>>> PracticeLessonContent(int? lessonId, int? userId)
         {
             throw new NotImplementedException();
         }
 
-        public ResponData<StudyDTO<TheoryLessonDTO>> TheoryLessonContent(int? lessonId, int? userId)
+        public async Task<ResponData<StudyDTO<TheoryLessonDTO>>> TheoryLessonContent(int? lessonId, int? userId)
         {
             throw new NotImplementedException();
         }
 
-        public ResponData<StudyDTO<VideoLessonDTO>> VideoLessonContent(int? lessonId, int? userId)
+        public async Task<ResponData<StudyDTO<VideoLessonDTO>>> VideoLessonContent(int? lessonId, int? userId)
         {
             ResponData<StudyDTO<VideoLessonDTO>> result = new ResponData<StudyDTO<VideoLessonDTO>>();
             if (lessonId == null)
