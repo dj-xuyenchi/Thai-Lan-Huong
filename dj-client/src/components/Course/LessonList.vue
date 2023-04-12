@@ -24,9 +24,7 @@
           :disabled="!item.isDone"
           :to="item.lesson"
           style="position: relative"
-          :href="
-            `https://dj-xuyenchi.edu.vn/study/` + item.lessonId + `/` + idCourse
-          "
+          :href="`/study/` + item.lessonId + `/` + idCourse"
         >
           <span
             style="
