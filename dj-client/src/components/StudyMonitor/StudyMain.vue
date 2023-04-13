@@ -1,7 +1,8 @@
 <template>
   <div class="study-main-container">
     <StudyHeader :courseName="lessonData.courseName" courseProcess="1%/100%" />
-    <VideoLesson />
+    <!-- <VideoLesson /> -->
+    <PracticeLesson />
     <div
       style="
         margin-left: 5%;
@@ -26,7 +27,7 @@
         </v-btn>
       </div>
     </div>
-    <StudyFooter />
+    <StudyFooter style="position: abslute; bottom: 0" />
   </div>
 </template>
 
@@ -36,6 +37,7 @@ import StudyFooter from "./StudyFooter.vue";
 import LessonComment from "./LessonComment.vue";
 import LessonList from "./LessonList.vue";
 import VideoLesson from "./VideoLesson.vue";
+import PracticeLesson from "./PracticeLesson.vue";
 import { mapGetters } from "vuex";
 import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 import { mapMutations } from "vuex";
@@ -46,7 +48,8 @@ export default {
     StudyFooter,
     LessonComment,
     LessonList,
-    VideoLesson,
+    // VideoLesson,
+    PracticeLesson,
   },
   data() {
     return {

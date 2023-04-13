@@ -13,8 +13,6 @@ export default {
   width: 100%;
   height: 52px;
   background-color: #29b6f6;
-  position: absolute;
-  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
