@@ -11,12 +11,12 @@
         position: relative;
       "
     >
-      <LessonComment />
+      <LessonComment style="float: left" />
       <LessonList
-        style="margin-left: 12px"
+        style="margin-left: 12px; float: left"
         :chapterList="lessonData.chapterDetail"
       />
-      <div style="position: absolute; right: 5%; top: 0">
+      <div style="float: left; margin-left: 12px">
         <v-btn color="#4FC3F7" v-bind="props">
           <font-awesome-icon
             icon="fa-solid fa-plus"
