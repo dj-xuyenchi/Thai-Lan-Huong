@@ -10,10 +10,12 @@ namespace dj_webdesigncore.Entities.CourseEntity
     {
         public string Problem { get; set; }
         public string ProblemDetail { get; set;}
-        public string Input { get; set;}
-        public string ExpecOutput { get; set;}
-        public string Explain { get; set;}
-        public string Suggest { get; set; }
+        public string BeginCodeMethod { get; set; }
+        public string CallTestCode { get; set; }
+        public string? Input { get; set;}
+        public string ExpectOutput { get; set;}
+        public string? Explain { get; set;}
+        public string? Suggest { get; set; }
         public int LessonId { get; set; }
         public Lesson Lesson { get; set; }
     }

@@ -155,12 +155,98 @@ namespace dj_actionlayer.Business.Study
             return chapterDetailResult;
         }
 
-        public async Task<ResponData<StudyDTO<PracticeLessonDTO>>> PracticeLessonContent(int? lessonId, int? userId)
+        public async Task<ResponData<StudyDTO<PracticeLessonDTO>>> PracticeLessonContent(int? lessonId, int? userId, int? courseId)
         {
-            throw new NotImplementedException();
+            ResponData<StudyDTO<PracticeLessonDTO>> result = new ResponData<StudyDTO<PracticeLessonDTO>>();
+
+            if (lessonId == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không nhận được lessonId!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
+                return result;
+            }
+            if (userId == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không nhận được userId!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
+                return result;
+            }
+            if (courseId == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không nhận được courseId!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
+                return result;
+            }
+            try
+            {
+                Lesson lesson = _context.lesson.Find(lessonId);
+                if (lesson == null)
+                {
+                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
+                    return result;
+                }
+                User user = _context.user.Find(userId);
+                if (user == null)
+                {
+                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
+                    return result;
+                }
+                PracticeLesson practiceLesson = _context.practice_lesson.Where(x=>x.LessonId== lessonId).FirstOrDefault();
+                if (practiceLesson == null)
+                {
+                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại PracticeLesson!";
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
+                    return result;
+                }
+                StudyDTO<PracticeLessonDTO> studyData = new StudyDTO<PracticeLessonDTO>();
+                PracticeLessonDTO practiceLessonDTO = new PracticeLessonDTO();
+                practiceLessonDTO.Input = practiceLesson.Input;
+                practiceLessonDTO.Suggest = practiceLesson.Suggest;
+                practiceLessonDTO.BeginCodeMethod = practiceLesson.BeginCodeMethod;
+                practiceLessonDTO.Problem = practiceLesson.Problem;
+                practiceLessonDTO.ProblemDetail = practiceLesson.ProblemDetail;
+                practiceLessonDTO.Explain = practiceLesson.Explain;
+                practiceLessonDTO.CallTestCode = practiceLesson.CallTestCode;
+                practiceLessonDTO.ExpectOutput = practiceLesson.ExpectOutput;
+                var listTestCase = _context.test_case.Where(x=>x.PracticeLessonId== practiceLesson.Id).ToList();
+                List<TryTestCaseDTO> tryTest = new List<TryTestCaseDTO>();
+                foreach (var item in listTestCase)
+                {
+                    TryTestCaseDTO tryTestCaseDTO = new TryTestCaseDTO();
+                    if (item.Input == null)
+                    {
+                        tryTestCaseDTO.Input = "Không có!";
+                    }
+                    else
+                    {
+                        tryTestCaseDTO.Input = item.Input;
+                    }
+                    tryTestCaseDTO.ExpectOutput = item.ExpecOutput;
+                    tryTestCaseDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WAIT;
+                    tryTest.Add(tryTestCaseDTO);
+                }
+                practiceLessonDTO.TestCase = tryTest;
+                studyData.StudyDetail = practiceLessonDTO;
+                studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.PRACTICE;
+                Course course = await _context.course.FindAsync(courseId);
+                studyData.CourseName = course.CourseName;
+                studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
+                result.Data = studyData;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                return result;
+            }
         }
 
-        public async Task<ResponData<StudyDTO<TheoryLessonDTO>>> TheoryLessonContent(int? lessonId, int? userId)
+        public async Task<ResponData<StudyDTO<QuestionLessonDTO>>> QuestionLessonContent(int? lessonId, int? userId, int? courseId)
         {
             throw new NotImplementedException();
         }
@@ -168,6 +254,7 @@ namespace dj_actionlayer.Business.Study
         public async Task<ResponData<StudyDTO<VideoLessonDTO>>> VideoLessonContent(int? lessonId, int? userId, int? courseId)
         {
             ResponData<StudyDTO<VideoLessonDTO>> result = new ResponData<StudyDTO<VideoLessonDTO>>();
+           
             if (lessonId == null)
             {
                 result.Messenger = "Lấy dữ liệu thất bại không nhận được lessonId!";
@@ -203,6 +290,7 @@ namespace dj_actionlayer.Business.Study
                     return result;
                 }
                 StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
+                studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
                 VideoLessonDTO videoLesson = new VideoLessonDTO();
                 videoLesson.VideoUrl= _context.video_lesson.Where(x=>x.LessonId==lessonId).SingleOrDefault().LessonLinkUrl;
                 studyData.StudyDetail = videoLesson;

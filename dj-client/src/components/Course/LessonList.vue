@@ -18,8 +18,8 @@
             item.lessonType == 1
               ? `mdi-play`
               : item.lessonType == 2
-              ? `mdi-file-outline`
-              : `mdi-pencil`
+              ? `mdi-pencil`
+              : `mdi-file-outline`
           "
           :disabled="!item.isDone"
           style="position: relative"

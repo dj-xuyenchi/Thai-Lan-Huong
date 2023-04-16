@@ -10,7 +10,7 @@ namespace dj_webdesigncore.Entities.CourseEntity
     {
         public int PracticeLessonId { get; set; }
         public PracticeLesson PracticeLesson { get; set; }
-        public string Input { get; set; }
+        public string? Input { get; set; }
         public string ExpecOutput { get; set; }
 
     }

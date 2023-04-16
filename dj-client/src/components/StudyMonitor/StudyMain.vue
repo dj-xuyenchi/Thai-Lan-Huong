@@ -1,8 +1,14 @@
 <template>
   <div class="study-main-container">
     <StudyHeader :courseName="lessonData.courseName" courseProcess="1%/100%" />
-    <!-- <VideoLesson /> -->
-    <PracticeLesson />
+    <VideoLesson
+      :videoPath="lessonData.studyDetail.videoUrl"
+      v-if="lessonData.lessonType == 1"
+    />
+    <PracticeLesson
+      :practiceData="lessonData.studyDetail"
+      v-if="lessonData.lessonType == 2"
+    />
     <div
       style="
         margin-left: 5%;
@@ -48,7 +54,7 @@ export default {
     StudyFooter,
     LessonComment,
     LessonList,
-    // VideoLesson,
+    VideoLesson,
     PracticeLesson,
   },
   data() {
@@ -57,10 +63,10 @@ export default {
     };
   },
   computed: {},
-  mounted() {
+  created() {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("id");
-    this.getVideoLesson(
+    this.getLessonDetail(
       this.$route.params.id,
       userId,
       this.$route.params.idCourse,
@@ -69,9 +75,9 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    async getVideoLesson(lessonId, userId, courseId, token) {
+    async getLessonDetail(lessonId, userId, courseId, token) {
       this.setIsLoadedData(true);
-      const data = await StudyAPI.getVideoLesson(
+      const data = await StudyAPI.getLessonDetail(
         lessonId,
         userId,
         courseId,

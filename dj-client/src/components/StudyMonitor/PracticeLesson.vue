@@ -1,7 +1,10 @@
 <template>
   <div class="practice-container">
     <ProblemSolution />
-    <CodeEditor />
+    <CodeEditor
+      :beginCodeMethod="practiceData.beginCodeMethod"
+      :testCase="practiceData.testCase"
+    />
   </div>
 </template>
 
@@ -11,6 +14,9 @@ import ProblemSolution from "./ProblemSolution.vue";
 export default {
   name: "PracticeLesson",
   components: { CodeEditor, ProblemSolution },
+  props: {
+    practiceData: Object,
+  },
 };
 </script>
 

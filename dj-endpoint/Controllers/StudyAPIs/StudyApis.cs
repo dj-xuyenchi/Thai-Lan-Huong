@@ -1,4 +1,5 @@
 ﻿using dj_actionlayer.Business.Study;
+using dj_webdesigncore.Enums.CourseEnums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,11 +21,21 @@ namespace dj_endpoint.Controllers.StudyAPIs
             return Ok(await _study.CommentOfLesson(lessonId));
         }
 
-        [HttpGet("getvideolesson")]
+        [HttpGet("getlessondetail")]
         public async Task<IActionResult> getVideoLesson(int? lessonId, int? userId, int? courseId)
         {
-          //  switch()
-            return Ok(await _study.VideoLessonContent(lessonId,userId,courseId));
+            int type = (int)_appContext.lesson.Find(lessonId).LessonTypeId;
+            switch (type)
+            {
+                case 1:
+                    return Ok(await _study.VideoLessonContent(lessonId, userId, courseId));
+                case 2:
+                    return Ok(await _study.PracticeLessonContent(lessonId, userId, courseId));
+                case 3:
+                    return Ok(await _study.VideoLessonContent(lessonId, userId, courseId));
+                default:
+                    return BadRequest();
+            }
         }
     }
 }

@@ -16,30 +16,21 @@
     />
     <div style="margin-left: 45%; margin-top: 12px">
       <v-tabs v-model="tab" bg-color="transparent" color="basil" grow>
-        <v-tab v-for="item in items" :key="item" :value="item">
-          {{ item }}
+        <v-tab v-for="(item, index) in testCase" :key="item" :value="item">
+          Case {{ index + 1 }}
         </v-tab>
       </v-tabs>
       <v-window v-model="tab" style="margin-bottom: 12px">
-        <v-window-item v-for="(item, index) in items" :key="item" :value="item">
+        <v-window-item v-for="item in testCase" :key="item" :value="item">
           <v-card
             :color="
-              caseInfo[index].isFalse === 1
-                ? `white`
-                : caseInfo[index].isFalse === 2
-                ? `green`
-                : `red`
+              item.result === 4 ? `white` : item.result === 2 ? `green` : `red`
             "
             flat
           >
-            <v-card-text>Đầu vào: {{ caseInfo[index].input }}</v-card-text>
-            <v-card-text
-              >Đầu ra thực tế: {{ caseInfo[index].realOutput }}</v-card-text
-            >
-            <v-card-text
-              >Đầu ra mong muốn:
-              {{ caseInfo[index].expectedOutput }}</v-card-text
-            >
+            <v-card-text>Đầu vào: {{ item.input }}</v-card-text>
+            <v-card-text>Đầu ra thực tế: {{ item.realOutput }}</v-card-text>
+            <v-card-text>Đầu ra mong muốn: {{ item.expectOutput }}</v-card-text>
           </v-card>
         </v-window-item>
       </v-window>
@@ -76,22 +67,17 @@ export default {
     return {
       content: "",
       tab: "TestCase",
-      items: ["Case 1", "Case 2"],
-      caseInfo: [
-        {
-          input: "1,2",
-          realOutput: "43",
-          expectedOutput: "77",
-          isFalse: 1,
-        },
-        {
-          input: "1,2",
-          realOutput: "43",
-          expectedOutput: "27",
-          isFalse: 2,
-        },
-      ],
     };
+  },
+  props: {
+    testCase: [],
+    beginCodeMethod: String,
+  },
+  mounted() {
+    this.content = this.beginCodeMethod;
+  },
+  setup(props) {
+    return { props };
   },
 };
 </script>

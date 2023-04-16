@@ -143,6 +143,7 @@ export default {
 .course-detail-container {
   width: 95%;
   margin-left: 2.5%;
+  min-height: 80vh;
 }
 .course-detail-container .course-detail-left {
   display: block;

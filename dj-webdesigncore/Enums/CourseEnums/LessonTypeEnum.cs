@@ -8,8 +8,9 @@ namespace dj_webdesigncore.Enums.CourseEnums
 {
     public enum LessonType
     {
-        QUESTION = 1,
+        THEORY = 1,
+        QUESTION = 3,
         PRACTICE = 2,
-        THEORY = 3
+       
     }
 }

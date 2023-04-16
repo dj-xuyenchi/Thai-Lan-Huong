@@ -17,7 +17,7 @@ class StudyAPI {
         });
     });
   }
-  getVideoLesson(
+  getLessonDetail(
     lessonId: number,
     userId: number,
     courseId: number,
@@ -25,7 +25,7 @@ class StudyAPI {
   ): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
       HTTP.get(
-        `/study/getvideolesson?lessonId=${lessonId}&userId=${userId}&courseId=${courseId}`,
+        `/study/getlessondetail?lessonId=${lessonId}&userId=${userId}&courseId=${courseId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

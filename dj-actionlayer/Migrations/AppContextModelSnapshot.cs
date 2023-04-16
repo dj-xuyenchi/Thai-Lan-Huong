@@ -682,7 +682,15 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ExpecOutput")
+                    b.Property<string>("BeginCodeMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CallTestCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpectOutput")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
