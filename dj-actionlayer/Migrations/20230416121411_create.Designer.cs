@@ -13,8 +13,8 @@ using AppContext = dj_actionlayer.DAO.AppContext;
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230412083146_updatepracetive")]
-    partial class updatepracetive
+    [Migration("20230416121411_create")]
+    partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,6 +117,33 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("comment_post");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.PracticeDoneData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("DoneData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PracticeLessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PracticeLessonId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("practice_done_data");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.Trophic", b =>
@@ -684,16 +711,22 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ExpecOutput")
+                    b.Property<string>("BeginCodeMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CallTestCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpectOutput")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Explain")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Input")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LessonId")
@@ -708,7 +741,6 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Suggest")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -772,10 +804,12 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Input")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PracticeLessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SortNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1306,6 +1340,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("CommentPostParent");
 
                     b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.PracticeDoneData", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", "PracticeLesson")
+                        .WithMany()
+                        .HasForeignKey("PracticeLessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PracticeLesson");
 
                     b.Navigation("User");
                 });

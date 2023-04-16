@@ -15,6 +15,7 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<StudyDTO<QuestionLessonDTO>>> QuestionLessonContent(int? lessonId, int? userId, int? courseId);
         Task<ResponData<StudyDTO<PracticeLessonDTO>>> PracticeLessonContent(int? lessonId, int? userId, int? courseId);
         Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId);
-        Task<List<ChapterDetailDTO>> LessonListOfUser(int? userId,int? courseId);
+        Task<List<ChapterDetailDTO>> LessonListOfUser(int? userId, int? courseId);
+        Task<ResponData<TryTestCaseResultDTO>> TryTestCase(string? code, int? practiceLessonId);
     }
 }

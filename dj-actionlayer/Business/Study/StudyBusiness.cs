@@ -1,4 +1,5 @@
-﻿using dj_webdesigncore.Business.Study;
+﻿using dj_actionlayer.Business.Compilerrrrrr;
+using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Study;
@@ -193,7 +194,7 @@ namespace dj_actionlayer.Business.Study
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                PracticeLesson practiceLesson = _context.practice_lesson.Where(x=>x.LessonId== lessonId).FirstOrDefault();
+                PracticeLesson practiceLesson = _context.practice_lesson.Where(x => x.LessonId == lessonId).FirstOrDefault();
                 if (practiceLesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại PracticeLesson!";
@@ -210,7 +211,8 @@ namespace dj_actionlayer.Business.Study
                 practiceLessonDTO.Explain = practiceLesson.Explain;
                 practiceLessonDTO.CallTestCode = practiceLesson.CallTestCode;
                 practiceLessonDTO.ExpectOutput = practiceLesson.ExpectOutput;
-                var listTestCase = _context.test_case.Where(x=>x.PracticeLessonId== practiceLesson.Id).ToList();
+                practiceLessonDTO.PracticeLessonId = practiceLesson.Id;
+                var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == practiceLesson.Id).OrderBy(x => x.SortNumber).ToList();
                 List<TryTestCaseDTO> tryTest = new List<TryTestCaseDTO>();
                 foreach (var item in listTestCase)
                 {
@@ -251,10 +253,74 @@ namespace dj_actionlayer.Business.Study
             throw new NotImplementedException();
         }
 
+        public async Task<ResponData<TryTestCaseResultDTO>> TryTestCase(string? code, int? practiceLessonId)
+        {
+            ResponData<TryTestCaseResultDTO> result = new ResponData<TryTestCaseResultDTO>();
+            if (code == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không nhận được code!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
+                return result;
+            }
+            if (practiceLessonId == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không nhận được PracticeLessonId!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
+                return result;
+            }
+            try
+            {
+                var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == practiceLessonId).OrderBy(x => x.SortNumber).ToList();
+                TryTestCaseResultDTO tryTestCaseResultDTO = new TryTestCaseResultDTO();
+                List<TryTestCaseDTO> listTest = new List<TryTestCaseDTO>();
+                foreach (var item in listTestCase)
+                {
+                    TryTestCaseDTO testDTO = new TryTestCaseDTO();
+                    if (item.Input == null)
+                    {
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(code);
+                        testDTO.Output = runCodeResult;
+                        testDTO.Input = null;
+                        testDTO.ExpectOutput = item.ExpecOutput;
+                        if (runCodeResult.Contains("ERORR+-COMPILE@@@???"))
+                        {
+                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.EXCEPTION;
+                            listTest.Add(testDTO);
+                            continue;
+                        }
+                        if (!runCodeResult.Equals(item.ExpecOutput))
+                        {
+                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WRONG;
+                            listTest.Add(testDTO);
+                            continue;
+                        }
+                        if (runCodeResult.Equals(item.ExpecOutput))
+                        {
+                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.SECCESSFULLY;
+                            listTest.Add(testDTO);
+                            continue;
+                        }
+                    }
+                }
+                tryTestCaseResultDTO.TestCase = listTest;
+                result.Data = tryTestCaseResultDTO;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                return result;
+            }
+
+        }
+
         public async Task<ResponData<StudyDTO<VideoLessonDTO>>> VideoLessonContent(int? lessonId, int? userId, int? courseId)
         {
             ResponData<StudyDTO<VideoLessonDTO>> result = new ResponData<StudyDTO<VideoLessonDTO>>();
-           
+
             if (lessonId == null)
             {
                 result.Messenger = "Lấy dữ liệu thất bại không nhận được lessonId!";
@@ -292,7 +358,7 @@ namespace dj_actionlayer.Business.Study
                 StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
                 studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
                 VideoLessonDTO videoLesson = new VideoLessonDTO();
-                videoLesson.VideoUrl= _context.video_lesson.Where(x=>x.LessonId==lessonId).SingleOrDefault().LessonLinkUrl;
+                videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).SingleOrDefault().LessonLinkUrl;
                 studyData.StudyDetail = videoLesson;
                 Course course = await _context.course.FindAsync(courseId);
                 studyData.CourseName = course.CourseName;

@@ -4,6 +4,7 @@
     <CodeEditor
       :beginCodeMethod="practiceData.beginCodeMethod"
       :testCase="practiceData.testCase"
+      :practiceLessonId="practiceData.practiceLessonId"
     />
   </div>
 </template>

@@ -16,6 +16,7 @@ namespace dj_webdesigncore.DTOs.Study
         public string ExpectOutput { get; set; }
         public string Explain { get; set; }
         public string Suggest { get; set; }
+        public int PracticeLessonId { get; set; }
         public List<TryTestCaseDTO> TestCase { get; set; }
     }
 }

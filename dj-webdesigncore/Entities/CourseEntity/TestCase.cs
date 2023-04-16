@@ -12,6 +12,6 @@ namespace dj_webdesigncore.Entities.CourseEntity
         public PracticeLesson PracticeLesson { get; set; }
         public string? Input { get; set; }
         public string ExpecOutput { get; set; }
-
+        public int SortNumber { get; set; }
     }
 }

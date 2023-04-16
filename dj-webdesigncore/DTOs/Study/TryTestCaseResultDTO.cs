@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace dj_webdesigncore.DTOs.Study
 {
-    internal class TryTestCaseResult
+    public class TryTestCaseResultDTO
     {
+        public List<TryTestCaseDTO> TestCase { get; set; }
     }
 }

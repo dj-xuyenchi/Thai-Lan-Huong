@@ -36,7 +36,30 @@ class StudyAPI {
           resolve(response.data);
         })
         .catch((error) => {
-          //    Error(error);
+          //  Error(error);
+          reject(error);
+        });
+    });
+  }
+  tryTestCase(
+    code: string,
+    practiceLessonId: number,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/study/trytestcase?code=${code}&practiceLessonId=${practiceLessonId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          //  Error(error);
           reject(error);
         });
     });

@@ -156,24 +156,6 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "practice_lesson",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProblemDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Input = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpecOutput = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Explain = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Suggest = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_practice_lesson", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "trophic",
                 columns: table => new
                 {
@@ -307,27 +289,6 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "test_case",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PracticeLessonId = table.Column<int>(type: "int", nullable: false),
-                    Input = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExpecOutput = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_test_case", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_test_case_practice_lesson_PracticeLessonId",
-                        column: x => x.PracticeLessonId,
-                        principalTable: "practice_lesson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "districts",
                 columns: table => new
                 {
@@ -454,6 +415,33 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "practice_lesson",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProblemDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BeginCodeMethod = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CallTestCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Input = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExpectOutput = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Explain = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Suggest = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LessonId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_practice_lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_practice_lesson_lesson_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "question_lesson",
                 columns: table => new
                 {
@@ -550,6 +538,28 @@ namespace dj_actionlayer.Migrations
                         name: "FK_chapter_lesson_lesson_LessonId",
                         column: x => x.LessonId,
                         principalTable: "lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "test_case",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PracticeLessonId = table.Column<int>(type: "int", nullable: false),
+                    Input = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExpecOutput = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SortNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_test_case", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_test_case_practice_lesson_PracticeLessonId",
+                        column: x => x.PracticeLessonId,
+                        principalTable: "practice_lesson",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -677,6 +687,33 @@ namespace dj_actionlayer.Migrations
                         column: x => x.UserCreateId,
                         principalTable: "user",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "practice_done_data",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    PracticeLessonId = table.Column<int>(type: "int", nullable: false),
+                    DoneData = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_practice_done_data", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_practice_done_data_practice_lesson_PracticeLessonId",
+                        column: x => x.PracticeLessonId,
+                        principalTable: "practice_lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_practice_done_data_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1061,6 +1098,21 @@ namespace dj_actionlayer.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_practice_done_data_PracticeLessonId",
+                table: "practice_done_data",
+                column: "PracticeLessonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_practice_done_data_UserId",
+                table: "practice_done_data",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_practice_lesson_LessonId",
+                table: "practice_lesson",
+                column: "LessonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_provinces_administrative_region_id",
                 table: "provinces",
                 column: "administrative_region_id");
@@ -1212,6 +1264,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "post_sentence");
+
+            migrationBuilder.DropTable(
+                name: "practice_done_data");
 
             migrationBuilder.DropTable(
                 name: "question_lesson");

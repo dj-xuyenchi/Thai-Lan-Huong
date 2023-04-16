@@ -37,5 +37,11 @@ namespace dj_endpoint.Controllers.StudyAPIs
                     return BadRequest();
             }
         }
+
+        [HttpGet("trytestcase")]
+        public async Task<IActionResult> tryTestCase(string? code, int? practiceLessonId)
+        {
+            return Ok(await _study.TryTestCase(code, practiceLessonId));
+        }
     }
 }

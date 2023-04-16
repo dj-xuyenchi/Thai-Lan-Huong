@@ -54,6 +54,7 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserRole> user_role { get; set; }
 		public DbSet<UserStatus> user_status { get; set; }
 		// Business Entities
+		public DbSet<PracticeDoneData> practice_done_data { get; set; }
 		public DbSet<Trophic> trophic { get; set; }
 		public DbSet<UserTrophic> user_trophic { get; set; }
 		public DbSet<UserLessonNote> user_lesson_note { get; set; }
@@ -67,7 +68,7 @@ namespace dj_actionlayer.DAO
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-		//optionsBuilder.UseSqlServer(Settings.DBConnect());
+	//	optionsBuilder.UseSqlServer(Settings.DBConnect());
 		//	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
 		}
 	}

@@ -26,11 +26,11 @@ namespace dj_actionlayer.Business.Compilerrrrrr
             }
             catch (CompilationErrorException ex)
             {
-                return ex.Message;
+                return "ERORR+-COMPILE@@@???" + ex.Message;
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return "ERORR+-COMPILE@@@???" + ex.ToString();
             }
         }
 
