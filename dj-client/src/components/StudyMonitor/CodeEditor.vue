@@ -15,7 +15,7 @@
       "
     />
     <div style="margin-left: 45%; margin-top: 12px">
-      <v-tabs v-model="listTest" bg-color="transparent" color="basil" grow>
+      <v-tabs v-model="tab" bg-color="transparent" color="basil" grow>
         <v-tab v-for="(item, index) in listTest" :key="item" :value="item">
           Case {{ index + 1 }}
         </v-tab>

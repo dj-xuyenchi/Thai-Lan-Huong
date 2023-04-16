@@ -36,7 +36,7 @@ class StudyAPI {
           resolve(response.data);
         })
         .catch((error) => {
-          //  Error(error);
+          Error(error);
           reject(error);
         });
     });
@@ -59,7 +59,7 @@ class StudyAPI {
           resolve(response.data);
         })
         .catch((error) => {
-          //  Error(error);
+          Error(error);
           reject(error);
         });
     });
