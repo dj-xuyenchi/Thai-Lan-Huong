@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       content: "",
-      tab: "CASE 1",
+      tab: 0,
       listTest: [],
     };
   },
