@@ -1,14 +1,27 @@
 <template>
   <div class="problem-solution-container">
-    <TitlePractice />
+    <TitlePractice
+      :problem="practiceData.problem"
+      :problemDetail="practiceData.problemDetail"
+    />
+    <BodyPractice
+      :explain="practiceData.explain"
+      :input="practiceData.input"
+      :expectOutput="practiceData.expectOutput"
+      :suggest="practiceData.suggest"
+    />
   </div>
 </template>
 
 <script>
 import TitlePractice from "./TitlePractice.vue";
+import BodyPractice from "./BodyPractice.vue";
 export default {
   name: "ProblemSolution",
-  components: { TitlePractice },
+  components: { TitlePractice, BodyPractice },
+  props: {
+    practiceData: Object,
+  },
 };
 </script>
 

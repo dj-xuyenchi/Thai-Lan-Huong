@@ -10,8 +10,7 @@ namespace dj_webdesigncore.Enums.CourseEnums
     {
         SECCESSFULLY = 1,
         WRONG = 2,
-        EXCEPTION =3,
-        WAIT=4
-
+        EXCEPTION = 3,
+        WAIT = 4
     }
 }

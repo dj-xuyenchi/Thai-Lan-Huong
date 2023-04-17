@@ -13,5 +13,6 @@ namespace dj_webdesigncore.Entities.CourseEntity
         public string? Input { get; set; }
         public string ExpecOutput { get; set; }
         public int SortNumber { get; set; }
+        public bool LockTestCase { get; set; }
     }
 }

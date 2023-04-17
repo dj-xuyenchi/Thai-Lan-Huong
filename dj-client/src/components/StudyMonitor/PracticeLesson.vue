@@ -1,6 +1,6 @@
 <template>
   <div class="practice-container">
-    <ProblemSolution />
+    <ProblemSolution :practiceData="practiceData" />
     <CodeEditor
       :beginCodeMethod="practiceData.beginCodeMethod"
       :testCase="practiceData.testCase"

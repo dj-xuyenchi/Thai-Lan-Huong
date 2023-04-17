@@ -226,6 +226,7 @@ namespace dj_actionlayer.Business.Study
                         tryTestCaseDTO.Input = item.Input;
                     }
                     tryTestCaseDTO.ExpectOutput = item.ExpecOutput;
+                    tryTestCaseDTO.LockTestCase = item.LockTestCase;
                     tryTestCaseDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WAIT;
                     tryTest.Add(tryTestCaseDTO);
                 }
@@ -276,6 +277,7 @@ namespace dj_actionlayer.Business.Study
                 foreach (var item in listTestCase)
                 {
                     TryTestCaseDTO testDTO = new TryTestCaseDTO();
+                    testDTO.LockTestCase = item.LockTestCase;
                     if (item.Input == null)
                     {
                         var runCodeResult = await CompileUserCode.RunCSharpCode(code);
