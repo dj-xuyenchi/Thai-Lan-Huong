@@ -18,6 +18,16 @@
       <v-card class="mx-auto" max-width="600">
         <v-list density="compact">
           <v-list-item
+            v-if="isAdmin"
+            active-color="primary"
+            @click="admin.event()"
+          >
+            <template v-slot:prepend>
+              <v-icon :icon="admin.icon"></v-icon>
+            </template>
+            <v-list-item-title v-text="admin.text"></v-list-item-title>
+          </v-list-item>
+          <v-list-item
             v-for="(item, i) in items"
             :key="i"
             :value="item"
@@ -44,6 +54,7 @@ export default {
   name: "UserCheckOut",
   data() {
     return {
+      isAdmin: false,
       showSignIn: true,
       user: {
         avatar: "",
@@ -54,6 +65,13 @@ export default {
       iconStatus: {
         normal: "mdi-chevron-right",
         click: "mdi-chevron-down",
+      },
+      admin: {
+        text: "Quản trị hệ thống",
+        icon: "mdi-desktop-mac",
+        event: () => {
+          this.$router.push({ path: "/admin" });
+        },
       },
       items: [
         {
@@ -126,7 +144,6 @@ export default {
       //   RefreshToken: refreshToken,
       // };
       // this.isLogin(tokenModel);
-      console.log("render lai");
     }
   },
   methods: {

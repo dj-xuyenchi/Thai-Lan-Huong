@@ -1,6 +1,6 @@
 <template>
   <div style="margin-left: 2.5%">
-    <div style="margin-top: 20px">
+    <div style="margin-top: 20px; width: 97.5%">
       <table>
         <thead>
           <tr>
