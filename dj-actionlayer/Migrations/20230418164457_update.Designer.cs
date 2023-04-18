@@ -13,8 +13,8 @@ using AppContext = dj_actionlayer.DAO.AppContext;
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230416121411_create")]
-    partial class create
+    [Migration("20230418164457_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -665,6 +665,9 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LessonStatusId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("LessonTypeId")
                         .HasColumnType("int");
 
@@ -677,9 +680,32 @@ namespace dj_actionlayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LessonStatusId");
+
                     b.HasIndex("LessonTypeId");
 
                     b.ToTable("lesson");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.LessonStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("LessonStatusCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LessonStatusName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("lesson_status");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.LessonType", b =>
@@ -805,6 +831,9 @@ namespace dj_actionlayer.Migrations
 
                     b.Property<string>("Input")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockTestCase")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PracticeLessonId")
                         .HasColumnType("int");
@@ -1555,9 +1584,17 @@ namespace dj_actionlayer.Migrations
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.Lesson", b =>
                 {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.LessonStatus", "LessonStatus")
+                        .WithMany()
+                        .HasForeignKey("LessonStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.LessonType", "LessonType")
                         .WithMany()
                         .HasForeignKey("LessonTypeId");
+
+                    b.Navigation("LessonStatus");
 
                     b.Navigation("LessonType");
                 });

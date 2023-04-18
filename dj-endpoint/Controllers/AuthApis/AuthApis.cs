@@ -1,7 +1,6 @@
 ﻿
 using dj_actionlayer.Business.Auth;
 using dj_webdesigncore.AuthModel;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dj_endpoint.Controllers.AuthApis

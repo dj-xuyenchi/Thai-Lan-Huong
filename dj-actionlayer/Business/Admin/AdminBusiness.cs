@@ -17,7 +17,26 @@ namespace dj_actionlayer.Business.Admin
             try
             {
                 List<LessonDetailDTO> lessonDetailDTO= new List<LessonDetailDTO>();
-
+                var listLesson = _context.lesson.Where(x=>x.LessonStatusId==1).ToList();
+                foreach(var item in listLesson)
+                {
+                    LessonDetailDTO lessonDetail = new LessonDetailDTO();
+                    lessonDetail.LessonDescription = item.LessonDescription;
+                    lessonDetail.LessonName=item.LessonName;
+                    lessonDetail.CreateDateTime = item.CreateDateTime.Day + " - " + item.CreateDateTime.Month + " - " + item.CreateDateTime.Year;
+                    lessonDetail.VideoTime = item.VideoTime;
+                    lessonDetail.LessonType = _context.lesson_type.Find(item.LessonTypeId).LessonTypeName;
+                    if (item.UpdateDateTime != null)
+                    {
+                        lessonDetail.UpdateDateTime = item.UpdateDateTime.Value.Day + " - " + item.UpdateDateTime.Value.Month + " - " + item.UpdateDateTime.Value.Year;
+                    }
+                    else
+                    {
+                        lessonDetail.UpdateDateTime = "";
+                    }
+                    lessonDetailDTO.Add(lessonDetail);
+                }
+                result.Data = lessonDetailDTO;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;

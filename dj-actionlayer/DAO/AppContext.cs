@@ -22,6 +22,7 @@ namespace dj_actionlayer.DAO
 		public DbSet<RefreshToken> refresh_token { get; set; }
 
 		// Course Entities
+		public DbSet<LessonStatus> lesson_status { get; set; }
 		public DbSet<PracticeLesson> practice_lesson { get; set; }
 		public DbSet<VideoLesson> video_lesson { get; set; }
 		public DbSet<QuestionLesson> question_lesson { get; set; }
@@ -67,9 +68,9 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserLikePost> user_like_post { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-	//	optionsBuilder.UseSqlServer(Settings.DBConnect());
-		//	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
+			//optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+	//optionsBuilder.UseSqlServer(Settings.DBConnect());
+			optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
 		}
 	}
 }

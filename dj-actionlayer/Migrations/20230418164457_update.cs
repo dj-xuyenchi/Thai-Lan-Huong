@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dj_actionlayer.Migrations
 {
-    public partial class create : Migration
+    public partial class update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,6 +125,20 @@ namespace dj_actionlayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_gender", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "lesson_status",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LessonStatusCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LessonStatusName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_lesson_status", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -276,11 +290,18 @@ namespace dj_actionlayer.Migrations
                     CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateDateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     LessonTypeId = table.Column<int>(type: "int", nullable: true),
-                    VideoTime = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    VideoTime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LessonStatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_lesson_lesson_status_LessonStatusId",
+                        column: x => x.LessonStatusId,
+                        principalTable: "lesson_status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_lesson_lesson_type_LessonTypeId",
                         column: x => x.LessonTypeId,
@@ -551,7 +572,8 @@ namespace dj_actionlayer.Migrations
                     PracticeLessonId = table.Column<int>(type: "int", nullable: false),
                     Input = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ExpecOutput = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SortNumber = table.Column<int>(type: "int", nullable: false)
+                    SortNumber = table.Column<int>(type: "int", nullable: false),
+                    LockTestCase = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1078,6 +1100,11 @@ namespace dj_actionlayer.Migrations
                 column: "province_code");
 
             migrationBuilder.CreateIndex(
+                name: "IX_lesson_LessonStatusId",
+                table: "lesson",
+                column: "LessonStatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_lesson_LessonTypeId",
                 table: "lesson",
                 column: "LessonTypeId");
@@ -1339,6 +1366,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_type");
+
+            migrationBuilder.DropTable(
+                name: "lesson_status");
 
             migrationBuilder.DropTable(
                 name: "lesson_type");

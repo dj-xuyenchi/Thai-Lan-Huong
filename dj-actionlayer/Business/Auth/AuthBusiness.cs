@@ -34,11 +34,12 @@ namespace dj_actionlayer.Business.Auth
                 Message = "Authenticate success",
                 Data = new AuthDataRespon
                 {
-                    id= user.Id,
-                    avatar=user.UserAvatarData40x40,
+                    id = user.Id,
+                    avatar = user.UserAvatarData40x40,
                     nickName = "Chiến thần Front End",
-                    name= user.UserLastName + " "+ user.UserFisrtName,
-                    Token =await GenToken(user)
+                    name = user.UserLastName + " " + user.UserFisrtName,
+                    Token = await GenToken(user),
+                    role = (int)user.UserRoleId
                 }
             };
         }

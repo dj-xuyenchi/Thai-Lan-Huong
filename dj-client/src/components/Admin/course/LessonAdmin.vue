@@ -288,8 +288,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
+      <tr v-for="(item, index) in tableData" :key="index">
+        <td>{{ index + 1 }}</td>
         <td>2</td>
         <td>2</td>
         <td>2</td>
@@ -303,6 +303,8 @@
 </template>
 
 <script>
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "LessonAdmin",
   component: {},
@@ -310,7 +312,21 @@ export default {
     dialog1: false,
     dialog2: false,
     dialog3: false,
+    tableData: [],
   }),
+  created() {
+    this.getLessonDetail();
+  },
+  methods: {
+    ...mapMutations(["setIsLoadedData"]),
+    async getLessonDetail() {
+      this.setIsLoadedData(true);
+      const token = localStorage.getItem("token");
+      const data = await AdminAPI.getLesson(token);
+      this.tableData = data.data;
+      this.setIsLoadedData(false);
+    },
+  },
 };
 </script>
 

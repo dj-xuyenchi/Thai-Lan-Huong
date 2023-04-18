@@ -15,5 +15,7 @@ namespace dj_webdesigncore.Entities.CourseEntity
 		public int? LessonTypeId { get; set; }
 		public LessonType? LessonType { get; set; }
 		public string VideoTime { get; set; }
+		public int LessonStatusId { get; set; }
+		public LessonStatus LessonStatus { get; set; }
 	}
 }

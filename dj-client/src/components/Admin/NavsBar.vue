@@ -8,9 +8,9 @@
       box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
         rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
         rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      min-width: 17.5%;
+      max-width: 17.5%;
     "
-    max-width="280px"
-    min-width="280px"
   >
     <div style="height: 64px; border-bottom: 1px solid black"></div>
     <div style="color: white; margin-top: 20px">

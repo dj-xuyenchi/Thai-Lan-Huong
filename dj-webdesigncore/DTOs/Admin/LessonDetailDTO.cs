@@ -10,8 +10,8 @@ namespace dj_webdesigncore.DTOs.Admin
     {
         public string LessonName { get; set; }
         public string LessonDescription { get; set; }
-        public DateTime CreateDateTime { get; set; }
-        public DateTime? UpdateDateTime { get; set; }
+        public string CreateDateTime { get; set; }
+        public string? UpdateDateTime { get; set; }
         public string LessonType { get; set; }
         public string VideoTime { get; set; }
     }

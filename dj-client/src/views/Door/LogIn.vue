@@ -163,6 +163,7 @@ export default {
           localStorage.setItem("avatar", login.data.avatar);
           localStorage.setItem("id", login.data.id);
           localStorage.setItem("nickName", login.data.nickName);
+          localStorage.setItem("role", login.data.role);
         }
         this.$router.push({ path: "/home/lobby" });
       }

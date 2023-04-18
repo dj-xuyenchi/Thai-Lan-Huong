@@ -3,7 +3,7 @@
     flat
     rounded="0"
     style="
-      margin-left: 280px;
+      margin-left: 17.5%;
       height: 64px;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     "
@@ -45,7 +45,9 @@
         </v-list>
       </v-menu>
       <v-spacer></v-spacer>
-      <v-btn prepend-icon="mdi mdi-logout-variant"> Log out </v-btn>
+      <v-btn prepend-icon="mdi mdi-logout-variant" @click="logOut()">
+        Log out
+      </v-btn>
     </v-toolbar>
   </v-card>
 </template>
@@ -63,6 +65,18 @@ export default {
   }),
   methods: {
     mergeProps,
+    logOut() {
+      document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      document.cookie = "refreshToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      localStorage.removeItem("token");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("avatar");
+      localStorage.removeItem("name");
+      localStorage.removeItem("id");
+      localStorage.removeItem("nickName");
+      localStorage.removeItem("role");
+      this.$router.push({ path: "/home/lobby" });
+    },
   },
 };
 </script>

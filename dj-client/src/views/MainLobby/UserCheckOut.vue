@@ -70,7 +70,7 @@ export default {
         text: "Quản trị hệ thống",
         icon: "mdi-desktop-mac",
         event: () => {
-          this.$router.push({ path: "/admin" });
+          this.$router.push({ path: "/admin/dashboard" });
         },
       },
       items: [
@@ -101,6 +101,7 @@ export default {
             localStorage.removeItem("name");
             localStorage.removeItem("id");
             localStorage.removeItem("nickName");
+            localStorage.removeItem("role");
             this.setShowLogin();
             this.$router.push({ path: "/home/lobby" });
           },
@@ -131,6 +132,7 @@ export default {
     const id = localStorage.getItem("id");
     const name = localStorage.getItem("name");
     const nickName = localStorage.getItem("nickName");
+    const role = localStorage.getItem("role");
     if (token || refreshToken) {
       this.showSignIn = false;
       this.user = {
@@ -144,6 +146,9 @@ export default {
       //   RefreshToken: refreshToken,
       // };
       // this.isLogin(tokenModel);
+    }
+    if (role == 1) {
+      this.isAdmin = true;
     }
   },
   methods: {
