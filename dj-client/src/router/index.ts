@@ -7,7 +7,9 @@ import StudyMain from "@/components/StudyMonitor/StudyMain.vue";
 import CourseMonitor from "@/components/Course/CourseMonitor.vue";
 import PostMonitor from "@/components/Post/PostMonitor.vue";
 import ForwardToHome from "../views/ForwardToHome.vue";
-import AdminLayout from "@/components/Admin/Layout/AdminLayout.vue";
+import AdminLayout from "@/components/Admin/AdminLayout.vue";
+import DashboardAdmin from "@/components/Admin/DashboardAdmin.vue";
+import LessonAdmin from "@/components/Admin/course/LessonAdmin.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -51,6 +53,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/admin",
     name: "admin",
     component: AdminLayout,
+    children: [
+      {
+        path: "dashboard",
+        component: DashboardAdmin,
+      },
+      {
+        path: "lesson",
+        component: LessonAdmin,
+      },
+    ],
   },
 ];
 
