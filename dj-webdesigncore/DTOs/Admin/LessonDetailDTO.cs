@@ -14,5 +14,6 @@ namespace dj_webdesigncore.DTOs.Admin
         public string? UpdateDateTime { get; set; }
         public string LessonType { get; set; }
         public string VideoTime { get; set; }
+        public int LessonTypeId { get; set; }
     }
 }

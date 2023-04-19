@@ -12,7 +12,20 @@
       max-width: 17.5%;
     "
   >
-    <div style="height: 64px; border-bottom: 1px solid black"></div>
+    <div
+      style="
+        height: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <img
+        :src="`data:image/png;base64,` + getAdminLogo"
+        alt=""
+        style="height: 60px"
+      />
+    </div>
     <div style="color: white; margin-top: 20px">
       <v-list v-for="item in navs" :key="item">
         <v-list-group>
@@ -52,6 +65,7 @@
   </v-card>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "NavsBar",
   data() {
@@ -70,7 +84,7 @@ export default {
             {
               icon: "mdi mdi-bookshelf",
               title: "Khóa học",
-              to: "/admin/courses",
+              to: "/admin/course",
             },
             {
               icon: "mdi mdi-book-open-variant",
@@ -155,6 +169,9 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapGetters(["getAdminLogo"]),
   },
 };
 </script>

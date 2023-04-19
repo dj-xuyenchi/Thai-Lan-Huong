@@ -10,16 +10,26 @@
         </thead>
         <tbody>
           <tr>
-            <td>12</td>
-            <td>23</td>
+            <td>{{ input }}</td>
+            <td>{{ expectOutput }}</td>
           </tr>
         </tbody>
       </table>
-      <span
-        style="font-family: inherit; font-weight: 350"
-        v-html="explain"
-      ></span>
-      <span v-html="Suggest"></span>
+      <div v-if="explain.length > 0" style="margin-top: 20px">
+        <h4 style="font-size: 24px; font-family: inherit; font-weight: 700">
+          Giải thích
+        </h4>
+        <span
+          style="font-family: inherit; font-weight: 350"
+          v-html="explain"
+        ></span>
+      </div>
+      <div v-if="suggest.length > 0" style="margin-top: 20px">
+        <h4 style="font-size: 24px; font-family: inherit; font-weight: 700">
+          Gợi ý cách làm
+        </h4>
+        <span v-html="suggest"></span>
+      </div>
     </div>
   </div>
 </template>

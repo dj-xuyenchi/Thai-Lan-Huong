@@ -1,6 +1,10 @@
 <template>
-  <AddPractice />
-  <LessonTable :data="tableData" />
+  <div style="display: flex; justify-content: space-between">
+    <AddPractice />
+    <AddPractice />
+    <AddTheory />
+  </div>
+  <LessonTable :data="tableData" style="margin-top: 12px" />
 </template>
 
 <script>
@@ -8,13 +12,11 @@ import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import { mapMutations } from "vuex";
 import AddPractice from "./AddPractice";
 import LessonTable from "./LessonTable";
+import AddTheory from "./AddTheory";
 export default {
   name: "LessonAdmin",
-  components: { AddPractice, LessonTable },
+  components: { AddPractice, LessonTable, AddTheory },
   data: () => ({
-    dialog1: false,
-    dialog2: false,
-    dialog3: false,
     tableData: [],
   }),
   created() {

@@ -191,7 +191,6 @@ export default {
   methods: {
     showResponComment() {
       this.commentRespon = !this.commentRespon;
-      console.log(this.commentRespon);
     },
   },
   props: {

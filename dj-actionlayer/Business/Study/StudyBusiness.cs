@@ -341,8 +341,8 @@ namespace dj_actionlayer.Business.Study
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
                 return result;
             }
-            try
-            {
+            //try
+            //{
                 Lesson lesson = _context.lesson.Find(lessonId);
                 if (lesson == null)
                 {
@@ -370,12 +370,12 @@ namespace dj_actionlayer.Business.Study
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
-            catch (Exception ex)
-            {
-                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
-                return result;
-            }
-        }
+            //catch (Exception ex)
+            //{
+            //    result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+            //    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+            //    return result;
+            //}
+        //}
     }
 }

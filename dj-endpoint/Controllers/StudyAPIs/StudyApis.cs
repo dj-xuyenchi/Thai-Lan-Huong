@@ -22,7 +22,7 @@ namespace dj_endpoint.Controllers.StudyAPIs
         }
 
         [HttpGet("getlessondetail")]
-        public async Task<IActionResult> getVideoLesson(int? lessonId, int? userId, int? courseId)
+        public async Task<IActionResult> getLesson(int? lessonId, int? userId, int? courseId)
         {
             int type = (int)_appContext.lesson.Find(lessonId).LessonTypeId;
             switch (type)

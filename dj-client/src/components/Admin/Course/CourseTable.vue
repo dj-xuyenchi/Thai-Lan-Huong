@@ -4,13 +4,11 @@
       <thead>
         <tr>
           <th class="text-left">STT</th>
-          <th class="text-left">Tên bài học</th>
-          <th class="text-left">Mô tả</th>
+          <th class="text-left">Tên học phần</th>
           <th class="text-left">Ngày tạo</th>
           <th class="text-left">Cập nhật</th>
-          <th class="text-left">Loại bài học</th>
           <th class="text-left">Thời lượng</th>
-          <th class="text-left">Action</th>
+          <th class="text-center">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -20,9 +18,16 @@
           <td>{{ item.lessonDescription }}</td>
           <td>{{ item.createDateTime }}</td>
           <td>{{ item.updateDateTime }}</td>
-          <td>{{ item.lessonType }}</td>
-          <td>{{ item.videoTime }}</td>
-          <td>{{ item.videoTime }}</td>
+          <td
+            style="
+              display: flex;
+              justify-content: space-evenly;
+              align-items: center;
+            "
+          >
+            <BtnUpdateCourse />
+            <AddChapterToCourse />
+          </td>
         </tr>
       </tbody>
     </v-table>
@@ -30,8 +35,11 @@
 </template>
 
 <script>
+import BtnUpdateCourse from "./BtnUpdateCourse";
+import AddChapterToCourse from "./AddChapterToCourse";
 export default {
-  name: "LessonTable",
+  name: "CourseTable",
+  components: { BtnUpdateCourse, AddChapterToCourse },
   props: {
     data: [],
   },

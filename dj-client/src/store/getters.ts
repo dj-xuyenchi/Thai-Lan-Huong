@@ -8,4 +8,7 @@ export default {
   getActiveMenu: (state: any) => {
     return state.activeMenu;
   },
+  getAdminLogo: (state: any) => {
+    return state.adminLogo;
+  },
 };
