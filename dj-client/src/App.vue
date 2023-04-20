@@ -34,6 +34,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
+import AdminAPI from "./apis/APIAdmin/AdminAPI.ts";
+import { mapMutations } from "vuex";
 export default defineComponent({
   name: "App",
   data() {
@@ -43,6 +45,18 @@ export default defineComponent({
   },
   computed: {
     ...mapGetters(["getIsLoadedData"]),
+  },
+  created() {
+    this.isAdmin();
+  },
+  methods: {
+    ...mapMutations(["setIsLoadedData"]),
+    async isAdmin() {
+      this.setIsLoadedData(true);
+      const token = localStorage.getItem("token");
+      await AdminAPI.isMemberOrAdmin(token);
+      this.setIsLoadedData(false);
+    },
   },
 });
 </script>

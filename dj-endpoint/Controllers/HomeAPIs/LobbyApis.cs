@@ -15,6 +15,9 @@ namespace dj_endpoint.Controllers.HomeAPIs
         {
             this._lobby = new LobbyBusiness();
         }
+       
+
+
         [HttpGet("lobbyhomedata")]
         public async Task<IActionResult> getLobbyData()
         {

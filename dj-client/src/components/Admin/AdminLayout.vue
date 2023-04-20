@@ -16,14 +16,14 @@ export default {
   name: "AdminLayout",
   components: { NavsBar, HeaderAdmin },
   created() {
-    this.isAdmin();
+    this.isMemberOrAdmin();
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    async isAdmin() {
+    async isMemberOrAdmin() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await AdminAPI.isAdmin(token);
+      const data = await AdminAPI.isMemberOrAdmin(token);
       this.setIsLoadedData(false);
     },
   },

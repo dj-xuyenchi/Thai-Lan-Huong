@@ -8,15 +8,15 @@ namespace dj_webdesigncore.Request.Lesson
 {
     public class PracticeLesson
     {
-      public  lessonName: "",
-    lessonDescription: "",
-    lessonTime: "",
-    problem: "",
-    problemDetail: "",
-    beginCode: "",
-    inputExemple: "",
-    outputExemple: "",
-    explainCode: "",
-    suggest: "",
+    //  public  lessonName: "",
+    //lessonDescription: "",
+    //lessonTime: "",
+    //problem: "",
+    //problemDetail: "",
+    //beginCode: "",
+    //inputExemple: "",
+    //outputExemple: "",
+    //explainCode: "",
+    //suggest: "",
     }
 }
