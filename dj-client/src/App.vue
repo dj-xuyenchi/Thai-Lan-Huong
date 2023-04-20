@@ -34,7 +34,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapGetters } from "vuex";
-import AdminAPI from "./apis/APIAdmin/AdminAPI.ts";
+import AdminAPI from "./apis/APIAdmin/AdminAPI";
 import { mapMutations } from "vuex";
 export default defineComponent({
   name: "App",
@@ -54,7 +54,9 @@ export default defineComponent({
     async isAdmin() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      await AdminAPI.isMemberOrAdmin(token);
+      if (token) {
+        const data = await AdminAPI.isMemberOrAdmin(token ? token : "");
+      }
       this.setIsLoadedData(false);
     },
   },
