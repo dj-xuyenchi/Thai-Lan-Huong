@@ -2,6 +2,22 @@
   "version": 3,
   "targets": {
     "net6.0": {
+      "Microsoft.AspNetCore.Authentication.Google/6.0.16": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -1134,6 +1150,21 @@
     }
   },
   "libraries": {
+    "Microsoft.AspNetCore.Authentication.Google/6.0.16": {
+      "sha512": "MbWGOoW1XGcy6aFEmXaQwztyhR+VjmvhSZW+d8/0xE5PO9S9nWUYGRNEPDqdk95vxxbQQHmBDG+nFYoeh8FmgA==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.authentication.google/6.0.16",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll",
+        "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.xml",
+        "microsoft.aspnetcore.authentication.google.6.0.16.nupkg.sha512",
+        "microsoft.aspnetcore.authentication.google.nuspec"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.0": {
       "sha512": "eIhpX25uUn33Ornnh718V2G/nESvk3TNX2FjTarv634GLfE50Fhz2geJ/QYpSmFaUIQ1hkZPfd9i0LcpZ9bfLQ==",
       "type": "package",
@@ -2914,6 +2945,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Microsoft.AspNetCore.Authentication.Google >= 6.0.16",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3",
       "dj-actionlayer >= 1.0.0",
@@ -2921,36 +2953,43 @@
     ]
   },
   "packageFolders": {
-    "/Users/quanganhdo/.nuget/packages/": {}
+    "C:\\Users\\LTS\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-endpoint/dj-endpoint.csproj",
+      "projectUniqueName": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
       "projectName": "dj-endpoint",
-      "projectPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-endpoint/dj-endpoint.csproj",
-      "packagesPath": "/Users/quanganhdo/.nuget/packages/",
-      "outputPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-endpoint/obj/",
+      "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
+      "packagesPath": "C:\\Users\\LTS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/quanganhdo/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\LTS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-actionlayer/dj-actionlayer.csproj": {
-              "projectPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-actionlayer/dj-actionlayer.csproj"
+            "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj": {
+              "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj"
             },
-            "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj": {
-              "projectPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj"
+            "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
+              "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj"
             }
           }
         }
@@ -2965,6 +3004,10 @@
       "net6.0": {
         "targetAlias": "net6.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Google": {
+            "target": "Package",
+            "version": "[6.0.16, )"
+          },
           "Microsoft.AspNetCore.Authentication.JwtBearer": {
             "target": "Package",
             "version": "[6.0.0, )"
@@ -2993,7 +3036,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -22,6 +22,7 @@
     "roboto-fontface": "*",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
+    "vue-google-oauth2": "^1.5.10",
     "vue-router": "^4.0.3",
     "vue3-ace-editor": "^2.2.2",
     "vuejs-ace-editor": "^1.0.1",

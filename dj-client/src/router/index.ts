@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import LobbyMain from "../views/MainLobby/LobbyMain.vue";
 import LogIn from "../views/Door/LogIn.vue";
+import SignIn from "../views/Door/SignIn.vue";
+import ConfirmEmail from "../views/Door/ConfirmEmail.vue";
 import AppNewFeedVue from "@/components/MainHome/AppNewFeed.vue";
 import CourseDetail from "@/components/Course/CourseDetail.vue";
 import StudyMain from "@/components/StudyMonitor/StudyMain.vue";
@@ -45,6 +47,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: LogIn,
+  },
+  {
+    path: "/signin",
+    name: "signin",
+    component: SignIn,
+    children: [
+      {
+        path: "confirm",
+        component: ConfirmEmail,
+      },
+    ],
   },
   {
     path: "/study/:id/:idCourse",

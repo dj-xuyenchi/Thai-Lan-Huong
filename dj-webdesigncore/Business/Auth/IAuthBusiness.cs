@@ -3,6 +3,7 @@ using dj_webdesigncore.AuthModel;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Request.Account;
 
 namespace dj_webdesigncore.Business.Auth
 {
@@ -13,6 +14,7 @@ namespace dj_webdesigncore.Business.Auth
         Task<DateTime> ConvertUnixTimeToDateTime(long utcExpireDate);
         Task<TokenModel> GenToken(User user);
         Task<string> GenerateRefreshToken();
+        Task<ResponData<NewAccount>> SignIn(SignInAccount newAccount);
     }
 }
 

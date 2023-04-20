@@ -24,6 +24,17 @@ class AuthApis {
         });
     });
   }
+  signIn(newAccount: object): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/login/signin`, newAccount)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
   //   detail(id: number): Promise<CamNhanHocVien> {
   //     return new Promise<CamNhanHocVien>((resolve: any, reject: any) => {

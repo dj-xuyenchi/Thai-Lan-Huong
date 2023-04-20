@@ -1,7 +1,12 @@
 ﻿using dj_actionlayer.DAO;
 using dj_webdesigncore.AuthModel;
 using dj_webdesigncore.Business.Auth;
+using dj_webdesigncore.DTOs;
+using dj_webdesigncore.DTOs.Lobby;
+using dj_webdesigncore.Entities.BusinessEntity;
+using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Request.Account;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace dj_actionlayer.Business.Auth
 {
-    public class AuthBusiness : BaseBusiness,IAuthBusiness
+    public class AuthBusiness : BaseBusiness, IAuthBusiness
     {
         public async Task<LoginResponse<AuthDataRespon>> Login(RequestLogin request)
         {
@@ -189,7 +194,7 @@ namespace dj_actionlayer.Business.Auth
 
             var token = jwtTokenHandler.CreateToken(tokenDescription);
             var accessToken = jwtTokenHandler.WriteToken(token);
-            var refreshToken =await GenerateRefreshToken();
+            var refreshToken = await GenerateRefreshToken();
 
             //Lưu database
             var refreshTokenEntity = new RefreshToken
@@ -204,10 +209,8 @@ namespace dj_actionlayer.Business.Auth
                 // Thời gian refresh token có hiệu lực
                 ExpiredAt = DateTime.Now.AddDays(1)
             };
-
-           await _context.AddAsync(refreshTokenEntity);
+            await _context.AddAsync(refreshTokenEntity);
             await _context.SaveChangesAsync();
-
             return new TokenModel
             {
                 AccessToken = accessToken,
@@ -221,6 +224,64 @@ namespace dj_actionlayer.Business.Auth
             {
                 rng.GetBytes(random);
                 return Convert.ToBase64String(random);
+            }
+        }
+
+        public async Task<ResponData<NewAccount>> SignIn(SignInAccount newAccount)
+        {
+            ResponData<NewAccount> result = new ResponData<NewAccount>();
+            try
+            {
+                NewAccount acc = new NewAccount();
+                if (_context.user.Where(x => x.UserName == newAccount.userName).SingleOrDefault() != null)
+                {
+                    acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.USEREXIST;
+                    acc.Detail = "Tài khoản đã tồn tại!";
+                    result.Data = acc;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                if (_context.user.Where(x => x.UserEmail == newAccount.email).SingleOrDefault() != null)
+                {
+                    acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.EMAILEXIST;
+                    acc.Detail = "Email đã sử dụng!";
+                    result.Data = acc;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                if (_context.user.Where(x => x.NumberPhone == newAccount.sdt).SingleOrDefault() != null)
+                {
+                    acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.PHONEEXIST;
+                    acc.Detail = "SDT đã sử dụng!";
+                    result.Data = acc;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                acc.Detail = "Thành công chờ xác nhận Email!";
+                acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.SECCESSFULLY;
+                User user = new User();
+                user.NumberPhone = newAccount.sdt;
+                user.UserName = newAccount.userName;
+                user.UserPass = newAccount.password;
+                user.UserEmail = newAccount.email;
+                user.UserFisrtName = "Nhân Tố ";
+                user.UserLastName = "Bí Ẩn";
+                user.UserRoleId = 3;
+                user.GenderId = 4;
+                user.UserStatusId = 3;
+                await _context.user.AddAsync(user);
+                await _context.SaveChangesAsync();
+                acc.Email = newAccount.email;
+                result.Data = acc;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.WAITEMAILCOMFIRM;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
             }
         }
     }

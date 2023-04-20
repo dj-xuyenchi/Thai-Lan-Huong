@@ -15,8 +15,8 @@
       <v-text-field
         v-model="userName"
         density="compact"
-        placeholder="Email, Sdt hoặc tên đăng nhập."
-        prepend-inner-icon="mdi-email-outline"
+        placeholder="Tên đăng nhập."
+        prepend-inner-icon="mdi-account"
         variant="outlined"
         :rules="[rules.minUser]"
       ></v-text-field>
@@ -84,23 +84,22 @@
           align-items: center;
         "
       >
-        <v-img
+        <!-- <v-img
           max-width="60"
           :src="require('../../assets/google.png')"
           style="padding: 0px 8px 0px 8px"
-        ></v-img>
-        <v-img
+        ></v-img> -->
+        <!-- <v-img
           max-width="60"
           :src="require('../../assets/fb.png')"
           style="padding: 0px 8px 0px 8px"
-        ></v-img>
+        ></v-img> -->
       </div>
       <v-card-text class="text-center">
         <a
           class="text-blue text-decoration-none"
-          href="#"
+          href="/signin"
           rel="noopener noreferrer"
-          target="_blank"
         >
           Đăng ký thành viên <v-icon icon="mdi-chevron-right"></v-icon>
           <span>{{ getUserNameLogIn }}</span>

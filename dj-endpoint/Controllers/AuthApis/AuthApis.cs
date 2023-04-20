@@ -1,6 +1,7 @@
 ﻿
 using dj_actionlayer.Business.Auth;
 using dj_webdesigncore.AuthModel;
+using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dj_endpoint.Controllers.AuthApis
@@ -23,6 +24,11 @@ namespace dj_endpoint.Controllers.AuthApis
         public async Task<IActionResult> RefreshToken(TokenModel tokenModel)
         {
             return Ok(await authBusiness.RenewToken(tokenModel));
+        }
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn(SignInAccount newAccount)
+        {
+            return Ok(await authBusiness.SignIn(newAccount));
         }
     }
 }

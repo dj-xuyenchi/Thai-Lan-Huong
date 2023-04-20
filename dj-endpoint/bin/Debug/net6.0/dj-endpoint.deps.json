@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "dj-endpoint/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNetCore.Authentication.Google": "6.0.16",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.0",
           "Swashbuckle.AspNetCore": "6.2.3",
           "dj-actionlayer": "1.0.0",
@@ -15,6 +16,14 @@
         },
         "runtime": {
           "dj-endpoint.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Authentication.Google/6.0.16": {
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.Authentication.Google.dll": {
+            "assemblyVersion": "6.0.16.0",
+            "fileVersion": "6.0.1623.17406"
+          }
         }
       },
       "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.0": {
@@ -284,22 +293,22 @@
           "runtimes/win-arm/native/Microsoft.Data.SqlClient.SNI.dll": {
             "rid": "win-arm",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.1.1.0"
           },
           "runtimes/win-arm64/native/Microsoft.Data.SqlClient.SNI.dll": {
             "rid": "win-arm64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.1.1.0"
           },
           "runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll": {
             "rid": "win-x64",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.1.1.0"
           },
           "runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll": {
             "rid": "win-x86",
             "assetType": "native",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "2.1.1.0"
           }
         }
       },
@@ -712,6 +721,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Microsoft.AspNetCore.Authentication.Google/6.0.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MbWGOoW1XGcy6aFEmXaQwztyhR+VjmvhSZW+d8/0xE5PO9S9nWUYGRNEPDqdk95vxxbQQHmBDG+nFYoeh8FmgA==",
+      "path": "microsoft.aspnetcore.authentication.google/6.0.16",
+      "hashPath": "microsoft.aspnetcore.authentication.google.6.0.16.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Authentication.JwtBearer/6.0.0": {
       "type": "package",

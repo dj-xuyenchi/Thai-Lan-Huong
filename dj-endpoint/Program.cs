@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
-
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +24,7 @@ var secretKeyBytes = Encoding.UTF8.GetBytes(Settings.SecretKey());
 // Tạo xác thực
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {
+
     opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         //Tu Cap Token
@@ -51,7 +51,7 @@ builder.Services.AddAuthorization(option =>
     option.AddPolicy("ADMIN", policy => policy.RequireClaim(
      ClaimTypes.Role, "ADMIN"
      ));
-    
+
 });
 builder.Services.AddCors(options =>
 {
