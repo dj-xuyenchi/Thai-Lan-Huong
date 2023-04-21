@@ -10,6 +10,7 @@
         rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
       min-width: 17.5%;
       max-width: 17.5%;
+      top: 0;
     "
   >
     <div
