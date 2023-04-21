@@ -6,6 +6,10 @@
       margin-left: 17.5%;
       height: 64px;
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 82.5%;
     "
   >
     <v-toolbar prominent extended>

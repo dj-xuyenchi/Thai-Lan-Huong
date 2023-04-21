@@ -34,7 +34,7 @@ export default {
 #admin-body {
   margin-left: 18.75%;
   width: 80%;
-  margin-top: 40px;
+  margin-top: 104px;
   min-height: 100vh;
 }
 </style>
