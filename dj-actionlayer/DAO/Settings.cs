@@ -24,5 +24,9 @@ namespace dj_actionlayer.DAO
         {
             return "Server=125.212.224.205;Integrated Security=false;Initial Catalog=djxuyen1_coding;MultipleActiveResultSets=True;User ID= djxuyen1_djxuyen1;Password =Mamama99@";
         }
+        public static string[] emailConfig()
+        {
+            return new string[] { "do.quanganh99zz@gmail.com", "cugzmhlctsbfssga", "smtp.gmail.com", "587" };
+        }
     }
 }

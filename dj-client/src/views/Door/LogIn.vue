@@ -148,6 +148,11 @@ export default {
         this.dialog = false;
         this.isUnValidUser = true;
       }
+      if (login.success !== 3) {
+        this.loginStatus = "Tài khoản chưa được kích hoạt.";
+        this.dialog = false;
+        this.isUnValidUser = true;
+      }
       if (login.success === 0) {
         this.dialog = false;
         // const now = new Date();
@@ -155,15 +160,13 @@ export default {
         // document.cookie = `token=${login.data.accessToken}; expires=${now}`;
         // document.cookie = `refreshToken=${login.data.refreshToken}; expires=${now}`;
         this.isUnValidUser = false;
-        if (this.isSave) {
-          localStorage.setItem("token", login.data.token.accessToken);
-          localStorage.setItem("refreshToken", login.data.token.refreshToken);
-          localStorage.setItem("name", login.data.name);
-          localStorage.setItem("avatar", login.data.avatar);
-          localStorage.setItem("id", login.data.id);
-          localStorage.setItem("nickName", login.data.nickName);
-          localStorage.setItem("role", login.data.role);
-        }
+        localStorage.setItem("token", login.data.token.accessToken);
+        localStorage.setItem("refreshToken", login.data.token.refreshToken);
+        localStorage.setItem("name", login.data.name);
+        localStorage.setItem("avatar", login.data.avatar);
+        localStorage.setItem("id", login.data.id);
+        localStorage.setItem("nickName", login.data.nickName);
+        localStorage.setItem("role", login.data.role);
         this.$router.push({ path: "/home/lobby" });
       }
     },

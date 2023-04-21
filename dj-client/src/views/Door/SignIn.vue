@@ -226,7 +226,8 @@ export default {
       if (result.data.status == 1) {
         this.dialog = false;
         this.isUnValidUser = true;
-        this.$router.push({ path: "/signin/confirm" });
+        localStorage.setItem("confirm", this.email);
+        this.$router.push({ path: "/confirm" });
       }
       if (result.data.status == 5) {
         this.loginStatus = "SDT đã tồn tại!";

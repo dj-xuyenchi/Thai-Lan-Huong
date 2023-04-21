@@ -52,12 +52,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/signin",
     name: "signin",
     component: SignIn,
-    children: [
-      {
-        path: "confirm",
-        component: ConfirmEmail,
-      },
-    ],
+  },
+  {
+    path: "/confirm",
+    name: "confirm",
+    component: ConfirmEmail,
   },
   {
     path: "/study/:id/:idCourse",

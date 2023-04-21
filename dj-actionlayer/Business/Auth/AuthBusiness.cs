@@ -1,4 +1,5 @@
-﻿using dj_actionlayer.DAO;
+﻿using dj_actionlayer.Business.Email;
+using dj_actionlayer.DAO;
 using dj_webdesigncore.AuthModel;
 using dj_webdesigncore.Business.Auth;
 using dj_webdesigncore.DTOs;
@@ -22,6 +23,7 @@ namespace dj_actionlayer.Business.Auth
 {
     public class AuthBusiness : BaseBusiness, IAuthBusiness
     {
+        private readonly SendEmail _sendEmail = new SendEmail(Settings.emailConfig()[0], Settings.emailConfig()[1], Settings.emailConfig()[2], int.Parse(Settings.emailConfig()[3]));
         public async Task<LoginResponse<AuthDataRespon>> Login(RequestLogin request)
         {
             var user = _context.user.SingleOrDefault(x => x.UserPass == request.Password && x.UserName == request.UserName);
@@ -31,6 +33,14 @@ namespace dj_actionlayer.Business.Auth
                 {
                     Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED,
                     Message = "Invalid username/password"
+                };
+            }
+            if(user.UserStatusId == 3)
+            {
+                return new LoginResponse<AuthDataRespon>
+                {
+                    Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.UNACTIVEUSER,
+                    Message = "Authenticate success",
                 };
             }
             return new LoginResponse<AuthDataRespon>
@@ -271,6 +281,16 @@ namespace dj_actionlayer.Business.Auth
                 user.UserStatusId = 3;
                 await _context.user.AddAsync(user);
                 await _context.SaveChangesAsync();
+                ConfirmEmail confirmEmail = new ConfirmEmail();
+                confirmEmail.IsConfirm = false;
+                confirmEmail.UserId = user.Id;
+                confirmEmail.RequiredDateTime = DateTime.Now;
+                confirmEmail.ExpiredDateTime = DateTime.Now.AddDays(1);
+                Random rand = new Random();
+                confirmEmail.Code = rand.Next(10000000, 99999999);
+                await _context.confirm_email.AddAsync(confirmEmail);
+                await _context.SaveChangesAsync();
+                _sendEmail.SendConfirmCreateAccount(newAccount.email, "https://dj-xuyenchi.edu.vn/"+ confirmEmail.Code);
                 acc.Email = newAccount.email;
                 result.Data = acc;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.WAITEMAILCOMFIRM;

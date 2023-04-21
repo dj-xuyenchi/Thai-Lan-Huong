@@ -8,7 +8,8 @@ namespace dj_webdesigncore.Enums.AuthEnums
 {
     public enum AuthStatusEnum
     {
-        SUCCESS=0,
+        SUCCESS = 0,
         FAILED = 1,
+        UNACTIVEUSER = 2
     }
 }
