@@ -30,5 +30,10 @@ namespace dj_endpoint.Controllers.AuthApis
         {
             return Ok(await authBusiness.SignIn(newAccount));
         }
+        [HttpGet("confirmemail")]
+        public async Task<IActionResult> ConfirmEmail(string code)
+        {
+            return Ok(await authBusiness.ConfirmAccount(code));
+        }
     }
 }

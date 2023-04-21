@@ -12,6 +12,7 @@ namespace dj_webdesigncore.Enums.ApiEnums
         WAITEMAILCOMFIRM = 5,
         FAILED = 2,
         PARAMNULL = 3,
-        NOTFOUND = 4
+        NOTFOUND = 4,
+       
     }
 }

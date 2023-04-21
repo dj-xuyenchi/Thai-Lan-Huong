@@ -148,7 +148,7 @@ export default {
         this.dialog = false;
         this.isUnValidUser = true;
       }
-      if (login.success !== 3) {
+      if (login.success == 3) {
         this.loginStatus = "Tài khoản chưa được kích hoạt.";
         this.dialog = false;
         this.isUnValidUser = true;

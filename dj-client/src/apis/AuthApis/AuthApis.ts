@@ -35,6 +35,17 @@ class AuthApis {
         });
     });
   }
+  confirmAccount(code: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/login/confirmemail?code=` + code)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 
   //   detail(id: number): Promise<CamNhanHocVien> {
   //     return new Promise<CamNhanHocVien>((resolve: any, reject: any) => {

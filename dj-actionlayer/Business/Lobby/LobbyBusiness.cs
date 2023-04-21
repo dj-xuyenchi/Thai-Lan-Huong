@@ -61,12 +61,28 @@ namespace dj_actionlayer.Business.Lobby
                     chapterDetailDTO.LessonCount = item.ChapterLessonCount;
                     List<LessonDetailDTO> lessonDetailDTOResult = new List<LessonDetailDTO>();
                     List<ChapterLesson> lessonOfChapter = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).OrderBy(x => x.SortNumber).ToList();
+                    User user =null;
+                    if (userId != null || userId != -1)
+                    {
+                        user = _context.user.Find(userId);
+                    }
+                    if(user != null)
+                    {
+                        UserCourse userCourse = _context.user_course.Where(x => x.UserId == user.Id).SingleOrDefault();
+                        if(userCourse != null)
+                        {
+                            courseDetail.isRegistered = true;
+                        }
+                        else
+                        {
+                            courseDetail.isRegistered = false;
+                        }
+                    }
                     foreach (var item1 in lessonOfChapter)
                     {
                         LessonDetailDTO lessonDetailDTO = new LessonDetailDTO();
-                        if (userId != null||userId!=-1)
+                        if (userId != null || userId != -1)
                         {
-                            User user = _context.user.Find(userId);
                             if (user == null)
                             {
                                 lessonDetailDTO.IsDone = false;
@@ -132,21 +148,21 @@ namespace dj_actionlayer.Business.Lobby
             ResponData<List<CourseListDTO>> result = new ResponData<List<CourseListDTO>>();
             try
             {
-                List<CourseListDTO> courseListDTOs= new List<CourseListDTO>();
+                List<CourseListDTO> courseListDTOs = new List<CourseListDTO>();
                 var listCourseType = _context.course_type.ToList();
-                foreach(var courseType in listCourseType )
+                foreach (var courseType in listCourseType)
                 {
-                    CourseListDTO courseListDTO= new CourseListDTO();
+                    CourseListDTO courseListDTO = new CourseListDTO();
                     List<CourseDTO> courseDTOs = new List<CourseDTO>();
-                  
-                    var courseListOfType = _context.course.Where(x=>x.CourseTypeId==courseType.Id).ToList();
+
+                    var courseListOfType = _context.course.Where(x => x.CourseTypeId == courseType.Id).ToList();
                     courseListDTO.CourseType = courseType.CourseTypeName;
                     if (courseListOfType.Count == 0)
                     {
                         courseListDTO.IsEmpty = true;
                         continue;
                     }
-                    foreach(var course in courseListOfType )
+                    foreach (var course in courseListOfType)
                     {
                         CourseDTO courseDTO = new CourseDTO();
                         courseDTO.CourseId = course.Id;

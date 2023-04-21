@@ -10,7 +10,7 @@ namespace dj_webdesigncore.Business.Lobby
 {
     public interface ILobbyBusiness
     {
-       Task<ResponData<LobbyDTO>> LobbyContent();
+        Task<ResponData<LobbyDTO>> LobbyContent();
         Task<ResponData<CourseDetailDTO>> CourseDetailContent(int? courseId, int? userId);
         Task<ResponData<List<CourseListDTO>>> CourseListContent();
     }

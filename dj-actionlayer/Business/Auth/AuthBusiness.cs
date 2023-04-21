@@ -16,6 +16,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,7 @@ namespace dj_actionlayer.Business.Auth
                     Message = "Invalid username/password"
                 };
             }
-            if(user.UserStatusId == 3)
+            if (user.UserStatusId == 3)
             {
                 return new LoginResponse<AuthDataRespon>
                 {
@@ -279,6 +280,7 @@ namespace dj_actionlayer.Business.Auth
                 user.UserRoleId = 3;
                 user.GenderId = 4;
                 user.UserStatusId = 3;
+                user.UserAvatarData40x40 = Convert.FromBase64String(Settings.defaultImage());
                 await _context.user.AddAsync(user);
                 await _context.SaveChangesAsync();
                 ConfirmEmail confirmEmail = new ConfirmEmail();
@@ -287,10 +289,15 @@ namespace dj_actionlayer.Business.Auth
                 confirmEmail.RequiredDateTime = DateTime.Now;
                 confirmEmail.ExpiredDateTime = DateTime.Now.AddDays(1);
                 Random rand = new Random();
-                confirmEmail.Code = rand.Next(10000000, 99999999);
+                int code = rand.Next(10000000, 99999999);
+                while (_context.confirm_email.Any(x => x.Code == code))
+                {
+                    code = rand.Next(10000000, 99999999);
+                }
+                confirmEmail.Code = code;
                 await _context.confirm_email.AddAsync(confirmEmail);
                 await _context.SaveChangesAsync();
-                _sendEmail.SendConfirmCreateAccount(newAccount.email, "https://dj-xuyenchi.edu.vn/"+ confirmEmail.Code);
+                _sendEmail.SendConfirmCreateAccount(newAccount.email, Settings.enviroment() + "checkconfirm/" + confirmEmail.Code);
                 acc.Email = newAccount.email;
                 result.Data = acc;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.WAITEMAILCOMFIRM;
@@ -303,6 +310,42 @@ namespace dj_actionlayer.Business.Auth
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<LoginResponse<AuthDataRespon>> ConfirmAccount(string code)
+        {
+            LoginResponse<AuthDataRespon> result = new LoginResponse<AuthDataRespon>();
+
+            ConfirmEmail confirmEmail = _context.confirm_email.Where(x => x.Code == int.Parse(code)).SingleOrDefault();
+            if (confirmEmail == null)
+            {
+                result.Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED;
+                result.Message = "Xác nhận thất bại!";
+                result.Data = null;
+                return result;
+            }
+            if (confirmEmail.ExpiredDateTime < DateTime.Now)
+            {
+                result.Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.EXPIRED;
+                result.Message = "Mã xác nhận đã hết hạn!";
+                result.Data = null;
+                return result;
+            }
+            User user = _context.user.Find(confirmEmail.UserId);
+            user.UserStatusId = 1;
+            _context.confirm_email.Remove(confirmEmail);
+            await _context.SaveChangesAsync();
+            result.Message = "Xác nhận đăng ký thành công tài khoản đã có thể sử dụng!";
+            result.Data = new AuthDataRespon
+            {
+                id = user.Id,
+                avatar = user.UserAvatarData40x40,
+                nickName = "Chiến thần Front End",
+                name = user.UserLastName + " " + user.UserFisrtName,
+                Token = await GenToken(user),
+                role = (int)user.UserRoleId
+            };
+            return result;
         }
     }
 }

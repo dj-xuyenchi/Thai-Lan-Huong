@@ -15,6 +15,7 @@ namespace dj_webdesigncore.Business.Auth
         Task<TokenModel> GenToken(User user);
         Task<string> GenerateRefreshToken();
         Task<ResponData<NewAccount>> SignIn(SignInAccount newAccount);
+        Task<LoginResponse<AuthDataRespon>> ConfirmAccount(string code);
     }
 }
 
