@@ -6,6 +6,7 @@ using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Request.Course;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -343,39 +344,128 @@ namespace dj_actionlayer.Business.Study
             }
             //try
             //{
-                Lesson lesson = _context.lesson.Find(lessonId);
-                if (lesson == null)
-                {
-                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
-                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
-                    return result;
-                }
-                User user = _context.user.Find(userId);
-                if (user == null)
-                {
-                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
-                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
-                    return result;
-                }
-                StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
-                studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
-                VideoLessonDTO videoLesson = new VideoLessonDTO();
-                videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).SingleOrDefault().LessonLinkUrl;
-                studyData.StudyDetail = videoLesson;
-                Course course = await _context.course.FindAsync(courseId);
-                studyData.CourseName = course.CourseName;
-                studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
-                result.Data = studyData;
-                result.Messenger = "Lấy dữ liệu thành công!";
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            Lesson lesson = _context.lesson.Find(lessonId);
+            if (lesson == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                 return result;
             }
-            //catch (Exception ex)
-            //{
-            //    result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
-            //    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
-            //    return result;
-            //}
+            User user = _context.user.Find(userId);
+            if (user == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
+                return result;
+            }
+            StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
+            studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
+            VideoLessonDTO videoLesson = new VideoLessonDTO();
+            videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).SingleOrDefault().LessonLinkUrl;
+            studyData.StudyDetail = videoLesson;
+            Course course = await _context.course.FindAsync(courseId);
+            studyData.CourseName = course.CourseName;
+            studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
+            result.Data = studyData;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+        //catch (Exception ex)
+        //{
+        //    result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+        //    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+        //    return result;
         //}
+        //}
+
+        public async Task<ResponData<RegisterCourseDTO>> RegisterCourse(RegisterCourse registerCourse)
+        {
+            ResponData<RegisterCourseDTO> result = new ResponData<RegisterCourseDTO>();
+            try
+            {
+                RegisterCourseDTO data = new RegisterCourseDTO();
+                User user = await _context.user.FindAsync(registerCourse.UserId);
+                if (user == null)
+                {
+                    data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.NOTFOUND;
+                    data.Mes = "Không tồn tại User!";
+                    result.Data = data;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                Course course = await _context.course.FindAsync(registerCourse.CourseId);
+                if (course == null)
+                {
+                    data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.NOTFOUND;
+                    data.Mes = "Không tồn tại Khóa học!";
+                    result.Data = data;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                UserCourse userCourse = _context.user_course.Where(x => x.CourseId == registerCourse.CourseId && x.UserId == registerCourse.UserId).SingleOrDefault();
+                if (userCourse != null)
+                {
+                    data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.REGISTERBEFORE;
+                    data.Mes = "Khóa học đã được đăng ký trước đó!";
+                    result.Data = data;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                UserCourse newUserCourse = new UserCourse();
+                newUserCourse.CourseId = registerCourse.CourseId;
+                newUserCourse.UserId = registerCourse.UserId;
+                newUserCourse.ResisterDateTime = DateTime.Now;
+                newUserCourse.isDone = false;
+                newUserCourse.LastTimeStudyDateTime = DateTime.Now;
+                newUserCourse.DonePercent = 0;
+                _context.Add(newUserCourse);
+                await _context.SaveChangesAsync();
+                CourseChapter courseChapter = _context.course_chapter.Where(x => x.CourseId == registerCourse.CourseId && x.SortNumber == 1).SingleOrDefault();
+                if (courseChapter == null)
+                {
+                    data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.NOCHAPTER;
+                    data.Mes = "Khóa học hiện chưa các học phần!";
+                    result.Data = data;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                ChapterLesson chapterLesson = _context.chapter_lesson.Where(x => x.SortNumber == 1 && x.CourseChapterId == courseChapter.Id).SingleOrDefault();
+                if (chapterLesson == null)
+                {
+                    data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.NOLESSON;
+                    data.Mes = "Chưa có bài học nào!";
+                    result.Data = data;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                UserLessonCheckpoint userLessonCheckpoint = new UserLessonCheckpoint();
+                userLessonCheckpoint.LessonId = chapterLesson.LessonId;
+                userLessonCheckpoint.UserId = registerCourse.UserId;
+                userLessonCheckpoint.OpenLessonDateTime= DateTime.Now;
+                userLessonCheckpoint.IsDone = false;
+                _context.Add(userLessonCheckpoint);
+                await _context.SaveChangesAsync();
+                data.CourseId = registerCourse.CourseId;
+                data.LessonId = chapterLesson.LessonId;
+                data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.SECCESSFULLY;
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+        }
     }
 }

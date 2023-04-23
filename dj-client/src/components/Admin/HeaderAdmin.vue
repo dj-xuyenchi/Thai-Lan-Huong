@@ -10,6 +10,7 @@
       top: 0;
       left: 0;
       width: 82.5%;
+      z-index: 1;
     "
   >
     <v-toolbar prominent extended>

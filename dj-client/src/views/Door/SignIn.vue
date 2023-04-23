@@ -96,13 +96,15 @@
         Đăng ký ngay
       </v-btn>
       <div style="text-align: center" class="mb-4">
-        <a
-          class="text-caption text-decoration-none text-blue"
-          href="/login"
-          rel="noopener noreferrer"
+        <v-btn
+          block
+          class="mb-4"
+          color="blue"
+          variant="text"
+          @click="back2Login()"
         >
-          Đã có tài khoản?</a
-        >
+          Đã có tài khoản?
+        </v-btn>
       </div>
       <div
         style="
@@ -164,6 +166,9 @@ export default {
   computed: {},
   methods: {
     ...mapActions(["updateUserName"]),
+    back2Login() {
+      this.$router.push({ path: "/login" });
+    },
     async signIn() {
       this.dialog = true;
       this.isUnValidUser = false;

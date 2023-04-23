@@ -12,10 +12,9 @@
       rounded="lg"
     >
       <span
-        >Chúng tôi đã gửi email xác nhận đến hòm thư
-        <span style="color: blue">{{ confirmEmail }}</span> của bạn vui lòng
-        click vào đường link trong email nhận được để kích hoạt tài khoản nếu
-        không nhận được email vui lòng kiểm tra hòm thư spam!</span
+        >Chúng tôi đã gửi mã xác nhận đến email
+        <span style="color: blue">{{ confirmEmail }}</span> vui lòng kiểm tra
+        hòm thư và nhập mã xác nhận được nhận vào bên dưới!</span
       >
       <a
         href="https://mail.google.com/mail/u/0/#inbox"
@@ -23,11 +22,28 @@
         target="_blank"
         ><p>Đến hòm thư!</p></a
       >
+      <div class="text-subtitle-1 text-medium-emphasis">Mã xác nhận</div>
+      <v-text-field
+        v-model="confirmCode"
+        density="compact"
+        variant="outlined"
+        :rules="[rules.minConfirm]"
+      ></v-text-field>
+      <v-btn
+        color="green-darken-1"
+        variant="text"
+        @click="sendConfirm()"
+        style="margin-left: 4px"
+      >
+        Kích hoạt tài khoản
+      </v-btn>
       <div style="margin-top: 24px">
         <v-row justify="center">
           <v-dialog v-model="dialog" persistent width="auto">
             <template v-slot:activator="{ props }">
-              <v-btn v-bind="props"> Tôi chưa nhận được email xác nhận! </v-btn>
+              <v-btn v-bind="props" color="green-darken-1" variant="text">
+                Tôi chưa nhận được email xác nhận!
+              </v-btn>
             </template>
             <v-card>
               <v-card-title class="text-h5">
@@ -76,7 +92,20 @@ export default {
     return {
       confirmEmail: "",
       dialog: false,
+      confirmCode: "",
+      rules: {
+        minConfirm: (value) =>
+          value.length == 10 || "Mã xác nhận gồm 10 ký tự.",
+      },
     };
+  },
+  methods: {
+    sendConfirm() {
+      if (this.confirmCode.trim().length != 10) {
+        return;
+      }
+      this.$router.push({ path: "/checkconfirm/" + this.confirmCode });
+    },
   },
   created() {
     this.confirmEmail = localStorage.getItem("confirm");

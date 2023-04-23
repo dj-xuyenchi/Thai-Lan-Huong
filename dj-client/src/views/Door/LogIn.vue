@@ -96,14 +96,10 @@
         ></v-img> -->
       </div>
       <v-card-text class="text-center">
-        <a
-          class="text-blue text-decoration-none"
-          href="/signin"
-          rel="noopener noreferrer"
-        >
+        <v-btn variant="text" @click="signIn()" color="#2196f3">
           Đăng ký thành viên <v-icon icon="mdi-chevron-right"></v-icon>
           <span>{{ getUserNameLogIn }}</span>
-        </a>
+        </v-btn>
       </v-card-text>
     </v-card>
   </div>
@@ -143,15 +139,17 @@ export default {
         Password: this.password,
       };
       const login = await AuthApis.getLogin(requestLogin);
-      if (login.success !== 0) {
+      if (login.success == 1) {
         this.loginStatus = "Tài khoản hoặc mật khẩu không chính xác.";
         this.dialog = false;
         this.isUnValidUser = true;
       }
-      if (login.success == 3) {
+      if (login.success == 2) {
         this.loginStatus = "Tài khoản chưa được kích hoạt.";
         this.dialog = false;
         this.isUnValidUser = true;
+        localStorage.setItem("confirm", login.data.email);
+        this.$router.push({ path: "/confirm" });
       }
       if (login.success === 0) {
         this.dialog = false;
@@ -169,6 +167,9 @@ export default {
         localStorage.setItem("role", login.data.role);
         this.$router.push({ path: "/home/lobby" });
       }
+    },
+    signIn() {
+      this.$router.push({ path: "/signin" });
     },
   },
 };

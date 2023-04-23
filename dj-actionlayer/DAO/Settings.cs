@@ -30,7 +30,7 @@ namespace dj_actionlayer.DAO
         }
         public static string enviroment()
         {
-            return "http://localhost:8080/";
+            return "https://dj-xuyenchi.edu.vn/";
         }
         public static string defaultImage()
         {

@@ -42,6 +42,10 @@ namespace dj_actionlayer.Business.Auth
                 {
                     Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.UNACTIVEUSER,
                     Message = "Authenticate success",
+                    Data = new AuthDataRespon
+                    {
+                        email = user.UserEmail,
+                    }
                 };
             }
             return new LoginResponse<AuthDataRespon>
@@ -53,6 +57,7 @@ namespace dj_actionlayer.Business.Auth
                     id = user.Id,
                     avatar = user.UserAvatarData40x40,
                     nickName = "Chiến thần Front End",
+                    email = user.UserEmail,
                     name = user.UserLastName + " " + user.UserFisrtName,
                     Token = await GenToken(user),
                     role = (int)user.UserRoleId
@@ -289,12 +294,12 @@ namespace dj_actionlayer.Business.Auth
                 confirmEmail.RequiredDateTime = DateTime.Now;
                 confirmEmail.ExpiredDateTime = DateTime.Now.AddDays(1);
                 Random rand = new Random();
-                int code = rand.Next(10000000, 99999999);
-                while (_context.confirm_email.Any(x => x.Code == code))
+                string code = "DJ" + rand.Next(10000000, 99999999);
+                while (_context.confirm_email.Any(x => x.Code.Equals(code)))
                 {
-                    code = rand.Next(10000000, 99999999);
+                    code = "DJ" + rand.Next(10000000, 99999999);
                 }
-                confirmEmail.Code = code;
+                confirmEmail.Code =  code;
                 await _context.confirm_email.AddAsync(confirmEmail);
                 await _context.SaveChangesAsync();
                 _sendEmail.SendConfirmCreateAccount(newAccount.email, Settings.enviroment() + "checkconfirm/" + confirmEmail.Code);
@@ -316,7 +321,7 @@ namespace dj_actionlayer.Business.Auth
         {
             LoginResponse<AuthDataRespon> result = new LoginResponse<AuthDataRespon>();
 
-            ConfirmEmail confirmEmail = _context.confirm_email.Where(x => x.Code == int.Parse(code)).SingleOrDefault();
+            ConfirmEmail confirmEmail = _context.confirm_email.Where(x => x.Code.Equals(code)).SingleOrDefault();
             if (confirmEmail == null)
             {
                 result.Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED;

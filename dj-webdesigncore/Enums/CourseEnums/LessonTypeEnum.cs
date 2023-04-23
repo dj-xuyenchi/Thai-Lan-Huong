@@ -11,6 +11,5 @@ namespace dj_webdesigncore.Enums.CourseEnums
         THEORY = 1,
         QUESTION = 3,
         PRACTICE = 2,
-       
     }
 }

@@ -142,6 +142,26 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "home_content",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Sdt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slide1 = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Slide2 = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Slide3 = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Slide4 = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Slide5 = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_home_content", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "lesson_status",
                 columns: table => new
                 {
@@ -703,7 +723,7 @@ namespace dj_actionlayer.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     RequiredDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpiredDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Code = table.Column<int>(type: "int", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsConfirm = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -1336,6 +1356,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_image");
+
+            migrationBuilder.DropTable(
+                name: "home_content");
 
             migrationBuilder.DropTable(
                 name: "post_sentence");

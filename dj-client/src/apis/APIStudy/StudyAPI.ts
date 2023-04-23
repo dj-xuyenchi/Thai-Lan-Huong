@@ -64,5 +64,21 @@ class StudyAPI {
         });
     });
   }
+  registerCourse(resisterCourse: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/study/registercourse`, resisterCourse, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new StudyAPI();

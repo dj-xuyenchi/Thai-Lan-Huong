@@ -68,9 +68,10 @@ namespace dj_actionlayer.DAO
 		public DbSet<UserLikeCommentLesson> user_like_comment_lesson { get; set; }
 		public DbSet<UserLikeCommentPost> user_like_comment_post { get; set; }
 		public DbSet<UserLikePost> user_like_post { get; set; }
+		public DbSet<HomeContent> home_content { get; set; }
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+		optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
 	     //   optionsBuilder.UseSqlServer(Settings.DBConnect());
 		//	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
 		}

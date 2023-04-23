@@ -85,7 +85,24 @@
           style="border-radius: 15px"
         ></iframe>
         <h2 style="text-align: center; margin: 12px 0 12px 0">Miễn Phí</h2>
-        <v-btn width="40%" rounded="pill" color="#4FC3F7"> Đăng ký học </v-btn>
+        <v-btn
+          width="40%"
+          rounded="pill"
+          color="#4FC3F7"
+          v-if="!isRegistered"
+          @click="registerCourse()"
+        >
+          Đăng ký học
+        </v-btn>
+        <v-btn
+          width="40%"
+          rounded="pill"
+          color="#4FC3F7"
+          v-if="isRegistered"
+          @click="getInClass()"
+        >
+          Vào học
+        </v-btn>
       </div>
     </div>
   </div>
@@ -94,6 +111,7 @@
 <script>
 import LessonList from "./LessonList.vue";
 import HomeApi from "../../apis/APIHome/HomeAPI.ts";
+import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 import { mapMutations } from "vuex";
 import { mapGetters } from "vuex";
 export default {
@@ -108,7 +126,10 @@ export default {
       chapterDetail: [],
       chapterCount: 0,
       lessonCount: 0,
+      isRegistered: false,
       timeTotal: "",
+      lessonIdGetInClass: 0,
+      courseIdGetInClass: 0,
     };
   },
   computed: {},
@@ -133,7 +154,35 @@ export default {
       this.chapterCount = data.data.chapterCount;
       this.lessonCount = data.data.lessonCount;
       this.chapterDetail = data.data.chapterDetail;
+      this.isRegistered = data.data.isRegistered;
+      if (data.data.isRegistered) {
+        this.lessonIdGetInClass = data.data.lessonId;
+        this.courseIdGetInClass = data.data.courseId;
+      }
       this.setIsLoadedData(false);
+    },
+    async registerCourse() {
+      this.setIsLoadedData(true);
+      const userId = localStorage.getItem("id");
+      if (!userId) {
+        this.$router.push({ path: "/login" });
+      }
+      const token = localStorage.getItem("token");
+      const registerRequest = {
+        userId: userId,
+        courseId: this.$route.params.id,
+      };
+      const data = await StudyAPI.registerCourse(registerRequest, token);
+      this.$router.push({
+        path: `/study/` + data.data.lessonId + `/` + data.data.courseId,
+      });
+      this.setIsLoadedData(false);
+    },
+    getInClass() {
+      this.$router.push({
+        path:
+          `/study/` + this.lessonIdGetInClass + `/` + this.courseIdGetInClass,
+      });
     },
   },
 };

@@ -49,5 +49,21 @@ class AdminAPI {
         });
     });
   }
+  addPracticeLesson(practiceLesson: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post("/admin/addpracticelesson", practiceLesson, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new AdminAPI();

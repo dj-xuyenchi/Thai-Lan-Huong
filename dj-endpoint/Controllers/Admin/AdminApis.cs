@@ -1,5 +1,6 @@
 ﻿using dj_actionlayer.Business.Admin;
 using dj_webdesigncore.Business.Admin;
+using dj_webdesigncore.Request.Lesson;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,11 @@ namespace dj_endpoint.Controllers.Admin
         public async Task<IActionResult> checkAdmin()
         {
             return Ok("Admin");
+        }
+        [HttpPost("addpracticelesson")]
+        public async Task<IActionResult> addPracticeLesson(PracticeLesson practiceLesson)
+        {
+            return Ok(await _admin.addPracticeLesson(practiceLesson));
         }
     }
 }

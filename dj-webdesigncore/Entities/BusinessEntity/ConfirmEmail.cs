@@ -13,7 +13,7 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         public User User { get; set; }
         public DateTime RequiredDateTime { get; set; }
         public DateTime ExpiredDateTime { get; set; }
-        public int Code { get; set; }
+        public string Code { get; set; }
         public bool IsConfirm { get; set; }
     }
 }

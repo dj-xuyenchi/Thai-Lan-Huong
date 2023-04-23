@@ -11,6 +11,8 @@ namespace dj_webdesigncore.DTOs.Lobby
     {
         public string CourseTitle { get; set; }
         public bool isRegistered { get; set; }
+        public int courseId { get; set; }
+        public int lessonId { get; set; }
         public string CourseSubTitle { get; set; }
         public List<CourseProfit> CourseProfit { get; set; }
         public List<CourseRequire> CourseRequire { get; set; }

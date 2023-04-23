@@ -482,3 +482,4 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Release\net6.0\ru\M
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Release\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Release\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Release\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\Admin\Desktop\Thai-Lan-Huong\dj-endpoint\bin\Release\net6.0\Microsoft.AspNetCore.Authentication.Google.dll

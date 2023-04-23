@@ -1,6 +1,7 @@
 ﻿using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Study;
+using dj_webdesigncore.Request.Course;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId);
         Task<List<ChapterDetailDTO>> LessonListOfUser(int? userId, int? courseId);
         Task<ResponData<TryTestCaseResultDTO>> TryTestCase(string? code, int? practiceLessonId);
+        Task<ResponData<RegisterCourseDTO>> RegisterCourse(RegisterCourse registerCourse);
     }
 }

@@ -11,6 +11,7 @@ namespace dj_webdesigncore.AuthModel
         public int id { get; set; }
         public byte[] avatar { get; set; }
         public TokenModel Token { get; set; }
+        public string email { get; set; }
         public string name { get; set; }
         public string nickName { get; set; }
         public int role { get; set; }
