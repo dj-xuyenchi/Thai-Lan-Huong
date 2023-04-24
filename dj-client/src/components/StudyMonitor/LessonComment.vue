@@ -35,8 +35,8 @@
             "
           >
             <img
-              style="width: 6%; height: 40px; float: left"
-              :src="require('../../assets/logo-web.png')"
+              style="width: 6%; height: 40px; float: left; border-radius: 50%"
+              :src="`data:image/jpeg;base64,` + avatar"
             />
             <v-text-field
               style="width: 90%; float: left; margin-left: 12px"
@@ -60,7 +60,14 @@
             /></v-text-field>
           </div>
         </div>
-        <CommentItem v-for="(item, i) in commentList" :key="i" :data="item" />
+        <CommentItem
+          v-for="(item, i) in commentList"
+          :key="i"
+          :data="item"
+          :commentId="item.commentId"
+          :reLoadComment="handleGetComment"
+          :resetClicked="resetClicked"
+        />
       </v-card>
     </v-menu>
   </div>
@@ -82,27 +89,38 @@ export default {
     hints: true,
     commentList: [],
     commentCount: 0,
+    isClicked: false,
+    avatar: "",
   }),
   computed: {
     ...mapGetters(["getAIProfile"]),
   },
-  mounted() {
+  created() {
     const token = localStorage.getItem("token");
     const refreshToken = localStorage.getItem("refreshToken");
+    const avatar = localStorage.getItem("avatar");
+    this.avatar = avatar;
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    async getComment(lessonId, token) {
-      const data = await StudyAPI.getLobbyData(lessonId, token);
+    async handleGetComment() {
+      if (this.isClicked) {
+        return;
+      }
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("id");
+      const refreshToken = localStorage.getItem("refreshToken");
+      const data = await StudyAPI.getLobbyData(
+        this.$route.params.id,
+        userId,
+        token
+      );
       this.commentList = data.data.listComment;
       this.commentCount = data.data.commentCount;
-    },
-    handleGetComment() {
-      const token = localStorage.getItem("token");
-      const refreshToken = localStorage.getItem("refreshToken");
-      this.getComment(this.$route.params.id, token);
+      this.isClicked = true;
     },
     async commentRequest() {
+      this.isClicked = false;
       const token = localStorage.getItem("token");
       const commentLesson = {
         UserId: localStorage.getItem("id"),
@@ -112,7 +130,9 @@ export default {
       };
       const data = await StudyAPI.commentLesson(commentLesson, token);
       this.comment = "";
-      this.handleGetComment();
+    },
+    resetClicked() {
+      this.isClicked = false;
     },
   },
 };

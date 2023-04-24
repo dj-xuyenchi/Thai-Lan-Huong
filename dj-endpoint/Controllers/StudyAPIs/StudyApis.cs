@@ -1,4 +1,5 @@
 ﻿using dj_actionlayer.Business.Study;
+using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.Enums.CourseEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
@@ -11,7 +12,7 @@ namespace dj_endpoint.Controllers.StudyAPIs
     [Route("/study")]
     public class StudyAPIs : BaseApi
     {
-        private readonly StudyBusiness _study;
+        private readonly IStudyBusiness _study;
 
         public StudyAPIs()
         {
@@ -23,9 +24,9 @@ namespace dj_endpoint.Controllers.StudyAPIs
             return Ok("MemberOrAdmin");
         }
         [HttpGet("getcommentoflesson")]
-        public async Task<IActionResult> getCommentOfLesson(int? lessonId)
+        public async Task<IActionResult> getCommentOfLesson(int? lessonId,int? userId)
         {
-            return Ok(await _study.CommentOfLesson(lessonId));
+            return Ok(await _study.CommentOfLesson(lessonId, userId));
         }
 
         [HttpGet("getlessondetail")]
@@ -61,6 +62,16 @@ namespace dj_endpoint.Controllers.StudyAPIs
         public async Task<IActionResult> commentLesson(CommentLessonRequest commentLessonRequest)
         {
             return Ok(await _study.CommentLesson(commentLessonRequest));
+        }
+        [HttpPost("subcommentlesson")]
+        public async Task<IActionResult> commentLesson(SubCommentLessonRequest subCommentLessonRequest)
+        {
+            return Ok(await _study.SubCommentLesson(subCommentLessonRequest));
+        }
+        [HttpPost("likecommentlesson")]
+        public async Task<IActionResult> likeCommentLesson(LikeComment likeComment)
+        {
+            return Ok(await _study.LikeComment(likeComment));
         }
     }
 }

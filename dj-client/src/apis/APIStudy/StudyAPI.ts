@@ -1,13 +1,16 @@
 import { HTTP } from "../HTTPs";
 import { Error } from "@/store/redirect";
 class StudyAPI {
-  getLobbyData(lessonId: number, token: string): Promise<any> {
+  getLobbyData(lessonId: number, userId: number, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get(`/study/getcommentoflesson?lessonId=${lessonId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      HTTP.get(
+        `/study/getcommentoflesson?lessonId=${lessonId}&userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
         .then((response) => {
           resolve(response.data);
         })
@@ -83,6 +86,38 @@ class StudyAPI {
   commentLesson(commentLesson: object, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
       HTTP.post(`/study/commentlesson`, commentLesson, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  subCommentLesson(subCommentLesson: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/study/subcommentlesson`, subCommentLesson, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  likeComment(likeComment: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/study/likecommentlesson`, likeComment, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

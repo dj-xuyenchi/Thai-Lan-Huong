@@ -8,6 +8,7 @@ using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
+using dj_webdesigncore.Request.Lesson;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace dj_actionlayer.Business.Study
 {
     public class StudyBusiness : BaseBusiness, IStudyBusiness
     {
-        public async Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId)
+        public async Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId,int? userId)
         {
             ResponData<CommentDTO> result = new ResponData<CommentDTO>();
             if (lessonId == null)
@@ -38,6 +39,15 @@ namespace dj_actionlayer.Business.Study
                 {
                     commentCout++;
                     CommentDetailDTO commentDetail = new CommentDetailDTO();
+                    commentDetail.CommentId = comment.Id;
+                    if (_context.user_like_comment_lesson.Any(x => x.CommentLessonId == comment.Id && x.UserId == userId))
+                    {
+                        commentDetail.IsLike = true;
+                    }
+                    else
+                    {
+                        commentDetail.IsLike = false;
+                    }
                     int dateDiff = (DateTime.Now - comment.CreateDateTime).Days;
                     if (dateDiff == 0)
                     {
@@ -56,7 +66,8 @@ namespace dj_actionlayer.Business.Study
                         commentDetail.CommentDate = dateDiff.ToString() + " ngày trước";
                     }
                     commentDetail.Comment = comment.Comment;
-                    commentDetail.UserName = _context.user.Find(comment.UserId).UserFisrtName;
+                    User user = _context.user.Find(comment.UserId);
+                    commentDetail.UserName = user.UserFisrtName + " " + user.UserLastName;
                     commentDetail.LikeCount = (int)comment.LikeCount;
                     commentDetail.UserId = (int)comment.UserId;
                     commentDetail.UserAvatar = _context.user.Find(comment.UserId).UserAvatarData40x40;
@@ -65,6 +76,15 @@ namespace dj_actionlayer.Business.Study
                     foreach (var subComment in listSubComment)
                     {
                         SubComment sub = new SubComment();
+                        sub.CommentId = subComment.Id;
+                        if (_context.user_like_comment_lesson.Any(x => x.CommentLessonId == subComment.Id && x.UserId == userId))
+                        {
+                            sub.IsLike = true;
+                        }
+                        else
+                        {
+                            sub.IsLike = false;
+                        }
                         int dateDiffSub = (DateTime.Now - subComment.CreateDateTime).Days;
                         if (dateDiffSub == 0)
                         {
@@ -83,7 +103,8 @@ namespace dj_actionlayer.Business.Study
                             sub.CommentDate = dateDiffSub.ToString() + " ngày trước";
                         }
                         sub.Comment = subComment.Comment;
-                        sub.UserName = _context.user.Find(subComment.UserId).UserFisrtName;
+                        User subUser = _context.user.Find(comment.UserId);
+                        sub.UserName = subUser.UserFisrtName + " " + subUser.UserLastName;
                         sub.LikeCount = (int)subComment.LikeCount;
                         sub.UserId = (int)subComment.UserId;
                         sub.UserAvatar = _context.user.Find(subComment.UserId).UserAvatarData40x40;
@@ -195,7 +216,7 @@ namespace dj_actionlayer.Business.Study
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                PracticeLesson practiceLesson = _context.practice_lesson.Where(x => x.LessonId == lessonId).FirstOrDefault();
+                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = _context.practice_lesson.Where(x => x.LessonId == lessonId).FirstOrDefault();
                 if (practiceLesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại PracticeLesson!";
@@ -345,32 +366,32 @@ namespace dj_actionlayer.Business.Study
             try
             {
                 Lesson lesson = _context.lesson.Find(lessonId);
-            if (lesson == null)
-            {
-                result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
+                if (lesson == null)
+                {
+                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
+                    return result;
+                }
+                User user = _context.user.Find(userId);
+                if (user == null)
+                {
+                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
+                    return result;
+                }
+                StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
+                studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
+                VideoLessonDTO videoLesson = new VideoLessonDTO();
+                videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).SingleOrDefault().LessonLinkUrl;
+                studyData.StudyDetail = videoLesson;
+                Course course = await _context.course.FindAsync(courseId);
+                studyData.CourseName = course.CourseName;
+                studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
+                result.Data = studyData;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
-            User user = _context.user.Find(userId);
-            if (user == null)
-            {
-                result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
-                return result;
-            }
-            StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
-            studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
-            VideoLessonDTO videoLesson = new VideoLessonDTO();
-            videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).SingleOrDefault().LessonLinkUrl;
-            studyData.StudyDetail = videoLesson;
-            Course course = await _context.course.FindAsync(courseId);
-            studyData.CourseName = course.CourseName;
-            studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
-            result.Data = studyData;
-            result.Messenger = "Lấy dữ liệu thành công!";
-            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
-            return result;
-        }
             catch (Exception ex)
             {
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
@@ -447,7 +468,7 @@ namespace dj_actionlayer.Business.Study
                 UserLessonCheckpoint userLessonCheckpoint = new UserLessonCheckpoint();
                 userLessonCheckpoint.LessonId = chapterLesson.LessonId;
                 userLessonCheckpoint.UserId = registerCourse.UserId;
-                userLessonCheckpoint.OpenLessonDateTime= DateTime.Now;
+                userLessonCheckpoint.OpenLessonDateTime = DateTime.Now;
                 userLessonCheckpoint.IsDone = false;
                 _context.Add(userLessonCheckpoint);
                 await _context.SaveChangesAsync();
@@ -471,9 +492,9 @@ namespace dj_actionlayer.Business.Study
         public async Task<ResponData<ActionStatus>> CommentLesson(dj_webdesigncore.Request.Lesson.CommentLessonRequest commentLessonRequest)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            foreach(var item in commentLessonRequest.GetType().GetProperties())
+            foreach (var item in commentLessonRequest.GetType().GetProperties())
             {
-                if (item.GetValue(commentLessonRequest, null)==null)
+                if (item.GetValue(commentLessonRequest, null) == null)
                 {
                     result.Data = ActionStatus.PARAMNULL;
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -505,6 +526,102 @@ namespace dj_actionlayer.Business.Study
             commentLesson.UserId = commentLessonRequest.UserId;
             await _context.AddAsync(commentLesson);
             await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> SubCommentLesson(dj_webdesigncore.Request.Lesson.SubCommentLessonRequest subCommentLessonRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            foreach (var item in subCommentLessonRequest.GetType().GetProperties())
+            {
+                if (item.GetValue(subCommentLessonRequest, null) == null)
+                {
+                    result.Data = ActionStatus.PARAMNULL;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+            }
+            User user = _context.user.Find(subCommentLessonRequest.UserId);
+            if (user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Lesson lesson = _context.lesson.Find(subCommentLessonRequest.LessonId);
+            if (lesson == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            CommentLesson commentLesson = new CommentLesson();
+            commentLesson.LessonId = subCommentLessonRequest.LessonId;
+            commentLesson.CreateDateTime = DateTime.Now;
+            commentLesson.LikeCount = 0;
+            commentLesson.Comment = subCommentLessonRequest.CommentContent;
+            commentLesson.UserId = subCommentLessonRequest.UserId;
+            commentLesson.CommentLessonParentId = subCommentLessonRequest.CommentParentId;
+            await _context.AddAsync(commentLesson);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> LikeComment(LikeComment likeComment)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            foreach (var item in likeComment.GetType().GetProperties())
+            {
+                if (item.GetValue(likeComment, null) == null)
+                {
+                    result.Data = ActionStatus.PARAMNULL;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+            }
+            User user = _context.user.Find(likeComment.UserId);
+            if (user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            CommentLesson comment = _context.comment_lesson.Find(likeComment.CommentId);
+            if (comment == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            UserLikeCommentLesson userLikeCommentLesson = _context.user_like_comment_lesson.Where(x => x.UserId == likeComment.UserId && x.CommentLessonId == likeComment.CommentId).FirstOrDefault();
+            if (userLikeCommentLesson != null)
+            {
+                _context.Remove(userLikeCommentLesson);
+                comment.LikeCount -= 1;
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                UserLikeCommentLesson newLike = new UserLikeCommentLesson();
+                newLike.CommentLessonId = comment.Id;
+                newLike.UserId = likeComment.UserId;
+                newLike.CreateDateTime = DateTime.Now;
+                comment.LikeCount++;
+                await _context.AddAsync(newLike);
+                await _context.SaveChangesAsync();
+            }
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";

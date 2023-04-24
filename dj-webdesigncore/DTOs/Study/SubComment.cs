@@ -11,6 +11,8 @@ namespace dj_webdesigncore.DTOs.Study
         public int UserId { get; set; }
         public string UserName { get; set; }
         public int LikeCount { get; set; }
+        public int CommentId { get; set; }
+        public bool IsLike { get; set; }
         public byte[] UserAvatar { get; set; }
         public string Comment { get; set; }
         public string CommentDate { get; set; }

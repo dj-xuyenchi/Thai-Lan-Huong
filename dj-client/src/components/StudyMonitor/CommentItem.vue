@@ -11,6 +11,7 @@
         color: black;
         background-color: #f2f3f5;
         margin: 0px 4px 4px 8px;
+        position: relative;
       "
     >
       <span
@@ -22,15 +23,39 @@
         "
         >{{ data.userName }}</span
       >
-
       <span
         style="padding: 0px 12px 8px 12px; font-size: 16px; display: block"
         >{{ data.comment }}</span
       >
+      <div
+        style="position: absolute; right: 0; bottom: -12px"
+        v-if="data.likeCount > 0"
+      >
+        <font-awesome-icon
+          icon="fa-solid fa-heart"
+          color="black"
+          style="margin-right: 5px; color: #f44336"
+        />
+        <span style="font-size: 14px">{{ data.likeCount }}</span>
+      </div>
     </div>
     <div class="comment-option-container">
       <ul class="comment-option">
-        <li class="more-option-content">{{ data.likeCount }} lượt thích</li>
+        <li
+          class="more-option-content"
+          v-if="data.isLike"
+          @click="likeComment(data.commentId)"
+          style="color: #2078f4"
+        >
+          Bỏ thích
+        </li>
+        <li
+          class="more-option-content"
+          v-if="!data.isLike"
+          @click="likeComment(data.commentId)"
+        >
+          Thích
+        </li>
         <li class="more-option-content" @click="showResponComment()">
           Phản hồi
         </li>
@@ -94,6 +119,7 @@
               color: black;
               background-color: #f2f3f5;
               margin: 0px 4px 4px 8px;
+              position: relative;
             "
           >
             <span
@@ -113,11 +139,34 @@
               "
               >{{ item.comment }}</span
             >
+            <div
+              style="position: absolute; right: 0; bottom: -12px"
+              v-if="item.likeCount > 0"
+            >
+              <font-awesome-icon
+                icon="fa-solid fa-heart"
+                color="black"
+                style="margin-right: 5px; color: #f44336"
+              />
+              <span style="font-size: 14px">{{ item.likeCount }}</span>
+            </div>
           </div>
           <div class="comment-option-container">
             <ul class="comment-option">
-              <li class="more-option-content">
-                {{ item.likeCount }} lượt thích
+              <li
+                class="more-option-content"
+                v-if="item.isLike"
+                @click="likeComment(item.commentId)"
+                style="color: #2078f4"
+              >
+                Bỏ thích
+              </li>
+              <li
+                class="more-option-content"
+                v-if="!item.isLike"
+                @click="likeComment(item.commentId)"
+              >
+                Thích
               </li>
               <li class="more-option-content">Phản hồi</li>
               <li style="font-weight: 400">
@@ -158,14 +207,15 @@
           "
         >
           <img
-            style="width: 40px; height: 40px; float: left"
-            :src="require('../../assets/logo-web.png')"
+            style="width: 40px; height: 40px; float: left; border-radius: 50%"
+            :src="`data:image/jpeg;base64,` + avatar"
           />
           <v-text-field
             style="width: 90%; float: left; margin-left: 12px"
             color="primary"
             variant="underlined"
             placeholder="Ý kiến của bạn."
+            v-model="comment"
             @keydown.enter="subcommentResquest()"
           >
             <font-awesome-icon
@@ -187,6 +237,7 @@
 </template>
 
 <script>
+import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 export default {
   name: "CommentItem",
   data: () => ({
@@ -198,29 +249,53 @@ export default {
         userName: "Mộc Quế Anh",
         commentContent: "Hí hí hí",
       },
-      {
-        id: 2,
-        likeCount: 20,
-        userName: "Hương Mộc Trà",
-        commentContent: "Hí hí hí",
-      },
     ],
+    comment: "",
     commentRespon: false,
+    avatar: "",
   }),
   methods: {
     showResponComment() {
       this.commentRespon = !this.commentRespon;
     },
-    subcommentResquest() {
-      console.log(123);
+    async subcommentResquest() {
+      const token = localStorage.getItem("token");
+      const commentLesson = {
+        UserId: localStorage.getItem("id"),
+        LessonId: this.$route.params.id,
+        CourseId: this.$route.params.idCourse,
+        CommentContent: this.comment,
+        CommentParentId: this.commentId,
+      };
+      const data = await StudyAPI.subCommentLesson(commentLesson, token);
+      this.comment = "";
+      this.resetClicked();
+      this.reLoadComment();
     },
+    async likeComment(commentId) {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("id");
+      const likeComment = {
+        UserId: userId,
+        CommentId: commentId,
+      };
+      const data = await StudyAPI.likeComment(likeComment, token);
+      this.resetClicked();
+      this.reLoadComment();
+    },
+  },
+  created() {
+    const avatar = localStorage.getItem("avatar");
+    this.avatar = avatar;
   },
   props: {
     data: Object,
+    commentId: Number,
+    reLoadComment: Function,
+    resetClicked: Function,
   },
 };
 </script>
-
 <style lang="css" scoped>
 .comment-option-container .comment-option li {
   display: inline;
