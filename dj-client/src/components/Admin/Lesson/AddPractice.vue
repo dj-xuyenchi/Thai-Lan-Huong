@@ -6,7 +6,7 @@
           <v-btn color="primary" v-bind="props"> Thêm bài học thực hành</v-btn>
         </template>
         <v-form @submit.prevent="submit()" ref="form">
-          <v-card>
+          <v-card style="height: 90vh; overflow: scroll">
             <v-card-title>
               <span class="text-h5">Thêm bài học thực hành</span>
             </v-card-title>

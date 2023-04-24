@@ -31,7 +31,9 @@
     <div class="comment-option-container">
       <ul class="comment-option">
         <li class="more-option-content">{{ data.likeCount }} lượt thích</li>
-        <li class="more-option-content">Phản hồi</li>
+        <li class="more-option-content" @click="showResponComment()">
+          Phản hồi
+        </li>
         <li style="font-weight: 400">{{ data.commentDate }}</li>
         <li>
           <v-menu :close-on-content-click="false">
@@ -56,7 +58,11 @@
         </li>
       </ul>
     </div>
-    <span class="show-comment-child" @click="showResponComment">
+    <span
+      class="show-comment-child"
+      @click="showResponComment"
+      v-if="data.subComment.length > 0"
+    >
       <span v-if="commentRespon == false"
         >Xem thêm {{ data.subComment.length }} câu trả lời
         <font-awesome-icon
@@ -159,8 +165,21 @@
             style="width: 90%; float: left; margin-left: 12px"
             color="primary"
             variant="underlined"
-            placeholder="Thắc mắc của bạn là gì."
-          ></v-text-field>
+            placeholder="Ý kiến của bạn."
+            @keydown.enter="subcommentResquest()"
+          >
+            <font-awesome-icon
+              icon="fa-solid fa-chevron-right"
+              color="black"
+              class="comment-enter"
+              style="
+                font-size: 20px;
+                margin-right: 4px;
+                position: absolute;
+                right: 0;
+              "
+              @click="subcommentResquest()"
+          /></v-text-field>
         </div>
       </div>
     </v-list>
@@ -191,6 +210,9 @@ export default {
   methods: {
     showResponComment() {
       this.commentRespon = !this.commentRespon;
+    },
+    subcommentResquest() {
+      console.log(123);
     },
   },
   props: {
@@ -231,5 +253,10 @@ export default {
 .show-comment-child:hover {
   cursor: pointer;
   color: black;
+}
+.comment-enter:hover {
+  cursor: pointer;
+  z-index: 1;
+  color: #a8a8a8;
 }
 </style>

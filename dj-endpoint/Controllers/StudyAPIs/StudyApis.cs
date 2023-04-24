@@ -1,6 +1,7 @@
 ﻿using dj_actionlayer.Business.Study;
 using dj_webdesigncore.Enums.CourseEnums;
 using dj_webdesigncore.Request.Course;
+using dj_webdesigncore.Request.Lesson;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +55,12 @@ namespace dj_endpoint.Controllers.StudyAPIs
         public async Task<IActionResult> registerCourse(RegisterCourse registerCourse)
         {
             return Ok(await _study.RegisterCourse(registerCourse));
+        }
+
+        [HttpPost("commentlesson")]
+        public async Task<IActionResult> commentLesson(CommentLessonRequest commentLessonRequest)
+        {
+            return Ok(await _study.CommentLesson(commentLessonRequest));
         }
     }
 }

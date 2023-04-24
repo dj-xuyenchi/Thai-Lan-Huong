@@ -28,6 +28,7 @@ import {
   faChevronUp,
   faCaretRight,
   faFloppyDisk,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarPlus,
@@ -63,6 +64,7 @@ library.add(
   faList,
   faPlus,
   faEllipsis,
+  faChevronRight,
   faChevronDown,
   faChevronUp,
   faCaretRight,

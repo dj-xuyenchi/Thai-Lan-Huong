@@ -6,6 +6,7 @@ using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,7 +32,7 @@ namespace dj_actionlayer.Business.Study
             {
                 CommentDTO commentDTO = new CommentDTO();
                 int commentCout = 0;
-                var listCommentOfLesson = _context.comment_lesson.Where(x => x.LessonId == lessonId && x.CommentLessonParentId == null).OrderBy(x => x.CreateDateTime).ToList();
+                var listCommentOfLesson = _context.comment_lesson.Where(x => x.LessonId == lessonId && x.CommentLessonParentId == null).OrderByDescending(x => x.CreateDateTime).ToList();
                 List<CommentDetailDTO> listCommentDetail = new List<CommentDetailDTO>();
                 foreach (var comment in listCommentOfLesson)
                 {
@@ -48,7 +49,6 @@ namespace dj_actionlayer.Business.Study
                         else
                         {
                             commentDetail.CommentDate = hourDiff.ToString() + " giờ trước";
-
                         }
                     }
                     else
@@ -57,7 +57,7 @@ namespace dj_actionlayer.Business.Study
                     }
                     commentDetail.Comment = comment.Comment;
                     commentDetail.UserName = _context.user.Find(comment.UserId).UserFisrtName;
-                    commentDetail.LikeCount = comment.LikeCount;
+                    commentDetail.LikeCount = (int)comment.LikeCount;
                     commentDetail.UserId = (int)comment.UserId;
                     commentDetail.UserAvatar = _context.user.Find(comment.UserId).UserAvatarData40x40;
                     List<SubComment> subComments = new List<SubComment>();
@@ -84,7 +84,7 @@ namespace dj_actionlayer.Business.Study
                         }
                         sub.Comment = subComment.Comment;
                         sub.UserName = _context.user.Find(subComment.UserId).UserFisrtName;
-                        sub.LikeCount = subComment.LikeCount;
+                        sub.LikeCount = (int)subComment.LikeCount;
                         sub.UserId = (int)subComment.UserId;
                         sub.UserAvatar = _context.user.Find(subComment.UserId).UserAvatarData40x40;
                         subComments.Add(sub);
@@ -342,9 +342,9 @@ namespace dj_actionlayer.Business.Study
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
                 return result;
             }
-            //try
-            //{
-            Lesson lesson = _context.lesson.Find(lessonId);
+            try
+            {
+                Lesson lesson = _context.lesson.Find(lessonId);
             if (lesson == null)
             {
                 result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
@@ -371,13 +371,13 @@ namespace dj_actionlayer.Business.Study
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;
         }
-        //catch (Exception ex)
-        //{
-        //    result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
-        //    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
-        //    return result;
-        //}
-        //}
+            catch (Exception ex)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                return result;
+            }
+        }
 
         public async Task<ResponData<RegisterCourseDTO>> RegisterCourse(RegisterCourse registerCourse)
         {
@@ -466,6 +466,49 @@ namespace dj_actionlayer.Business.Study
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<ActionStatus>> CommentLesson(dj_webdesigncore.Request.Lesson.CommentLessonRequest commentLessonRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            foreach(var item in commentLessonRequest.GetType().GetProperties())
+            {
+                if (item.GetValue(commentLessonRequest, null)==null)
+                {
+                    result.Data = ActionStatus.PARAMNULL;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+            }
+            User user = _context.user.Find(commentLessonRequest.UserId);
+            if (user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Lesson lesson = _context.lesson.Find(commentLessonRequest.LessonId);
+            if (lesson == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            CommentLesson commentLesson = new CommentLesson();
+            commentLesson.LessonId = commentLessonRequest.LessonId;
+            commentLesson.CreateDateTime = DateTime.Now;
+            commentLesson.LikeCount = 0;
+            commentLesson.Comment = commentLessonRequest.CommentContent;
+            commentLesson.UserId = commentLessonRequest.UserId;
+            await _context.AddAsync(commentLesson);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
         }
     }
 }

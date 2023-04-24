@@ -42,8 +42,22 @@
               style="width: 90%; float: left; margin-left: 12px"
               color="primary"
               variant="underlined"
+              v-model="comment"
               placeholder="Thắc mắc của bạn là gì."
-            ></v-text-field>
+              @keydown.enter="commentRequest()"
+            >
+              <font-awesome-icon
+                icon="fa-solid fa-chevron-right"
+                color="black"
+                class="comment-enter"
+                style="
+                  font-size: 20px;
+                  margin-right: 4px;
+                  position: absolute;
+                  right: 0;
+                "
+                @click="commentRequest()"
+            /></v-text-field>
           </div>
         </div>
         <CommentItem v-for="(item, i) in commentList" :key="i" :data="item" />
@@ -64,6 +78,7 @@ export default {
     fav: true,
     menu: false,
     message: false,
+    comment: "",
     hints: true,
     commentList: [],
     commentCount: 0,
@@ -87,8 +102,26 @@ export default {
       const refreshToken = localStorage.getItem("refreshToken");
       this.getComment(this.$route.params.id, token);
     },
+    async commentRequest() {
+      const token = localStorage.getItem("token");
+      const commentLesson = {
+        UserId: localStorage.getItem("id"),
+        LessonId: this.$route.params.id,
+        CourseId: this.$route.params.idCourse,
+        CommentContent: this.comment,
+      };
+      const data = await StudyAPI.commentLesson(commentLesson, token);
+      this.comment = "";
+      this.handleGetComment();
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.comment-enter:hover {
+  cursor: pointer;
+  z-index: 1;
+  color: #a8a8a8;
+}
+</style>
