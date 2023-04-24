@@ -20,7 +20,7 @@ namespace dj_actionlayer.Business.Study
 {
     public class StudyBusiness : BaseBusiness, IStudyBusiness
     {
-        public async Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId,int? userId)
+        public async Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId, int? userId)
         {
             ResponData<CommentDTO> result = new ResponData<CommentDTO>();
             if (lessonId == null)
@@ -303,24 +303,29 @@ namespace dj_actionlayer.Business.Study
                     if (item.Input == null)
                     {
                         var runCodeResult = await CompileUserCode.RunCSharpCode(code);
-                        testDTO.Output = runCodeResult;
                         testDTO.Input = null;
                         testDTO.ExpectOutput = item.ExpecOutput;
-                        if (runCodeResult.Contains("ERORR+-COMPILE@@@???"))
+                        if (!runCodeResult.success)
                         {
                             testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.EXCEPTION;
+                            testDTO.Output = runCodeResult.exeption;
                             listTest.Add(testDTO);
                             continue;
                         }
-                        if (!runCodeResult.Equals(item.ExpecOutput))
+
+                        if (runCodeResult.success)
                         {
-                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WRONG;
-                            listTest.Add(testDTO);
-                            continue;
-                        }
-                        if (runCodeResult.Equals(item.ExpecOutput))
-                        {
+                            if (!runCodeResult.result.Contains(item.ExpecOutput))
+                            {
+                                testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WRONG;
+                                testDTO.Output = runCodeResult.result;
+                                testDTO.RunTimeTotal = runCodeResult.time;
+                                listTest.Add(testDTO);
+                                continue;
+                            }
                             testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.SECCESSFULLY;
+                            testDTO.Output = runCodeResult.result;
+                            testDTO.RunTimeTotal = runCodeResult.time;
                             listTest.Add(testDTO);
                             continue;
                         }

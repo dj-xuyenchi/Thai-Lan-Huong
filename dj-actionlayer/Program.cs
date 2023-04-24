@@ -2,7 +2,6 @@
 using System.Net.Mail;
 using System.Net;
 using dj_webdesigncore.DTOs.Study;
-
 namespace dj_actionlayer
 {
 	internal class Program
@@ -10,21 +9,17 @@ namespace dj_actionlayer
         static async Task Main(string[] args)
         {
 
-            PracticeLessonDTO d = new PracticeLessonDTO();
-            d.Input = "ádasd";
-            foreach(var i in d.GetType().GetProperties())
-            {
-                 Console.Out.WriteLine(i.GetValue(d,null));
-            }
-            //var code = " Console.WriteLine(123); ";
-
-            //var result = await CompileUserCode.RunCSharpCode(code);
+            //StringWriter stringWriter = new StringWriter();
+            //stringWriter.WriteLine("Hello, world!");
+            //string result = stringWriter.ToString();
             //Console.WriteLine(result);
 
-            // Thông tin tài khoản email người gửi
-            Random rand = new Random();
-            int randomNumber = rand.Next(10000000, 99999999);
-            Console.WriteLine(randomNumber);
+            string code = "Console.WriteLine(\"dsdsdsd\");Console.WriteLine(\"\");Console.WriteLine(\"đ\");";
+            var result = await CompileUserCode.RunCSharpCode(code);
+            Console.WriteLine(result.result);
+
+            Console.WriteLine(result.time);
+            Console.WriteLine(result.exeption);
         }
     }
 }
