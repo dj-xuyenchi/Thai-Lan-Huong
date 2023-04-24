@@ -19,6 +19,7 @@
         :studentCount="item.studentCount"
         :courseName="item.courseName"
         :courseId="item.courseId"
+        :isActive="item.isActive"
       />
     </div>
   </div>

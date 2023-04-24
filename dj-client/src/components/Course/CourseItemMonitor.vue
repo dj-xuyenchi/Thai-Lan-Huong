@@ -18,9 +18,11 @@
           <router-link
             :to="`/home/course/` + courseId"
             style="text-decoration: none"
+            v-if="isActive"
           >
             <v-btn variant="flat rounded-xl">Xem khóa học</v-btn>
           </router-link>
+          <v-btn variant="flat rounded-xl" v-if="!isActive">Coming soon</v-btn>
         </v-overlay>
       </v-card>
     </v-hover>
@@ -68,6 +70,7 @@ export default {
     courseName: String,
     studentCount: Number,
     courseId: Number,
+    isActive: Boolean,
   },
 };
 </script>

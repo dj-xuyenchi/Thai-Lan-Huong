@@ -171,6 +171,14 @@ namespace dj_actionlayer.Business.Lobby
                     foreach (var course in courseListOfType)
                     {
                         CourseDTO courseDTO = new CourseDTO();
+                        if (course.CourseStatusId == 1)
+                        {
+                            courseDTO.IsActive = true;
+                        }
+                        else
+                        {
+                            courseDTO.IsActive = false;
+                        }
                         courseDTO.CourseId = course.Id;
                         courseDTO.CourseImageData = course.CourseImageData;
                         courseDTO.CourseName = course.CourseName;
