@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -37,5 +38,5 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
 }

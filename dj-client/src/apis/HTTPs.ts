@@ -29,16 +29,4 @@ export class HTTPSingleton {
     return this.HTTP;
   }
 }
-// Exemple api
-//  getData: () => {
-//     return new Promise((resolve: any, reject: any) => {
-//       HTTP.get(`api/hocvien/hihi`)
-//         .then((response: any) => {
-//           resolve(response.data);g
-//         })
-//         .catch((error: any) => {
-//           reject(error);
-//         });
-//     });
-//   },
 export const HTTP: AxiosInstance = HTTPSingleton.getInstance().getHTTP();

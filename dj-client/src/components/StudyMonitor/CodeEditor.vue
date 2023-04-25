@@ -187,6 +187,7 @@
         color="#36ae7c"
         v-bind="props"
         style="width: 120px; margin-left: 12px"
+        @click="callTest()"
       >
         <font-awesome-icon
           icon="fa-solid fa-floppy-disk"
@@ -202,6 +203,7 @@
 <script>
 import { VAceEditor } from "vue3-ace-editor";
 import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
+import HeyGPT from "../../apis/OpenAI";
 import { mapMutations } from "vuex";
 export default {
   name: "CodeEditor",
@@ -237,6 +239,9 @@ export default {
       const data = await StudyAPI.tryTestCase(codeRequest, token);
       this.listTest = data.data.testCase;
       this.setIsLoadedData(false);
+    },
+    async callTest() {
+      HeyGPT.sayToGPT("xin chào");
     },
   },
 };
