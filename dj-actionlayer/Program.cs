@@ -14,7 +14,7 @@ namespace dj_actionlayer
             //string result = stringWriter.ToString();
             //Console.WriteLine(result);
 
-            string code = "Console.WriteLine(\"dsdsdsd\");Console.WriteLine(\"\");Console.WriteLine(\"đ\");";
+            string code = "int a =1;\r\nint b=2;\r\n\r\nConsole.WriteLine(a+b);";
             var result = await CompileUserCode.RunCSharpCode(code);
             Console.WriteLine(result.result);
 

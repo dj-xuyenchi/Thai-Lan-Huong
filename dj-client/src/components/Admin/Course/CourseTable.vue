@@ -4,20 +4,30 @@
       <thead>
         <tr>
           <th class="text-left">STT</th>
-          <th class="text-left">Tên học phần</th>
-          <th class="text-left">Ngày tạo</th>
-          <th class="text-left">Cập nhật</th>
+          <th class="text-left">Hình đại diện</th>
+          <th class="text-left">Tên khóa học</th>
+          <th class="text-left">Học phần</th>
+          <th class="text-left">Bài học</th>
           <th class="text-left">Thời lượng</th>
+          <th class="text-left">Trạng thái</th>
           <th class="text-center">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in data" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ item.lessonName }}</td>
-          <td>{{ item.lessonDescription }}</td>
-          <td>{{ item.createDateTime }}</td>
-          <td>{{ item.updateDateTime }}</td>
+          <td>
+            <img
+              :src="`data:image/jpeg;base64,` + item.courseImageData"
+              alt=""
+              style="height: 40px; width: 80px"
+            />
+          </td>
+          <td>{{ item.courseName }}</td>
+          <td>{{ item.chapterCount }}</td>
+          <td>{{ item.lessonCount }}</td>
+          <td>{{ item.timeLessonTotal }}</td>
+          <td>{{ item.courseStatus }}</td>
           <td
             style="
               display: flex;

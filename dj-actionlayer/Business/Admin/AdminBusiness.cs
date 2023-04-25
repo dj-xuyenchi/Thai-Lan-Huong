@@ -78,7 +78,50 @@ namespace dj_actionlayer.Business.Admin
                 data.list = chapterDetail;
                 int size = _context.lesson.Count();
                 data.maxPage = _context.lesson.Count() / 10;
-                if (size % 10 != 0)
+                if (size % 10 != 0&&size>10)
+                {
+                    data.maxPage++;
+                }
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+        }
+
+        public async Task<ResponData<GetCourseDTO>> getCoursePage(int page)
+        {
+            ResponData<GetCourseDTO> result = new ResponData<GetCourseDTO>();
+            GetCourseDTO data = new GetCourseDTO();
+            try
+            {
+                List<CourseDetailDTO> courseDetailDTOs = new List<CourseDetailDTO>();
+                var listCourse = _context.course.Skip((page - 1) * 10).Take(10).ToList();
+                foreach (var item in listCourse)
+                {
+                    CourseDetailDTO courseDetailDTO = new CourseDetailDTO();
+                    courseDetailDTO.ChapterCount = item.ChapterCount + " học phần";
+                    courseDetailDTO.CourseCode = item.CourseCode;
+                    courseDetailDTO.CourseName = item.CourseName;
+                    courseDetailDTO.CourseLevel = _context.course_level.Find(item.CourseLevelId).LevelName;
+                    courseDetailDTO.CourseStatus = _context.course_status.Find(item.CourseStatusId).CourseStatusName;
+                    courseDetailDTO.CourseImageData = item.CourseImageData;
+                    courseDetailDTO.CourseSubTitle = item.CourseSubTitle;
+                    courseDetailDTO.CourseType = _context.course_type.Find(item.CourseTypeId).CourseTypeName;
+                    courseDetailDTO.CourseTypeId=item.CourseTypeId;
+                    courseDetailDTO.TimeLessonTotal = item.TimeLessonTotal;
+                    courseDetailDTOs.Add(courseDetailDTO);
+                }
+                data.list = courseDetailDTOs;
+                int size = _context.lesson.Count();
+                data.maxPage = _context.lesson.Count() / 10;
+                if (size % 10 != 0 && size > 10)
                 {
                     data.maxPage++;
                 }
@@ -126,7 +169,7 @@ namespace dj_actionlayer.Business.Admin
                 data.list = lessonDetailDTO;
                 int size = _context.lesson.Count();
                 data.maxPage = _context.lesson.Count() / 10;
-                if (size % 10 != 0)
+                if (size % 10 != 0 && size > 10)
                 {
                     data.maxPage++;
                 }

@@ -13,6 +13,7 @@ namespace dj_webdesigncore.Business.Admin
     {
         Task<ResponData<GetLessonDTO>> getLessonPage(int page);
         Task<ResponData<GetChapterDTO>> getChapterPage(int page);
+        Task<ResponData<GetCourseDTO>> getCoursePage(int page);
         Task<ResponData<AddLessonDTO>> addPracticeLesson(PracticeLesson practiceLesson);
     }
 }

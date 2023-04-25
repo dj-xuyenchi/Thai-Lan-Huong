@@ -53,7 +53,6 @@ namespace dj_actionlayer.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Comment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CommentImagePath")
@@ -71,7 +70,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("LessonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LikeCount")
+                    b.Property<int?>("LikeCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDateTime")
@@ -190,23 +189,18 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Slide1")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Slide2")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Slide3")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Slide4")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Slide5")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
@@ -837,7 +831,6 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CallTestCode")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ExpectOutput")
@@ -920,11 +913,14 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ExpecOutput")
+                    b.Property<string>("ExpectOutput")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Input")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InputDetail")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockTestCase")

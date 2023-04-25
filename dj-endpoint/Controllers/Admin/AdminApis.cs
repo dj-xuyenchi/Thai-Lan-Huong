@@ -27,6 +27,11 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.getChapterPage(page));
         }
+        [HttpGet("getcoursepage")]
+        public async Task<IActionResult> getCoursePage(int page)
+        {
+            return Ok(await _admin.getCoursePage(page));
+        }
         [HttpGet("checkadmin")]
         public async Task<IActionResult> checkAdmin()
         {

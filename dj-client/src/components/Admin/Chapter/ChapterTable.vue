@@ -6,7 +6,7 @@
           <th class="text-left">STT</th>
           <th class="text-left">Tên học phần</th>
           <th class="text-left">Ngày tạo</th>
-          <th class="text-left">Cập nhật</th>
+          <th class="text-left">Số bài học</th>
           <th class="text-left">Thời lượng</th>
           <th class="text-center">Action</th>
         </tr>
@@ -14,10 +14,10 @@
       <tbody>
         <tr v-for="(item, index) in data" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>{{ item.lessonName }}</td>
-          <td>{{ item.lessonDescription }}</td>
+          <td>{{ item.chapterName }}</td>
           <td>{{ item.createDateTime }}</td>
-          <td>{{ item.updateDateTime }}</td>
+          <td>{{ item.lessonCount }}</td>
+          <td>{{ item.timeTotal }}</td>
           <td
             style="
               display: flex;

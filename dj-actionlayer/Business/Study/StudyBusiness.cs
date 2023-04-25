@@ -247,7 +247,7 @@ namespace dj_actionlayer.Business.Study
                     {
                         tryTestCaseDTO.Input = item.Input;
                     }
-                    tryTestCaseDTO.ExpectOutput = item.ExpecOutput;
+                    tryTestCaseDTO.ExpectOutput = item.ExpectOutput;
                     tryTestCaseDTO.LockTestCase = item.LockTestCase;
                     tryTestCaseDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WAIT;
                     tryTest.Add(tryTestCaseDTO);
@@ -262,14 +262,14 @@ namespace dj_actionlayer.Business.Study
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
-            }
+        }
             catch (Exception ex)
             {
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
                 return result;
             }
-        }
+}
 
         public async Task<ResponData<StudyDTO<QuestionLessonDTO>>> QuestionLessonContent(int? lessonId, int? userId, int? courseId)
         {
@@ -303,19 +303,20 @@ namespace dj_actionlayer.Business.Study
                     if (item.Input == null)
                     {
                         var runCodeResult = await CompileUserCode.RunCSharpCode(code);
-                        testDTO.Input = null;
-                        testDTO.ExpectOutput = item.ExpecOutput;
+                        testDTO.Input = "Không có";
+                        testDTO.ExpectOutput = item.ExpectOutput;
                         if (!runCodeResult.success)
                         {
                             testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.EXCEPTION;
                             testDTO.Output = runCodeResult.exeption;
+                            testDTO.RunTimeTotal = "Lỗi! không tính được";
                             listTest.Add(testDTO);
                             continue;
                         }
 
                         if (runCodeResult.success)
                         {
-                            if (!runCodeResult.result.Contains(item.ExpecOutput))
+                            if (!runCodeResult.result.Contains(item.ExpectOutput))
                             {
                                 testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WRONG;
                                 testDTO.Output = runCodeResult.result;
@@ -329,6 +330,10 @@ namespace dj_actionlayer.Business.Study
                             listTest.Add(testDTO);
                             continue;
                         }
+                    }
+                    else
+                    {
+
                     }
                 }
                 tryTestCaseResultDTO.TestCase = listTest;
