@@ -5,6 +5,22 @@
     <AddTheory />
   </div>
   <LessonTable :data="tableData" style="margin-top: 12px" />
+  <div class="text-center" @click="getLessonDetail()">
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="4">
+          <v-container class="max-width">
+            <v-pagination
+              v-model="page"
+              class="my-4"
+              :length="maxPage"
+              rounded="circle"
+            ></v-pagination>
+          </v-container>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -18,6 +34,8 @@ export default {
   components: { AddPractice, LessonTable, AddTheory },
   data: () => ({
     tableData: [],
+    page: 1,
+    maxPage: 1,
   }),
   created() {
     this.getLessonDetail();
@@ -27,8 +45,9 @@ export default {
     async getLessonDetail() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await AdminAPI.getLesson(token);
-      this.tableData = data.data;
+      const data = await AdminAPI.getLessonPage(this.page, token);
+      this.tableData = data.data.list;
+      this.maxPage = data.data.maxPage;
       this.setIsLoadedData(false);
     },
   },

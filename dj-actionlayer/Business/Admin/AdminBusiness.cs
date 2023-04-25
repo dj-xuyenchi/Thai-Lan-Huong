@@ -57,16 +57,56 @@ namespace dj_actionlayer.Business.Admin
             return result;
         }
 
-        public async Task<ResponData<List<LessonDetailDTO>>> getAllLesson()
+        public async Task<ResponData<GetChapterDTO>> getChapterPage(int page)
         {
-            ResponData<List<LessonDetailDTO>> result = new ResponData<List<LessonDetailDTO>>();
+            ResponData<GetChapterDTO> result = new ResponData<GetChapterDTO>();
+            GetChapterDTO data = new GetChapterDTO();
+            try
+            {
+                List<ChapterDetailDTO> chapterDetail = new List<ChapterDetailDTO>();
+                var listChapter = _context.course_chapter.OrderByDescending(x => x.ChapterCreateDateTime).Skip((page - 1) * 10).Take(10).ToList();
+                foreach (var item in listChapter)
+                {
+                    ChapterDetailDTO chapterDetailDTO = new ChapterDetailDTO();
+                    chapterDetailDTO.ChapterId = item.Id;
+                    chapterDetailDTO.ChapterName = item.ChapterName;
+                    chapterDetailDTO.CreateDateTime = item.ChapterCreateDateTime.Day + " - " + item.ChapterCreateDateTime.Month + " - " + item.ChapterCreateDateTime.Year;
+                    chapterDetailDTO.TimeTotal = item.ChapterTotalTime;
+                    chapterDetailDTO.LessonCount = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).Count()+" bài học";
+                    chapterDetail.Add(chapterDetailDTO);
+                }
+                data.list = chapterDetail;
+                int size = _context.lesson.Count();
+                data.maxPage = _context.lesson.Count() / 10;
+                if (size % 10 != 0)
+                {
+                    data.maxPage++;
+                }
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+        }
+
+        public async Task<ResponData<GetLessonDTO>> getLessonPage(int page)
+        {
+            ResponData<GetLessonDTO> result = new ResponData<GetLessonDTO>();
+            GetLessonDTO data = new GetLessonDTO();
             try
             {
                 List<LessonDetailDTO> lessonDetailDTO = new List<LessonDetailDTO>();
-                var listLesson = _context.lesson.ToList();
+                var listLesson = _context.lesson.OrderByDescending(x=>x.CreateDateTime).Skip((page-1)*10).Take(10).ToList();
                 foreach (var item in listLesson)
                 {
                     LessonDetailDTO lessonDetail = new LessonDetailDTO();
+                    lessonDetail.LessonId = item.Id;
                     lessonDetail.LessonDescription = item.LessonDescription;
                     lessonDetail.LessonName = item.LessonName;
                     lessonDetail.CreateDateTime = item.CreateDateTime.Day + " - " + item.CreateDateTime.Month + " - " + item.CreateDateTime.Year;
@@ -83,7 +123,14 @@ namespace dj_actionlayer.Business.Admin
                     }
                     lessonDetailDTO.Add(lessonDetail);
                 }
-                result.Data = lessonDetailDTO;
+                data.list = lessonDetailDTO;
+                int size = _context.lesson.Count();
+                data.maxPage = _context.lesson.Count() / 10;
+                if (size % 10 != 0)
+                {
+                    data.maxPage++;
+                }
+                result.Data = data;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;

@@ -1,11 +1,13 @@
 ﻿<Properties StartupConfiguration="{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}|Default">
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.dj-actionlayer PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.dj-webdesigncore PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../usr/local/share/dotnet/sdk/7.0.203/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets">
+  <MonoDevelop.Ide.Workbench ActiveDocument="dj-actionlayer/Business/Email/SendEmail.cs">
     <Files>
       <File FileName="dj-endpoint/Program.cs" />
       <File FileName="dj-endpoint/Controllers/AuthApis/AuthApis.cs" />
@@ -14,8 +16,8 @@
       <File FileName="dj-webdesigncore/AuthModel/LoginResponse.cs" />
       <File FileName="dj-actionlayer/DAO/AppContext.cs" />
       <File FileName="dj-webdesigncore/Entities/UserEntity/RefreshToken.cs" />
-      <File FileName="dj-actionlayer/Business/Study/StudyBusiness.cs" />
-      <File FileName="dj-webdesigncore/Business/Study/IStudyBusiness.cs" />
+      <File FileName="dj-actionlayer/Business/Study/StudyBusiness.cs" Line="62" Column="26" />
+      <File FileName="dj-webdesigncore/Business/Study/IStudyBusiness.cs" Line="20" Column="38" />
       <File FileName="dj-webdesigncore/DTOs/Study/VideoLessonDTO.cs" />
       <File FileName="dj-webdesigncore/DTOs/Lobby/ChapterDetailDTO.cs" />
       <File FileName="dj-webdesigncore/DTOs/Lobby/CourseDetailDTO.cs" />
@@ -24,16 +26,21 @@
       <File FileName="dj-endpoint/Controllers/HomeAPIs/LobbyApis.cs" />
       <File FileName="dj-actionlayer/Business/Lobby/LobbyBusiness.cs" />
       <File FileName="dj-webdesigncore/AuthModel/AuthDataRespon.cs" />
-      <File FileName="dj-webdesigncore/AuthModel/RequestLogin.cs" />
-      <File FileName="dj-actionlayer/Business/Auth/AuthBusiness.cs" Line="191" Column="54" />
+      <File FileName="dj-webdesigncore/AuthModel/RequestLogin.cs" Line="11" Column="37" />
+      <File FileName="dj-actionlayer/Business/Auth/AuthBusiness.cs" />
       <File FileName="dj-webdesigncore/Business/Auth/IAuthBusiness.cs" />
       <File FileName="dj-endpoint/Controllers/BaseApi.cs" />
-      <File FileName="dj-endpoint/Controllers/StudyAPIs/StudyApis.cs" Line="25" Column="10" />
-      <File FileName="dj-actionlayer/Business/Compilerrrrrr/CompileUserCode.cs" Line="23" Column="52" />
-      <File FileName="dj-actionlayer/Program.cs" Line="10" Column="1" />
-      <File FileName="dj-webdesigncore/Request/Lesson/PracticeLesson.cs" Line="10" Column="6" />
-      <File FileName="dj-webdesigncore/AuthModel/NewAccount.cs" Line="1" Column="1" />
-      <File FileName="../../../../../usr/local/share/dotnet/sdk/7.0.203/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets" Line="266" Column="5" />
+      <File FileName="dj-endpoint/Controllers/StudyAPIs/StudyApis.cs" Line="39" Column="57" />
+      <File FileName="dj-actionlayer/Business/Compilerrrrrr/CompileUserCode.cs" Line="23" Column="14" />
+      <File FileName="dj-actionlayer/Program.cs" />
+      <File FileName="dj-webdesigncore/Request/Lesson/PracticeLesson.cs" Line="15" Column="21" />
+      <File FileName="dj-webdesigncore/AuthModel/NewAccount.cs" />
+      <File FileName="../../../../../usr/local/share/dotnet/sdk/7.0.203/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets" Line="265" Column="1" />
+      <File FileName="dj-webdesigncore/Request/Lesson/CommentLessonRequest.cs" Line="4" Column="15" />
+      <File FileName="dj-webdesigncore/Entities/BusinessEntity/CommentLesson.cs" Line="21" Column="15" />
+      <File FileName="dj-actionlayer/DAO/Settings.cs" Line="33" Column="21" />
+      <File FileName="dj-actionlayer/Business/Compilerrrrrr/ResultCode.cs" Line="1" Column="1" />
+      <File FileName="dj-actionlayer/Business/Email/SendEmail.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -43,15 +50,33 @@
               <Node name="Business" expanded="True">
                 <Node name="Auth" expanded="True" />
                 <Node name="Compilerrrrrr" expanded="True" />
+                <Node name="Email" expanded="True">
+                  <Node name="SendEmail.cs" selected="True" />
+                </Node>
+                <Node name="Study" expanded="True" />
               </Node>
+              <Node name="DAO" expanded="True" />
             </Node>
             <Node name="dj-endpoint" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="StudyAPIs" expanded="True" />
               </Node>
             </Node>
-            <Node name="dj-webdesigncore" expanded="True" selected="True">
+            <Node name="dj-webdesigncore" expanded="True">
               <Node name="AuthModel" expanded="True" />
+              <Node name="Business" expanded="True">
+                <Node name="Study" expanded="True" />
+              </Node>
+              <Node name="DTOs" expanded="True">
+                <Node name="Study" expanded="True" />
+              </Node>
+              <Node name="Entities" expanded="True">
+                <Node name="BusinessEntity" expanded="True" />
+              </Node>
+              <Node name="Enums" expanded="True">
+                <Node name="ApiEnums" expanded="True" />
+                <Node name="CourseEnums" expanded="True" />
+              </Node>
               <Node name="Request" expanded="True">
                 <Node name="Lesson" expanded="True" />
               </Node>
@@ -61,7 +86,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.dj-webdesigncore PreferredExecutionTarget="MonoDevelop.Default" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>

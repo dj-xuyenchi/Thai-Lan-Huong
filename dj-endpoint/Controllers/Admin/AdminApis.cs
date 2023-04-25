@@ -17,10 +17,15 @@ namespace dj_endpoint.Controllers.Admin
             _admin = new AdminBusiness();
         }
 
-        [HttpGet("getlesson")]
-        public async Task<IActionResult> getLobbyData()
+        [HttpGet("getlessonpage")]
+        public async Task<IActionResult> getLessonPage(int page)
         {
-            return Ok(await _admin.getAllLesson());
+            return Ok(await _admin.getLessonPage(page));
+        }
+        [HttpGet("getchapterpage")]
+        public async Task<IActionResult> getChapterPage(int page)
+        {
+            return Ok(await _admin.getChapterPage(page));
         }
         [HttpGet("checkadmin")]
         public async Task<IActionResult> checkAdmin()

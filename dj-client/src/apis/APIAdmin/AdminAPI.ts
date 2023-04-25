@@ -1,9 +1,25 @@
 import { HTTP } from "../HTTPs";
 import { Error } from "@/store/redirect";
 class AdminAPI {
-  getLesson(token: string): Promise<any> {
+  getLessonPage(page: number, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get("/admin/getlesson", {
+      HTTP.get(`/admin/getlessonpage?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  getChapterPage(page: number, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/admin/getchapterpage?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

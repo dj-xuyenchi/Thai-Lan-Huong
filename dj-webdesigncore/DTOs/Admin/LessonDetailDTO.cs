@@ -8,6 +8,7 @@ namespace dj_webdesigncore.DTOs.Admin
 {
     public class LessonDetailDTO
     {
+        public int LessonId { get; set; }
         public string LessonName { get; set; }
         public string LessonDescription { get; set; }
         public string CreateDateTime { get; set; }

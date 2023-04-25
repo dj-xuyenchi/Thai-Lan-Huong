@@ -26,7 +26,10 @@
             style="display: flex; justify-content: center; align-items: center"
           >
             <BtnUpdateTheory v-if="item.lessonTypeId == 1" />
-            <BtnUpdatePractice v-if="item.lessonTypeId == 2" />
+            <BtnUpdatePractice
+              v-if="item.lessonTypeId == 2"
+              :lessonId="item.lessonId"
+            />
             <BtnUpdateQuestion v-if="item.lessonTypeId == 3" />
           </td>
         </tr>

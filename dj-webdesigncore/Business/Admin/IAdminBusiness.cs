@@ -11,7 +11,8 @@ namespace dj_webdesigncore.Business.Admin
 {
     public interface IAdminBusiness
     {
-        Task<ResponData<List<LessonDetailDTO>>> getAllLesson();
+        Task<ResponData<GetLessonDTO>> getLessonPage(int page);
+        Task<ResponData<GetChapterDTO>> getChapterPage(int page);
         Task<ResponData<AddLessonDTO>> addPracticeLesson(PracticeLesson practiceLesson);
     }
 }

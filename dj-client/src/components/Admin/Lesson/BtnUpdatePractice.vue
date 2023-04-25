@@ -1,20 +1,20 @@
 <template>
   <div>
-    <v-form ref="form" @submit.prevent="submit">
-      <v-row>
-        <v-dialog v-model="dialog" persistent width="1024">
-          <template v-slot:activator="{ props }">
-            <v-btn
-              color="green"
-              v-bind="props"
-              density="compact"
-              icon="mdi-pencil"
-            >
-            </v-btn>
-          </template>
-          <v-card>
+    <v-row>
+      <v-dialog v-model="dialog" persistent width="1024">
+        <template v-slot:activator="{ props }">
+          <v-btn
+            color="green"
+            v-bind="props"
+            density="compact"
+            icon="mdi-pencil"
+          >
+          </v-btn>
+        </template>
+        <v-form @submit.prevent="submit()" ref="form">
+          <v-card style="height: 90vh; overflow: scroll">
             <v-card-title>
-              <span class="text-h5">Thêm bài học thực hành</span>
+              <span class="text-h5">Cập nhật bài học thực hành</span>
             </v-card-title>
             <v-card-text>
               <v-container>
@@ -23,40 +23,40 @@
                     <v-text-field
                       label="Tên bài học"
                       hint="Khi hiển thị sẽ là Bài học + tên bài học"
-                      required
-                      :v-model="lessonName"
+                      v-model="lessonName"
+                      :rules="rules"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       label="Mô tả"
                       hint="Mô tả bài học"
-                      required
-                      :v-model="lessonDescription"
+                      :rules="rules"
+                      v-model="lessonDescription"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
                       label="Thời lượng"
                       hint="Thời lượng của bài học"
-                      required
-                      :v-model="lessonTime"
+                      :rules="rules"
+                      v-model="lessonTime"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       label="Vấn đề"
                       hint="Vấn đề cần giải quyết"
-                      required
-                      :v-model="problem"
+                      :rules="rules"
+                      v-model="problem"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       label="Mô tả vấn đề"
                       hint="Mô tả vấn đề cần giải quyết"
-                      required
-                      :v-model="problemDetail"
+                      :rules="rules"
+                      v-model="problemDetail"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -64,40 +64,49 @@
                       counter
                       label="Code mặc định"
                       hint="Đoạn code mặc định hiển thị lên code field"
-                      required
-                      :v-model="beginCode"
+                      :rules="rules"
+                      v-model="beginCode"
                     ></v-textarea>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      counter
+                      label="Call Test Code"
+                      hint="Call Test Code"
+                      :rules="rules"
+                      v-model="callTestCode"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
                       label="Đầu vào ví dụ"
                       hint="Input test case ví dụ"
-                      required
-                      :v-model="inputExemple"
+                      :rules="rules"
+                      v-model="inputExemple"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
                       label="Đầu ra ví dụ"
                       hint="Output test case ví dụ"
-                      required
-                      :v-model="outputExemple"
+                      :rules="rules"
+                      v-model="outputExemple"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       label="Giải thích"
                       hint="Giải thích ví dụ"
-                      required
-                      :v-model="explain"
+                      :rules="rules"
+                      v-model="explainCode"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       label="Gợi ý"
                       hint="Gợi ý bài tập"
-                      required
-                      :v-model="suggest"
+                      :rules="rules"
+                      v-model="suggest"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -119,39 +128,44 @@
               >
                 Hủy
               </v-btn>
-              <v-btn
-                type="sendData"
-                color="blue-darken-1"
-                variant="text"
-                @click="sendData"
-              >
-                Thêm bài tập
+              <v-btn color="blue-darken-1" variant="text" type="submit">
+                Cập nhật
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-dialog>
-      </v-row>
-    </v-form>
+        </v-form>
+      </v-dialog>
+    </v-row>
   </div>
 </template>
 
 <script>
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 export default {
   name: "BtnUpdatePractice",
-  data: () => ({
-    lessonName: "",
-    lessonDescription: "",
-    lessonTime: "",
-    problem: "",
-    problemDetail: "",
-    beginCode: "",
-    inputExemple: "",
-    outputExemple: "",
-    explainCode: "",
-    suggest: "",
-    activeLesson: false,
-    dialog: false,
-  }),
+  data() {
+    return {
+      lessonName: "",
+      lessonDescription: "",
+      lessonTime: "",
+      problem: "",
+      problemDetail: "",
+      beginCode: "",
+      inputExemple: "",
+      callTestCode: "",
+      outputExemple: "",
+      explainCode: "",
+      suggest: "",
+      activeLesson: false,
+      dialog: false,
+      rules: [
+        (value) => {
+          if (value) return true;
+          return "Không được để trống!";
+        },
+      ],
+    };
+  },
   methods: {
     getData() {
       return {
@@ -161,16 +175,26 @@ export default {
         problem: this.problem,
         problemDetail: this.problemDetail,
         beginCode: this.beginCode,
+        callTestCode: this.callTestCode,
         inputExemple: this.inputExemple,
         outputExemple: this.outputExemple,
         explainCode: this.explainCode,
         suggest: this.suggest,
       };
     },
-    sendData() {
-      console.log(this.getData());
-      //   this.dialog = false;
+    async submit() {
+      const form = Object.assign({}, this.$refs.form);
+      for (const item of form.items) {
+        if (!item.isValid) {
+          return;
+        }
+      }
+      const token = localStorage.getItem("token");
+      await AdminAPI.addPracticeLesson(this.getData(), token);
     },
+  },
+  props: {
+    lessonId: String,
   },
 };
 </script>
