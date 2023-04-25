@@ -159,7 +159,9 @@
                   <div class="test-case-info">
                     <span
                       >Thời gian chạy:
-                      <span class="test-case-result">null</span></span
+                      <span class="test-case-result">{{
+                        item.runTimeTotal
+                      }}</span></span
                     >
                   </div>
                 </v-card-text>
@@ -228,11 +230,11 @@ export default {
     async tryTestCase() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await StudyAPI.tryTestCase(
-        this.content,
-        this.practiceLessonId,
-        token
-      );
+      const codeRequest = {
+        Code: this.content,
+        PracticeLessonId: this.practiceLessonId,
+      };
+      const data = await StudyAPI.tryTestCase(codeRequest, token);
       this.listTest = data.data.testCase;
       this.setIsLoadedData(false);
     },

@@ -44,20 +44,13 @@ class StudyAPI {
         });
     });
   }
-  tryTestCase(
-    code: string,
-    practiceLessonId: number,
-    token: string
-  ): Promise<any> {
+  tryTestCase(codeRequest: object, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get(
-        `/study/trytestcase?code=${code}&practiceLessonId=${practiceLessonId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      HTTP.post(`/study/trytestcase`, codeRequest, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => {
           resolve(response.data);
         })
