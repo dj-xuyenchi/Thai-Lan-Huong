@@ -15,7 +15,7 @@
           </tr>
         </tbody>
       </table>
-      <div v-if="explain.length > 0" style="margin-top: 20px">
+      <div v-if="explain" style="margin-top: 20px">
         <h4 style="font-size: 24px; font-family: inherit; font-weight: 700">
           Giải thích
         </h4>
@@ -24,7 +24,7 @@
           v-html="explain"
         ></span>
       </div>
-      <div v-if="suggest.length > 0" style="margin-top: 20px">
+      <div v-if="suggest" style="margin-top: 20px">
         <h4 style="font-size: 24px; font-family: inherit; font-weight: 700">
           Gợi ý cách làm
         </h4>

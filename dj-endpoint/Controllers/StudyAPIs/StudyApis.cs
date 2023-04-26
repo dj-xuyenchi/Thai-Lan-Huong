@@ -46,10 +46,10 @@ namespace dj_endpoint.Controllers.StudyAPIs
             }
         }
 
-        [HttpGet("trytestcase")]
-        public async Task<IActionResult> tryTestCase(string? code, int? practiceLessonId)
+        [HttpPost("trytestcase")]
+        public async Task<IActionResult> tryTestCase(CodeRequest codeRequest)
         {
-            return Ok(await _study.TryTestCase(code, practiceLessonId));
+            return Ok(await _study.TryTestCase(codeRequest));
         }
 
         [HttpPost("registercourse")]

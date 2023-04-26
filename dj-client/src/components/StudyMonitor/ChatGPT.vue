@@ -20,22 +20,24 @@ export default {
 <style lang="css" scoped>
 .chat-container {
   width: 400px;
+  min-height: 300px;
   display: inline-block;
 }
 .chat-container .chat-item {
-  border-top-left-radius: 5px;
+  border-top-left-radius: 15px;
   border: 1px solid rgb(218, 220, 224);
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
   min-height: 30px;
   min-width: 80px;
   display: inline-flex;
   margin-top: 4px;
   margin-bottom: 4px;
   align-items: center;
-  padding-left: 8px;
-  padding-bottom: 4px;
+  padding-left: 12px;
+  color: black;
+  padding-bottom: 8px;
   padding-right: 8px;
-  padding-top: 4px;
+  padding-top: 8px;
 }
 </style>

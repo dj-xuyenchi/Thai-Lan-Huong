@@ -1,14 +1,14 @@
 <template>
   <div class="quiz-container">
-    <div style="width: 40%; float: left">
+    <div style="width: 40%; float: left; height: 300px">
       <h4 style="font-size: 24px; font-family: inherit; font-weight: 700">
-        {{ question }}
+        {{ data.question }}
       </h4>
       <v-radio-group>
-        <v-radio color="primary" :label="a" value="1"></v-radio>
-        <v-radio color="primary" :label="b" value="2"></v-radio>
-        <v-radio color="primary" :label="c" value="3"></v-radio>
-        <v-radio color="primary" :label="d" value="4"></v-radio>
+        <v-radio color="primary" :label="data.answerA" value="1"></v-radio>
+        <v-radio color="primary" :label="data.answerB" value="2"></v-radio>
+        <v-radio color="primary" :label="data.answerC" value="3"></v-radio>
+        <v-radio color="primary" :label="data.answerD" value="4"></v-radio>
       </v-radio-group>
     </div>
     <div style="width: 60%; float: left" v-if="openai">
@@ -38,15 +38,14 @@ export default {
   name: "QuizLesson",
   components: { ChatGPT },
   data: () => ({
-    a: "",
-    b: "",
-    c: "",
-    d: "",
     question: "",
     answer: 0,
     openai: true,
     listChat: ["asa", "xin chào mình có thể giúp gì cho bạn."],
   }),
+  props: {
+    data: Object,
+  },
 };
 </script>
 

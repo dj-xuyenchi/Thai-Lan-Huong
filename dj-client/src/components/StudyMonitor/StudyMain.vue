@@ -1,15 +1,18 @@
 <template>
   <div class="study-main-container">
     <StudyHeader :courseName="lessonData.courseName" courseProcess="1%/100%" />
-    <!-- <VideoLesson
+    <VideoLesson
       :videoPath="lessonData.studyDetail.videoUrl"
       v-if="lessonData.lessonType == 1"
     />
     <PracticeLesson
       :practiceData="lessonData.studyDetail"
       v-if="lessonData.lessonType == 2"
-    /> -->
-    <QuizLesson />
+    />
+    <QuizLesson
+      :data="lessonData.studyDetail"
+      v-if="lessonData.lessonType == 3"
+    />
     <div
       style="
         margin-left: 5%;
@@ -56,8 +59,8 @@ export default {
     StudyFooter,
     LessonComment,
     LessonList,
-    // VideoLesson,
-    // PracticeLesson,
+    VideoLesson,
+    PracticeLesson,
     QuizLesson,
   },
   data() {
@@ -96,7 +99,8 @@ export default {
 
 <style lang="css" scoped>
 .study-main-container {
-  height: 92vh;
+  min-height: 100vh;
+  display: inline-block;
   width: 100%;
 }
 .study-main-container .video-container {

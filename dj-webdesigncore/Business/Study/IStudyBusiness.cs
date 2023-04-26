@@ -19,7 +19,7 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<StudyDTO<PracticeLessonDTO>>> PracticeLessonContent(int? lessonId, int? userId, int? courseId);
         Task<ResponData<CommentDTO>> CommentOfLesson(int? lessonId,int? userId);
         Task<List<ChapterDetailDTO>> LessonListOfUser(int? userId, int? courseId);
-        Task<ResponData<TryTestCaseResultDTO>> TryTestCase(string? code, int? practiceLessonId);
+        Task<ResponData<TryTestCaseResultDTO>> TryTestCase(CodeRequest codeRequest);
         Task<ResponData<RegisterCourseDTO>> RegisterCourse(RegisterCourse registerCourse);
         Task<ResponData<ActionStatus>> CommentLesson(CommentLessonRequest commentLessonRequest);
         Task<ResponData<ActionStatus>> SubCommentLesson(SubCommentLessonRequest subCommentLessonRequest);

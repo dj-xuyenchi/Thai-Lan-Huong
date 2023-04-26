@@ -342,16 +342,16 @@ namespace dj_actionlayer.Business.Study
             }
         }
 
-        public async Task<ResponData<TryTestCaseResultDTO>> TryTestCase(string? code, int? practiceLessonId)
+        public async Task<ResponData<TryTestCaseResultDTO>> TryTestCase(CodeRequest codeRequest)
         {
             ResponData<TryTestCaseResultDTO> result = new ResponData<TryTestCaseResultDTO>();
-            if (code == null)
+            if (codeRequest.Code == null)
             {
                 result.Messenger = "Lấy dữ liệu thất bại không nhận được code!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
                 return result;
             }
-            if (practiceLessonId == null)
+            if (codeRequest.PracticeLessonId == null)
             {
                 result.Messenger = "Lấy dữ liệu thất bại không nhận được PracticeLessonId!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
@@ -359,7 +359,7 @@ namespace dj_actionlayer.Business.Study
             }
             try
             {
-                var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == practiceLessonId).OrderBy(x => x.SortNumber).ToList();
+                var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == codeRequest.PracticeLessonId).OrderBy(x => x.SortNumber).ToList();
                 TryTestCaseResultDTO tryTestCaseResultDTO = new TryTestCaseResultDTO();
                 List<TryTestCaseDTO> listTest = new List<TryTestCaseDTO>();
                 foreach (var item in listTestCase)
@@ -368,7 +368,7 @@ namespace dj_actionlayer.Business.Study
                     testDTO.LockTestCase = item.LockTestCase;
                     if (item.Input == null)
                     {
-                        var runCodeResult = await CompileUserCode.RunCSharpCode(code);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code);
                         testDTO.Input = "Không có";
                         testDTO.ExpectOutput = item.ExpectOutput;
                         if (!runCodeResult.success)

@@ -15,33 +15,6 @@
       "
     />
     <div style="margin-left: 45%; margin-top: 12px">
-      <!-- <v-tabs v-model="tab" bg-color="transparent" color="basil" grow>
-        <v-tab v-for="(item, index) in listTest" :key="item" :value="item">
-          Case {{ index + 1 }}
-        </v-tab>
-      </v-tabs>
-      <v-window v-model="tab" style="margin-bottom: 12px">
-        <v-window-item v-for="item in listTest" :key="item" :value="item">
-          <v-card
-            :color="
-              item.result === 1
-                ? `green`
-                : item.result === 2
-                ? `red`
-                : item.result === 3
-                ? `red`
-                : item.result === 4
-                ? `white`
-                : ``
-            "
-            flat
-          >
-            <v-card-text>Đầu vào: {{ item.input }}</v-card-text>
-            <v-card-text>Đầu ra thực tế: {{ item.output }}</v-card-text>
-            <v-card-text>Đầu ra mong muốn: {{ item.expectOutput }}</v-card-text>
-          </v-card>
-        </v-window-item>
-      </v-window> -->
       <v-card style="margin-bottom: 12px">
         <v-toolbar color="#1b749b">
           <v-toolbar-title>Test Case</v-toolbar-title>
@@ -164,6 +137,16 @@
                       }}</span></span
                     >
                   </div>
+                  <v-btn
+                    v-if="item.result == 2 || item.result == 3"
+                    outlined
+                    @click="
+                      callTest(item.result == 2 ? 1 : 2, item);
+                      showChat = true;
+                    "
+                  >
+                    Giải thích lỗi
+                  </v-btn>
                 </v-card-text>
               </v-card>
             </v-window-item>
@@ -196,7 +179,66 @@
         />
         Nộp bài
       </v-btn>
+      <v-btn
+        color="#36ae7c"
+        v-bind="props"
+        style="width: 120px; margin-left: 12px"
+        @click="showChat = !showChat"
+      >
+        <font-awesome-icon
+          icon="fa-solid fa-user-doctor"
+          color="black"
+          style="font-size: 20px; margin-right: 4px"
+        />
+        ChatGPT
+      </v-btn>
     </div>
+
+    <v-card
+      style="
+        position: absolute;
+        bottom: 5vh;
+        left: 12px;
+        width: 600px;
+        height: 600px;
+        overflow: scroll;
+        z-index: 1;
+      "
+      v-if="showChat"
+    >
+      <v-toolbar color="rgba(0, 0, 0, 0)" theme="dark">
+        <v-toolbar-title class="text-h6" style="color: green">
+          ChatGPT
+        </v-toolbar-title>
+        <v-progress-circular
+          :size="20"
+          color="primary"
+          indeterminate
+          v-if="thinking"
+        ></v-progress-circular>
+        <span v-if="thinking" style="color: black; margin-left: 12px"
+          >Đang phân tích vấn đề của bạn</span
+        >
+        <template v-slot:append>
+          <v-btn
+            icon="mdi-close"
+            style="color: black"
+            @click="showChat = !showChat"
+          ></v-btn>
+        </template>
+      </v-toolbar>
+      <div style="margin-left: 12px">
+        <ChatGPT :listChat="listGPTResponse" />
+      </div>
+    </v-card>
+    <v-snackbar v-model="snackbar" multi-line>
+      Bạn chưa code gì hết!
+      <template v-slot:actions>
+        <v-btn color="red" variant="text" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -204,15 +246,20 @@
 import { VAceEditor } from "vue3-ace-editor";
 import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 import HeyGPT from "../../apis/OpenAI";
+import ChatGPT from "./ChatGPT";
 import { mapMutations } from "vuex";
 export default {
   name: "CodeEditor",
-  components: { VAceEditor },
+  components: { VAceEditor, ChatGPT },
   data() {
     return {
       content: "",
       tab: "option-0",
       listTest: [],
+      listGPTResponse: [],
+      showChat: false,
+      thinking: false,
+      snackbar: false,
     };
   },
   props: {
@@ -221,7 +268,7 @@ export default {
     practiceLessonId: Number,
   },
   mounted() {
-    this.content = this.beginCodeMethod;
+    this.content = this.beginCodeMethod ? " " : " ";
     this.listTest = this.testCase;
   },
   setup(props) {
@@ -230,6 +277,10 @@ export default {
   methods: {
     ...mapMutations(["setIsLoadedData"]),
     async tryTestCase() {
+      if (this.content.trim().length === 0) {
+        this.snackbar = true;
+        return;
+      }
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
       const codeRequest = {
@@ -240,8 +291,27 @@ export default {
       this.listTest = data.data.testCase;
       this.setIsLoadedData(false);
     },
-    async callTest() {
-      HeyGPT.sayToGPT("xin chào");
+    async callTest(option, content) {
+      if (option == 1) {
+        this.thinking = true;
+        const respon = await HeyGPT.sayToGPTWrong(
+          this.content,
+          content.expectOutput,
+          content.output
+        );
+        this.listGPTResponse.push(respon.choices[0].message.content);
+        this.thinking = false;
+      }
+      if (option == 2) {
+        this.thinking = true;
+        const respon = await HeyGPT.sayToGPTExeption(
+          this.content,
+          content.expectOutput,
+          content.output
+        );
+        this.listGPTResponse.push(respon.choices[0].message.content);
+        this.thinking = false;
+      }
     },
   },
 };
