@@ -355,7 +355,11 @@ export default {
       const token = localStorage.getItem("token");
       const data = await StudyAPI.sendCodeOk(senData, token);
       console.log(data);
-      if (data.data == 1 || data.data == 5) {
+      if (data.data == 1) {
+        this.snackBarContent = "Thành công! Đã mở khóa bài học mới";
+        this.snackbarOk = true;
+      }
+      if (data.data == 5) {
         this.snackBarContent = "Thành công!";
         this.snackbarOk = true;
       }
