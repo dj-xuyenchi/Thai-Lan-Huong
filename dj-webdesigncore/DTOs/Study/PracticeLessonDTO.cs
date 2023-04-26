@@ -13,6 +13,7 @@ namespace dj_webdesigncore.DTOs.Study
         public string? BeginCodeMethod { get; set; }
         public string? CallTestCode { get; set; }
         public string? Input { get; set; }
+        public string? CodeOk { get; set; }
         public string? ExpectOutput { get; set; }
         public string? Explain { get; set; }
         public string? Suggest { get; set; }

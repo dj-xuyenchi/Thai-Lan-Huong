@@ -73,5 +73,10 @@ namespace dj_endpoint.Controllers.StudyAPIs
         {
             return Ok(await _study.LikeComment(likeComment));
         }
+        [HttpPost("sendcodeok")]
+        public async Task<IActionResult> sendCodeOk(SendPracticeRequest sendPracticeRequest)
+        {
+            return Ok(await _study.SendPracticeOk(sendPracticeRequest));
+        }
     }
 }

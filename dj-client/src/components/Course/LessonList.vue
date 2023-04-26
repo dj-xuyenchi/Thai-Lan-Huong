@@ -23,7 +23,7 @@
           "
           :disabled="!item.isDone"
           style="position: relative"
-          :to="`/study/` + item.lessonId + `/` + idCourse"
+          :to="`/study/` + item.lessonId + `/` + idCourse + `/` + chapterId"
         >
           <span
             style="
@@ -59,6 +59,7 @@ export default {
     titleLesson: String,
     listLesson: Array,
     idCourse: Number,
+    chapterId: Number,
   },
 };
 </script>

@@ -10,6 +10,7 @@ namespace dj_webdesigncore.DTOs.Lobby
     {
         public string ChapterTitle { get; set; }
         public int LessonCount { get; set; }
+        public int ChapterId { get; set; }
         public List<LessonDetailDTO> LessonDetail { get; set; }
     }
 }

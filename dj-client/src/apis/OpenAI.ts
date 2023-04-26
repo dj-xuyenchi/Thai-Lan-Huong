@@ -1,11 +1,7 @@
 import axios from "axios";
 
 class HeyGPT {
-  sayToGPTExeption(
-    code: string,
-    expectOutput: string,
-    exeption: string
-  ): Promise<any> {
+  sayToGPTExeption(exeption: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
       axios
         .post(
@@ -15,14 +11,7 @@ class HeyGPT {
             messages: [
               {
                 role: "user",
-                content:
-                  "Đây là đoạn code của tôi bằng C#. using System; namespace HelloWorld { class Program { static void Main(string[] args) { " +
-                  code +
-                  "  } } }tôi mong muốn nhận được kết quả là " +
-                  expectOutput +
-                  " nhưng tôi chạy bị lỗi " +
-                  exeption +
-                  " lỗi đó là lỗi gì vậy. giải thích lỗi không trả lời cách sửa.",
+                content: "Lỗi " + exeption + " là lỗi gì",
               },
             ],
           },

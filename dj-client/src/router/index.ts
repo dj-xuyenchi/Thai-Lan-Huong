@@ -75,7 +75,7 @@ const routes: Array<RouteRecordRaw> = [
     component: CheckConfirm,
   },
   {
-    path: "/study/:id/:idCourse",
+    path: "/study/:id/:idCourse/:idChapter",
     name: "study",
     component: StudyMain,
   },

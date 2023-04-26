@@ -24,5 +24,6 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<ActionStatus>> CommentLesson(CommentLessonRequest commentLessonRequest);
         Task<ResponData<ActionStatus>> SubCommentLesson(SubCommentLessonRequest subCommentLessonRequest);
         Task<ResponData<ActionStatus>> LikeComment(LikeComment likeComment);
+        Task<ResponData<ActionStatus>> SendPracticeOk(SendPracticeRequest sendPracticeRequest);
     }
 }

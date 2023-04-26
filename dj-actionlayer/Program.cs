@@ -14,7 +14,7 @@ namespace dj_actionlayer
             //string result = stringWriter.ToString();
             //Console.WriteLine(result);
 
-            string code = "int a =1;\r\nint b=2;\r\n\r\nConsole.WriteLine(a+b);";
+            string code = "using System.Diagnostics;internal class Program\r\n\t{\r\n\t\tstatic void Main(string[] args)\r\n\t\t{\r\n\t\t\tConsole.WriteLine(\"Hello, World!\");\r\n\t\t}\r\n\t}";
             var result = await CompileUserCode.RunCSharpCode(code);
             Console.WriteLine(result.result);
 

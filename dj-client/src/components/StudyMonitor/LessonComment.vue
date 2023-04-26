@@ -130,6 +130,7 @@ export default {
       };
       const data = await StudyAPI.commentLesson(commentLesson, token);
       this.comment = "";
+      this.handleGetComment();
     },
     resetClicked() {
       this.isClicked = false;

@@ -80,6 +80,7 @@ namespace dj_actionlayer.Business.Lobby
                 foreach (var item in chapterOfCourse)
                 {
                     ChapterDetailDTO chapterDetailDTO = new ChapterDetailDTO();
+                    chapterDetailDTO.ChapterId = item.Id;
                     chapterDetailDTO.ChapterTitle = item.ChapterName;
                     chapterDetailDTO.LessonCount = item.ChapterLessonCount;
                     List<LessonDetailDTO> lessonDetailDTOResult = new List<LessonDetailDTO>();

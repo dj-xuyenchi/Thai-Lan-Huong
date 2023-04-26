@@ -69,6 +69,7 @@
           :key="index"
           :listLesson="item.lessonDetail"
           :idCourse="this.$route.params.id"
+          :chapterId="item.chapterId"
         />
       </div>
     </div>

@@ -5,6 +5,7 @@
       :beginCodeMethod="practiceData.beginCodeMethod"
       :testCase="practiceData.testCase"
       :practiceLessonId="practiceData.practiceLessonId"
+      :codeOk="practiceData.codeOk"
     />
   </div>
 </template>

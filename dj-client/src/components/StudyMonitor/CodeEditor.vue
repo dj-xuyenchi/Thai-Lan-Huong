@@ -170,7 +170,7 @@
         color="#36ae7c"
         v-bind="props"
         style="width: 120px; margin-left: 12px"
-        @click="callTest()"
+        @click="sendCodeOk()"
       >
         <font-awesome-icon
           icon="fa-solid fa-floppy-disk"
@@ -231,11 +231,19 @@
         <ChatGPT :listChat="listGPTResponse" />
       </div>
     </v-card>
-    <v-snackbar v-model="snackbar" multi-line>
-      Bạn chưa code gì hết!
+    <v-snackbar v-model="snackbarNotOk" multi-line>
+      {{ snackBarContent }}
       <template v-slot:actions>
-        <v-btn color="red" variant="text" @click="snackbar = false">
-          Close
+        <v-btn color="red" variant="text" @click="snackbarNotOk = false">
+          Đóng
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar v-model="snackbarOk" multi-line>
+      {{ snackBarContent }}
+      <template v-slot:actions>
+        <v-btn color="green" variant="text" @click="snackbarOk = false">
+          Đóng
         </v-btn>
       </template>
     </v-snackbar>
@@ -259,16 +267,24 @@ export default {
       listGPTResponse: [],
       showChat: false,
       thinking: false,
-      snackbar: false,
+      snackbarNotOk: false,
+      snackBarContent: "",
+      snackbarOk: false,
+      isOk: false,
     };
   },
   props: {
     testCase: [],
     beginCodeMethod: String,
     practiceLessonId: Number,
+    codeOk: String,
   },
   mounted() {
-    this.content = this.beginCodeMethod ? " " : " ";
+    if (this.codeOk) {
+      this.content = this.codeOk;
+    } else {
+      this.content = this.beginCodeMethod ? " " : " ";
+    }
     this.listTest = this.testCase;
   },
   setup(props) {
@@ -278,7 +294,8 @@ export default {
     ...mapMutations(["setIsLoadedData"]),
     async tryTestCase() {
       if (this.content.trim().length === 0) {
-        this.snackbar = true;
+        this.snackBarContent = "Bạn chưa code gì hết!";
+        this.snackbarNotOk = true;
         return;
       }
       this.setIsLoadedData(true);
@@ -289,6 +306,13 @@ export default {
       };
       const data = await StudyAPI.tryTestCase(codeRequest, token);
       this.listTest = data.data.testCase;
+      this.isOk = true;
+      for (var item of this.listTest) {
+        if (item.result != 1) {
+          this.isOk = false;
+          break;
+        }
+      }
       this.setIsLoadedData(false);
     },
     async callTest(option, content) {
@@ -312,6 +336,30 @@ export default {
         this.listGPTResponse.push(respon.choices[0].message.content);
         this.thinking = false;
       }
+    },
+    async sendCodeOk() {
+      this.setIsLoadedData(true);
+      if (!this.isOk) {
+        this.snackBarContent = "Chưa hoàn thành đủ Test Case!";
+        this.snackbarNotOk = true;
+        this.setIsLoadedData(false);
+        return;
+      }
+      const userId = localStorage.getItem("id");
+      const senData = {
+        UserId: userId,
+        LessonId: this.$route.params.id,
+        ChapterId: this.$route.params.idChapter,
+        Code: this.content,
+      };
+      const token = localStorage.getItem("token");
+      const data = await StudyAPI.sendCodeOk(senData, token);
+      console.log(data);
+      if (data.data == 1 || data.data == 5) {
+        this.snackBarContent = "Thành công!";
+        this.snackbarOk = true;
+      }
+      this.setIsLoadedData(false);
     },
   },
 };

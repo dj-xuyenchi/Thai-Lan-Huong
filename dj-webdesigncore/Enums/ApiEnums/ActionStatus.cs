@@ -13,6 +13,6 @@ namespace dj_webdesigncore.Enums.ApiEnums
         FAILED = 2,
         PARAMNULL = 3,
         NOTFOUND = 4,
-       
+        EXIST = 5
     }
 }
