@@ -15,6 +15,8 @@ export default {
   background-color: #29b6f6;
   display: flex;
   justify-content: center;
+  position: absolute;
+  bottom: 0;
   align-items: center;
   font-size: 20px;
   font-weight: bold;

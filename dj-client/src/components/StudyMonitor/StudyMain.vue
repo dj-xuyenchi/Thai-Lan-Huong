@@ -1,14 +1,15 @@
 <template>
   <div class="study-main-container">
     <StudyHeader :courseName="lessonData.courseName" courseProcess="1%/100%" />
-    <VideoLesson
+    <!-- <VideoLesson
       :videoPath="lessonData.studyDetail.videoUrl"
       v-if="lessonData.lessonType == 1"
     />
     <PracticeLesson
       :practiceData="lessonData.studyDetail"
       v-if="lessonData.lessonType == 2"
-    />
+    /> -->
+    <QuizLesson />
     <div
       style="
         margin-left: 5%;
@@ -33,7 +34,7 @@
         </v-btn>
       </div>
     </div>
-    <StudyFooter style="position: abslute; bottom: 0" />
+    <StudyFooter />
   </div>
 </template>
 
@@ -44,6 +45,7 @@ import LessonComment from "./LessonComment.vue";
 import LessonList from "./LessonList.vue";
 import VideoLesson from "./VideoLesson.vue";
 import PracticeLesson from "./PracticeLesson.vue";
+import QuizLesson from "./QuizLesson.vue";
 import { mapGetters } from "vuex";
 import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 import { mapMutations } from "vuex";
@@ -54,8 +56,9 @@ export default {
     StudyFooter,
     LessonComment,
     LessonList,
-    VideoLesson,
-    PracticeLesson,
+    // VideoLesson,
+    // PracticeLesson,
+    QuizLesson,
   },
   data() {
     return {
@@ -93,7 +96,7 @@ export default {
 
 <style lang="css" scoped>
 .study-main-container {
-  height: 100%;
+  height: 92vh;
   width: 100%;
 }
 .study-main-container .video-container {

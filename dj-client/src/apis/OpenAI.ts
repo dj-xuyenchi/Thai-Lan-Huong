@@ -12,7 +12,7 @@ class HeyGPT {
           },
           {
             headers: {
-              Authorization: `Bearer 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`,
+              Authorization: `Bearer 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`,
             },
           }
         )

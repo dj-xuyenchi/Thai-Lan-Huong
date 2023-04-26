@@ -29,6 +29,7 @@ import {
   faCaretRight,
   faFloppyDisk,
   faChevronRight,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarPlus,
@@ -50,6 +51,7 @@ library.add(
   faBloggerB,
   faCalendarDays,
   faUsers,
+  faPaperPlane,
   faEnvelope,
   faPhone,
   faLocationDot,

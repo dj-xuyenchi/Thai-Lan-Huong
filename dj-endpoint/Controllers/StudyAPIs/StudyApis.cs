@@ -40,7 +40,7 @@ namespace dj_endpoint.Controllers.StudyAPIs
                 case 2:
                     return Ok(await _study.PracticeLessonContent(lessonId, userId, courseId));
                 case 3:
-                    return Ok(await _study.VideoLessonContent(lessonId, userId, courseId));
+                    return Ok(await _study.QuestionLessonContent(lessonId, userId, courseId));
                 default:
                     return BadRequest();
             }
