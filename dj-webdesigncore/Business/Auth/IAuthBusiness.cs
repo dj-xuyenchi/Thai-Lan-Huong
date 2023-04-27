@@ -18,6 +18,8 @@ namespace dj_webdesigncore.Business.Auth
         Task<ResponData<NewAccount>> SignIn(SignInAccount newAccount);
         Task<ResponData<ActionStatus>> ForgetPass(ForgetPassRequest forgetPassRequest);
         Task<LoginResponse<AuthDataRespon>> ConfirmAccount(string code);
+        Task<ResponData<ActionStatus>> ConfirmCodeForgetPass(string code);
+        Task<LoginResponse<AuthDataRespon>> ConfirmNewPass(ConfirmNewPass confirmNewPass);
     }
 }
 

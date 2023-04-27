@@ -1,6 +1,7 @@
 ﻿
 using dj_actionlayer.Business.Auth;
 using dj_webdesigncore.AuthModel;
+using dj_webdesigncore.Business.Auth;
 using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace dj_endpoint.Controllers.AuthApis
     [Route("/login")]
     public class AuthApis : BaseApi
     {
-        private readonly AuthBusiness authBusiness;
+        private readonly IAuthBusiness authBusiness;
 
         public AuthApis()
         {
@@ -39,6 +40,16 @@ namespace dj_endpoint.Controllers.AuthApis
         public async Task<IActionResult> ForgetPass(ForgetPassRequest forgetPassRequest)
         {
             return Ok(await authBusiness.ForgetPass(forgetPassRequest));
+        }
+        [HttpGet("confirmcodeforgetpass")]
+        public async Task<IActionResult> ConfirmCodeForgetPass(string code)
+        {
+            return Ok(await authBusiness.ConfirmCodeForgetPass(code));
+        }
+        [HttpPost("confirmpass")]
+        public async Task<IActionResult> ConfirmNewPass(ConfirmNewPass confirmNewPass)
+        {
+            return Ok(await authBusiness.ConfirmNewPass(confirmNewPass));
         }
     }
 }

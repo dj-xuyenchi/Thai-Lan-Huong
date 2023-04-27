@@ -79,7 +79,25 @@ export default {
     ...mapActions(["updateUserName"]),
     async sendRequest() {
       this.dialog = true;
-      console.log(123);
+      const request = {
+        Code: localStorage.getItem("codePass"),
+        NewPass: this.password,
+      };
+      const result = AuthApis.confirmPass(request);
+      console.log(result);
+      if (result.success === 0) {
+        this.dialog = false;
+        this.isUnValidUser = false;
+        localStorage.setItem("token", result.data.token.accessToken);
+        localStorage.setItem("refreshToken", result.data.token.refreshToken);
+        localStorage.setItem("name", result.data.name);
+        localStorage.setItem("avatar", result.data.avatar);
+        localStorage.setItem("id", result.data.id);
+        localStorage.setItem("nickName", result.data.nickName);
+        localStorage.setItem("role", result.data.role);
+        localStorage.remove("codePass");
+        this.$router.push({ path: "/home/lobby" });
+      }
       this.dialog = false;
     },
   },

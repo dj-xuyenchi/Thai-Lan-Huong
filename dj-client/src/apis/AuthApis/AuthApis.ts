@@ -46,50 +46,38 @@ class AuthApis {
         });
     });
   }
-
-  //   detail(id: number): Promise<CamNhanHocVien> {
-  //     return new Promise<CamNhanHocVien>((resolve: any, reject: any) => {
-  //       HTTP.get("camnhanhocvien/" + id)
-  //         .then((response) => {
-  //           resolve(response.data);
-  //         })
-  //         .catch((error) => {
-  //           reject(error);
-  //         });
-  //     });
-  //   }
-  //   update(id: number, camNhanHocVien: CamNhanHocVien): Promise<CamNhanHocVien> {
-  //     return new Promise<CamNhanHocVien>((resolve: any, reject: any) => {
-  //       HTTP.put("camnhanhocvien/" + id, camNhanHocVien)
-  //         .then((response) => {
-  //           resolve(response.data);
-  //         })
-  //         .catch((error) => {
-  //           reject(error);
-  //         });
-  //     });
-  //   }
-  //   insert(camNhanHocVien: CamNhanHocVien): Promise<CamNhanHocVien> {
-  //     return new Promise<CamNhanHocVien>((resolve: any, reject: any) => {
-  //       HTTP.post("camnhanhocvien", camNhanHocVien)
-  //         .then((response) => {
-  //           resolve(response.data);
-  //         })
-  //         .catch((error) => {
-  //           reject(error);
-  //         });
-  //     });
-  //   }
-  //   delete(id: number): Promise<CamNhanHocVien> {
-  //     return new Promise<CamNhanHocVien>((resolve: any, reject: any) => {
-  //       HTTP.delete("camnhanhocvien/" + id)
-  //         .then((response) => {
-  //           resolve(response.data);
-  //         })
-  //         .catch((error) => {
-  //           reject(error);
-  //         });
-  //     });
-  //   }
+  forgetPass(forgetRequest: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/login/forgetpass`, forgetRequest)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  confirmCode(code: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`login/confirmcodeforgetpass?code=${code}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  confirmPass(request: object): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`login/confirmpass`, request)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 export default new AuthApis();

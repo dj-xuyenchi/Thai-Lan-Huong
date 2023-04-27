@@ -15,8 +15,8 @@
       <v-text-field
         v-model="email"
         density="compact"
-        placeholder="Email đăng ký tài khoản."
-        prepend-inner-icon="mdi-email"
+        placeholder="Email đăng ký"
+        prepend-inner-icon="mdi-email-outline"
         variant="outlined"
         :rules="[rules.email]"
       ></v-text-field>
@@ -33,6 +33,15 @@
         Yêu cầu đổi mật khẩu
       </v-btn>
     </v-card>
+    <v-snackbar v-model="snackbar" multi-line>
+      {{ text }}
+
+      <template v-slot:actions>
+        <v-btn color="red" variant="text" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -44,6 +53,9 @@ export default {
   name: "ForgetPass",
   data: () => ({
     dialog: false,
+    email: "",
+    snackbar: false,
+    text: `Email không tồn tại!`,
     rules: {
       email: (value) => value.includes("@") || "Email chưa đúng",
     },
@@ -52,7 +64,20 @@ export default {
     ...mapActions(["updateUserName"]),
     async sendRequest() {
       this.dialog = true;
-      console.log(123);
+      const request = {
+        Email: this.email,
+      };
+      const result = await AuthApis.forgetPass(request);
+      if (result.data == 4) {
+        this.snackbar = true;
+        this.dialog = false;
+        return;
+      }
+      if (result.data == 1) {
+        localStorage.setItem("forgetEmail", this.email);
+        // this.$router.push({ path: "/forwardrequestforgetpass/1312" });
+        this.$router.push({ path: "/confirmforgetpass" });
+      }
       this.dialog = false;
     },
   },

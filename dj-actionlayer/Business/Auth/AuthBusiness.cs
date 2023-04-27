@@ -357,9 +357,20 @@ namespace dj_actionlayer.Business.Auth
         public async Task<ResponData<ActionStatus>> ForgetPass(ForgetPassRequest forgetPassRequest)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User user = await _context.user.Where(x => x.UserEmail.Equals(forgetPassRequest.Email)).FirstOrDefaultAsync();
+            if(user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!"; 
+                return result;
+            }
+            var listConfirm =  _context.confirm_email.Where(x => x.UserId == user.Id).ToList();
+            _context.confirm_email.RemoveRange(listConfirm);
+            await _context.SaveChangesAsync();
             ConfirmEmail confirmEmail = new ConfirmEmail();
             confirmEmail.IsConfirm = false;
-            confirmEmail.UserId = forgetPassRequest.UserId;
+            confirmEmail.UserId = user.Id;
             confirmEmail.RequiredDateTime = DateTime.Now;
             confirmEmail.ExpiredDateTime = DateTime.Now.AddDays(1);
             Random rand = new Random();
@@ -372,8 +383,70 @@ namespace dj_actionlayer.Business.Auth
             await _context.confirm_email.AddAsync(confirmEmail);
             await _context.SaveChangesAsync();
             _sendEmail.SendForgetPass(forgetPassRequest.Email,  confirmEmail.Code);
+            result.Data = ActionStatus.SECCESSFULLY;
             result.Status = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> ConfirmCodeForgetPass(string code)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            ConfirmEmail confirmEmail1 = await _context.confirm_email.Where(x => x.Code.Equals(code)).FirstOrDefaultAsync();
+            if (confirmEmail1 == null)
+            {
+                result.Status = ActionStatus.SECCESSFULLY;
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            if (confirmEmail1.ExpiredDateTime < DateTime.Now)
+            {
+                result.Status = ActionStatus.SECCESSFULLY;
+                result.Data = ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+
+        }
+
+        public async Task<LoginResponse<AuthDataRespon>> ConfirmNewPass(ConfirmNewPass confirmNewPass)
+        {
+            LoginResponse<AuthDataRespon> result = new LoginResponse<AuthDataRespon>();
+
+            ConfirmEmail confirmEmail =await _context.confirm_email.Where(x => x.Code.Equals(confirmNewPass.Code)).FirstOrDefaultAsync();
+            if (confirmEmail == null)
+            {
+                result.Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED;
+                result.Message = "Xác nhận thất bại!";
+                result.Data = null;
+                return result;
+            }
+            if (confirmEmail.ExpiredDateTime < DateTime.Now)
+            {
+                result.Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.EXPIRED;
+                result.Message = "Mã xác nhận đã hết hạn!";
+                result.Data = null;
+                return result;
+            }
+            User user = _context.user.Find(confirmEmail.UserId);
+            user.UserPass = confirmNewPass.NewPass;
+            _context.confirm_email.Remove(confirmEmail);
+            await _context.SaveChangesAsync();
+            result.Message = "Xác nhận đổi mật khẩu thành công!";
+            result.Data = new AuthDataRespon
+            {
+                id = user.Id,
+                avatar = user.UserAvatarData40x40,
+                nickName = "Chiến thần Front End",
+                name = user.UserLastName + " " + user.UserFisrtName,
+                Token = await GenToken(user),
+                role = (int)user.UserRoleId
+            };
             return result;
         }
     }
