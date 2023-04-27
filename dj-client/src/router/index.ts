@@ -8,6 +8,9 @@ import LobbyMain from "../views/MainLobby/LobbyMain.vue";
 import LogIn from "../views/Door/LogIn.vue";
 import SignIn from "../views/Door/SignIn.vue";
 import ConfirmEmail from "../views/Door/ConfirmEmail.vue";
+import ConfirmForgetPass from "../views/Door/ConfirmForgetPass.vue";
+import ChangePass from "../views/Door/ChangePass.vue";
+import ForgetPass from "../views/Door/ForgetPass.vue";
 import CheckConfirm from "../views/Door/CheckConfirm.vue";
 import AppNewFeedVue from "@/components/MainHome/AppNewFeed.vue";
 import CourseDetail from "@/components/Course/CourseDetail.vue";
@@ -26,6 +29,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "",
     name: "",
     component: ForwardToHome,
+  },
+  {
+    path: "/forget",
+    name: "",
+    component: ForgetPass,
+  },
+  {
+    path: "/confirmforgetpass",
+    name: "",
+    component: ConfirmForgetPass,
+  },
+  {
+    path: "/changepass",
+    name: "",
+    component: ChangePass,
   },
   {
     path: "/home",

@@ -35,5 +35,10 @@ namespace dj_endpoint.Controllers.AuthApis
         {
             return Ok(await authBusiness.ConfirmAccount(code));
         }
+        [HttpPost("forgetpass")]
+        public async Task<IActionResult> ForgetPass(ForgetPassRequest forgetPassRequest)
+        {
+            return Ok(await authBusiness.ForgetPass(forgetPassRequest));
+        }
     }
 }

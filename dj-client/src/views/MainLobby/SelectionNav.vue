@@ -16,7 +16,7 @@
         @click="setActiveMenu(2)"
       />
     </router-link>
-    <router-link to="post" style="text-decoration: none">
+    <router-link to="/home" style="text-decoration: none">
       <BtnNav
         icon="fa-regular fa-calendar-plus"
         title="Bài viết"
@@ -24,7 +24,7 @@
         @click="setActiveMenu(3)"
       />
     </router-link>
-    <router-link to="blog" style="text-decoration: none">
+    <router-link to="/home" style="text-decoration: none">
       <BtnNav
         icon="fa-brands fa-blogger-b"
         title="Blog"
@@ -32,7 +32,7 @@
         @click="setActiveMenu(4)"
       />
     </router-link>
-    <router-link to="event" style="text-decoration: none">
+    <router-link to="/home" style="text-decoration: none">
       <BtnNav
         icon="fa-regular fa-calendar-days"
         title="Sự kiện"

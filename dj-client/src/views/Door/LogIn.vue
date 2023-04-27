@@ -67,13 +67,12 @@
         Đăng nhập
       </v-btn>
       <div style="text-align: center" class="mb-4">
-        <a
+        <v-btn
           class="text-caption text-decoration-none text-blue"
-          href="#"
-          rel="noopener noreferrer"
-          target="_blank"
+          variant="text"
+          @click="forget()"
         >
-          Quên mật khẩu?</a
+          Quên mật khẩu?</v-btn
         >
       </div>
       <div
@@ -153,10 +152,6 @@ export default {
       }
       if (login.success === 0) {
         this.dialog = false;
-        // const now = new Date();
-        // now.setMonth(now.getMonth() + 3);
-        // document.cookie = `token=${login.data.accessToken}; expires=${now}`;
-        // document.cookie = `refreshToken=${login.data.refreshToken}; expires=${now}`;
         this.isUnValidUser = false;
         localStorage.setItem("token", login.data.token.accessToken);
         localStorage.setItem("refreshToken", login.data.token.refreshToken);
@@ -170,6 +165,9 @@ export default {
     },
     signIn() {
       this.$router.push({ path: "/signin" });
+    },
+    forget() {
+      this.$router.push({ path: "/forget" });
     },
   },
 };

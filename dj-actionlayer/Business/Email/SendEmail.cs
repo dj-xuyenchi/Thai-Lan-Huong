@@ -45,5 +45,29 @@ namespace dj_actionlayer.Business.Email
                 return false;
             }
         }
+        public bool SendForgetPass(string toEmail, string confirmLink)
+        {
+            MailMessage message = new MailMessage(FromEmail, toEmail);
+            message.Subject = "Xác nhận yêu cầu đổi mật khẩu tài khoản DJ - Coding";
+            message.Body = "🌱 Xin chào mình nhận được yêu cầu đổi mật khẩu tài khoản DJ - Coding để hoàn thành xác nhận vui lòng nhập mã xác nhận dưới đây. " +
+                confirmLink +
+                ". Nếu bạn không có yêu cầu này vui lòng bỏ qua.";
+
+            // Tạo đối tượng SmtpClient
+            SmtpClient smtpClient = new SmtpClient(SmtpHost, SmtpPort);
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential(FromEmail, Password16);
+            smtpClient.EnableSsl = true;
+            try
+            {
+                // Gửi email
+                smtpClient.Send(message);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

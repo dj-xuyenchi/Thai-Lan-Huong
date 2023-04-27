@@ -2,6 +2,7 @@
 using dj_webdesigncore.Business.Lobby;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
+using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dj_endpoint.Controllers.HomeAPIs
@@ -15,9 +16,6 @@ namespace dj_endpoint.Controllers.HomeAPIs
         {
             this._lobby = new LobbyBusiness();
         }
-       
-
-
         [HttpGet("lobbyhomedata")]
         public async Task<IActionResult> getLobbyData()
         {
@@ -32,6 +30,11 @@ namespace dj_endpoint.Controllers.HomeAPIs
         public async Task<IActionResult> getCourseDetail(int? courseId,int? userId)
         {
             return Ok(await _lobby.CourseDetailContent(courseId, userId));
+        }
+        [HttpPost("sendadvice")]
+        public async Task<IActionResult> sendAdvice(AdviceMentorRequest adviceMentorRequest)
+        {
+            return Ok(await _lobby.AdviceMentor(adviceMentorRequest));
         }
     }
 }

@@ -10,8 +10,10 @@
 
   <ItemGroup>
     <None Remove="Business\Auth\" />
+    <None Remove="Request\SomeThingElse\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\Auth\" />
+    <Folder Include="Request\SomeThingElse\" />
   </ItemGroup>
 </Project>

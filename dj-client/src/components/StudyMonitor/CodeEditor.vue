@@ -182,6 +182,19 @@
       <v-btn
         color="#36ae7c"
         v-bind="props"
+        style="width: 128px; margin-left: 12px"
+        @click="showChat = !showChat"
+      >
+        <font-awesome-icon
+          icon="fa-solid fa-rotate-right"
+          color="black"
+          style="font-size: 20px; margin-right: 4px"
+        />
+        Reset Code
+      </v-btn>
+      <v-btn
+        color="#36ae7c"
+        v-bind="props"
         style="width: 120px; margin-left: 12px"
         @click="showChat = !showChat"
       >

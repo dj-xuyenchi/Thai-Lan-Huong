@@ -5,7 +5,9 @@ using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
+using dj_webdesigncore.Request.SomeThingElse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,20 @@ namespace dj_actionlayer.Business.Lobby
 {
     public class LobbyBusiness : BaseBusiness, ILobbyBusiness
     {
+        public async Task<ResponData<ActionStatus>> AdviceMentor(AdviceMentorRequest adviceMentorRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            AdviceContact adviceMentor = new AdviceContact();
+            adviceMentor.Name = adviceMentorRequest.Name;
+            adviceMentor.Sdt = adviceMentor.Sdt;
+            await _context.AddAsync(adviceMentor);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
         public async Task<ResponData<CourseDetailDTO>> CourseDetailContent(int? courseId, int? userId)
         {
             ResponData<CourseDetailDTO> result = new ResponData<CourseDetailDTO>();
@@ -244,7 +260,5 @@ namespace dj_actionlayer.Business.Lobby
                 return result;
             }
         }
-
-
     }
 }

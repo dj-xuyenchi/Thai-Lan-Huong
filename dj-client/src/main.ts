@@ -29,6 +29,7 @@ import {
   faCaretRight,
   faFloppyDisk,
   faChevronRight,
+  faRotateRight,
   faPaperPlane,
   faUserDoctor,
 } from "@fortawesome/free-solid-svg-icons";
@@ -72,6 +73,7 @@ library.add(
   faChevronDown,
   faChevronUp,
   faCaretRight,
+  faRotateRight,
   faFloppyDisk
 );
 loadFonts();

@@ -7,6 +7,7 @@ using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Account;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -302,7 +303,7 @@ namespace dj_actionlayer.Business.Auth
                 confirmEmail.Code =  code;
                 await _context.confirm_email.AddAsync(confirmEmail);
                 await _context.SaveChangesAsync();
-                _sendEmail.SendConfirmCreateAccount(newAccount.email, Settings.enviroment() + "checkconfirm/" + confirmEmail.Code);
+                _sendEmail.SendConfirmCreateAccount(newAccount.email, confirmEmail.Code);
                 acc.Email = newAccount.email;
                 result.Data = acc;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.WAITEMAILCOMFIRM;
@@ -350,6 +351,29 @@ namespace dj_actionlayer.Business.Auth
                 Token = await GenToken(user),
                 role = (int)user.UserRoleId
             };
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> ForgetPass(ForgetPassRequest forgetPassRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            ConfirmEmail confirmEmail = new ConfirmEmail();
+            confirmEmail.IsConfirm = false;
+            confirmEmail.UserId = forgetPassRequest.UserId;
+            confirmEmail.RequiredDateTime = DateTime.Now;
+            confirmEmail.ExpiredDateTime = DateTime.Now.AddDays(1);
+            Random rand = new Random();
+            string code = "DJ" + rand.Next(10000000, 99999999);
+            while (_context.confirm_email.Any(x => x.Code.Equals(code)))
+            {
+                code = "DJ" + rand.Next(10000000, 99999999);
+            }
+            confirmEmail.Code = code;
+            await _context.confirm_email.AddAsync(confirmEmail);
+            await _context.SaveChangesAsync();
+            _sendEmail.SendForgetPass(forgetPassRequest.Email,  confirmEmail.Code);
+            result.Status = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
             return result;
         }
     }
