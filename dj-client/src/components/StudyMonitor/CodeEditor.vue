@@ -183,7 +183,7 @@
         color="#36ae7c"
         v-bind="props"
         style="width: 128px; margin-left: 12px"
-        @click="showChat = !showChat"
+        @click="content = beginCodeMethod"
       >
         <font-awesome-icon
           icon="fa-solid fa-rotate-right"

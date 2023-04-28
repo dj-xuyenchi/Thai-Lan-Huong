@@ -23,7 +23,7 @@ namespace dj_actionlayer.Business.Lobby
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
             AdviceContact adviceMentor = new AdviceContact();
             adviceMentor.Name = adviceMentorRequest.Name;
-            adviceMentor.Sdt = adviceMentor.Sdt;
+            adviceMentor.Sdt = adviceMentorRequest.Sdt;
             await _context.AddAsync(adviceMentor);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;

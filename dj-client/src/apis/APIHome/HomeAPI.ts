@@ -33,5 +33,16 @@ class HomeAPI {
         });
     });
   }
+  sendAdvice(request: object): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/lobby/sendadvice`, request)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 export default new HomeAPI();
