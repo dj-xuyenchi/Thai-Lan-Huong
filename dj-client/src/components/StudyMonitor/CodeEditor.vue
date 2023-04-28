@@ -296,7 +296,7 @@ export default {
     if (this.codeOk) {
       this.content = this.codeOk;
     } else {
-      this.content = this.beginCodeMethod ? " " : " ";
+      this.content = this.beginCodeMethod ? this.beginCodeMethod : " ";
     }
     this.listTest = this.testCase;
   },

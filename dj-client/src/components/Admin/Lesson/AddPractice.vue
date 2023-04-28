@@ -15,7 +15,7 @@
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Tên bài học"
+                      label="Tên bài học*"
                       hint="Khi hiển thị sẽ là Bài học + tên bài học"
                       v-model="lessonName"
                       :rules="rules"
@@ -23,7 +23,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Mô tả"
+                      label="Mô tả*"
                       hint="Mô tả bài học"
                       :rules="rules"
                       v-model="lessonDescription"
@@ -31,7 +31,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Thời lượng"
+                      label="Thời lượng*"
                       hint="Thời lượng của bài học"
                       :rules="rules"
                       v-model="lessonTime"
@@ -39,7 +39,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Vấn đề"
+                      label="Vấn đề*"
                       hint="Vấn đề cần giải quyết"
                       :rules="rules"
                       v-model="problem"
@@ -47,7 +47,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Mô tả vấn đề"
+                      label="Mô tả vấn đề*"
                       hint="Mô tả vấn đề cần giải quyết"
                       :rules="rules"
                       v-model="problemDetail"
@@ -58,7 +58,6 @@
                       counter
                       label="Code mặc định"
                       hint="Đoạn code mặc định hiển thị lên code field"
-                      :rules="rules"
                       v-model="beginCode"
                     ></v-textarea>
                   </v-col>
@@ -67,21 +66,26 @@
                       counter
                       label="Call Test Code"
                       hint="Call Test Code"
-                      :rules="rules"
                       v-model="callTestCode"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="Case mặc định giải thích tham số"
+                      hint="Giải thích truyền tham số case mặc định"
+                      v-model="caseDefaultDetail"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
                       label="Đầu vào ví dụ"
                       hint="Input test case ví dụ"
-                      :rules="rules"
                       v-model="inputExemple"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
-                      label="Đầu ra ví dụ"
+                      label="Đầu ra ví dụ*"
                       hint="Output test case ví dụ"
                       :rules="rules"
                       v-model="outputExemple"
@@ -89,7 +93,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Giải thích"
+                      label="Giải thích*"
                       hint="Giải thích ví dụ"
                       :rules="rules"
                       v-model="explainCode"
@@ -97,7 +101,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Gợi ý"
+                      label="Gợi ý*"
                       hint="Gợi ý bài tập"
                       :rules="rules"
                       v-model="suggest"
@@ -105,7 +109,7 @@
                   </v-col>
                 </v-row>
               </v-container>
-              <small>Tất cả các trường là bắt buộc!</small>
+              <small>* là trường là bắt buộc!</small>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -125,6 +129,14 @@
       </v-dialog>
     </v-row>
   </div>
+  <v-snackbar v-model="snackbar">
+    {{ text }}
+    <template v-slot:actions>
+      <v-btn color="green" variant="text" @click="snackbar = false">
+        Đóng
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -133,12 +145,15 @@ export default {
   name: "AddPractice",
   data() {
     return {
+      text: "",
+      snackbar: false,
       lessonName: "",
       lessonDescription: "",
       lessonTime: "",
       problem: "",
       problemDetail: "",
       beginCode: "",
+      caseDefaultDetail: "",
       inputExemple: "",
       callTestCode: "",
       outputExemple: "",
@@ -162,6 +177,7 @@ export default {
         problem: this.problem,
         problemDetail: this.problemDetail,
         beginCode: this.beginCode,
+        caseDefaultDetail: this.caseDefaultDetail,
         callTestCode: this.callTestCode,
         inputExemple: this.inputExemple,
         outputExemple: this.outputExemple,
@@ -177,8 +193,33 @@ export default {
         }
       }
       const token = localStorage.getItem("token");
-      await AdminAPI.addPracticeLesson(this.getData(), token);
+      const result = await AdminAPI.addPracticeLesson(this.getData(), token);
+      if (result.status == 1) {
+        this.text = "Thêm thành công";
+        this.dialog = false;
+        this.snackbar = true;
+        this.lessonName = "";
+        this.lessonDescription = "";
+        this.lessonTime = "";
+        this.problem = "";
+        this.problemDetail = "";
+        this.beginCode = "";
+        this.caseDefaultDetail = "";
+        this.callTestCode = "";
+        this.inputExemple = "";
+        this.outputExemple = "";
+        this.explainCode = "";
+        this.suggest = "";
+        this.getLessonDetail();
+      }
+      if (result.status == 2) {
+        this.text = "Thêm thất bại";
+        this.snackbar = true;
+      }
     },
+  },
+  props: {
+    getLessonDetail: Function,
   },
 };
 </script>

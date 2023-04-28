@@ -14,12 +14,19 @@ namespace dj_actionlayer
             //string result = stringWriter.ToString();
             //Console.WriteLine(result);
 
-            string code = "using System.Diagnostics;internal class Program\r\n\t{\r\n\t\tstatic void Main(string[] args)\r\n\t\t{\r\n\t\t\tConsole.WriteLine(\"Hello, World!\");\r\n\t\t}\r\n\t}";
-            var result = await CompileUserCode.RunCSharpCode(code);
-            Console.WriteLine(result.result);
+            //string code = "using System.Diagnostics;internal class Program\r\n\t{\r\n\t\tstatic void Main(string[] args)\r\n\t\t{\r\n\t\t\tConsole.WriteLine(\"Hello, World!\");\r\n\t\t}\r\n\t}";
+            //var result = await CompileUserCode.RunCSharpCode(code);
+            //Console.WriteLine(result.result);
 
-            Console.WriteLine(result.time);
-            Console.WriteLine(result.exeption);
+            //Console.WriteLine(result.time);
+            //Console.WriteLine(result.exeption);
+
+            string[] input = "1".Split(",");
+            Console.WriteLine(input.Length);
+            foreach (var item in input)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

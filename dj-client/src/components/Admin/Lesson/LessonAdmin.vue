@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; justify-content: space-between">
-    <AddPractice />
+    <AddPractice :getLessonDetail="getLessonDetail" />
     <AddPractice />
     <AddTheory />
   </div>

@@ -367,12 +367,13 @@ namespace dj_actionlayer.Business.Study
                 var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == codeRequest.PracticeLessonId).OrderBy(x => x.SortNumber).ToList();
                 TryTestCaseResultDTO tryTestCaseResultDTO = new TryTestCaseResultDTO();
                 List<TryTestCaseDTO> listTest = new List<TryTestCaseDTO>();
-                foreach (var item in listTestCase)
+                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = _context.practice_lesson.Find(codeRequest.PracticeLessonId);
+                if (practiceLesson.Input == null)
                 {
-                    TryTestCaseDTO testDTO = new TryTestCaseDTO();
-                    testDTO.LockTestCase = item.LockTestCase;
-                    if (item.Input == null)
+                    foreach (var item in listTestCase)
                     {
+                        TryTestCaseDTO testDTO = new TryTestCaseDTO();
+                        testDTO.LockTestCase = item.LockTestCase;
                         var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code);
                         testDTO.Input = "Không có";
                         testDTO.ExpectOutput = item.ExpectOutput;
@@ -402,11 +403,47 @@ namespace dj_actionlayer.Business.Study
                             continue;
                         }
                     }
-                    else
+                }
+                else
+                {
+                    string callTestCode = practiceLesson.CallTestCode;
+                    foreach (var item in listTestCase)
                     {
-
+                        TryTestCaseDTO testDTO = new TryTestCaseDTO();
+                        testDTO.LockTestCase = item.LockTestCase;
+                        callTestCode = callTestCode.Replace("variable",item.Input);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code+callTestCode);
+                        callTestCode = practiceLesson.CallTestCode;
+                        testDTO.Input = item.Input;
+                        testDTO.ExpectOutput = item.ExpectOutput;
+                        if (!runCodeResult.success)
+                        {
+                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.EXCEPTION;
+                            testDTO.Output = runCodeResult.exeption;
+                            testDTO.RunTimeTotal = "Lỗi! không tính được";
+                            listTest.Add(testDTO);
+                            continue;
+                        }
+                        if (runCodeResult.success)
+                        {
+                            if (!runCodeResult.result.Contains(item.ExpectOutput))
+                            {
+                                testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WRONG;
+                                testDTO.Output = runCodeResult.result;
+                                testDTO.RunTimeTotal = runCodeResult.time;
+                                listTest.Add(testDTO);
+                                continue;
+                            }
+                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.SECCESSFULLY;
+                            testDTO.Output = runCodeResult.result;
+                            testDTO.RunTimeTotal = runCodeResult.time;
+                            listTest.Add(testDTO);
+                            continue;
+                        }
+                        
                     }
                 }
+               
                 tryTestCaseResultDTO.TestCase = listTest;
                 result.Data = tryTestCaseResultDTO;
                 result.Messenger = "Lấy dữ liệu thành công!";

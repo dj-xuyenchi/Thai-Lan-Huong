@@ -17,17 +17,10 @@ namespace dj_actionlayer.Business.Admin
         {
             ResponData<AddLessonDTO> result = new ResponData<AddLessonDTO>();
             AddLessonDTO data = new AddLessonDTO();
-            foreach (var i in practiceLesson.GetType().GetProperties())
+            try
             {
-                if (i.GetValue(practiceLesson, null) == null){
-                    data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.NULLPROPS;
-                    data.Mes = "Thuộc tính "+i.Name+" không có giá trị!";
-                    result.Data = data;
-                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
-                    result.Messenger = "Lấy dữ liệu thành công!";
-                    return result;
-                }
-            }
+
+            
             Lesson lesson = new Lesson();
             lesson.LessonStatusId = 1;
             lesson.LessonName = practiceLesson.lessonName;
@@ -49,12 +42,27 @@ namespace dj_actionlayer.Business.Admin
             practiceNew.Explain= practiceLesson.explainCode;
             await _context.AddAsync(practiceNew);
             await _context.SaveChangesAsync();
+            TestCase defaultTestCase = new TestCase();
+            defaultTestCase.ExpectOutput=practiceNew.ExpectOutput;
+            defaultTestCase.Input = practiceNew.Input;      
+            defaultTestCase.PracticeLessonId = practiceNew.Id;
+            defaultTestCase.LockTestCase = false;
+            defaultTestCase.InputDetail = practiceLesson.caseDefaultDetail;
+            defaultTestCase.SortNumber = 1;
+            await _context.AddAsync(defaultTestCase);
+            await _context.SaveChangesAsync();
             data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.SECCESSFULLY;
             data.Mes = "Thêm bài học thành công!";
             result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
+            }catch(Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
         }
 
         public async Task<ResponData<GetChapterDTO>> getChapterPage(int page)

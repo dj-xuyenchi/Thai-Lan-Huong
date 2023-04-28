@@ -24,6 +24,7 @@ namespace dj_actionlayer.Business.Lobby
             AdviceContact adviceMentor = new AdviceContact();
             adviceMentor.Name = adviceMentorRequest.Name;
             adviceMentor.Sdt = adviceMentorRequest.Sdt;
+            adviceMentor.IsContact = false;
             await _context.AddAsync(adviceMentor);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;

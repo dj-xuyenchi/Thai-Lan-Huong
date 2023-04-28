@@ -10,5 +10,6 @@ namespace dj_webdesigncore.Entities.BusinessEntity
     {
         public string Name { get; set; }
         public string Sdt { get; set; }
+        public bool IsContact { get; set; }
     }
 }
