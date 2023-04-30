@@ -194,7 +194,21 @@ export default {
     },
   },
   props: {
-    lessonId: String,
+    item: Object,
+  },
+  mounted() {
+    console.log(this.item);
+    this.lessonName = this.item.lessonName;
+    this.lessonDescription = this.item.lessonDescription;
+    this.lessonTime = this.item.videoTime;
+    this.problem = this.item.lessonName;
+    this.problemDetail = this.item.lessonName;
+    this.beginCode = this.item.lessonName;
+    this.callTestCode = this.item.lessonName;
+    this.inputExemple = this.item.lessonName;
+    this.outputExemple = this.item.lessonName;
+    this.explainCode = this.item.lessonName;
+    this.suggest = this.item.lessonName;
   },
 };
 </script>

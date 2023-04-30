@@ -75,16 +75,26 @@
     </div>
     <div class="course-detail-right">
       <div class="intro-content">
-        <iframe
-          width="100%"
-          height="350"
-          src="https://www.youtube.com/embed/6jZVsr7q-tE"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          style="border-radius: 15px"
-        ></iframe>
+        <div style="height: 240px; width: 400px; border: 1px solid black">
+          <v-dialog v-model="dialog" activator="parent" width="auto">
+            <v-card>
+              <iframe
+                width="1200"
+                height="600"
+                src="https://www.youtube.com/embed/8kX6LwuhKLs"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+              ></iframe>
+              <v-card-actions>
+                <v-btn color="primary" block @click="dialog = false"
+                  >Đóng</v-btn
+                >
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
         <h2 style="text-align: center; margin: 12px 0 12px 0">Miễn Phí</h2>
         <v-btn
           width="40%"
@@ -131,6 +141,7 @@ export default {
       timeTotal: "",
       lessonIdGetInClass: 0,
       courseIdGetInClass: 0,
+      dialog: false,
     };
   },
   computed: {},

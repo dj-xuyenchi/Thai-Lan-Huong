@@ -3,12 +3,12 @@
     <v-row>
       <v-dialog v-model="dialog" persistent width="1024">
         <template v-slot:activator="{ props }">
-          <v-btn color="primary" v-bind="props"> Thêm bài học thực hành</v-btn>
+          <v-btn color="primary" v-bind="props"> Thêm bài học video</v-btn>
         </template>
         <v-form @submit.prevent="submit()" ref="form">
-          <v-card style="height: 90vh; overflow: scroll">
+          <v-card style="overflow: scroll">
             <v-card-title>
-              <span class="text-h5">Thêm bài học thực hành</span>
+              <span class="text-h5">Thêm bài học video</span>
             </v-card-title>
             <v-card-text>
               <v-container>
@@ -39,72 +39,10 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Vấn đề*"
-                      hint="Vấn đề cần giải quyết"
+                      label="Link video*"
+                      hint="Link video"
                       :rules="rules"
-                      v-model="problem"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Mô tả vấn đề*"
-                      hint="Mô tả vấn đề cần giải quyết"
-                      :rules="rules"
-                      v-model="problemDetail"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-textarea
-                      counter
-                      label="Code mặc định"
-                      hint="Đoạn code mặc định hiển thị lên code field"
-                      v-model="beginCode"
-                    ></v-textarea>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      counter
-                      label="Call Test Code"
-                      hint="Call Test Code"
-                      v-model="callTestCode"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Case mặc định giải thích tham số"
-                      hint="Giải thích truyền tham số case mặc định"
-                      v-model="caseDefaultDetail"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      label="Đầu vào ví dụ"
-                      hint="Input test case ví dụ"
-                      v-model="inputExemple"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      label="Đầu ra ví dụ*"
-                      hint="Output test case ví dụ"
-                      :rules="rules"
-                      v-model="outputExemple"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Giải thích*"
-                      hint="Giải thích ví dụ"
-                      :rules="rules"
-                      v-model="explainCode"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Gợi ý*"
-                      hint="Gợi ý bài tập"
-                      :rules="rules"
-                      v-model="suggest"
+                      v-model="linkVideo"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -121,7 +59,7 @@
                 Hủy
               </v-btn>
               <v-btn color="blue-darken-1" variant="text" type="submit">
-                Thêm bài tập
+                Thêm bài học
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -150,15 +88,7 @@ export default {
       lessonName: "",
       lessonDescription: "",
       lessonTime: "",
-      problem: "",
-      problemDetail: "",
-      beginCode: "",
-      caseDefaultDetail: "",
-      inputExemple: "",
-      callTestCode: "",
-      outputExemple: "",
-      explainCode: "",
-      suggest: "",
+      linkVideo: "",
       dialog: false,
       rules: [
         (value) => {
@@ -174,15 +104,7 @@ export default {
         lessonName: this.lessonName,
         lessonDescription: this.lessonDescription,
         lessonTime: this.lessonTime,
-        problem: this.problem,
-        problemDetail: this.problemDetail,
-        beginCode: this.beginCode,
-        caseDefaultDetail: this.caseDefaultDetail,
-        callTestCode: this.callTestCode,
-        inputExemple: this.inputExemple,
-        outputExemple: this.outputExemple,
-        explainCode: this.explainCode,
-        suggest: this.suggest,
+        linkVideo: this.linkVideo,
       };
     },
     async submit() {
@@ -201,15 +123,7 @@ export default {
         this.lessonName = "";
         this.lessonDescription = "";
         this.lessonTime = "";
-        this.problem = "";
-        this.problemDetail = "";
-        this.beginCode = "";
-        this.caseDefaultDetail = "";
-        this.callTestCode = "";
-        this.inputExemple = "";
-        this.outputExemple = "";
-        this.explainCode = "";
-        this.suggest = "";
+        this.linkVideo = "";
         this.getLessonDetail();
       }
       if (result.status == 2) {

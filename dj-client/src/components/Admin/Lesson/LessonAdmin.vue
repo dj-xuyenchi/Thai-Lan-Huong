@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; justify-content: space-between">
     <AddPractice :getLessonDetail="getLessonDetail" />
-    <AddPractice />
+    <AddQuestion />
     <AddTheory />
   </div>
   <LessonTable :data="tableData" style="margin-top: 12px" />
@@ -29,9 +29,10 @@ import { mapMutations } from "vuex";
 import AddPractice from "./AddPractice";
 import LessonTable from "./LessonTable";
 import AddTheory from "./AddTheory";
+import AddQuestion from "./AddQuestion";
 export default {
   name: "LessonAdmin",
-  components: { AddPractice, LessonTable, AddTheory },
+  components: { AddPractice, LessonTable, AddTheory, AddQuestion },
   data: () => ({
     tableData: [],
     page: 1,
