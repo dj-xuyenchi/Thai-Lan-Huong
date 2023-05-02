@@ -8,7 +8,7 @@
         icon="mdi-test-tube"
       >
       </v-btn>
-      <v-dialog v-model="dialog" width="auto">
+      <v-dialog v-model="dialog" persistent width="auto">
         <v-card style="height: 90vh; :scroll ; width: 80vw">
           <v-card-title> {{ item.lessonName }} </v-card-title>
           <v-card-text>
@@ -16,7 +16,11 @@
               :getTestCase="getTestCase"
               :practiceId="item.practiceId"
             />
-            <TestCaseTable :listTestCase="listTest" style="margin-top: 12px" />
+            <TestCaseTable
+              :listTestCase="listTest"
+              :getTestCase="getTestCase"
+              style="margin-top: 12px"
+            />
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" variant="text" @click="dialog = false">

@@ -20,7 +20,6 @@ namespace dj_actionlayer
 
             //Console.WriteLine(result.time);
             //Console.WriteLine(result.exeption);
-
             string[] input = "1".Split(",");
             Console.WriteLine(input.Length);
             foreach (var item in input)

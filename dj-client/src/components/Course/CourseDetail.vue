@@ -75,7 +75,14 @@
     </div>
     <div class="course-detail-right">
       <div class="intro-content">
-        <div style="height: 240px; width: 400px; border: 1px solid black">
+        <div
+          style="
+            height: 240px;
+            width: 400px;
+            border: 1px solid black;
+            margin: 0 auto;
+          "
+        >
           <v-dialog v-model="dialog" activator="parent" width="auto">
             <v-card>
               <iframe

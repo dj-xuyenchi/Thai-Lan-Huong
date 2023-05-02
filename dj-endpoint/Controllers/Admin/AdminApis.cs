@@ -93,5 +93,15 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.addTestCase(testCaseRequest));
         }
+        [HttpPost("updatetestcase")]
+        public async Task<IActionResult> updateTestCase(int testCaseId,TestCaseRequest testCaseRequest)
+        {
+            return Ok(await _admin.updateTestCase(testCaseId,testCaseRequest));
+        }
+        [HttpGet("deletetestcase")]
+        public async Task<IActionResult> deleteTestCase(int testCaseId)
+        {
+            return Ok(await _admin.deleteTestCase(testCaseId));
+        }
     }
 }

@@ -4,6 +4,7 @@ using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Lesson;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,43 +56,44 @@ namespace dj_actionlayer.Business.Admin
             AddLessonDTO data = new AddLessonDTO();
             try
             {
-            Lesson lesson = new Lesson();
-            lesson.LessonStatusId = 1;
-            lesson.LessonName = practiceLesson.lessonName;
-            lesson.LessonDescription = practiceLesson.lessonDescription;
-            lesson.VideoTime = practiceLesson.lessonTime;
-            lesson.CreateDateTime=DateTime.Now;
-            lesson.LessonTypeId = 2;
-            await _context.AddAsync(lesson);
-            await _context.SaveChangesAsync();
-            dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceNew = new dj_webdesigncore.Entities.CourseEntity.PracticeLesson();
-            practiceNew.LessonId = lesson.Id;
-            practiceNew.BeginCodeMethod = practiceLesson.beginCode;
-            practiceNew.Problem= practiceLesson.problem;
-            practiceNew.ProblemDetail= practiceLesson.problemDetail;
-            practiceNew.CallTestCode = practiceLesson.callTestCode;
-            practiceNew.ExpectOutput= practiceLesson.outputExemple;
-            practiceNew.Input= practiceLesson.inputExemple;
-            practiceNew.Suggest = practiceLesson.suggest;
-            practiceNew.Explain= practiceLesson.explainCode;
-            await _context.AddAsync(practiceNew);
-            await _context.SaveChangesAsync();
-            TestCase defaultTestCase = new TestCase();
-            defaultTestCase.ExpectOutput=practiceNew.ExpectOutput;
-            defaultTestCase.Input = practiceNew.Input;      
-            defaultTestCase.PracticeLessonId = practiceNew.Id;
-            defaultTestCase.LockTestCase = false;
-            defaultTestCase.InputDetail = practiceLesson.caseDefaultDetail;
-            defaultTestCase.SortNumber = 1;
-            await _context.AddAsync(defaultTestCase);
-            await _context.SaveChangesAsync();
-            data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.SECCESSFULLY;
-            data.Mes = "Thêm bài học thành công!";
-            result.Data = data;
-            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
-            result.Messenger = "Lấy dữ liệu thành công!";
-            return result;
-            }catch(Exception ex)
+                Lesson lesson = new Lesson();
+                lesson.LessonStatusId = 1;
+                lesson.LessonName = practiceLesson.lessonName;
+                lesson.LessonDescription = practiceLesson.lessonDescription;
+                lesson.VideoTime = practiceLesson.lessonTime;
+                lesson.CreateDateTime = DateTime.Now;
+                lesson.LessonTypeId = 2;
+                await _context.AddAsync(lesson);
+                await _context.SaveChangesAsync();
+                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceNew = new dj_webdesigncore.Entities.CourseEntity.PracticeLesson();
+                practiceNew.LessonId = lesson.Id;
+                practiceNew.BeginCodeMethod = practiceLesson.beginCode;
+                practiceNew.Problem = practiceLesson.problem;
+                practiceNew.ProblemDetail = practiceLesson.problemDetail;
+                practiceNew.CallTestCode = practiceLesson.callTestCode;
+                practiceNew.ExpectOutput = practiceLesson.outputExemple;
+                practiceNew.Input = practiceLesson.inputExemple;
+                practiceNew.Suggest = practiceLesson.suggest;
+                practiceNew.Explain = practiceLesson.explainCode;
+                await _context.AddAsync(practiceNew);
+                await _context.SaveChangesAsync();
+                TestCase defaultTestCase = new TestCase();
+                defaultTestCase.ExpectOutput = practiceNew.ExpectOutput;
+                defaultTestCase.Input = practiceNew.Input;
+                defaultTestCase.PracticeLessonId = practiceNew.Id;
+                defaultTestCase.LockTestCase = false;
+                defaultTestCase.InputDetail = practiceLesson.caseDefaultDetail;
+                defaultTestCase.SortNumber = 1;
+                await _context.AddAsync(defaultTestCase);
+                await _context.SaveChangesAsync();
+                data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.SECCESSFULLY;
+                data.Mes = "Thêm bài học thành công!";
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
             {
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
@@ -117,7 +119,7 @@ namespace dj_actionlayer.Business.Admin
                 QuestionLesson questionLesson = new QuestionLesson();
                 questionLesson.LessonId = lesson.Id;
                 questionLesson.AnswerA = questionLessonRequest.answerA;
-                questionLesson.AnswerB= questionLessonRequest.answerB;
+                questionLesson.AnswerB = questionLessonRequest.answerB;
                 questionLesson.AnswerC = questionLessonRequest.answerC;
                 questionLesson.AnswerD = questionLessonRequest.answerD;
                 questionLesson.Answer = questionLessonRequest.answer;
@@ -205,16 +207,54 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
+        public async Task<ResponData<AddTestCaseDTO>> deleteTestCase(int testCaseId)
+        {
+            ResponData<AddTestCaseDTO> result = new ResponData<AddTestCaseDTO>();
+            AddTestCaseDTO data = new AddTestCaseDTO();
+            try
+            {
+                TestCase testCase = await _context.test_case.FindAsync(testCaseId);
+                if (testCase == null)
+                {
+                    data.Mes = "Không tồn tại test case có Id là " + testCaseId;
+                    data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.NOTFOUND;
+                    result.Data = data;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                _context.Remove(testCase);
+                await _context.SaveChangesAsync();
+                data.Mes = "Xóa thành công!";
+                data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.SECCESSFULLY;
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                data.Mes = "Lỗi";
+                data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.FAILED;
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+
+        }
+
         public async Task<ResponData<List<TestCaseDTO>>> getAllTestCase(int practiceId)
         {
             ResponData<List<TestCaseDTO>> result = new ResponData<List<TestCaseDTO>>();
             try
             {
                 List<TestCaseDTO> data = new List<TestCaseDTO>();
-                var testList = _context.test_case.Where(x => x.PracticeLessonId == practiceId).OrderBy(x=>x.SortNumber).ToList();
-                foreach(var item in testList)
+                var testList = _context.test_case.Where(x => x.PracticeLessonId == practiceId).OrderBy(x => x.SortNumber).ToList();
+                foreach (var item in testList)
                 {
                     TestCaseDTO testCaseDTO = new TestCaseDTO();
+                    testCaseDTO.TestCaseId = item.Id;
                     testCaseDTO.Input = item.Input;
                     testCaseDTO.Output = item.ExpectOutput;
                     testCaseDTO.SortNumber = item.SortNumber;
@@ -256,7 +296,7 @@ namespace dj_actionlayer.Business.Admin
                 data.list = chapterDetail;
                 int size = _context.lesson.Count();
                 data.maxPage = _context.lesson.Count() / 10;
-                if (size % 10 != 0&&size>10)
+                if (size % 10 != 0 && size > 10)
                 {
                     data.maxPage++;
                 }
@@ -292,7 +332,7 @@ namespace dj_actionlayer.Business.Admin
                     courseDetailDTO.CourseImageData = item.CourseImageData;
                     courseDetailDTO.CourseSubTitle = item.CourseSubTitle;
                     courseDetailDTO.CourseType = _context.course_type.Find(item.CourseTypeId).CourseTypeName;
-                    courseDetailDTO.CourseTypeId=item.CourseTypeId;
+                    courseDetailDTO.CourseTypeId = item.CourseTypeId;
                     courseDetailDTO.TimeLessonTotal = item.TimeLessonTotal;
                     courseDetailDTOs.Add(courseDetailDTO);
                 }
@@ -323,7 +363,7 @@ namespace dj_actionlayer.Business.Admin
             try
             {
                 List<LessonDetailDTO> lessonDetailDTO = new List<LessonDetailDTO>();
-                var listLesson = _context.lesson.OrderByDescending(x=>x.CreateDateTime).Skip((page-1)*10).Take(10).ToList();
+                var listLesson = _context.lesson.OrderByDescending(x => x.CreateDateTime).Skip((page - 1) * 10).Take(10).ToList();
                 foreach (var item in listLesson)
                 {
                     LessonDetailDTO lessonDetail = new LessonDetailDTO();
@@ -344,7 +384,7 @@ namespace dj_actionlayer.Business.Admin
                     }
                     if (item.LessonTypeId == 3)
                     {
-                        QuestionLesson questionLesson = _context.question_lesson.Where(x => x.LessonId == item.Id).FirstOrDefault();
+                        QuestionLesson questionLesson = await _context.question_lesson.Where(x => x.LessonId == item.Id).FirstOrDefaultAsync();
                         if (questionLesson == null)
                         {
                             continue;
@@ -372,8 +412,9 @@ namespace dj_actionlayer.Business.Admin
                     }
                     if (item.LessonTypeId == 2)
                     {
-                        dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = _context.practice_lesson.Where(x => x.LessonId == item.Id).FirstOrDefault();
-                        TestCase testCase = _context.test_case.Where(x => x.PracticeLessonId == practiceLesson.Id&&x.SortNumber==1).FirstOrDefault();
+                        dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson =await _context.practice_lesson.Where(x => x.LessonId == item.Id).FirstOrDefaultAsync();
+                        TestCase testCase =await _context.test_case.Where(x => x.PracticeLessonId == practiceLesson.Id && x.SortNumber == 1).FirstOrDefaultAsync();
+                        if(testCase == null) { continue; }
                         lessonDetail.problem = practiceLesson.Problem;
                         lessonDetail.practiceId = practiceLesson.Id;
                         lessonDetail.problemDetail = practiceLesson.ProblemDetail;
@@ -387,8 +428,8 @@ namespace dj_actionlayer.Business.Admin
                     }
                     if (item.LessonTypeId == 1)
                     {
-                        VideoLesson videoLesson=_context.video_lesson.Where(x => x.LessonId == item.Id).FirstOrDefault();
-                       
+                        VideoLesson videoLesson = _context.video_lesson.Where(x => x.LessonId == item.Id).FirstOrDefault();
+
                         lessonDetail.linkVideo = videoLesson.LessonLinkUrl;
                     }
                     lessonDetailDTO.Add(lessonDetail);
@@ -418,7 +459,7 @@ namespace dj_actionlayer.Business.Admin
             ResponData<List<SelectCourseForChapter>> result = new ResponData<List<SelectCourseForChapter>>();
             var listCourse = _context.course.ToList();
             List<SelectCourseForChapter> data = new List<SelectCourseForChapter>();
-            foreach(var item in listCourse)
+            foreach (var item in listCourse)
             {
                 data.Add(new SelectCourseForChapter()
                 {
@@ -439,7 +480,7 @@ namespace dj_actionlayer.Business.Admin
             try
             {
                 CourseChapter courseChapter = await _context.course_chapter.FindAsync(updateChapterRequest.ChapterId);
-                if(courseChapter == null)
+                if (courseChapter == null)
                 {
                     data.Mes = "Không tồn tại học phần!";
                     data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.NOTFOUND;
@@ -457,7 +498,7 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 data.Mes = "Lỗi";
                 data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.FAILED;
@@ -475,7 +516,7 @@ namespace dj_actionlayer.Business.Admin
             Lesson lesson = await _context.lesson.FindAsync(lessonId);
             if (lesson == null)
             {
-                data.Mes = "Không tồn tại bài học có Id là "+lessonId;
+                data.Mes = "Không tồn tại bài học có Id là " + lessonId;
                 data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.NOTFOUND;
                 result.Data = data;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -507,7 +548,7 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 data.Mes = "Lỗi";
                 data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.FAILED;
@@ -560,6 +601,69 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<AddTestCaseDTO>> updateTestCase(int testCaseId, TestCaseRequest testCaseRequest)
+        {
+            ResponData<AddTestCaseDTO> result = new ResponData<AddTestCaseDTO>();
+            AddTestCaseDTO data = new AddTestCaseDTO();
+            try
+            {
+                TestCase testCase = await _context.test_case.FindAsync(testCaseId);
+                if (testCase == null)
+                {
+                    data.Mes = "Không tồn tại test case có Id là " + testCaseId;
+                    data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.NOTFOUND;
+                    result.Data = data;
+                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    return result;
+                }
+                //if (testCase.SortNumber != testCaseRequest.SortNumber)
+                //{
+                //    testCase.SortNumber = -1;
+                //    await _context.SaveChangesAsync();
+                //    var list = _context.test_case.Where(x => x.SortNumber >= testCaseRequest.SortNumber && x.PracticeLessonId == testCase.PracticeLessonId).OrderBy(x => x.SortNumber).ToList();
+                //    int sortNumber = testCaseRequest.SortNumber + 1;
+                //    foreach (var item in list)
+                //    {
+                //        item.SortNumber = sortNumber;
+                //        sortNumber++;
+                //    }
+                //    testCase.SortNumber = testCaseRequest.SortNumber;
+                //    await _context.SaveChangesAsync();
+                //    var listResult = _context.test_case.Where(x => x.PracticeLessonId == testCase.PracticeLessonId).OrderBy(x => x.SortNumber).ToList();
+                //    sortNumber = 1;
+                //    foreach (var item in list)
+                //    {
+                //        item.SortNumber = sortNumber;
+                //        sortNumber++;
+                //    }
+                //    await _context.SaveChangesAsync();
+                //}
+                testCase.SortNumber=testCaseRequest.SortNumber;
+                testCase.Input = testCaseRequest.Input;
+                testCase.ExpectOutput = testCaseRequest.Output;
+                testCase.InputDetail = testCaseRequest.InputDetail;
+                testCase.LockTestCase = testCaseRequest.IsLock;
+                await _context.SaveChangesAsync();
+                data.Mes = "Cập nhật thành công!";
+                data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.SECCESSFULLY;
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                data.Mes = "Lỗi";
+                data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.FAILED;
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+
         }
 
         public async Task<ResponData<AddLessonDTO>> updateTheoryLesson(int lessonId, TheoryLessonRequest theoryLessonRequest)

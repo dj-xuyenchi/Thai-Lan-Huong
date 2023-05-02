@@ -10,7 +10,7 @@ export const Error = (err: any) => {
       localStorage.removeItem("id");
       localStorage.removeItem("nickName");
       localStorage.removeItem("role");
-      window.location.replace("/login");
+      window.location.replace("/#");
       break;
     case 403:
       document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
@@ -22,7 +22,7 @@ export const Error = (err: any) => {
       localStorage.removeItem("id");
       localStorage.removeItem("nickName");
       localStorage.removeItem("role");
-      window.location.replace("/login");
+      window.location.replace("/#");
       break;
   }
 };

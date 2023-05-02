@@ -3,6 +3,7 @@ namespace dj_webdesigncore.DTOs.Admin
 {
 	public class TestCaseDTO
 	{
+		public int TestCaseId { get; set; }
 		public int SortNumber { get; set; }
 		public string TestCaseDetail { get; set; }
 		public string Input { get; set; }

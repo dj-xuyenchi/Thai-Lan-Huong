@@ -813,5 +813,11 @@ namespace dj_actionlayer.Business.Study
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
         }
+
+        public async Task<ResponData<ActionStatus>> SendQuestionAnswer(int questionId, int userAnswer, int userId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            return result;
+        }
     }
 }

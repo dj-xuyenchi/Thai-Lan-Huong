@@ -125,10 +125,10 @@ export default {
         this.text = "Thêm thành công";
         this.dialog = false;
         this.snackbar = true;
-        this.lessonName = "";
-        this.lessonDescription = "";
-        this.lessonTime = "";
-        this.linkVideo = "";
+        this.isLock = false;
+        this.inputDetail = "";
+        this.input = "";
+        this.output = "";
         this.getTestCase();
       }
       if (result.status == 2) {

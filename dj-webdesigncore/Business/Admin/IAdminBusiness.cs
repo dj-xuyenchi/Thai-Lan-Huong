@@ -26,5 +26,7 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<AddChapterDTO>> updateChapter(UpdateChapterRequest updateChapterRequest);
         Task<ResponData<List<TestCaseDTO>>> getAllTestCase(int practiceId);
         Task<ResponData<AddTestCaseDTO>> addTestCase(TestCaseRequest testCaseRequest);
+        Task<ResponData<AddTestCaseDTO>> updateTestCase(int testCaseId,TestCaseRequest testCaseRequest);
+        Task<ResponData<AddTestCaseDTO>> deleteTestCase(int testCaseId);
     }
 }

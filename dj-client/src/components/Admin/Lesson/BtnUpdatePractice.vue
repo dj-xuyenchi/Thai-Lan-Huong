@@ -156,9 +156,7 @@
 
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
-
 import { mapMutations } from "vuex";
-
 export default {
   name: "BtnUpdatePractice",
   data() {
