@@ -42,7 +42,7 @@
                       label="Câu hỏi*"
                       hint="Câu hỏi hiển thị"
                       :rules="rules"
-                      v-model="linkVideo"
+                      v-model="question"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -58,7 +58,7 @@
                       label="Đáp án B*"
                       hint="Đáp án B"
                       :rules="rules"
-                      v-model="answera"
+                      v-model="answerb"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -82,6 +82,7 @@
                       label="Đáp án đúng"
                       :items="['A', 'B', 'C', 'D']"
                       :rules="rules"
+                      v-model="answer"
                     ></v-select>
                   </v-col>
                 </v-row>
@@ -97,7 +98,12 @@
               >
                 Hủy
               </v-btn>
-              <v-btn color="blue-darken-1" variant="text" type="submit">
+              <v-btn
+                color="blue-darken-1"
+                :loading="btnLoading"
+                variant="text"
+                type="submit"
+              >
                 Thêm bài học
               </v-btn>
             </v-card-actions>
@@ -118,6 +124,7 @@
 
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "AddQuestion",
   data() {
@@ -127,8 +134,14 @@ export default {
       lessonName: "",
       lessonDescription: "",
       lessonTime: "",
-      linkVideo: "",
+      question: "",
+      answera: "",
+      answerb: "",
+      answerc: "",
+      answerd: "",
+      answer: "A",
       dialog: false,
+      btnLoading: false,
       rules: [
         (value) => {
           if (value) return true;
@@ -138,23 +151,48 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     getData() {
+      var answerResult;
+      switch (this.answer) {
+        case "A":
+          answerResult = 1;
+          break;
+        case "B":
+          answerResult = 2;
+          break;
+        case "C":
+          answerResult = 3;
+          break;
+        case "D":
+          answerResult = 4;
+          break;
+        default:
+          break;
+      }
       return {
         lessonName: this.lessonName,
         lessonDescription: this.lessonDescription,
         lessonTime: this.lessonTime,
-        linkVideo: this.linkVideo,
+        question: this.question,
+        answerA: this.answera,
+        answerB: this.answerb,
+        answerC: this.answerc,
+        answerD: this.answerd,
+        answer: answerResult,
       };
     },
     async submit() {
+      this.btnLoading = true;
       const form = Object.assign({}, this.$refs.form);
       for (const item of form.items) {
         if (!item.isValid) {
+          this.btnLoading = false;
           return;
         }
       }
       const token = localStorage.getItem("token");
-      const result = await AdminAPI.addPracticeLesson(this.getData(), token);
+      const result = await AdminAPI.addQuestionLesson(this.getData(), token);
       if (result.status == 1) {
         this.text = "Thêm thành công";
         this.dialog = false;
@@ -162,13 +200,19 @@ export default {
         this.lessonName = "";
         this.lessonDescription = "";
         this.lessonTime = "";
-        this.linkVideo = "";
+        this.question = "";
+        this.answera = "";
+        this.answerb = "";
+        this.answerc = "";
+        this.answerd = "";
+        this.answer = "A";
         this.getLessonDetail();
       }
       if (result.status == 2) {
         this.text = "Thêm thất bại";
         this.snackbar = true;
       }
+      this.btnLoading = false;
     },
   },
   props: {

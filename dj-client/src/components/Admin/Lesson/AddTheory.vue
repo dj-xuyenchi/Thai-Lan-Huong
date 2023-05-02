@@ -58,7 +58,12 @@
               >
                 Hủy
               </v-btn>
-              <v-btn color="blue-darken-1" variant="text" type="submit">
+              <v-btn
+                color="blue-darken-1"
+                :loading="btnLoading"
+                variant="text"
+                type="submit"
+              >
                 Thêm bài học
               </v-btn>
             </v-card-actions>
@@ -79,6 +84,7 @@
 
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "AddTheory",
   data() {
@@ -89,6 +95,7 @@ export default {
       lessonDescription: "",
       lessonTime: "",
       linkVideo: "",
+      btnLoading: false,
       dialog: false,
       rules: [
         (value) => {
@@ -99,23 +106,26 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     getData() {
       return {
         lessonName: this.lessonName,
         lessonDescription: this.lessonDescription,
         lessonTime: this.lessonTime,
-        linkVideo: this.linkVideo,
+        videoLink: this.linkVideo,
       };
     },
     async submit() {
+      this.btnLoading = true;
       const form = Object.assign({}, this.$refs.form);
       for (const item of form.items) {
         if (!item.isValid) {
+          this.btnLoading = false;
           return;
         }
       }
       const token = localStorage.getItem("token");
-      const result = await AdminAPI.addPracticeLesson(this.getData(), token);
+      const result = await AdminAPI.addTheoryLesson(this.getData(), token);
       if (result.status == 1) {
         this.text = "Thêm thành công";
         this.dialog = false;
@@ -130,6 +140,7 @@ export default {
         this.text = "Thêm thất bại";
         this.snackbar = true;
       }
+      this.btnLoading = false;
     },
   },
   props: {

@@ -1,8 +1,12 @@
 <template>
   <div style="display: flex; justify-content: space-between">
-    <AddChapter />
+    <AddChapter :getChapterDetail="getChapterDetail" />
   </div>
-  <ChapterTable :data="tableData" style="margin-top: 12px" />
+  <ChapterTable
+    :data="tableData"
+    :getChapterDetail="getChapterDetail"
+    style="margin-top: 12px"
+  />
   <div class="text-center" @click="getChapterDetail()">
     <v-container>
       <v-row justify="center">

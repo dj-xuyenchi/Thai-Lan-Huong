@@ -1,5 +1,6 @@
 ﻿using dj_actionlayer.Business.Admin;
 using dj_webdesigncore.Business.Admin;
+using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Lesson;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,56 @@ namespace dj_endpoint.Controllers.Admin
         public async Task<IActionResult> addPracticeLesson(PracticeLesson practiceLesson)
         {
             return Ok(await _admin.addPracticeLesson(practiceLesson));
+        }
+        [HttpPost("addtheorylesson")]
+        public async Task<IActionResult> addTheoryLesson(TheoryLessonRequest theoryLessonRequest)
+        {
+            return Ok(await _admin.addTheoryLesson(theoryLessonRequest));
+        }
+        [HttpPost("addquestionlesson")]
+        public async Task<IActionResult> addQuestionLesson(QuestionLessonRequest questionLessonRequest)
+        {
+            return Ok(await _admin.addQuestionLesson(questionLessonRequest));
+        }
+        [HttpPost("updatepracticelesson")]
+        public async Task<IActionResult> updatePracticeLesson(int lessonId,PracticeLesson practiceLesson)
+        {
+            return Ok(await _admin.updatePracticeLesson(lessonId,practiceLesson));
+        }
+        [HttpPost("updatequestionlesson")]
+        public async Task<IActionResult> updateQuestionLesson(int lessonId, QuestionLessonRequest questionLessonRequest)
+        {
+            return Ok(await _admin.updateQuestionLesson(lessonId, questionLessonRequest));
+        }
+        [HttpPost("updatetheorylesson")]
+        public async Task<IActionResult> updateTheoryLesson(int lessonId, TheoryLessonRequest theoryLessonRequest)
+        {
+            return Ok(await _admin.updateTheoryLesson(lessonId, theoryLessonRequest));
+        }
+        [HttpGet("selectcourseforchapter")]
+        public async Task<IActionResult> getCourseForChapter()
+        {
+            return Ok(await _admin.selectCourseForChapter());
+        }
+        [HttpPost("addchapter")]
+        public async Task<IActionResult> addChapter(AddChapterRequest addChapterRequest)
+        {
+            return Ok(await _admin.addChapter(addChapterRequest));
+        }
+        [HttpPost("updatechapter")]
+        public async Task<IActionResult> updateChapter(UpdateChapterRequest updateChapterRequest)
+        {
+            return Ok(await _admin.updateChapter(updateChapterRequest));
+        }
+        [HttpGet("gettestcase")]
+        public async Task<IActionResult> getAllTestCase(int practiceId)
+        {
+            return Ok(await _admin.getAllTestCase(practiceId));
+        }
+        [HttpPost("addtestcase")]
+        public async Task<IActionResult> addTestCase(TestCaseRequest testCaseRequest)
+        {
+            return Ok(await _admin.addTestCase(testCaseRequest));
         }
     }
 }

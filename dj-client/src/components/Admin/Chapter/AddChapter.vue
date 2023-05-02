@@ -1,104 +1,55 @@
 <template>
   <div>
-    <v-form ref="form" @submit.prevent="submit">
-      <v-row>
-        <v-dialog v-model="dialog" persistent width="1024">
-          <template v-slot:activator="{ props }">
-            <v-btn color="primary" v-bind="props">
-              Thêm bài học thực hành</v-btn
-            >
-          </template>
-          <v-card>
+    <v-row>
+      <v-dialog v-model="dialog" persistent width="1024">
+        <template v-slot:activator="{ props }">
+          <v-btn color="primary" v-bind="props"> Thêm học phần</v-btn>
+        </template>
+        <v-form @submit.prevent="submit()" ref="form">
+          <v-card style="overflow: scroll">
             <v-card-title>
-              <span class="text-h5">Thêm bài học thực hành</span>
+              <span class="text-h5">Thêm học phần</span>
             </v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Tên bài học"
-                      hint="Khi hiển thị sẽ là Bài học + tên bài học"
-                      required
-                      :v-model="lessonName"
+                      label="Tên học phần*"
+                      hint="Tên học phần"
+                      v-model="chapterName"
+                      :rules="rules"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Mô tả"
-                      hint="Mô tả bài học"
-                      required
-                      :v-model="lessonDescription"
+                      label="Tổng thời gian học*"
+                      hint="Tổng thời gian học"
+                      :rules="rules"
+                      v-model="chapterTime"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Thời lượng"
-                      hint="Thời lượng của bài học"
-                      required
-                      :v-model="lessonTime"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Vấn đề"
-                      hint="Vấn đề cần giải quyết"
-                      required
-                      :v-model="problem"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Mô tả vấn đề"
-                      hint="Mô tả vấn đề cần giải quyết"
-                      required
-                      :v-model="problemDetail"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-textarea
-                      counter
-                      label="Code mặc định"
-                      hint="Đoạn code mặc định hiển thị lên code field"
-                      required
-                      :v-model="beginCode"
-                    ></v-textarea>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      label="Đầu vào ví dụ"
-                      hint="Input test case ví dụ"
-                      required
-                      :v-model="inputExemple"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      label="Đầu ra ví dụ"
-                      hint="Output test case ví dụ"
-                      required
-                      :v-model="outputExemple"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Giải thích"
-                      hint="Giải thích ví dụ"
-                      required
-                      :v-model="explain"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Gợi ý"
-                      hint="Gợi ý bài tập"
-                      required
-                      :v-model="suggest"
-                    ></v-text-field>
+                    <v-select
+                      v-model="select"
+                      :hint="
+                        `Học phần được thêm cho khóa học ` + select.courseName
+                      "
+                      :items="courseList"
+                      item-title="courseName"
+                      item-value="courseId"
+                      label="Dành cho khóa học"
+                      persistent-hint
+                      return-object
+                      single-line
+                    ></v-select>
                   </v-col>
                 </v-row>
               </v-container>
-              <small>Tất cả các trường là bắt buộc!</small>
+              <small
+                >* là trường là bắt buộc. Học phần khi thêm mặc định sẽ được sếp
+                xuống cuối cùng trong danh sách học phần của khóa học!</small
+              >
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -110,55 +61,98 @@
                 Hủy
               </v-btn>
               <v-btn
-                type="sendData"
                 color="blue-darken-1"
+                :loading="btnLoading"
                 variant="text"
-                @click="sendData"
+                type="submit"
               >
                 Thêm bài tập
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-dialog>
-      </v-row>
-    </v-form>
+        </v-form>
+      </v-dialog>
+    </v-row>
   </div>
+  <v-snackbar v-model="snackbar">
+    {{ text }}
+    <template v-slot:actions>
+      <v-btn color="green" variant="text" @click="snackbar = false">
+        Đóng
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "AddChapter",
-  data: () => ({
-    lessonName: "",
-    lessonDescription: "",
-    lessonTime: "",
-    problem: "",
-    problemDetail: "",
-    beginCode: "",
-    inputExemple: "",
-    outputExemple: "",
-    explainCode: "",
-    suggest: "",
-    dialog: false,
-  }),
+  data() {
+    return {
+      text: "",
+      snackbar: false,
+      select: {
+        courseName: "Khóa học",
+      },
+      chapterName: "",
+      chapterTime: "",
+      courseList: [],
+      dialog: false,
+      btnLoading: false,
+      rules: [
+        (value) => {
+          if (value) return true;
+          return "Không được để trống!";
+        },
+      ],
+    };
+  },
   methods: {
-    getData() {
-      return {
-        lessonName: this.lessonName,
-        lessonDescription: this.lessonDescription,
-        lessonTime: this.lessonTime,
-        problem: this.problem,
-        problemDetail: this.problemDetail,
-        beginCode: this.beginCode,
-        inputExemple: this.inputExemple,
-        outputExemple: this.outputExemple,
-        explainCode: this.explainCode,
-        suggest: this.suggest,
-      };
+    ...mapMutations(["setIsLoadedData"]),
+    async submit() {
+      this.btnLoading = true;
+      const form = Object.assign({}, this.$refs.form);
+      for (const item of form.items) {
+        if (!item.isValid) {
+          this.btnLoading = false;
+          return;
+        }
+      }
+      const token = localStorage.getItem("token");
+      const result = await AdminAPI.addChapter(
+        {
+          CourseId: this.select.courseId,
+          ChapterName: this.chapterName,
+          ChapterTotalTime: this.chapterTime,
+        },
+        token
+      );
+      if (result.status == 1) {
+        this.text = "Thêm thành công";
+        this.dialog = false;
+        this.snackbar = true;
+        this.getChapterDetail();
+        this.getLessonDetail();
+      }
+      if (result.status == 2) {
+        this.text = "Thêm thất bại";
+        this.snackbar = true;
+      }
+      this.btnLoading = false;
     },
-    sendData() {
-      console.log(this.getData());
+    async getCourseForSelect() {
+      const token = localStorage.getItem("token");
+      const data = await AdminAPI.getCourseForChapter(token);
+      this.courseList = data.data;
     },
+  },
+  props: {
+    getChapterDetail: Function,
+  },
+  created() {
+    this.getCourseForSelect();
   },
 };
 </script>

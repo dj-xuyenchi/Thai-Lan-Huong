@@ -11,9 +11,11 @@
   <ItemGroup>
     <None Remove="Business\Auth\" />
     <None Remove="Request\SomeThingElse\" />
+    <None Remove="Request\Chapter\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\Auth\" />
     <Folder Include="Request\SomeThingElse\" />
+    <Folder Include="Request\Chapter\" />
   </ItemGroup>
 </Project>

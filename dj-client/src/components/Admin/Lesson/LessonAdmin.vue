@@ -1,10 +1,14 @@
 <template>
   <div style="display: flex; justify-content: space-between">
     <AddPractice :getLessonDetail="getLessonDetail" />
-    <AddQuestion />
-    <AddTheory />
+    <AddQuestion :getLessonDetail="getLessonDetail" />
+    <AddTheory :getLessonDetail="getLessonDetail" />
   </div>
-  <LessonTable :data="tableData" style="margin-top: 12px" />
+  <LessonTable
+    :getLessonDetail="getLessonDetail"
+    :data="tableData"
+    style="margin-top: 12px"
+  />
   <div class="text-center" @click="getLessonDetail()">
     <v-container>
       <v-row justify="center">
@@ -12,7 +16,7 @@
           <v-container class="max-width">
             <v-pagination
               v-model="page"
-              class="my-4"
+              class="my-2"
               :length="maxPage"
               rounded="circle"
             ></v-pagination>

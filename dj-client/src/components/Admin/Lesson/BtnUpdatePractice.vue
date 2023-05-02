@@ -21,7 +21,7 @@
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Tên bài học"
+                      label="Tên bài học*"
                       hint="Khi hiển thị sẽ là Bài học + tên bài học"
                       v-model="lessonName"
                       :rules="rules"
@@ -29,7 +29,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Mô tả"
+                      label="Mô tả*"
                       hint="Mô tả bài học"
                       :rules="rules"
                       v-model="lessonDescription"
@@ -37,7 +37,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Thời lượng"
+                      label="Thời lượng*"
                       hint="Thời lượng của bài học"
                       :rules="rules"
                       v-model="lessonTime"
@@ -45,7 +45,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Vấn đề"
+                      label="Vấn đề*"
                       hint="Vấn đề cần giải quyết"
                       :rules="rules"
                       v-model="problem"
@@ -53,7 +53,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Mô tả vấn đề"
+                      label="Mô tả vấn đề*"
                       hint="Mô tả vấn đề cần giải quyết"
                       :rules="rules"
                       v-model="problemDetail"
@@ -64,7 +64,6 @@
                       counter
                       label="Code mặc định"
                       hint="Đoạn code mặc định hiển thị lên code field"
-                      :rules="rules"
                       v-model="beginCode"
                     ></v-textarea>
                   </v-col>
@@ -72,22 +71,27 @@
                     <v-text-field
                       counter
                       label="Call Test Code"
-                      hint="Call Test Code"
-                      :rules="rules"
+                      hint="Mặc định hàm gọi nếu có tham số thì sẽ là tên hàm và (variable)"
                       v-model="callTestCode"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="Case mặc định giải thích tham số"
+                      hint="Giải thích truyền tham số case mặc định"
+                      v-model="caseDefaultDetail"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
                       label="Đầu vào ví dụ"
                       hint="Input test case ví dụ"
-                      :rules="rules"
                       v-model="inputExemple"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
-                      label="Đầu ra ví dụ"
+                      label="Đầu ra ví dụ*"
                       hint="Output test case ví dụ"
                       :rules="rules"
                       v-model="outputExemple"
@@ -95,7 +99,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Giải thích"
+                      label="Giải thích*"
                       hint="Giải thích ví dụ"
                       :rules="rules"
                       v-model="explainCode"
@@ -103,21 +107,19 @@
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Gợi ý"
+                      label="Gợi ý*"
                       hint="Gợi ý bài tập"
                       :rules="rules"
                       v-model="suggest"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
-                    <v-switch
-                      v-model="activeLesson"
-                      label="Active bài học"
-                    ></v-switch>
-                  </v-col>
                 </v-row>
               </v-container>
-              <small>Tất cả các trường là bắt buộc!</small>
+              <small
+                >* là trường là bắt buộc và chú ý khi update bài thực hành nếu
+                cập nhật cách truyền tham số hoặc thay đổi các gọi, trả về cần
+                update lại các test case!</small
+              >
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -128,7 +130,12 @@
               >
                 Hủy
               </v-btn>
-              <v-btn color="blue-darken-1" variant="text" type="submit">
+              <v-btn
+                color="blue-darken-1"
+                :loading="btnLoading"
+                variant="text"
+                type="submit"
+              >
                 Cập nhật
               </v-btn>
             </v-card-actions>
@@ -137,26 +144,40 @@
       </v-dialog>
     </v-row>
   </div>
+  <v-snackbar v-model="snackbar">
+    {{ text }}
+    <template v-slot:actions>
+      <v-btn color="green" variant="text" @click="snackbar = false">
+        Đóng
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+
+import { mapMutations } from "vuex";
+
 export default {
   name: "BtnUpdatePractice",
   data() {
     return {
+      text: "",
+      snackbar: false,
       lessonName: "",
       lessonDescription: "",
       lessonTime: "",
       problem: "",
       problemDetail: "",
       beginCode: "",
+      caseDefaultDetail: "",
       inputExemple: "",
       callTestCode: "",
       outputExemple: "",
       explainCode: "",
       suggest: "",
-      activeLesson: false,
+      btnLoading: false,
       dialog: false,
       rules: [
         (value) => {
@@ -167,6 +188,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     getData() {
       return {
         lessonName: this.lessonName,
@@ -175,6 +197,7 @@ export default {
         problem: this.problem,
         problemDetail: this.problemDetail,
         beginCode: this.beginCode,
+        caseDefaultDetail: this.caseDefaultDetail,
         callTestCode: this.callTestCode,
         inputExemple: this.inputExemple,
         outputExemple: this.outputExemple,
@@ -183,32 +206,51 @@ export default {
       };
     },
     async submit() {
+      this.btnLoading = true;
       const form = Object.assign({}, this.$refs.form);
       for (const item of form.items) {
         if (!item.isValid) {
+          this.btnLoading = false;
           return;
         }
       }
       const token = localStorage.getItem("token");
-      await AdminAPI.addPracticeLesson(this.getData(), token);
+      const result = await AdminAPI.updatePracticeLesson(
+        this.lessonId,
+        this.getData(),
+        token
+      );
+      if (result.status == 1) {
+        this.text = "Cập nhật thành công";
+        this.dialog = false;
+        this.snackbar = true;
+        this.getLessonDetail();
+      }
+      if (result.status == 2) {
+        this.text = "cập nhật thất bại";
+        this.snackbar = true;
+      }
+      this.btnLoading = false;
     },
   },
-  props: {
-    item: Object,
-  },
   mounted() {
-    console.log(this.item);
     this.lessonName = this.item.lessonName;
     this.lessonDescription = this.item.lessonDescription;
     this.lessonTime = this.item.videoTime;
-    this.problem = this.item.lessonName;
-    this.problemDetail = this.item.lessonName;
-    this.beginCode = this.item.lessonName;
-    this.callTestCode = this.item.lessonName;
-    this.inputExemple = this.item.lessonName;
-    this.outputExemple = this.item.lessonName;
-    this.explainCode = this.item.lessonName;
-    this.suggest = this.item.lessonName;
+    this.problem = this.item.problem;
+    this.problemDetail = this.item.problemDetail;
+    this.beginCode = this.item.beginCode;
+    this.caseDefaultDetail = this.item.caseDefaultDetail;
+    this.callTestCode = this.item.callTestCode;
+    this.inputExemple = this.item.inputExemple;
+    this.outputExemple = this.item.outputExemple;
+    this.explainCode = this.item.explainCode;
+    this.suggest = this.item.suggest;
+  },
+  props: {
+    getLessonDetail: Function,
+    item: Object,
+    lessonId: Number,
   },
 };
 </script>

@@ -65,7 +65,7 @@
                     <v-text-field
                       counter
                       label="Call Test Code"
-                      hint="Call Test Code"
+                      hint="Mặc định hàm gọi nếu có tham số thì sẽ là tên hàm và (variable)"
                       v-model="callTestCode"
                     ></v-text-field>
                   </v-col>
@@ -120,7 +120,12 @@
               >
                 Hủy
               </v-btn>
-              <v-btn color="blue-darken-1" variant="text" type="submit">
+              <v-btn
+                color="blue-darken-1"
+                :loading="btnLoading"
+                variant="text"
+                type="submit"
+              >
                 Thêm bài tập
               </v-btn>
             </v-card-actions>
@@ -141,6 +146,7 @@
 
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import { mapMutations } from "vuex";
 export default {
   name: "AddPractice",
   data() {
@@ -160,6 +166,7 @@ export default {
       explainCode: "",
       suggest: "",
       dialog: false,
+      btnLoading: false,
       rules: [
         (value) => {
           if (value) return true;
@@ -169,6 +176,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     getData() {
       return {
         lessonName: this.lessonName,
@@ -186,9 +194,11 @@ export default {
       };
     },
     async submit() {
+      this.btnLoading = true;
       const form = Object.assign({}, this.$refs.form);
       for (const item of form.items) {
         if (!item.isValid) {
+          this.btnLoading = false;
           return;
         }
       }
@@ -216,6 +226,7 @@ export default {
         this.text = "Thêm thất bại";
         this.snackbar = true;
       }
+      this.btnLoading = false;
     },
   },
   props: {

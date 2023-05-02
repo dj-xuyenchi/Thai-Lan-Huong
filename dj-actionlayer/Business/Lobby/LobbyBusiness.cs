@@ -113,7 +113,7 @@ namespace dj_actionlayer.Business.Lobby
                             }
                             else
                             {
-                                UserLessonCheckpoint checkPoint = _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).SingleOrDefault();
+                                UserLessonCheckpoint checkPoint = _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).FirstOrDefault();
                                 if (checkPoint != null)
                                 {
                                     lessonDetailDTO.IsDone = true;

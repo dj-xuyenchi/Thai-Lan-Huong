@@ -13,10 +13,10 @@ namespace dj_webdesigncore.Request.Lesson
         public string lessonTime { get; set; }
         public string problem { get; set; }
         public string problemDetail { get; set; }
-        public string caseDefaultDetail { get; set; }
-        public string callTestCode { get; set; }
-        public string beginCode  { get; set; }
-        public string inputExemple  { get; set; }
+        public string? caseDefaultDetail { get; set; }
+        public string? callTestCode { get; set; }
+        public string? beginCode  { get; set; }
+        public string? inputExemple  { get; set; }
         public string outputExemple  { get; set; }
         public string explainCode { get; set; }
         public string suggest { get; set; }

@@ -16,7 +16,7 @@
           <td>{{ index + 1 }}</td>
           <td>{{ item.chapterName }}</td>
           <td>{{ item.createDateTime }}</td>
-          <td>{{ item.lessonCount }}</td>
+          <td>{{ item.lessonCount }} bài học</td>
           <td>{{ item.timeTotal }}</td>
           <td
             style="
@@ -25,7 +25,11 @@
               align-items: center;
             "
           >
-            <BtnUpdateChapter />
+            <BtnUpdateChapter
+              :getChapterDetail="getChapterDetail"
+              :chapterId="item.chapterId"
+              :item="item"
+            />
             <AddLessonToChapter />
           </td>
         </tr>
@@ -42,6 +46,7 @@ export default {
   components: { BtnUpdateChapter, AddLessonToChapter },
   props: {
     data: [],
+    getChapterDetail: Function,
   },
 };
 </script>

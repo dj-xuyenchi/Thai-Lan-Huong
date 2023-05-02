@@ -11,5 +11,6 @@ namespace dj_webdesigncore.Enums.CourseEnums
         SECCESSFULLY = 1,
         FAILED = 2,
         NULLPROPS = 3,
+        NOTFOUND=4
     }
 }

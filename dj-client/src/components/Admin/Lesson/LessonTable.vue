@@ -5,7 +5,6 @@
         <tr>
           <th class="text-left">STT</th>
           <th class="text-left">Tên bài học</th>
-          <th class="text-left">Mô tả</th>
           <th class="text-left">Ngày tạo</th>
           <th class="text-left">Cập nhật</th>
           <th class="text-left">Loại bài học</th>
@@ -17,17 +16,36 @@
         <tr v-for="(item, index) in data" :key="index">
           <td>{{ index + 1 }}</td>
           <td>{{ item.lessonName }}</td>
-          <td>{{ item.lessonDescription }}</td>
           <td>{{ item.createDateTime }}</td>
           <td>{{ item.updateDateTime }}</td>
           <td>{{ item.lessonType }}</td>
           <td>{{ item.videoTime }}</td>
           <td
-            style="display: flex; justify-content: center; align-items: center"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
           >
-            <BtnUpdateTheory v-if="item.lessonTypeId == 1" />
-            <BtnUpdatePractice v-if="item.lessonTypeId == 2" :item="item" />
-            <BtnUpdateQuestion v-if="item.lessonTypeId == 3" />
+            <BtnUpdateTheory
+              :lessonId="item.lessonId"
+              v-if="item.lessonTypeId == 1"
+              :item="item"
+              :getLessonDetail="getLessonDetail"
+            />
+            <BtnUpdatePractice
+              :lessonId="item.lessonId"
+              v-if="item.lessonTypeId == 2"
+              :item="item"
+              :getLessonDetail="getLessonDetail"
+            />
+            <BtnUpdateQuestion
+              :lessonId="item.lessonId"
+              v-if="item.lessonTypeId == 3"
+              :item="item"
+              :getLessonDetail="getLessonDetail"
+            />
+            <ListTestCase v-if="item.lessonTypeId == 2" :item="item" />
           </td>
         </tr>
       </tbody>
@@ -39,11 +57,18 @@
 import BtnUpdatePractice from "./BtnUpdatePractice";
 import BtnUpdateTheory from "./BtnUpdateTheory";
 import BtnUpdateQuestion from "./BtnUpdateQuestion";
+import ListTestCase from "./ListTestCase";
 export default {
   name: "LessonTable",
-  components: { BtnUpdatePractice, BtnUpdateTheory, BtnUpdateQuestion },
+  components: {
+    BtnUpdatePractice,
+    BtnUpdateTheory,
+    BtnUpdateQuestion,
+    ListTestCase,
+  },
   props: {
     data: [],
+    getLessonDetail: Function,
   },
 };
 </script>
