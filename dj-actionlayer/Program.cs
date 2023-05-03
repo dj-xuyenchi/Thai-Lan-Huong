@@ -2,6 +2,8 @@
 using System.Net.Mail;
 using System.Net;
 using dj_webdesigncore.DTOs.Study;
+using System.Linq;
+
 namespace dj_actionlayer
 {
 	internal class Program
@@ -20,12 +22,23 @@ namespace dj_actionlayer
 
             //Console.WriteLine(result.time);
             //Console.WriteLine(result.exeption);
-            string[] input = "1".Split(",");
-            Console.WriteLine(input.Length);
-            foreach (var item in input)
+            //string[] input = "1".Split(",");
+            //Console.WriteLine(input.Length);
+            //foreach (var item in input)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            Console.WriteLine(remixName("  đỗ linh  "));
+        }
+        static string  remixName(string input)
+        {
+            input = input.Trim();
+            while (input.Contains("  "))
             {
-                Console.WriteLine(item);
+                input = input.Replace("  ", " ");
             }
+            return input;
         }
     }
 }
