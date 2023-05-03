@@ -20,5 +20,6 @@ namespace dj_webdesigncore.DTOs.Lobby
         public int ChapterCount { get; set; }
         public int LessonCount { get; set; }
         public string TimeTotal { get; set; }
+        public string IntroVideoPath { get; set; }
     }
 }

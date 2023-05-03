@@ -16,6 +16,7 @@ import CheckConfirm from "../views/Door/CheckConfirm.vue";
 import AppNewFeedVue from "@/components/MainHome/AppNewFeed.vue";
 import CourseDetail from "@/components/Course/CourseDetail.vue";
 import StudyMain from "@/components/StudyMonitor/StudyMain.vue";
+import ForwardLesson from "../components/StudyMonitor/ForwardLesson.vue";
 import CourseMonitor from "@/components/Course/CourseMonitor.vue";
 import PostMonitor from "@/components/Post/PostMonitor.vue";
 import ForwardToHome from "../views/ForwardToHome.vue";
@@ -35,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/forget",
     name: "",
     component: ForgetPass,
+  },
+  {
+    path: "/forwardlesson",
+    name: "forwardlesson",
+    component: ForwardLesson,
   },
   {
     path: "/forwardrequestforgetpass/:code",

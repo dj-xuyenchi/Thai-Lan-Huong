@@ -28,5 +28,10 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<AddTestCaseDTO>> addTestCase(TestCaseRequest testCaseRequest);
         Task<ResponData<AddTestCaseDTO>> updateTestCase(int testCaseId,TestCaseRequest testCaseRequest);
         Task<ResponData<AddTestCaseDTO>> deleteTestCase(int testCaseId);
+        Task<ResponData<List<LessonDetailDTO>>> getLessonOfChapter(int chapterId);
+        Task<ResponData<AddLesson2ChapterDTO>> updateSortNumberLesson(UpdateSortNumberLessonRequest updateSortNumberLessonRequest);
+        Task<ResponData<AddLesson2ChapterDTO>> addLesson2Chapter(UpdateSortNumberLessonRequest updateSortNumberLessonRequest);
+        Task<ResponData<AddLesson2ChapterDTO>> deleteLessonOfChapter(int lessonChapterId);
+        Task<ResponData<List<LessonDetailDTO>>> getLessonNotInChapter();
     }
 }

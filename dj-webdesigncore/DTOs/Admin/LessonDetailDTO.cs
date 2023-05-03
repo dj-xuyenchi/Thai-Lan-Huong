@@ -9,6 +9,8 @@ namespace dj_webdesigncore.DTOs.Admin
     public class LessonDetailDTO
     {
         public int LessonId { get; set; }
+        public int ChapterLessonId { get; set; }
+        public int SortNumber { get; set; }
         public string LessonName { get; set; }
         public string LessonDescription { get; set; }
         public string CreateDateTime { get; set; }
@@ -33,7 +35,5 @@ namespace dj_webdesigncore.DTOs.Admin
         public string outputExemple { get; set; }
         public string explainCode { get; set; }
         public string suggest { get; set; }
-
-
     }
 }

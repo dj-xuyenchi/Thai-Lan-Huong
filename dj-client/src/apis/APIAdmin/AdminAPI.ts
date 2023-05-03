@@ -317,5 +317,99 @@ class AdminAPI {
         });
     });
   }
+  getLessonOfChapter(chapterId: number, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/admin/getlessonofchapter?chapterId=${chapterId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+
+  updateSortNumberLesson(
+    updateSortNumberLessonRequest: object,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(
+        `/admin/updatesortnumberlesson`,
+        updateSortNumberLessonRequest,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  addLesson2Chapter(
+    updateSortNumberLessonRequest: object,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/admin/addlesson2chapter`, updateSortNumberLessonRequest, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  deleteLessonOfChapter(lessonChapterId: number, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/admin/deletelessonofchapter?lessonChapterId=${lessonChapterId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  getLessonNotInChapter(token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/admin/getlessonnotinchapter`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new AdminAPI();

@@ -6,7 +6,7 @@
       v-model="menu"
     >
       <template v-slot:activator="{ props }">
-        <v-btn color="#4FC3F7" v-bind="props">
+        <v-btn color="#4FC3F7" v-bind="props" @click="getChapterLesson()">
           <font-awesome-icon
             icon="fa-solid fa-list"
             color="black"
@@ -22,7 +22,7 @@
             title="Khóa học JAVA cơ bản đến Spring"
             subtitle="Cập nhật 23/12/2023"
           >
-            <template v-slot:append>
+            <!-- <template v-slot:append>
               <v-btn
                 variant="text"
                 :class="fav ? 'text-red' : ''"
@@ -30,7 +30,7 @@
                 @click="fav = !fav"
               ></v-btn>
               <span>Bạn và 2.123 người khác</span>
-            </template>
+            </template> -->
           </v-list-item>
         </v-list>
         <v-divider></v-divider>
@@ -39,6 +39,7 @@
           :key="i"
           :listLesson="item.lessonDetail"
           :titleLesson="i + 1 + `. ` + item.chapterTitle"
+          :chapterId="item.chapterId"
         />
         <div style="height: 12px"></div>
       </v-card>
@@ -47,6 +48,7 @@
 </template>
 
 <script>
+import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 import LessonListStudy from "./LessonListStudy.vue";
 import { mapGetters } from "vuex";
 export default {
@@ -57,8 +59,20 @@ export default {
     menu: false,
     message: false,
     hints: true,
+    chapterList: [],
   }),
-  props: { chapterList: [] },
+  methods: {
+    async getChapterLesson() {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("id");
+      const result = await StudyAPI.getChapterLessonOfUser(
+        userId,
+        this.$route.params.idCourse,
+        token
+      );
+      this.chapterList = result;
+    },
+  },
   computed: {
     ...mapGetters(["getAIProfile"]),
   },

@@ -103,5 +103,30 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.deleteTestCase(testCaseId));
         }
+        [HttpGet("getlessonofchapter")]
+        public async Task<IActionResult> getLessonOfChapter(int chapterId)
+        {
+            return Ok(await _admin.getLessonOfChapter(chapterId));
+        }
+        [HttpPost("updatesortnumberlesson")]
+        public async Task<IActionResult> updateSortNumberLesson(UpdateSortNumberLessonRequest updateSortNumberLessonRequest)
+        {
+            return Ok(await _admin.updateSortNumberLesson(updateSortNumberLessonRequest));
+        }
+        [HttpPost("addlesson2chapter")]
+        public async Task<IActionResult> addLesson2Chapter(UpdateSortNumberLessonRequest updateSortNumberLessonRequest)
+        {
+            return Ok(await _admin.addLesson2Chapter(updateSortNumberLessonRequest));
+        }
+        [HttpGet("deletelessonofchapter")]
+        public async Task<IActionResult> deleteLessonOfChapter(int lessonChapterId)
+        {
+            return Ok(await _admin.deleteLessonOfChapter(lessonChapterId));
+        }
+        [HttpGet("getlessonnotinchapter")]
+        public async Task<IActionResult> getLessonNotInChapter()
+        {
+            return Ok(await _admin.getLessonNotInChapter());
+        }
     }
 }

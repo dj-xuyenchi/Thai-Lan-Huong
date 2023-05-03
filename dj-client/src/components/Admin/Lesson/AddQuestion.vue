@@ -6,14 +6,14 @@
           <v-btn color="primary" v-bind="props"> Thêm bài quiz</v-btn>
         </template>
         <v-form @submit.prevent="submit()" ref="form">
-          <v-card style="height: 90vh; overflow: scroll">
+          <v-card style="overflow: scroll">
             <v-card-title>
               <span class="text-h5">Thêm bài quiz</span>
             </v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="12" md="12">
                     <v-text-field
                       label="Tên bài học*"
                       hint="Khi hiển thị sẽ là Bài học + tên bài học"
@@ -21,7 +21,7 @@
                       :rules="rules"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="6">
                     <v-text-field
                       label="Mô tả*"
                       hint="Mô tả bài học"
@@ -29,7 +29,7 @@
                       v-model="lessonDescription"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="6">
                     <v-text-field
                       label="Thời lượng*"
                       hint="Thời lượng của bài học"

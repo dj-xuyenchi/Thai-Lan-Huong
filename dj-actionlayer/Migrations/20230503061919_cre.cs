@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dj_actionlayer.Migrations
 {
-    public partial class create : Migration
+    public partial class cre : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -291,7 +291,8 @@ namespace dj_actionlayer.Migrations
                     RegisterCount = table.Column<int>(type: "int", nullable: false),
                     DoneCount = table.Column<int>(type: "int", nullable: false),
                     CourseStatusId = table.Column<int>(type: "int", nullable: true),
-                    CourseTypeId = table.Column<int>(type: "int", nullable: false)
+                    CourseTypeId = table.Column<int>(type: "int", nullable: false),
+                    IntroVideoLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -778,7 +779,8 @@ namespace dj_actionlayer.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     PracticeLessonId = table.Column<int>(type: "int", nullable: false),
-                    DoneData = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DoneData = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DoneTime = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -791,6 +793,34 @@ namespace dj_actionlayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_practice_done_data_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "question_done_data",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QuestionLessonId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Answer = table.Column<int>(type: "int", nullable: false),
+                    DoneTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_question_done_data", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_question_done_data_question_lesson_QuestionLessonId",
+                        column: x => x.QuestionLessonId,
+                        principalTable: "question_lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_question_done_data_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "Id",
@@ -900,6 +930,33 @@ namespace dj_actionlayer.Migrations
                         name: "FK_user_trophic_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "video_done_data",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VideoLessonId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    DoneTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_video_done_data", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_video_done_data_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_video_done_data_video_lesson_VideoLessonId",
+                        column: x => x.VideoLessonId,
+                        principalTable: "video_lesson",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1214,6 +1271,16 @@ namespace dj_actionlayer.Migrations
                 column: "administrative_unit_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_question_done_data_QuestionLessonId",
+                table: "question_done_data",
+                column: "QuestionLessonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_question_done_data_UserId",
+                table: "question_done_data",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_question_lesson_LessonId",
                 table: "question_lesson",
                 column: "LessonId");
@@ -1324,6 +1391,16 @@ namespace dj_actionlayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_video_done_data_UserId",
+                table: "video_done_data",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_video_done_data_VideoLessonId",
+                table: "video_done_data",
+                column: "VideoLessonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_video_lesson_LessonId",
                 table: "video_lesson",
                 column: "LessonId");
@@ -1369,7 +1446,7 @@ namespace dj_actionlayer.Migrations
                 name: "practice_done_data");
 
             migrationBuilder.DropTable(
-                name: "question_lesson");
+                name: "question_done_data");
 
             migrationBuilder.DropTable(
                 name: "refresh_token");
@@ -1396,7 +1473,7 @@ namespace dj_actionlayer.Migrations
                 name: "user_trophic");
 
             migrationBuilder.DropTable(
-                name: "video_lesson");
+                name: "video_done_data");
 
             migrationBuilder.DropTable(
                 name: "course_chapter");
@@ -1406,6 +1483,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_require");
+
+            migrationBuilder.DropTable(
+                name: "question_lesson");
 
             migrationBuilder.DropTable(
                 name: "practice_lesson");
@@ -1423,13 +1503,16 @@ namespace dj_actionlayer.Migrations
                 name: "trophic");
 
             migrationBuilder.DropTable(
+                name: "video_lesson");
+
+            migrationBuilder.DropTable(
                 name: "course");
 
             migrationBuilder.DropTable(
-                name: "lesson");
+                name: "post");
 
             migrationBuilder.DropTable(
-                name: "post");
+                name: "lesson");
 
             migrationBuilder.DropTable(
                 name: "course_level");
@@ -1441,16 +1524,16 @@ namespace dj_actionlayer.Migrations
                 name: "course_type");
 
             migrationBuilder.DropTable(
-                name: "lesson_status");
-
-            migrationBuilder.DropTable(
-                name: "lesson_type");
-
-            migrationBuilder.DropTable(
                 name: "post_status");
 
             migrationBuilder.DropTable(
                 name: "user");
+
+            migrationBuilder.DropTable(
+                name: "lesson_status");
+
+            migrationBuilder.DropTable(
+                name: "lesson_type");
 
             migrationBuilder.DropTable(
                 name: "gender");

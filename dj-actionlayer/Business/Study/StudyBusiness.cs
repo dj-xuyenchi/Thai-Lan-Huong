@@ -136,6 +136,7 @@ namespace dj_actionlayer.Business.Study
             {
                 ChapterDetailDTO chapterDetailDTO = new ChapterDetailDTO();
                 chapterDetailDTO.ChapterTitle = item.ChapterName;
+                chapterDetailDTO.ChapterId = item.Id;
                 chapterDetailDTO.LessonCount = item.ChapterLessonCount;
                 List<LessonDetailDTO> lessonDetailDTOResult = new List<LessonDetailDTO>();
                 List<ChapterLesson> lessonOfChapter = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).OrderBy(x => x.SortNumber).ToList();
@@ -328,7 +329,7 @@ namespace dj_actionlayer.Business.Study
                 questionLessonDTO.AnswerC = questionLesson.AnswerC;
                 questionLessonDTO.AnswerD = questionLesson.AnswerD;
                 questionLessonDTO.Question = questionLesson.Question;
-                questionLessonDTO.LessonId = questionLesson.Id;
+                questionLessonDTO.LessonId = lesson.Id;
                 data.StudyDetail = questionLessonDTO;
                 data.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.QUESTION;
                 Course course = await _context.course.FindAsync(courseId);
@@ -411,8 +412,8 @@ namespace dj_actionlayer.Business.Study
                     {
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
-                        callTestCode = callTestCode.Replace("variable",item.Input);
-                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code+callTestCode);
+                        callTestCode = callTestCode.Replace("variable", item.Input);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code + callTestCode);
                         callTestCode = practiceLesson.CallTestCode;
                         testDTO.Input = item.Input;
                         testDTO.ExpectOutput = item.ExpectOutput;
@@ -440,10 +441,10 @@ namespace dj_actionlayer.Business.Study
                             listTest.Add(testDTO);
                             continue;
                         }
-                        
+
                     }
                 }
-               
+
                 tryTestCaseResultDTO.TestCase = listTest;
                 result.Data = tryTestCaseResultDTO;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -500,7 +501,7 @@ namespace dj_actionlayer.Business.Study
                 StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
                 studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
                 VideoLessonDTO videoLesson = new VideoLessonDTO();
-                videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).SingleOrDefault().LessonLinkUrl;
+                videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).FirstOrDefault().LessonLinkUrl;
                 studyData.StudyDetail = videoLesson;
                 Course course = await _context.course.FindAsync(courseId);
                 studyData.CourseName = course.CourseName;
@@ -814,10 +815,144 @@ namespace dj_actionlayer.Business.Study
             return result;
         }
 
-        public async Task<ResponData<ActionStatus>> SendQuestionAnswer(int questionId, int userAnswer, int userId)
+        public async Task<ResponData<ActionStatus>> SendQuestionAnswer(SendQuestionRequest sendQuestionRequest)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            return result;
+            Lesson lesson = await _context.lesson.FindAsync(sendQuestionRequest.LessonId);
+            if (lesson == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            QuestionLesson questionLesson = await _context.question_lesson.Where(x => x.LessonId == lesson.Id).FirstOrDefaultAsync();
+            if (questionLesson.Answer != sendQuestionRequest.Answer)
+            {
+                result.Data = ActionStatus.WRONG;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            if (_context.question_done_data.Any(x => x.QuestionLessonId == questionLesson.Id && x.UserId == sendQuestionRequest.UserId))
+            {
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            else
+            {
+                QuestionDoneData questionDoneData = new QuestionDoneData();
+                questionDoneData.Answer = sendQuestionRequest.Answer;
+                questionDoneData.QuestionLessonId = questionLesson.Id;
+                questionDoneData.UserId = sendQuestionRequest.UserId;
+                questionDoneData.DoneTime = DateTime.Now;
+                await _context.AddAsync(questionDoneData);
+                ChapterLesson chapterLesson = await _context.chapter_lesson.Where(x => x.LessonId == sendQuestionRequest.LessonId && x.CourseChapterId == sendQuestionRequest.ChapterId).FirstOrDefaultAsync();
+                ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendQuestionRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
+                if (chapterLessonNext != null)
+                {
+                    UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                    newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
+                    newUserLessonCheckPoint.UserId = sendQuestionRequest.UserId;
+                    newUserLessonCheckPoint.IsDone = false;
+                    newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                    await _context.AddAsync(newUserLessonCheckPoint);
+                }
+                else
+                {
+                    CourseChapter courseChapter = await _context.course_chapter.FindAsync(sendQuestionRequest.ChapterId);
+                    CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
+                    if (courseChapterNext != null)
+                    {
+                        ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
+                        UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                        newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
+                        newUserLessonCheckPoint.UserId = sendQuestionRequest.UserId;
+                        newUserLessonCheckPoint.IsDone = false;
+                        newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                        await _context.AddAsync(newUserLessonCheckPoint);
+                    }
+                    else
+                    {
+                        // Không còn học phần tốt nghiệp khóa
+                    }
+                }
+                UserLessonCheckpoint userLessonCheckpoint = await _context.user_lesson_checkpoint.Where(x => x.LessonId == sendQuestionRequest.LessonId && x.UserId == sendQuestionRequest.UserId).FirstOrDefaultAsync();
+                userLessonCheckpoint.IsDone = true;
+                result.Data = ActionStatus.RIGHT;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                await _context.SaveChangesAsync();
+                return result;
+            }
+        }
+
+        public async Task<ResponData<ActionStatus>> SendVideoDoneRequest(SendVideoDoneRequest sendVideoDoneRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            Lesson lesson = await _context.lesson.FindAsync(sendVideoDoneRequest.LessonId);
+            if (lesson == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            VideoLesson videoLesson = await _context.video_lesson.Where(x => x.LessonId == lesson.Id).FirstOrDefaultAsync();
+            if (_context.video_done_data.Any(x => x.VideoLessonId == videoLesson.Id && x.UserId == sendVideoDoneRequest.UserId))
+            {
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            else
+            {
+                VideoDoneData videoDoneData = new VideoDoneData();
+                videoDoneData.VideoLessonId = videoLesson.Id;
+                videoDoneData.UserId = sendVideoDoneRequest.UserId;
+                videoDoneData.DoneTime = DateTime.Now;
+                await _context.AddAsync(videoDoneData);
+                ChapterLesson chapterLesson = await _context.chapter_lesson.Where(x => x.LessonId == sendVideoDoneRequest.LessonId && x.CourseChapterId == sendVideoDoneRequest.ChapterId).FirstOrDefaultAsync();
+                ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendVideoDoneRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
+                if (chapterLessonNext != null)
+                {
+                    UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                    newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
+                    newUserLessonCheckPoint.UserId = sendVideoDoneRequest.UserId;
+                    newUserLessonCheckPoint.IsDone = false;
+                    newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                    await _context.AddAsync(newUserLessonCheckPoint);
+                }
+                else
+                {
+                    CourseChapter courseChapter = await _context.course_chapter.FindAsync(sendVideoDoneRequest.ChapterId);
+                    CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
+                    if (courseChapterNext != null)
+                    {
+                        ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
+                        UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                        newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
+                        newUserLessonCheckPoint.UserId = sendVideoDoneRequest.UserId;
+                        newUserLessonCheckPoint.IsDone = false;
+                        newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                        await _context.AddAsync(newUserLessonCheckPoint);
+                    }
+                    else
+                    {
+                        // Không còn học phần tốt nghiệp khóa
+                    }
+                }
+                UserLessonCheckpoint userLessonCheckpoint = await _context.user_lesson_checkpoint.Where(x => x.LessonId == sendVideoDoneRequest.LessonId && x.UserId == sendVideoDoneRequest.UserId).FirstOrDefaultAsync();
+                userLessonCheckpoint.IsDone = true;
+                result.Data = ActionStatus.RIGHT;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                await _context.SaveChangesAsync();
+                return result;
+            }
         }
     }
 }

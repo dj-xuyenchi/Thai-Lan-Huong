@@ -24,6 +24,7 @@
             "
             :disabled="!item.isDone"
             style="position: relative"
+            @click="changeLesson(item.lessonId)"
           >
             <span
               style="
@@ -56,9 +57,21 @@ export default {
       ],
     };
   },
+
+  methods: {
+    changeLesson(lessonId) {
+      localStorage.setItem("lessonIdFW", lessonId);
+      localStorage.setItem("idCourseFW", this.$route.params.idCourse);
+      localStorage.setItem("chapterIdFW", this.chapterId);
+      this.$router.push({
+        path: "/forwardlesson",
+      });
+    },
+  },
   props: {
     titleLesson: String,
     listLesson: [],
+    chapterId: Number,
   },
 };
 </script>

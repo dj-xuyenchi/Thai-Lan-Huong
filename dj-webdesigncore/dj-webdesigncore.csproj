@@ -16,6 +16,5 @@
   <ItemGroup>
     <Folder Include="Business\Auth\" />
     <Folder Include="Request\SomeThingElse\" />
-    <Folder Include="Request\Chapter\" />
   </ItemGroup>
 </Project>

@@ -6,7 +6,7 @@
       <h4 style="font-size: 24px; font-family: inherit; font-weight: 700">
         {{ data.question }}
       </h4>
-      <v-radio-group>
+      <v-radio-group v-model="answer">
         <v-radio color="primary" :label="data.answerA" value="1"></v-radio>
         <v-radio color="primary" :label="data.answerB" value="2"></v-radio>
         <v-radio color="primary" :label="data.answerC" value="3"></v-radio>
@@ -18,7 +18,7 @@
         color="#36ae7c"
         v-bind="props"
         style="width: 120px"
-        @click="callTest()"
+        @click="sendQuestion()"
       >
         <font-awesome-icon
           icon="fa-solid fa-paper-plane"
@@ -78,12 +78,21 @@
         <ChatGPT :listChat="listGPTResponse" />
       </div>
     </v-card>
+    <v-snackbar v-model="snackbarOk" multi-line>
+      {{ snackBarContent }}
+      <template v-slot:actions>
+        <v-btn color="green" variant="text" @click="snackbarOk = false">
+          Đóng
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import HeyGPT from "../../apis/OpenAI";
 import ChatGPT from "./ChatGPT";
+import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 export default {
   name: "QuizLesson",
   components: { ChatGPT },
@@ -92,33 +101,55 @@ export default {
     answer: 0,
     openai: true,
     showChat: false,
+    snackbarOk: false,
+    snackBarContent: "",
     thinking: false,
-    listGPTResponse: ["asa", "xin chào mình có thể giúp gì cho bạn."],
+    listGPTResponse: ["xin chào mình có thể giúp gì cho bạn."],
   }),
   props: {
     data: Object,
   },
   methods: {
     async callTest(option, content) {
-      if (option == 1) {
-        this.thinking = true;
-        const respon = await HeyGPT.sayToGPTWrong(
-          this.content,
-          content.expectOutput,
-          content.output
-        );
-        this.listGPTResponse.push(respon.choices[0].message.content);
-        this.thinking = false;
+      this.thinking = true;
+      this.showChat = true;
+      const respon = await HeyGPT.satToGPTQuestion(this.data.question);
+      this.listGPTResponse.push(respon.choices[0].message.content);
+      this.thinking = false;
+    },
+    async sendQuestion() {
+      if (this.answer == 0) {
+        this.snackBarContent = "Hãy chọn đáp án!";
+        this.snackbarOk = true;
+        return;
       }
-      if (option == 2) {
-        this.thinking = true;
-        const respon = await HeyGPT.sayToGPTExeption(
-          this.content,
-          content.expectOutput,
-          content.output
-        );
-        this.listGPTResponse.push(respon.choices[0].message.content);
-        this.thinking = false;
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("id");
+      const result = await StudyAPI.sendQuestionAnswer(
+        {
+          UserId: userId,
+          LessonId: this.data.lessonId,
+          CourseId: this.$route.params.idCourse,
+          ChapterId: this.$route.params.idChapter,
+          Answer: this.answer,
+        },
+        token
+      );
+      if (result.data == 1) {
+        this.snackBarContent = "Đúng!";
+        this.snackbarOk = true;
+        return;
+      }
+      if (result.data == 6) {
+        this.snackBarContent = "Đáp án sai!";
+        this.snackbarOk = true;
+        this.callTest();
+        return;
+      }
+      if (result.data == 7) {
+        this.snackBarContent = "Đúng đã mở bài học mới!";
+        this.snackbarOk = true;
+        return;
       }
     },
   },

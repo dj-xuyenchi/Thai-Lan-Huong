@@ -45,7 +45,7 @@ namespace dj_actionlayer.Business.Lobby
             try
             {
                 CourseDetailDTO courseDetail = new CourseDetailDTO();
-                Course course = _context.course.Find(courseId);
+                Course course =await _context.course.FindAsync(courseId);
                 if (course == null)
                 {
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
@@ -57,6 +57,7 @@ namespace dj_actionlayer.Business.Lobby
                 courseDetail.LessonCount = course.LessonCount;
                 courseDetail.ChapterCount = course.ChapterCount;
                 courseDetail.TimeTotal = course.TimeLessonTotal;
+                courseDetail.IntroVideoPath = course.IntroVideoLink;
                 List<CourseCourseProfit> courseCourseProfit = _context.course_course_profit.Where(x => x.CourseId == courseId).OrderBy(x => x.SortNumber).ToList();
                 List<CourseProfit> courseProfitResult = new List<CourseProfit>();
                 foreach (var item in courseCourseProfit)

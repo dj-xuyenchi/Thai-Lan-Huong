@@ -140,5 +140,60 @@ class StudyAPI {
         });
     });
   }
+  sendQuestionAnswer(sendQuestionRequest: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/study/sendquestionok`, sendQuestionRequest, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  sendVideoOk(sendVideoRequest: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/study/sendvideook`, sendVideoRequest, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  getChapterLessonOfUser(
+    userId: number,
+    courseId: number,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/study/getchapterlessonofuser?userId=${userId}&courseId=${courseId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new StudyAPI();

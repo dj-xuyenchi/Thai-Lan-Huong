@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
-using AppContext = dj_actionlayer.DAO.AppContext;
 
+using AppContext = dj_actionlayer.DAO.AppContext;
 #nullable disable
 
 namespace dj_actionlayer.Migrations
@@ -223,6 +223,9 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DoneTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PracticeLessonId")
                         .HasColumnType("int");
 
@@ -236,6 +239,35 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("practice_done_data");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.QuestionDoneData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Answer")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DoneTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("QuestionLessonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionLessonId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("question_done_data");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.Trophic", b =>
@@ -435,6 +467,32 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("user_like_post");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.VideoDoneData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("DoneTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VideoLessonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("VideoLessonId");
+
+                    b.ToTable("video_done_data");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.ChapterLesson", b =>
                 {
                     b.Property<int>("Id")
@@ -501,6 +559,9 @@ namespace dj_actionlayer.Migrations
 
                     b.Property<int>("DoneCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("IntroVideoLink")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LessonCount")
                         .HasColumnType("int");
@@ -1496,6 +1557,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.QuestionDoneData", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.QuestionLesson", "QuestionLesson")
+                        .WithMany()
+                        .HasForeignKey("QuestionLessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestionLesson");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserCourse", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.Course", "Course")
@@ -1584,6 +1664,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.VideoDoneData", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.VideoLesson", "VideoLesson")
+                        .WithMany()
+                        .HasForeignKey("VideoLessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+
+                    b.Navigation("VideoLesson");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.ChapterLesson", b =>

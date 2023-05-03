@@ -250,7 +250,7 @@ namespace dj_actionlayer.Business.Auth
             try
             {
                 NewAccount acc = new NewAccount();
-                if (_context.user.Where(x => x.UserName == newAccount.userName).SingleOrDefault() != null)
+                if (await _context.user.Where(x => x.UserName == newAccount.userName).FirstOrDefaultAsync() != null)
                 {
                     acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.USEREXIST;
                     acc.Detail = "Tài khoản đã tồn tại!";
@@ -258,7 +258,7 @@ namespace dj_actionlayer.Business.Auth
                     result.Messenger = "Lấy dữ liệu thành công!";
                     return result;
                 }
-                if (_context.user.Where(x => x.UserEmail == newAccount.email).SingleOrDefault() != null)
+                if (await _context.user.Where(x => x.UserEmail == newAccount.email).FirstOrDefaultAsync() != null)
                 {
                     acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.EMAILEXIST;
                     acc.Detail = "Email đã sử dụng!";
@@ -266,7 +266,7 @@ namespace dj_actionlayer.Business.Auth
                     result.Messenger = "Lấy dữ liệu thành công!";
                     return result;
                 }
-                if (_context.user.Where(x => x.NumberPhone == newAccount.sdt).SingleOrDefault() != null)
+                if (await _context.user.Where(x => x.NumberPhone == newAccount.sdt).FirstOrDefaultAsync() != null)
                 {
                     acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.PHONEEXIST;
                     acc.Detail = "SDT đã sử dụng!";
@@ -411,9 +411,7 @@ namespace dj_actionlayer.Business.Auth
             result.Status = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
-
         }
-
         public async Task<LoginResponse<AuthDataRespon>> ConfirmNewPass(ConfirmNewPass confirmNewPass)
         {
             LoginResponse<AuthDataRespon> result = new LoginResponse<AuthDataRespon>();

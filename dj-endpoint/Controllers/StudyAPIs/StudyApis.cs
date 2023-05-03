@@ -78,5 +78,20 @@ namespace dj_endpoint.Controllers.StudyAPIs
         {
             return Ok(await _study.SendPracticeOk(sendPracticeRequest));
         }
+        [HttpPost("sendquestionok")]
+        public async Task<IActionResult> sendQuestionAnswer(SendQuestionRequest sendQuestionRequest)
+        {
+            return Ok(await _study.SendQuestionAnswer(sendQuestionRequest));
+        }
+        [HttpPost("sendvideook")]
+        public async Task<IActionResult> sendVideoOk(SendVideoDoneRequest sendVideoDoneRequest)
+        {
+            return Ok(await _study.SendVideoDoneRequest(sendVideoDoneRequest));
+        }
+        [HttpGet("getchapterlessonofuser")]
+        public async Task<IActionResult> lessonListOfUser(int? userId, int? courseId)
+        {
+            return Ok(await _study.LessonListOfUser(userId, courseId));
+        }
     }
 }

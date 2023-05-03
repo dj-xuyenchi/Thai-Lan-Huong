@@ -15,5 +15,6 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         public PracticeLesson PracticeLesson { get; set; }
         public int PracticeLessonId { get; set; }
         public string DoneData { get; set; }
+        public DateTime? DoneTime { get; set; }
     }
 }

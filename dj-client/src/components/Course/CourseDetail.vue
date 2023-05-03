@@ -75,20 +75,18 @@
     </div>
     <div class="course-detail-right">
       <div class="intro-content">
-        <div
-          style="
-            height: 240px;
-            width: 400px;
-            border: 1px solid black;
-            margin: 0 auto;
-          "
-        >
-          <v-dialog v-model="dialog" activator="parent" width="auto">
+        <div style="height: 240px; width: 400px; margin: 0 auto">
+          <img
+            :src="require('../../assets/intro.jpg')"
+            alt=""
+            style="height: 240px; width: 400px; border-radius: 15px"
+          />
+          <v-dialog v-model="dialog" persistent activator="parent" width="auto">
             <v-card>
               <iframe
                 width="1200"
                 height="600"
-                src="https://www.youtube.com/embed/8kX6LwuhKLs"
+                :src="videoPath"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -145,9 +143,11 @@ export default {
       chapterCount: 0,
       lessonCount: 0,
       isRegistered: false,
+      videoPath: "",
       timeTotal: "",
       lessonIdGetInClass: 0,
       courseIdGetInClass: 0,
+      chapterId: 0,
       dialog: false,
     };
   },
@@ -172,11 +172,14 @@ export default {
       this.timeTotal = data.data.timeTotal;
       this.chapterCount = data.data.chapterCount;
       this.lessonCount = data.data.lessonCount;
+      this.videoPath = data.data.introVideoPath;
       this.chapterDetail = data.data.chapterDetail;
       this.isRegistered = data.data.isRegistered;
       if (data.data.isRegistered) {
-        this.lessonIdGetInClass = data.data.lessonId;
+        this.lessonIdGetInClass =
+          data.data.chapterDetail[0].lessonDetail[0].lessonId;
         this.courseIdGetInClass = data.data.courseId;
+        this.chapterId = data.data.chapterDetail[0].chapterId;
       }
       this.setIsLoadedData(false);
     },
@@ -193,14 +196,25 @@ export default {
       };
       const data = await StudyAPI.registerCourse(registerRequest, token);
       this.$router.push({
-        path: `/study/` + data.data.lessonId + `/` + data.data.courseId,
+        path:
+          `/study/` +
+          data.data.lessonId +
+          `/` +
+          data.data.courseId +
+          "/" +
+          this.chapterId,
       });
       this.setIsLoadedData(false);
     },
     getInClass() {
       this.$router.push({
         path:
-          `/study/` + this.lessonIdGetInClass + `/` + this.courseIdGetInClass,
+          `/study/` +
+          this.lessonIdGetInClass +
+          `/` +
+          this.courseIdGetInClass +
+          `/` +
+          this.chapterId,
       });
     },
   },

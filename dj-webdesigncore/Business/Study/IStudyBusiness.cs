@@ -25,6 +25,7 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<ActionStatus>> SubCommentLesson(SubCommentLessonRequest subCommentLessonRequest);
         Task<ResponData<ActionStatus>> LikeComment(LikeComment likeComment);
         Task<ResponData<ActionStatus>> SendPracticeOk(SendPracticeRequest sendPracticeRequest);
-        Task<ResponData<ActionStatus>> SendQuestionAnswer(int questionId,int userAnswer,int userId);
+        Task<ResponData<ActionStatus>> SendQuestionAnswer(SendQuestionRequest sendQuestionRequest);
+        Task<ResponData<ActionStatus>> SendVideoDoneRequest(SendVideoDoneRequest sendVideoDoneRequest);
     }
 }

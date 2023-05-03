@@ -30,7 +30,10 @@
               :chapterId="item.chapterId"
               :item="item"
             />
-            <AddLessonToChapter />
+            <LessonList
+              :chapterName="item.chapterName"
+              :chapterId="item.chapterId"
+            />
           </td>
         </tr>
       </tbody>
@@ -40,10 +43,10 @@
 
 <script>
 import BtnUpdateChapter from "./BtnUpdateChapter";
-import AddLessonToChapter from "./AddLessonToChapter";
+import LessonList from "./LessonList";
 export default {
   name: "ChapterTable",
-  components: { BtnUpdateChapter, AddLessonToChapter },
+  components: { BtnUpdateChapter, LessonList },
   props: {
     data: [],
     getChapterDetail: Function,
