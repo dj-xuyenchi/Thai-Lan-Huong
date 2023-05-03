@@ -75,13 +75,6 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
-      const form = Object.assign({}, this.$refs.form);
-      for (const item of form.items) {
-        if (!item.isValid) {
-          this.btnLoading = false;
-          return;
-        }
-      }
       const token = localStorage.getItem("token");
       const result = await AdminAPI.addLesson2Chapter(
         {

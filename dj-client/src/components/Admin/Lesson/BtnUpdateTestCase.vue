@@ -126,12 +126,13 @@ export default {
         this.btnLoading = false;
         return;
       }
-      const form = Object.assign({}, this.$refs.form);
-      for (const item of form.items) {
-        if (!item.isValid) {
-          this.btnLoading = false;
-          return;
-        }
+      if (
+        this.inputDetail.trim().length < 1 ||
+        this.input.trim().length < 1 ||
+        this.output.trim().length < 1
+      ) {
+        this.btnLoading = false;
+        return;
       }
       const token = localStorage.getItem("token");
       const result = await AdminAPI.updateTestCase(

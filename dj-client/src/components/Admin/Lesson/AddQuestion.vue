@@ -16,7 +16,7 @@
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
                       label="Tên bài học*"
-                      hint="Khi hiển thị sẽ là Bài học + tên bài học"
+                      hint="Với bài học dạng câu hỏi tên sẽ là Quiz: + tên bài học"
                       v-model="lessonName"
                       :rules="rules"
                     ></v-text-field>
@@ -184,12 +184,18 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
-      const form = Object.assign({}, this.$refs.form);
-      for (const item of form.items) {
-        if (!item.isValid) {
-          this.btnLoading = false;
-          return;
-        }
+      if (
+        this.lessonName.trim().length < 1 ||
+        this.lessonDescription.trim().length < 1 ||
+        this.lessonTime.trim().length < 1 ||
+        this.question.trim().length < 1 ||
+        this.answera.trim().length < 1 ||
+        this.answerb.trim().length < 1 ||
+        this.answerc.trim().length < 1 ||
+        this.answerd.trim().length < 1
+      ) {
+        this.btnLoading = false;
+        return;
       }
       const token = localStorage.getItem("token");
       const result = await AdminAPI.addQuestionLesson(this.getData(), token);

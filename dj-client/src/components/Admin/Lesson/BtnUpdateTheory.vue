@@ -123,12 +123,14 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
-      const form = Object.assign({}, this.$refs.form);
-      for (const item of form.items) {
-        if (!item.isValid) {
-          this.btnLoading = false;
-          return;
-        }
+      if (
+        this.lessonName.trim().length < 1 ||
+        this.lessonDescription.trim().length < 1 ||
+        this.lessonTime.trim().length < 1 ||
+        this.linkVideo.trim().length < 1
+      ) {
+        this.btnLoading = false;
+        return;
       }
       const token = localStorage.getItem("token");
       const result = await AdminAPI.updateTheoryLesson(

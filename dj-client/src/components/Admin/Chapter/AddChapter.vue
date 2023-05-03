@@ -113,12 +113,12 @@ export default {
     ...mapMutations(["setIsLoadedData"]),
     async submit() {
       this.btnLoading = true;
-      const form = Object.assign({}, this.$refs.form);
-      for (const item of form.items) {
-        if (!item.isValid) {
-          this.btnLoading = false;
-          return;
-        }
+      if (
+        this.chapterName.trim().length < 1 ||
+        this.chapterTime.trim().length < 1
+      ) {
+        this.btnLoading = false;
+        return;
       }
       const token = localStorage.getItem("token");
       const result = await AdminAPI.addChapter(
