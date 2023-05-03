@@ -19,8 +19,8 @@
         <v-list>
           <v-list-item
             :prepend-avatar="getAIProfile.avatar"
-            title="Khóa học JAVA cơ bản đến Spring"
-            subtitle="Cập nhật 23/12/2023"
+            :title="courseName"
+            :subtitle="updateTime"
           >
             <!-- <template v-slot:append>
               <v-btn
@@ -59,6 +59,8 @@ export default {
     menu: false,
     message: false,
     hints: true,
+    courseName: "",
+    updateTime: "",
     chapterList: [],
   }),
   methods: {
@@ -70,7 +72,9 @@ export default {
         this.$route.params.idCourse,
         token
       );
-      this.chapterList = result;
+      this.chapterList = result.chapterLesson;
+      this.courseName = result.courseName;
+      this.updateTime = result.updateTime;
     },
   },
   computed: {

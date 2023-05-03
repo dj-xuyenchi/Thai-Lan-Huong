@@ -128,8 +128,9 @@ namespace dj_actionlayer.Business.Study
             }
         }
 
-        public async Task<List<ChapterDetailDTO>> LessonListOfUser(int? userId, int? courseId)
+        public async Task<ChapterLessonStudy> LessonListOfUser(int? userId, int? courseId)
         {
+            ChapterLessonStudy data = new ChapterLessonStudy();
             List<ChapterDetailDTO> chapterDetailResult = new List<ChapterDetailDTO>();
             List<CourseChapter> chapterOfCourse = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x => x.SortNumber).ToList();
             foreach (var item in chapterOfCourse)
@@ -176,7 +177,11 @@ namespace dj_actionlayer.Business.Study
                 chapterDetailDTO.LessonDetail = lessonDetailDTOResult;
                 chapterDetailResult.Add(chapterDetailDTO);
             }
-            return chapterDetailResult;
+            Course course = await _context.course.FindAsync(courseId);
+            data.ChapterLesson = chapterDetailResult;
+            data.CourseName = course.CourseName;
+            data.UpdateTime = "Chưa cập nhật";
+            return data;
         }
 
         public async Task<ResponData<StudyDTO<PracticeLessonDTO>>> PracticeLessonContent(int? lessonId, int? userId, int? courseId)
@@ -263,7 +268,7 @@ namespace dj_actionlayer.Business.Study
                 studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.PRACTICE;
                 Course course = await _context.course.FindAsync(courseId);
                 studyData.CourseName = course.CourseName;
-                studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
+                studyData.ChapterDetail = LessonListOfUser(userId, courseId).Result.ChapterLesson;
                 result.Data = studyData;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -334,7 +339,7 @@ namespace dj_actionlayer.Business.Study
                 data.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.QUESTION;
                 Course course = await _context.course.FindAsync(courseId);
                 data.CourseName = course.CourseName;
-                data.ChapterDetail = await LessonListOfUser(userId, courseId);
+                data.ChapterDetail =  LessonListOfUser(userId, courseId).Result.ChapterLesson;
                 result.Data = data;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -505,7 +510,7 @@ namespace dj_actionlayer.Business.Study
                 studyData.StudyDetail = videoLesson;
                 Course course = await _context.course.FindAsync(courseId);
                 studyData.CourseName = course.CourseName;
-                studyData.ChapterDetail = await LessonListOfUser(userId, courseId);
+                studyData.ChapterDetail = LessonListOfUser(userId, courseId).Result.ChapterLesson;
                 result.Data = studyData;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;

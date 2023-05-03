@@ -38,7 +38,13 @@ namespace dj_actionlayer
             {
                 input = input.Replace("  ", " ");
             }
-            return input;
+            string[] resu= input.Split(' ');
+            input = "";
+            for(int i = 0; i < resu.Length; i++)
+            {
+                input += resu[i][0].ToString().ToUpper() + resu[i].Substring(1).ToString().ToLower()+" ";
+            }
+            return input.Substring(0,input.Length-1);
         }
     }
 }
