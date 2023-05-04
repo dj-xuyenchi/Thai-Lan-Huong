@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const KEY = "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";
+const KEY = "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";
 class HeyGPT {
   sayToGPTExeption(exeption: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
