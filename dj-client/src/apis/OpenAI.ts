@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const KEY = "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";
 class HeyGPT {
   sayToGPTExeption(exeption: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
@@ -17,7 +18,7 @@ class HeyGPT {
           },
           {
             headers: {
-              Authorization: `Bearer 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`,
+              Authorization: `Bearer ${KEY}`,
             },
           }
         )
@@ -45,7 +46,7 @@ class HeyGPT {
           },
           {
             headers: {
-              Authorization: `Bearer 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`,
+              Authorization: `Bearer ${KEY}`,
             },
           }
         )
@@ -84,7 +85,7 @@ class HeyGPT {
           },
           {
             headers: {
-              Authorization: `Bearer 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`,
+              Authorization: `Bearer ${KEY}`,
             },
           }
         )

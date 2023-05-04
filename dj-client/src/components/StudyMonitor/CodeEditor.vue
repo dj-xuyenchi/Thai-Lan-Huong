@@ -341,11 +341,7 @@ export default {
       }
       if (option == 2) {
         this.thinking = true;
-        const respon = await HeyGPT.sayToGPTExeption(
-          this.content,
-          content.expectOutput,
-          content.output
-        );
+        const respon = await HeyGPT.sayToGPTExeption(content.output);
         this.listGPTResponse.push(respon.choices[0].message.content);
         this.thinking = false;
       }

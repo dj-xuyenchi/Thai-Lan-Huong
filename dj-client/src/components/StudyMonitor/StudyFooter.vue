@@ -1,5 +1,6 @@
 <template>
-  <div class="study-footer-container">DJ - Coding</div>
+  <div></div>
+  <!-- <div class="study-footer-container">DJ - Coding</div> -->
 </template>
 
 <script>
