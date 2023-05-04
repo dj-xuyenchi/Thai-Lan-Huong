@@ -15,7 +15,7 @@ import CodeEditor from "./CodeEditor.vue";
 import ProblemSolution from "./ProblemSolution.vue";
 export default {
   name: "PracticeLesson",
-  components: { CodeEditor, ProblemSolution },
+  components: { ProblemSolution, CodeEditor },
   props: {
     practiceData: Object,
   },

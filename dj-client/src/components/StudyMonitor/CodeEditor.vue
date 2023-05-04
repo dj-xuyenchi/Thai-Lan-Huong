@@ -2,17 +2,12 @@
   <div>
     <v-ace-editor
       v-model:value="content"
-      @init="editorInit"
-      theme="Terminal"
-      minLines:30
-      mode="html"
-      style="
-        background-color: #1e1f26;
-        color: white;
-        font-size: 16px;
-        height: 60vh;
-        caret-color: white;
-      "
+      :highlightActiveLine="true"
+      :mode="'csharp'"
+      :theme="'chrome'"
+      :options="option"
+      @input="onInput"
+      style="height: 60vh"
     />
     <div style="margin-left: 45%; margin-top: 12px">
       <v-card style="margin-bottom: 12px">
@@ -269,6 +264,10 @@ import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 import HeyGPT from "../../apis/OpenAI";
 import ChatGPT from "./ChatGPT";
 import { mapMutations } from "vuex";
+import "brace/mode/csharp";
+import "brace/theme/chrome";
+import "ace-builds/src-noconflict/mode-csharp";
+import "ace-builds/src-noconflict/theme-chrome";
 export default {
   name: "CodeEditor",
   components: { VAceEditor, ChatGPT },
@@ -284,6 +283,17 @@ export default {
       snackBarContent: "",
       snackbarOk: false,
       isOk: false,
+      option: {
+        theme: "ace/theme/chrome",
+        mode: "ace/mode/csharp",
+        fontSize: "16px",
+        showGutter: true,
+        wrap: true,
+        highlightActiveLine: true,
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+      },
     };
   },
   props: {
@@ -345,6 +355,9 @@ export default {
         this.listGPTResponse.push(respon.choices[0].message.content);
         this.thinking = false;
       }
+    },
+    onInput(code) {
+      this.$emit("input", code);
     },
     async sendCodeOk() {
       this.setIsLoadedData(true);
