@@ -1,7 +1,7 @@
 <template>
   <div
     style="
-      width: 79%;
+      width: 50%;
       height: 1200px;
       border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
       float: left;
@@ -10,7 +10,7 @@
       margin-left: 1%;
     "
   >
-    <div style="margin-left: 28px; margin-top: 20px">
+    <div style="margin-left: 28px; margin-top: 12px">
       <router-view class="infor" />
     </div>
   </div>

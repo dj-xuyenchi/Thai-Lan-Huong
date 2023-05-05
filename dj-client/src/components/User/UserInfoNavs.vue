@@ -10,14 +10,16 @@
   >
     <div style="margin-left: 28px; margin-top: 20px">
       <ul>
-        <router-link to="/home/user/infocontact" style="text-decoration: none">
+        <router-link to="/home/user/inforcontact" style="text-decoration: none">
           <li class="active" @click="changBread(`Thông tin & liên hệ`)">
             Thông tin & liên hệ
           </li>
         </router-link>
-        <li class="unactive" @click="changBread(`Kinh nghiệm & Học vấn`)">
-          Kinh nghiệm & Học vấn
-        </li>
+        <router-link to="/home/user/experlearn" style="text-decoration: none">
+          <li class="unactive" @click="changBread(`Hồ sơ khóa học đăng ký`)">
+            Hồ sơ khóa học đăng ký
+          </li>
+        </router-link>
         <li class="unactive" @click="changBread(`Đổi mật khẩu`)">
           Đổi mật khẩu
         </li>

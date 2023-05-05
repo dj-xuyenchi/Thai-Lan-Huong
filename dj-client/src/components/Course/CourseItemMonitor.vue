@@ -3,7 +3,7 @@
     <v-hover v-slot="{ isHovering, props }">
       <v-card
         ref="gg"
-        class="mx-auto rounded-xl item-hover"
+        class="mx-auto rounded-xl item-hover course-item-fix"
         v-bind="props"
         variant="none"
         height="200px"
@@ -99,5 +99,14 @@ export default {
 }
 .course-detail span:hover {
   cursor: pointer;
+}
+@media screen and (min-height: 739px) {
+  .course-item img {
+    width: 100%;
+    height: 240px;
+  }
+  .course-item-fix {
+    height: 240px !important;
+  }
 }
 </style>

@@ -51,7 +51,7 @@ export default {
     return {
       items: [
         { title: "Home", link: "/home/lobby" },
-        { title: "Khóa Học", link: "/home/course" },
+        { title: "Khóa Học", link: "/home/courselist" },
         { title: "Bài Viết", link: "/post" },
         { title: "Blog", link: "/blog" },
         { title: "Sự Kiện", link: "/event" },

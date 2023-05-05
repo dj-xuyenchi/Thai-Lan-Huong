@@ -32,6 +32,7 @@ import {
   faRotateRight,
   faPaperPlane,
   faUserDoctor,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarPlus,
@@ -67,6 +68,7 @@ library.add(
   faChevronLeft,
   faComments,
   faList,
+  faPen,
   faPlus,
   faEllipsis,
   faChevronRight,

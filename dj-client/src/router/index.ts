@@ -27,6 +27,7 @@ import ChapterAdmin from "@/components/Admin/Chapter/ChapterAdmin.vue";
 import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
 import UserMain from "@/components/User/UserMain.vue";
 import InforContact from "@/components/User/InforContact.vue";
+import ExperienceAndLearn from "@/components/User/ExperienceAndLearn.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -84,8 +85,12 @@ const routes: Array<RouteRecordRaw> = [
         component: UserMain,
         children: [
           {
-            path: "infocontact",
+            path: "inforcontact",
             component: InforContact,
+          },
+          {
+            path: "experlearn",
+            component: ExperienceAndLearn,
           },
         ],
       },

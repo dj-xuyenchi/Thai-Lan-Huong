@@ -75,12 +75,37 @@
     </div>
     <div class="course-detail-right">
       <div class="intro-content">
-        <div style="height: 240px; width: 400px; margin: 0 auto">
+        <div class="intro-img">
           <img
             :src="require('../../assets/intro.jpg')"
             alt=""
             style="height: 240px; width: 400px; border-radius: 15px"
           />
+          <img
+            :src="require('../../assets/play.png')"
+            alt=""
+            style="
+              position: absolute;
+              height: 60px;
+              width: 60px;
+              top: 90px;
+              left: 170px;
+            "
+            class="icon-show"
+          />
+          <h3
+            style="
+              position: absolute;
+              bottom: 4px;
+              left: 0;
+              right: 0;
+              font-size: 16px;
+              font-weight: 400;
+              color: white;
+            "
+          >
+            Xem giới thiệu khóa học
+          </h3>
           <v-dialog v-model="dialog" persistent activator="parent" width="auto">
             <v-card>
               <iframe
@@ -272,6 +297,58 @@ export default {
 }
 .course-lesson {
   margin-bottom: 24px;
+}
+.intro-img {
+  height: 240px;
+  width: 400px;
+  margin: 0 auto;
+  position: relative;
+}
+.intro-img:hover {
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+.icon-show {
+  display: none;
+}
+.intro-img:hover .icon-show {
+  display: block;
+}
+.intro-img:hover::before {
+  -webkit-animation: shine 3s;
+  animation: shine 3s;
+}
+@-webkit-keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+.intro-img::before {
+  position: absolute;
+  top: 0;
+  left: -75%;
+  z-index: 2;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+  background: -webkit-linear-gradient(
+    left,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  -webkit-transform: skewX(-25deg);
+  transform: skewX(-25deg);
 }
 @media screen and (max-width: 739px) {
   .require-profit .require-profit-detail {

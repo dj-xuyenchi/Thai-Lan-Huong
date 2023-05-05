@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-left: 12%">
     <div style="margin-bottom: 16px">
       <span class="bread">Thông tin cá nhân</span
       ><span style="font-size: 13px"> > </span>
