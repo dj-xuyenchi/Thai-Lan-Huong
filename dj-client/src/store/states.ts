@@ -1,5 +1,6 @@
 export default {
   activeMenu: 1,
+  activeUserNav: 1,
   isLoadedData: false,
   AI: {
     name: "Thái Lan Hương",

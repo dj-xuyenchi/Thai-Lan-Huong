@@ -8,20 +8,33 @@ namespace dj_actionlayer
 {
 	internal class Program
 	{
+        static void MyMethod1()
+        {
+            Thread.Sleep(5000);
+            Console.WriteLine(123);
+        }
         static async Task Main(string[] args)
         {
+            //Thread thread1 = new Thread(new ThreadStart(MyMethod1));
+
+            //thread1.Start();
+
+
+
+
+
 
             //StringWriter stringWriter = new StringWriter();
             //stringWriter.WriteLine("Hello, world!");
             //string result = stringWriter.ToString();
             //Console.WriteLine(result);
 
-            //string code = "using System.Diagnostics;internal class Program\r\n\t{\r\n\t\tstatic void Main(string[] args)\r\n\t\t{\r\n\t\t\tConsole.WriteLine(\"Hello, World!\");\r\n\t\t}\r\n\t}";
-            //var result = await CompileUserCode.RunCSharpCode(code);
-            //Console.WriteLine(result.result);
+            string code = "while(true){}";
+            var result = await CompileUserCode.RunCSharpCode(code,3000);
+            Console.WriteLine(result.result);
 
-            //Console.WriteLine(result.time);
-            //Console.WriteLine(result.exeption);
+           Console.WriteLine(result.time);
+            Console.WriteLine(result.exeption);
             //string[] input = "1".Split(",");
             //Console.WriteLine(input.Length);
             //foreach (var item in input)
@@ -29,7 +42,6 @@ namespace dj_actionlayer
             //    Console.WriteLine(item);
             //}
 
-            Console.WriteLine(remixName("  đỗ linh  "));
         }
         static string  remixName(string input)
         {

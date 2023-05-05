@@ -3,13 +3,12 @@
     <v-row>
       <v-dialog v-model="dialog" persistent width="1024">
         <template v-slot:activator="{ props }">
-          <v-btn
-            color="#4d96ff"
+          <font-awesome-icon
+            icon="fa-solid fa-pen"
             v-bind="props"
-            density="compact"
-            icon="mdi-plus"
-          >
-          </v-btn>
+            class="iconBtn"
+            color="#898989"
+          />
         </template>
         <v-form @submit.prevent="submit()" ref="form">
           <v-card style="overflow: scroll">
@@ -131,7 +130,7 @@
 <script>
 import { mapMutations } from "vuex";
 export default {
-  name: "AddExperience",
+  name: "UpdateInfor",
   data() {
     return {
       text: "",
@@ -231,4 +230,14 @@ export default {
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.iconBtn {
+  margin-left: 40px;
+  font-size: 16px;
+  position: absolute;
+  right: 20px;
+}
+.iconBtn:hover {
+  cursor: pointer;
+}
+</style>

@@ -2,7 +2,7 @@
   <div
     style="
       width: 50%;
-      height: 1200px;
+      display: inline-block;
       border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
       float: left;
       border-radius: 10px;

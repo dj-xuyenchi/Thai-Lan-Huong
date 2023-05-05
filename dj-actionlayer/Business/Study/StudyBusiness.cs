@@ -380,7 +380,7 @@ namespace dj_actionlayer.Business.Study
                     {
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
-                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code,3000);
                         testDTO.Input = "Không có";
                         testDTO.ExpectOutput = item.ExpectOutput;
                         if (!runCodeResult.success)
@@ -418,7 +418,7 @@ namespace dj_actionlayer.Business.Study
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
                         callTestCode = callTestCode.Replace("variable", item.Input);
-                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code + callTestCode);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code + callTestCode,3000);
                         callTestCode = practiceLesson.CallTestCode;
                         testDTO.Input = item.Input;
                         testDTO.ExpectOutput = item.ExpectOutput;

@@ -154,6 +154,7 @@ export default {
 .footer-container {
   background-color: #01579b;
   width: 100%;
+  margin-top: 100px;
   display: inline-block;
 }
 .footer-container .content {

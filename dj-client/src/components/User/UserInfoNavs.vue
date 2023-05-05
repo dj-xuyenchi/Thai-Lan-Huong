@@ -2,7 +2,8 @@
   <div
     style="
       width: 20%;
-      height: 1200px;
+      display: inline-block;
+      height: 400px;
       border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
       float: left;
       border-radius: 10px;
@@ -11,28 +12,56 @@
     <div style="margin-left: 28px; margin-top: 20px">
       <ul>
         <router-link to="/home/user/inforcontact" style="text-decoration: none">
-          <li class="active" @click="changBread(`Thông tin & liên hệ`)">
+          <li
+            :class="getActiveUserNav == 1 ? `active` : `unactive`"
+            @click="
+              changBread(`Thông tin & liên hệ`);
+              setActiveUserNav(1);
+            "
+          >
             Thông tin & liên hệ
           </li>
         </router-link>
         <router-link to="/home/user/experlearn" style="text-decoration: none">
-          <li class="unactive" @click="changBread(`Hồ sơ khóa học đăng ký`)">
+          <li
+            :class="getActiveUserNav == 2 ? `active` : `unactive`"
+            @click="
+              changBread(`Hồ sơ khóa học đăng ký`);
+              setActiveUserNav(2);
+            "
+          >
             Hồ sơ khóa học đăng ký
           </li>
         </router-link>
-        <li class="unactive" @click="changBread(`Đổi mật khẩu`)">
-          Đổi mật khẩu
-        </li>
+        <router-link to="/home/user/experlearn" style="text-decoration: none">
+          <li
+            :class="getActiveUserNav == 3 ? `active` : `unactive`"
+            @click="
+              changBread(`Đổi mật khẩu`);
+              setActiveUserNav(3);
+            "
+          >
+            Đổi mật khẩu
+          </li>
+        </router-link>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   name: "UserInfoNavs",
   props: {
     changBread: Function,
+  },
+  computed: {
+    ...mapGetters(["getActiveUserNav"]),
+  },
+  methods: {
+    ...mapMutations(["setActiveUserNav"]),
   },
 };
 </script>

@@ -23,16 +23,8 @@
             >
             <span class="field-content" style="position: relative"
               >Đỗ Quang Anh
-              <font-awesome-icon
-                icon="fa-solid fa-pen"
-                style="
-                  margin-left: 40px;
-                  font-size: 16px;
-                  position: absolute;
-                  right: 20px;
-                "
-                color="#898989"
-            /></span>
+              <UpdateInfor />
+            </span>
           </div>
         </li>
         <li>
@@ -147,15 +139,41 @@
     >
       Mô tả kinh nghiệm làm việc của bạn
     </h5>
-    <AddExperience style="margin-left: 12px" />
+    <AddExperience />
+    <h4
+      style="
+        color: #4d96ff;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 14px;
+        margin-top: 24px;
+        letter-spacing: 1px;
+      "
+    >
+      Học vấn
+    </h4>
+    <h5
+      style="
+        color: #000000;
+        font-size: 15px;
+        font-weight: bold;
+        margin-bottom: 14px;
+        letter-spacing: 1px;
+      "
+    >
+      Thêm thông tin học vấn
+    </h5>
+    <AddExperience />
+    <div style="height: 40px"></div>
   </div>
 </template>
 
 <script>
 import AddExperience from "./AddExperience.vue";
+import UpdateInfor from "./UpdateInfor.vue";
 export default {
   name: "InforContact",
-  components: { AddExperience },
+  components: { AddExperience, UpdateInfor },
 };
 </script>
 

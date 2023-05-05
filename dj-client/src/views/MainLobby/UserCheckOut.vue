@@ -78,7 +78,7 @@ export default {
           text: "Thông tin cá nhân",
           icon: "mdi-account",
           event: () => {
-            this.$router.push({ path: "/home/user" });
+            this.$router.push({ path: "/home/user/inforcontact" });
           },
         },
         {
