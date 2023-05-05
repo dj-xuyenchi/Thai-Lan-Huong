@@ -147,7 +147,7 @@
     >
       Mô tả kinh nghiệm làm việc của bạn
     </h5>
-    <AddExperience style=""/>
+    <AddExperience style="margin-left: 12px" />
   </div>
 </template>
 

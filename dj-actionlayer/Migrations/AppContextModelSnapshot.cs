@@ -1216,6 +1216,38 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("districts");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Experience", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Close")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Open")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("experience");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Gender", b =>
                 {
                     b.Property<int>("Id")
@@ -1235,6 +1267,34 @@ namespace dj_actionlayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("gender");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.LearningExperience", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Close")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Open")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SchoolName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("learning_experience");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>
@@ -1337,6 +1397,9 @@ namespace dj_actionlayer.Migrations
                     b.Property<byte[]>("UserAvatarData40x40")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("UserDetail")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -1347,6 +1410,9 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserLastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserLinkedIn")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -1885,6 +1951,28 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("AdministrativeUnit");
 
                     b.Navigation("Province");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Experience", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.LearningExperience", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>

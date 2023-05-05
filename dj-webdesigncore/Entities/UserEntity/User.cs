@@ -16,9 +16,11 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public byte[]? UserAvatarData40x40 { get; set; }
 		public string? UserEmail { get; set; }
 		public string? UserFacebook { get; set; }
+		public string? UserLinkedIn { get; set; }
 		public string? UserFisrtName { get; set; }
 		public string? UserLastName { get; set; }
 		public string? NumberPhone { get; set; }
+		public string? UserDetail { get; set; }
 		public DateTime? Birthday { get; set; }
 		public int? GenderId { get; set; }
 		public  Gender? Gender { get; set; }

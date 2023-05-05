@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dj_actionlayer.Migrations
 {
-    public partial class cre : Migration
+    public partial class crea : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -635,9 +635,11 @@ namespace dj_actionlayer.Migrations
                     UserAvatarData40x40 = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserFacebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserLinkedIn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserFisrtName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumberPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GenderId = table.Column<int>(type: "int", nullable: true),
                     UserRoleId = table.Column<int>(type: "int", nullable: true),
@@ -734,6 +736,51 @@ namespace dj_actionlayer.Migrations
                     table.PrimaryKey("PK_confirm_email", x => x.Id);
                     table.ForeignKey(
                         name: "FK_confirm_email_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "experience",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Detail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Open = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Close = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_experience", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_experience_user_UserId",
+                        column: x => x.UserId,
+                        principalTable: "user",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "learning_experience",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    SchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Open = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Close = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_learning_experience", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_learning_experience_user_UserId",
                         column: x => x.UserId,
                         principalTable: "user",
                         principalColumn: "Id",
@@ -1221,6 +1268,16 @@ namespace dj_actionlayer.Migrations
                 column: "province_code");
 
             migrationBuilder.CreateIndex(
+                name: "IX_experience_UserId",
+                table: "experience",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_learning_experience_UserId",
+                table: "learning_experience",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_lesson_LessonStatusId",
                 table: "lesson",
                 column: "LessonStatusId");
@@ -1437,7 +1494,13 @@ namespace dj_actionlayer.Migrations
                 name: "course_image");
 
             migrationBuilder.DropTable(
+                name: "experience");
+
+            migrationBuilder.DropTable(
                 name: "home_content");
+
+            migrationBuilder.DropTable(
+                name: "learning_experience");
 
             migrationBuilder.DropTable(
                 name: "post_sentence");
