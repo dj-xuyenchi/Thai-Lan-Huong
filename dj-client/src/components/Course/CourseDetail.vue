@@ -99,26 +99,26 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+          <h2 style="text-align: center; margin: 12px 0 12px 0">Miễn Phí</h2>
+          <v-btn
+            width="40%"
+            rounded="pill"
+            color="#4FC3F7"
+            v-if="!isRegistered"
+            @click="registerCourse()"
+          >
+            Đăng ký học
+          </v-btn>
+          <v-btn
+            width="40%"
+            rounded="pill"
+            color="#4FC3F7"
+            v-if="isRegistered"
+            @click="getInClass()"
+          >
+            Vào học
+          </v-btn>
         </div>
-        <h2 style="text-align: center; margin: 12px 0 12px 0">Miễn Phí</h2>
-        <v-btn
-          width="40%"
-          rounded="pill"
-          color="#4FC3F7"
-          v-if="!isRegistered"
-          @click="registerCourse()"
-        >
-          Đăng ký học
-        </v-btn>
-        <v-btn
-          width="40%"
-          rounded="pill"
-          color="#4FC3F7"
-          v-if="isRegistered"
-          @click="getInClass()"
-        >
-          Vào học
-        </v-btn>
       </div>
     </div>
   </div>

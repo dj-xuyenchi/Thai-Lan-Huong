@@ -6,7 +6,7 @@
         class="mx-auto rounded-xl item-hover"
         v-bind="props"
         variant="none"
-        height="25vh"
+        height="200px"
       >
         <img :src="`data:image/jpeg;base64,` + courseData" alt="" />
         <v-overlay
@@ -86,7 +86,7 @@ export default {
 
 .course-item img {
   width: 100%;
-  height: 25vh;
+  height: 200px;
 }
 .course-item .course-detail {
   display: flex;

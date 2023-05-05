@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div id="logo">
+    <div id="logo" @click="goHome()">
       <img class="logo-header" :src="require('../../assets/logo-web.png')" />
     </div>
     <div class="cf-title-07">
@@ -58,6 +58,11 @@ export default {
       ],
     };
   },
+  methods: {
+    goHome() {
+      this.$router.push({ path: "/home/lobby" });
+    },
+  },
 };
 </script>
 
@@ -80,8 +85,13 @@ export default {
   justify-content: center;
   align-items: center;
 }
+#logo-header,
+h4:hover {
+  cursor: pointer;
+}
 .logo-header {
   height: 52px;
+  z-index: 1;
   width: 52px;
 }
 .cf-title-07 {

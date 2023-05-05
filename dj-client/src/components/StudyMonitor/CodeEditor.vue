@@ -149,17 +149,17 @@
         </div>
       </v-card>
       <v-btn
-        color="#1b749b"
+        color="#2c31cf"
         v-bind="props"
         style="width: 120px"
         @click="tryTestCase()"
       >
         <font-awesome-icon
           icon="fa-solid fa-caret-right"
-          color="black"
+          color="white"
           style="font-size: 20px; margin-right: 4px"
         />
-        Chạy thử
+        <span style="color: white"> Chạy thử </span>
       </v-btn>
       <v-btn
         color="#36ae7c"

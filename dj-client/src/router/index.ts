@@ -26,6 +26,7 @@ import LessonAdmin from "@/components/Admin/Lesson/LessonAdmin.vue";
 import ChapterAdmin from "@/components/Admin/Chapter/ChapterAdmin.vue";
 import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
 import UserMain from "@/components/User/UserMain.vue";
+import InforContact from "@/components/User/InforContact.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -79,8 +80,14 @@ const routes: Array<RouteRecordRaw> = [
         component: PostMonitor,
       },
       {
-        path: "user/:id",
+        path: "user",
         component: UserMain,
+        children: [
+          {
+            path: "infocontact",
+            component: InforContact,
+          },
+        ],
       },
     ],
   },

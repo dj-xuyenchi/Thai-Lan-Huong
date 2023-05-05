@@ -19,11 +19,11 @@
         <template v-slot:activator="{ props: menu }">
           <v-tooltip location="top">
             <template v-slot:activator="{ props: tooltip }">
-              <v-btn icon v-bind="mergeProps(menu, tooltip)">
-                <v-icon>mdi mdi-earth</v-icon>
+              <v-btn icon v-bind="mergeProps(menu, tooltip)" @click="goHome()">
+                <v-icon>mdi mdi-home</v-icon>
               </v-btn>
             </template>
-            <span>I'm A Tooltip</span>
+            <span>Về trang chủ</span>
           </v-tooltip>
         </template>
         <v-list>
@@ -80,6 +80,9 @@ export default {
       localStorage.removeItem("id");
       localStorage.removeItem("nickName");
       localStorage.removeItem("role");
+      this.$router.push({ path: "/home/lobby" });
+    },
+    goHome() {
       this.$router.push({ path: "/home/lobby" });
     },
   },

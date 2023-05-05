@@ -1,4 +1,9 @@
 ﻿<Properties StartupConfiguration="{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workbench ActiveDocument="dj-actionlayer/Business/Admin/AdminBusiness.cs">
     <Files>
       <File FileName="dj-endpoint/Program.cs" />
@@ -8,7 +13,7 @@
       <File FileName="dj-webdesigncore/AuthModel/LoginResponse.cs" />
       <File FileName="dj-actionlayer/DAO/AppContext.cs" />
       <File FileName="dj-webdesigncore/Entities/UserEntity/RefreshToken.cs" />
-      <File FileName="dj-actionlayer/Business/Study/StudyBusiness.cs" />
+      <File FileName="dj-actionlayer/Business/Study/StudyBusiness.cs" Line="1" Column="1" />
       <File FileName="dj-webdesigncore/Business/Study/IStudyBusiness.cs" />
       <File FileName="dj-webdesigncore/DTOs/Study/VideoLessonDTO.cs" />
       <File FileName="dj-webdesigncore/DTOs/Lobby/ChapterDetailDTO.cs" />
@@ -19,36 +24,35 @@
       <File FileName="dj-actionlayer/Business/Lobby/LobbyBusiness.cs" Line="169" Column="1" />
       <File FileName="dj-webdesigncore/AuthModel/AuthDataRespon.cs" />
       <File FileName="dj-webdesigncore/AuthModel/RequestLogin.cs" />
-      <File FileName="dj-actionlayer/Business/Auth/AuthBusiness.cs" />
+      <File FileName="dj-actionlayer/Business/Auth/AuthBusiness.cs" Line="1" Column="1" />
       <File FileName="dj-webdesigncore/Business/Auth/IAuthBusiness.cs" />
       <File FileName="dj-endpoint/Controllers/BaseApi.cs" />
       <File FileName="dj-endpoint/Controllers/StudyAPIs/StudyApis.cs" />
-      <File FileName="dj-actionlayer/Business/Compilerrrrrr/CompileUserCode.cs" />
+      <File FileName="dj-actionlayer/Business/Compilerrrrrr/CompileUserCode.cs" Line="1" Column="1" />
       <File FileName="dj-actionlayer/Program.cs" />
-      <File FileName="dj-webdesigncore/Request/Lesson/PracticeLesson.cs" Line="12" Column="7" />
+      <File FileName="dj-webdesigncore/Request/Lesson/PracticeLesson.cs" />
       <File FileName="dj-webdesigncore/AuthModel/NewAccount.cs" />
       <File FileName="../../../../../usr/local/share/dotnet/sdk/7.0.203/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets" />
       <File FileName="dj-webdesigncore/Request/Lesson/CommentLessonRequest.cs" />
       <File FileName="dj-webdesigncore/Entities/BusinessEntity/CommentLesson.cs" />
       <File FileName="dj-actionlayer/DAO/Settings.cs" />
       <File FileName="dj-actionlayer/Business/Compilerrrrrr/ResultCode.cs" />
-      <File FileName="dj-actionlayer/Business/Email/SendEmail.cs" Line="1" Column="1" />
-      <File FileName="dj-webdesigncore/Business/Admin/IAdminBusiness.cs" Line="13" Column="34" />
-      <File FileName="dj-webdesigncore/DTOs/Admin/AddLessonDTO.cs" Line="13" Column="40" />
-      <File FileName="dj-webdesigncore/Request/Lesson/TheoryLessonRequest.cs" Line="6" Column="7" />
-      <File FileName="dj-actionlayer/Business/Admin/AdminBusiness.cs" Line="214" Column="119" />
-      <File FileName="dj-endpoint/Controllers/Admin/AdminApis.cs" Line="92" Column="61" />
-      <File FileName="dj-webdesigncore/Request/Lesson/QuestionLessonRequest.cs" Line="9" Column="31" />
-      <File FileName="dj-webdesigncore/DTOs/Admin/LessonDetailDTO.cs" Line="16" Column="42" />
-      <File FileName="dj-webdesigncore/Enums/CourseEnums/AddStatusEnum.cs" Line="14" Column="19" />
-      <File FileName="dj-webdesigncore/DTOs/Admin/SelectCourseForChapter.cs" Line="7" Column="39" />
-      <File FileName="dj-webdesigncore/DTOs/Admin/AddChapterDTO.cs" Line="9" Column="40" />
-      <File FileName="dj-webdesigncore/Request/Chapter/AddChapterRequest.cs" Line="8" Column="47" />
-      <File FileName="dj-webdesigncore/Request/Chapter/UpdateChapterRequest.cs" Line="9" Column="45" />
-      <File FileName="dj-webdesigncore/DTOs/Admin/ChapterDetailDTO.cs" Line="4" Column="15" />
-      <File FileName="dj-webdesigncore/DTOs/Admin/GetTestCaseDTO.cs" Line="7" Column="31" />
-      <File FileName="dj-webdesigncore/Request/Lesson/TestCaseRequest.cs" Line="13" Column="1" />
-      <File FileName="dj-webdesigncore/DTOs/Admin/AddTestCaseDTO.cs" Line="9" Column="40" />
+      <File FileName="dj-actionlayer/Business/Email/SendEmail.cs" />
+      <File FileName="dj-webdesigncore/Business/Admin/IAdminBusiness.cs" Line="22" Column="50" />
+      <File FileName="dj-webdesigncore/DTOs/Admin/AddLessonDTO.cs" />
+      <File FileName="dj-webdesigncore/Request/Lesson/TheoryLessonRequest.cs" />
+      <File FileName="dj-actionlayer/Business/Admin/AdminBusiness.cs" Line="494" Column="62" />
+      <File FileName="dj-endpoint/Controllers/Admin/AdminApis.cs" />
+      <File FileName="dj-webdesigncore/Request/Lesson/QuestionLessonRequest.cs" />
+      <File FileName="dj-webdesigncore/DTOs/Admin/LessonDetailDTO.cs" />
+      <File FileName="dj-webdesigncore/Enums/CourseEnums/AddStatusEnum.cs" />
+      <File FileName="dj-webdesigncore/DTOs/Admin/SelectCourseForChapter.cs" />
+      <File FileName="dj-webdesigncore/DTOs/Admin/AddChapterDTO.cs" />
+      <File FileName="dj-webdesigncore/Request/Chapter/AddChapterRequest.cs" />
+      <File FileName="dj-webdesigncore/Request/Chapter/UpdateChapterRequest.cs" />
+      <File FileName="dj-webdesigncore/DTOs/Admin/ChapterDetailDTO.cs" />
+      <File FileName="dj-webdesigncore/Request/Lesson/TestCaseRequest.cs" />
+      <File FileName="dj-webdesigncore/DTOs/Admin/AddTestCaseDTO.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -56,7 +60,9 @@
           <Node name="dj-coding" expanded="True">
             <Node name="dj-actionlayer" expanded="True">
               <Node name="Business" expanded="True">
-                <Node name="Admin" expanded="True" />
+                <Node name="Admin" expanded="True">
+                  <Node name="AdminBusiness.cs" selected="True" />
+                </Node>
                 <Node name="Auth" expanded="True" />
                 <Node name="Compilerrrrrr" expanded="True" />
                 <Node name="Email" expanded="True" />
@@ -96,12 +102,7 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.ItemProperties.dj-webdesigncore PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.dj-actionlayer PreferredExecutionTarget="MonoDevelop.Default" />
   <MultiItemStartupConfigurations />
 </Properties>
