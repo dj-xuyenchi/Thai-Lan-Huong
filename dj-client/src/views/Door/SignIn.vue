@@ -18,7 +18,7 @@
         placeholder="Tên đăng nhập"
         prepend-inner-icon="mdi-account"
         variant="outlined"
-        :rules="[rules.minUser]"
+        :rules="[rules.minUser, rules.userName]"
       ></v-text-field>
       <div class="text-subtitle-1 text-medium-emphasis">Email</div>
       <v-text-field
@@ -156,6 +156,8 @@ export default {
     dialog: false,
     isUnValidUser: false,
     rules: {
+      userName: (value) =>
+        !/[@#$%^&+=! ]/.test(value) || "Tên đăng nhập chứa ký tự không hợp lệ",
       email: (value) => value.includes("@") || "Email chưa đúng",
       sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
       minUser: (value) => value.length >= 8 || "Tài khoản lớn hơn 8 ký tự",
@@ -174,6 +176,13 @@ export default {
       this.isUnValidUser = false;
       if (this.userName.trim().length < 8) {
         this.loginStatus = "Tài khoản chưa đúng.";
+        this.isUnValidUser = true;
+        this.dialog = false;
+        this.isUnValidUser = true;
+        return;
+      }
+      if (/[@#$%^&+=! ]/.test(this.userName)) {
+        this.loginStatus = "Tên đăng nhập chứa ký tự không hợp lệ!";
         this.isUnValidUser = true;
         this.dialog = false;
         this.isUnValidUser = true;

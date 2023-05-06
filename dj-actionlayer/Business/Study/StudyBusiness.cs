@@ -9,6 +9,8 @@ using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -66,7 +68,7 @@ namespace dj_actionlayer.Business.Study
                         commentDetail.CommentDate = dateDiff.ToString() + " ngày trước";
                     }
                     commentDetail.Comment = comment.Comment;
-                    User user = _context.user.Find(comment.UserId);
+                    User user =await _context.user.FindAsync(comment.UserId);
                     commentDetail.UserName = user.UserFisrtName + " " + user.UserLastName;
                     commentDetail.LikeCount = (int)comment.LikeCount;
                     commentDetail.UserId = (int)comment.UserId;
@@ -103,7 +105,7 @@ namespace dj_actionlayer.Business.Study
                             sub.CommentDate = dateDiffSub.ToString() + " ngày trước";
                         }
                         sub.Comment = subComment.Comment;
-                        User subUser = _context.user.Find(comment.UserId);
+                        User subUser =await _context.user.FindAsync(subComment.UserId);
                         sub.UserName = subUser.UserFisrtName + " " + subUser.UserLastName;
                         sub.LikeCount = (int)subComment.LikeCount;
                         sub.UserId = (int)subComment.UserId;
@@ -339,7 +341,7 @@ namespace dj_actionlayer.Business.Study
                 data.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.QUESTION;
                 Course course = await _context.course.FindAsync(courseId);
                 data.CourseName = course.CourseName;
-                data.ChapterDetail =  LessonListOfUser(userId, courseId).Result.ChapterLesson;
+                data.ChapterDetail = LessonListOfUser(userId, courseId).Result.ChapterLesson;
                 result.Data = data;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -355,6 +357,7 @@ namespace dj_actionlayer.Business.Study
 
         public async Task<ResponData<TryTestCaseResultDTO>> TryTestCase(CodeRequest codeRequest)
         {
+
             ResponData<TryTestCaseResultDTO> result = new ResponData<TryTestCaseResultDTO>();
             if (codeRequest.Code == null)
             {
@@ -373,14 +376,14 @@ namespace dj_actionlayer.Business.Study
                 var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == codeRequest.PracticeLessonId).OrderBy(x => x.SortNumber).ToList();
                 TryTestCaseResultDTO tryTestCaseResultDTO = new TryTestCaseResultDTO();
                 List<TryTestCaseDTO> listTest = new List<TryTestCaseDTO>();
-                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = _context.practice_lesson.Find(codeRequest.PracticeLessonId);
+                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = await _context.practice_lesson.FindAsync(codeRequest.PracticeLessonId);
                 if (practiceLesson.Input == null)
                 {
                     foreach (var item in listTestCase)
                     {
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
-                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code,3000);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code);
                         testDTO.Input = "Không có";
                         testDTO.ExpectOutput = item.ExpectOutput;
                         if (!runCodeResult.success)
@@ -394,7 +397,7 @@ namespace dj_actionlayer.Business.Study
 
                         if (runCodeResult.success)
                         {
-                            if (!runCodeResult.result.Contains(item.ExpectOutput))
+                            if (!runCodeResult.result.Equals(item.ExpectOutput))
                             {
                                 testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WRONG;
                                 testDTO.Output = runCodeResult.result;
@@ -418,7 +421,7 @@ namespace dj_actionlayer.Business.Study
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
                         callTestCode = callTestCode.Replace("variable", item.Input);
-                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code + callTestCode,3000);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code+callTestCode);
                         callTestCode = practiceLesson.CallTestCode;
                         testDTO.Input = item.Input;
                         testDTO.ExpectOutput = item.ExpectOutput;
@@ -432,7 +435,7 @@ namespace dj_actionlayer.Business.Study
                         }
                         if (runCodeResult.success)
                         {
-                            if (!runCodeResult.result.Contains(item.ExpectOutput))
+                            if (!runCodeResult.result.Equals(item.ExpectOutput))
                             {
                                 testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.WRONG;
                                 testDTO.Output = runCodeResult.result;

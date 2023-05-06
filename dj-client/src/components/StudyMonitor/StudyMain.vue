@@ -26,7 +26,10 @@
         style="margin-left: 12px; float: left"
         :chapterList="lessonData.chapterDetail"
       />
-      <div style="float: left; margin-left: 12px">
+      <!-- <div
+        style="float: left; margin-left: 12px"
+        v-if="lessonData.lessonType == 1"
+      >
         <v-btn color="#4FC3F7" v-bind="props">
           <font-awesome-icon
             icon="fa-solid fa-plus"
@@ -35,7 +38,7 @@
           />
           Tạo ghi chú.
         </v-btn>
-      </div>
+      </div> -->
     </div>
     <StudyFooter />
   </div>

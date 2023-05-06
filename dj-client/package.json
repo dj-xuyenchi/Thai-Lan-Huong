@@ -5,6 +5,7 @@
   "scripts": {
     "lint": "vue-cli-service lint",
     "mixue": "vue-cli-service serve",
+    "serve": "vue-cli-service serve",
     "yeuem": "vue-cli-service build"
   },
   "dependencies": {

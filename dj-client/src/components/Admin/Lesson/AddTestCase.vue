@@ -57,7 +57,7 @@
                 variant="text"
                 type="submit"
               >
-                Thêm bài học
+                Thêm test case
               </v-btn>
             </v-card-actions>
           </v-card>

@@ -6,7 +6,8 @@
         class="mx-auto rounded-xl item-hover"
         v-bind="props"
         variant="none"
-        height="25vh"
+        width="340px"
+        height="220px"
       >
         <img :src="postImg" alt="" />
         <v-overlay
@@ -68,14 +69,17 @@ export default {
 <style lang="css" scoped>
 .blog-item {
   margin-top: 14px;
-  width: 25%;
+  width: 340px;
+  height: 220px;
   margin-bottom: 36px;
   padding: 0 14px 0 14px;
+  margin-left: 2%;
+  margin-bottom: 60px;
 }
 
 .blog-item img {
-  width: 100%;
-  height: 25vh;
+  width: 340px;
+  height: 220px;
 }
 .blog-item .blog-detail {
   width: 100%;

@@ -39,8 +39,9 @@ export default {
 
 <style lang="css" scoped>
 .course-list-by-type-container {
-  margin-left: 3%;
-  width: 92%;
+  margin-left: 2%;
+  margin-bottom: 40px;
+  width: 93%;
 }
 .course-list-by-type-container .course-list {
   display: flex;

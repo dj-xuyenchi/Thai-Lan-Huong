@@ -96,6 +96,7 @@ export default {
 .course-list-container {
   margin-left: 3%;
   width: 92%;
+  margin-bottom: 20px;
 }
 .course-list-container .course-list {
   display: flex;

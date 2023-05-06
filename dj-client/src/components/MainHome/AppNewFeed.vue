@@ -2,8 +2,8 @@
   <div>
     <HeaderSlider />
     <CourseList />
-    <PostList />
-    <BlogList />
+    <!-- <PostList /> -->
+    <!-- <BlogList /> -->
   </div>
 </template>
 
@@ -16,7 +16,11 @@ import HomeAPI from "../../apis/APIHome/HomeAPI";
 import { mapMutations } from "vuex";
 export default {
   name: "AppNewFeed",
-  components: { HeaderSlider, CourseList, PostList, BlogList },
+  components: {
+    HeaderSlider,
+    CourseList,
+    //  PostList, BlogList
+  },
   data: () => {
     return {};
   },

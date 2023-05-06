@@ -6,7 +6,8 @@
         class="mx-auto rounded-xl item-hover course-item-fix"
         v-bind="props"
         variant="none"
-        height="200px"
+        height="220px"
+        width="340px"
       >
         <img :src="`data:image/jpeg;base64,` + courseData" alt="" />
         <v-overlay
@@ -78,14 +79,16 @@ export default {
 <style lang="css" scoped>
 .course-item {
   margin-top: 14px;
-  width: 30%;
+  width: 340px;
+  height: 220px;
   margin-bottom: 36px;
+  margin-right: 24px;
   padding: 0 14px 0 14px;
 }
 
 .course-item img {
-  width: 100%;
-  height: 200px;
+  width: 340px;
+  height: 220px;
 }
 .course-item .course-detail {
   display: flex;
@@ -99,14 +102,5 @@ export default {
 }
 .course-detail span:hover {
   cursor: pointer;
-}
-@media screen and (min-height: 739px) {
-  .course-item img {
-    width: 100%;
-    height: 240px;
-  }
-  .course-item-fix {
-    height: 240px !important;
-  }
 }
 </style>
