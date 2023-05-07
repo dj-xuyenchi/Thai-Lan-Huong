@@ -192,7 +192,7 @@
         />
         Reset Code
       </v-btn>
-      <v-btn
+      <!-- <v-btn
         color="#36ae7c"
         v-bind="props"
         style="width: 120px; margin-left: 12px"
@@ -204,7 +204,7 @@
           style="font-size: 20px; margin-right: 4px"
         />
         ChatGPT
-      </v-btn>
+      </v-btn> -->
     </div>
 
     <v-card
@@ -240,9 +240,9 @@
           ></v-btn>
         </template>
       </v-toolbar>
-      <div style="margin-left: 12px">
+      <!-- <div style="margin-left: 12px">
         <ChatGPT :listChat="listGPTResponse" />
-      </div>
+      </div> -->
     </v-card>
     <v-snackbar v-model="snackbarNotOk" multi-line>
       {{ snackBarContent }}
@@ -275,7 +275,10 @@ import "ace-builds/src-noconflict/mode-csharp";
 import "ace-builds/src-noconflict/theme-chrome";
 export default {
   name: "CodeEditor",
-  components: { VAceEditor, ChatGPT },
+  components: {
+    VAceEditor,
+    //  ChatGPT
+  },
   data() {
     return {
       content: "",
@@ -427,7 +430,10 @@ export default {
       }
       if (option == 2) {
         this.thinking = true;
-        const respon = await HeyGPT.sayToGPTExeption(content.output);
+        const respon = await HeyGPT.sayToGPTExeption(
+          this.content,
+          content.output
+        );
         this.listGPTResponse.push(respon.choices[0].message.content);
         this.thinking = false;
       }

@@ -20,7 +20,7 @@
           <v-list-item
             :prepend-avatar="getAIProfile.avatar"
             :title="commentCount + ` bình luận`"
-            subtitle="Nếu phát hiện bình luận span hoặc vi phạm quy tác report giúp tớ nha."
+            subtitle="Nếu phát hiện bình luận span hoặc vi phạm quy tắc report giúp tớ nha."
           >
           </v-list-item>
         </v-list>

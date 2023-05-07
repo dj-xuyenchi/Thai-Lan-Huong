@@ -6,7 +6,7 @@
         class="mx-auto rounded-xl item-hover course-item-fix"
         v-bind="props"
         variant="none"
-        width="340px"
+        width="380px"
         height="220px"
       >
         <img :src="`data:image/jpeg;base64,` + courseData" alt="" />
@@ -80,16 +80,16 @@ export default {
 <style lang="css" scoped>
 .course-item {
   margin-top: 14px;
-  width: 340px;
+  width: 380px;
   height: 220px;
   margin-bottom: 36px;
   padding: 0 14px 0 14px;
-  margin-left: 2%;
+  margin-left: 1%;
   margin-bottom: 60px;
 }
 
 .course-item img {
-  width: 340px;
+  width: 380px;
   height: 220px;
 }
 .course-item .course-detail {

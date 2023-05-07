@@ -1,8 +1,10 @@
 <template>
   <div style="display: flex; justify-content: space-between">
     <AddPractice :getLessonDetail="getLessonDetail" />
+    <!-- <CustomGen :setContext="setContext" /> -->
     <AddQuestion :getLessonDetail="getLessonDetail" />
     <AddTheory :getLessonDetail="getLessonDetail" />
+    <!-- <GenPracticeGPT v-if="show" :context="context" :setShow="setShow" /> -->
   </div>
   <LessonTable
     :getLessonDetail="getLessonDetail"
@@ -33,14 +35,25 @@ import { mapMutations } from "vuex";
 import AddPractice from "./AddPractice";
 import LessonTable from "./LessonTable";
 import AddTheory from "./AddTheory";
+import CustomGen from "./CustomGen";
 import AddQuestion from "./AddQuestion";
+import GenPracticeGPT from "./GenPracticeGPT";
 export default {
   name: "LessonAdmin",
-  components: { AddPractice, LessonTable, AddTheory, AddQuestion },
+  components: {
+    AddPractice,
+    LessonTable,
+    AddTheory,
+    AddQuestion,
+    // CustomGen,
+    // GenPracticeGPT,
+  },
   data: () => ({
     tableData: [],
     page: 1,
+    context: "",
     maxPage: 1,
+    show: false,
   }),
   created() {
     this.getLessonDetail();
@@ -54,6 +67,13 @@ export default {
       this.tableData = data.data.list;
       this.maxPage = data.data.maxPage;
       this.setIsLoadedData(false);
+    },
+    setContext(context) {
+      this.context = context;
+      this.show = true;
+    },
+    setShow(show) {
+      this.show = show;
     },
   },
 };

@@ -11,84 +11,178 @@
           />
         </template>
         <v-form @submit.prevent="submit()" ref="form">
-          <v-card style="overflow: scroll">
+          <v-card
+            class="mx-auto pa-12 pb-8"
+            elevation="8"
+            min-width="40%"
+            rounded="lg"
+          >
             <v-card-title>
-              <span class="text-h5">Thêm bài quiz</span>
+              <span class="text-h5">Cập nhật thông tin</span>
             </v-card-title>
             <v-card-text>
               <v-container>
-                <v-row>
-                  <v-col cols="12" sm="12" md="12">
+                <v-row
+                  ><v-col cols="12" sm="12" md="12">
+                    <img
+                      src="
+                       https://haycafe.vn/wp-content/uploads/2022/02/anh-meo-cute-hinh-cute-meo.jpg
+                      "
+                      alt=""
+                      style="height: 100px; width: 100px; border-radius: 50%"
+                    />
+                    <v-label style="width: 100%; margin: 24px 0 8px 0"
+                      >Ảnh đại diện của bạn</v-label
+                    >
+                    <v-btn
+                      color="#4d96ff"
+                      style="
+                        height: 35px;
+                        width: 104px;
+                        font-size: 14px;
+                        font-weight: 400;
+                      "
+                      @click="$refs.fileInput.click()"
+                    >
+                      Chọn ảnh</v-btn
+                    >
+                    <v-file-input
+                      ref="fileInput"
+                      v-model="selectedFiles"
+                      accept="image/*"
+                      @change="onFileSelect"
+                      outlined
+                      dense
+                      hide-details
+                      class="my-file-input"
+                    ></v-file-input>
+                  </v-col>
+                  <v-col cols="4" sm="4" md="4">
                     <v-text-field
-                      label="Tên bài học*"
-                      hint="Với bài học dạng câu hỏi tên sẽ là Quiz: + tên bài học"
-                      v-model="lessonName"
+                      v-model="firstName"
+                      class="input-field"
+                      density="compact"
+                      label="Họ*"
+                      hint="Họ của bạn"
+                      variant="outlined"
+                      :rules="rules.validName"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="4" sm="4" md="4">
+                    <v-text-field
+                      v-model="lastName"
+                      density="compact"
+                      label="Tên*"
+                      hint="Tên của bạn"
+                      variant="outlined"
+                      :rules="rules.validName"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="4" sm="4" md="4">
+                    <v-label>Ngày sinh</v-label>
+                    <input
+                      v-model="firstName"
+                      type="date"
+                      style="margin-left: 12px; height: 40px; font-size: 16px"
+                  /></v-col>
+                  <v-col cols="4" sm="4" md="4">
+                    <v-text-field
+                      v-model="userPhone"
+                      density="compact"
+                      label="SĐT*"
+                      hint="Số điện thoại liên lạc"
+                      variant="outlined"
                       :rules="rules"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="4" sm="4" md="4">
                     <v-text-field
-                      label="Mô tả*"
-                      hint="Mô tả bài học"
+                      v-model="firstName"
+                      density="compact"
+                      label="Facebook"
+                      hint="Facebook"
+                      variant="outlined"
                       :rules="rules"
-                      v-model="lessonDescription"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+
+                  <v-col cols="4" sm="4" md="4">
                     <v-text-field
-                      label="Thời lượng*"
-                      hint="Thời lượng của bài học"
+                      v-model="firstName"
+                      density="compact"
+                      label="LinkedIn"
+                      hint="LinkedIn"
+                      variant="outlined"
                       :rules="rules"
-                      v-model="lessonTime"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Câu hỏi*"
-                      hint="Câu hỏi hiển thị"
-                      :rules="rules"
-                      v-model="question"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án A*"
-                      hint="Đáp án A"
-                      :rules="rules"
-                      v-model="answera"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án B*"
-                      hint="Đáp án B"
-                      :rules="rules"
-                      v-model="answerb"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án C*"
-                      hint="Đáp án C"
-                      :rules="rules"
-                      v-model="answerc"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án D*"
-                      hint="Đáp án D"
-                      :rules="rules"
-                      v-model="answerd"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
+
+                  <v-col cols="4" sm="4" md="4">
                     <v-select
-                      label="Đáp án đúng"
-                      :items="['A', 'B', 'C', 'D']"
-                      :rules="rules"
-                      v-model="answer"
+                      label="Tỉnh/thành phố"
+                      :items="[
+                        'California',
+                        'Colorado',
+                        'Florida',
+                        'Georgia',
+                        'Texas',
+                        'Wyoming',
+                      ]"
+                      variant="outlined"
                     ></v-select>
+                  </v-col>
+                  <v-col cols="4" sm="4" md="4">
+                    <v-select
+                      label="Quận/huyện"
+                      :items="[
+                        'California',
+                        'Colorado',
+                        'Florida',
+                        'Georgia',
+                        'Texas',
+                        'Wyoming',
+                      ]"
+                      variant="outlined"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="4" sm="4" md="4">
+                    <v-select
+                      label="Xã phường"
+                      :items="[
+                        'California',
+                        'Colorado',
+                        'Florida',
+                        'Georgia',
+                        'Texas',
+                        'Wyoming',
+                      ]"
+                      variant="outlined"
+                      height="40px"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-select
+                      label="Giới tính"
+                      :items="[
+                        'California',
+                        'Colorado',
+                        'Florida',
+                        'Georgia',
+                        'Texas',
+                        'Wyoming',
+                      ]"
+                      variant="outlined"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-textarea
+                      v-model="firstName"
+                      density="compact"
+                      label="Mô tả bản thân"
+                      hint="Mô tả bản thân"
+                      variant="outlined"
+                      :rules="rules"
+                    ></v-textarea>
                   </v-col>
                 </v-row>
               </v-container>
@@ -109,7 +203,7 @@
                 variant="text"
                 type="submit"
               >
-                Thêm bài học
+                Cập nhật
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -135,95 +229,67 @@ export default {
     return {
       text: "",
       snackbar: false,
-      lessonName: "",
-      lessonDescription: "",
-      lessonTime: "",
-      question: "",
-      answera: "",
-      answerb: "",
-      answerc: "",
-      answerd: "",
-      answer: "A",
+      firstName: "",
+      lastName: "",
+      userPhone: "",
+      userGender: "",
+      userDetail: "",
+      userFacebook: "",
+      userLinkedIn: "",
+      userTinh: "",
+      userHuyen: "",
+      userXa: "",
       dialog: false,
       btnLoading: false,
-      rules: [
-        (value) => {
-          if (value) return true;
-          return "Không được để trống!";
-        },
-      ],
+      rules: {
+        validName: (value) =>
+          !/[@#$%^&+=! ]/.test(value) || "Tên chứa ký tự không hợp lệ",
+        sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
+        validValue: (value) => value || "Tài khoản lớn hơn 8 ký tự",
+      },
     };
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    getData() {
-      var answerResult;
-      switch (this.answer) {
-        case "A":
-          answerResult = 1;
-          break;
-        case "B":
-          answerResult = 2;
-          break;
-        case "C":
-          answerResult = 3;
-          break;
-        case "D":
-          answerResult = 4;
-          break;
-        default:
-          break;
-      }
-      return {
-        lessonName: this.lessonName,
-        lessonDescription: this.lessonDescription,
-        lessonTime: this.lessonTime,
-        question: this.question,
-        answerA: this.answera,
-        answerB: this.answerb,
-        answerC: this.answerc,
-        answerD: this.answerd,
-        answer: answerResult,
-      };
-    },
-    async submit() {
-      //   this.btnLoading = true;
-      //   if (
-      //     this.lessonName.trim().length < 1 ||
-      //     this.lessonDescription.trim().length < 1 ||
-      //     this.lessonTime.trim().length < 1 ||
-      //     this.question.trim().length < 1 ||
-      //     this.answera.trim().length < 1 ||
-      //     this.answerb.trim().length < 1 ||
-      //     this.answerc.trim().length < 1 ||
-      //     this.answerd.trim().length < 1
-      //   ) {
-      //     this.btnLoading = false;
-      //     return;
-      //   }
-      //   const token = localStorage.getItem("token");
-      //   if (result.status == 1) {
-      //     this.text = "Thêm thành công";
-      //     this.dialog = false;
-      //     this.snackbar = true;
-      //     this.lessonName = "";
-      //     this.lessonDescription = "";
-      //     this.lessonTime = "";
-      //     this.question = "";
-      //     this.answera = "";
-      //     this.answerb = "";
-      //     this.answerc = "";
-      //     this.answerd = "";
-      //     this.answer = "A";
-      //     this.getLessonDetail();
-      //   }
-      //   if (result.status == 2) {
-      //     this.text = "Thêm thất bại";
-      //     this.snackbar = true;
-      //   }
-      //   this.btnLoading = false;
-    },
   },
+  async submit() {
+    //   this.btnLoading = true;
+    //   if (
+    //     this.lessonName.trim().length < 1 ||
+    //     this.lessonDescription.trim().length < 1 ||
+    //     this.lessonTime.trim().length < 1 ||
+    //     this.question.trim().length < 1 ||
+    //     this.answera.trim().length < 1 ||
+    //     this.answerb.trim().length < 1 ||
+    //     this.answerc.trim().length < 1 ||
+    //     this.answerd.trim().length < 1
+    //   ) {
+    //     this.btnLoading = false;
+    //     return;
+    //   }
+    //   const token = localStorage.getItem("token");
+    //   if (result.status == 1) {
+    //     this.text = "Thêm thành công";
+    //     this.dialog = false;
+    //     this.snackbar = true;
+    //     this.lessonName = "";
+    //     this.lessonDescription = "";
+    //     this.lessonTime = "";
+    //     this.question = "";
+    //     this.answera = "";
+    //     this.answerb = "";
+    //     this.answerc = "";
+    //     this.answerd = "";
+    //     this.answer = "A";
+    //     this.getLessonDetail();
+    //   }
+    //   if (result.status == 2) {
+    //     this.text = "Thêm thất bại";
+    //     this.snackbar = true;
+    //   }
+    //   this.btnLoading = false;
+  },
+
   props: {
     getLessonDetail: Function,
   },
@@ -239,5 +305,9 @@ export default {
 }
 .iconBtn:hover {
   cursor: pointer;
+}
+
+.my-file-input {
+  display: none;
 }
 </style>

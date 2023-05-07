@@ -33,6 +33,7 @@
         placeholder="Nhập mật khẩu"
         prepend-inner-icon="mdi-lock-outline"
         variant="outlined"
+        @keydown.enter="checkLogin()"
         @click:append-inner="visible = !visible"
         :rules="[rules.minPass]"
       ></v-text-field>
