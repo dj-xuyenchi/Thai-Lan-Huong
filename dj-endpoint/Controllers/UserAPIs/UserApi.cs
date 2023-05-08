@@ -21,5 +21,10 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.getInformation(userId));
         }
+        [HttpGet("getoptionupdate")]
+        public async Task<IActionResult> getOptionUpdate()
+        {
+            return Ok(await _user.optionUpdateInfor());
+        }
     }
 }

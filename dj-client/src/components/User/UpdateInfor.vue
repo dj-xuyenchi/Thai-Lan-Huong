@@ -10,7 +10,7 @@
             color="#898989"
           />
         </template>
-        <v-form @submit.prevent="submit()" ref="form">
+        <v-form @submit.prevent="submit()" ref="form" style="overflow: scroll">
           <v-card
             class="mx-auto pa-12 pb-8"
             elevation="8"
@@ -25,9 +25,7 @@
                 <v-row
                   ><v-col cols="12" sm="12" md="12">
                     <img
-                      src="
-                       https://haycafe.vn/wp-content/uploads/2022/02/anh-meo-cute-hinh-cute-meo.jpg
-                      "
+                      :src="'data:image/jpeg;base64,' + userAvatarData40x40"
                       alt=""
                       style="height: 100px; width: 100px; border-radius: 50%"
                     />
@@ -48,7 +46,7 @@
                     >
                     <v-file-input
                       ref="fileInput"
-                      v-model="selectedFiles"
+                      v-model="selectFile"
                       accept="image/*"
                       @change="onFileSelect"
                       outlined
@@ -60,12 +58,11 @@
                   <v-col cols="4" sm="4" md="4">
                     <v-text-field
                       v-model="firstName"
-                      class="input-field"
                       density="compact"
                       label="Họ*"
                       hint="Họ của bạn"
                       variant="outlined"
-                      :rules="rules.validName"
+                      :rules="[rules.validName, rules.validValue]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
@@ -75,13 +72,13 @@
                       label="Tên*"
                       hint="Tên của bạn"
                       variant="outlined"
-                      :rules="rules.validName"
+                      :rules="[rules.validName, rules.validValue]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
                     <v-label>Ngày sinh</v-label>
                     <input
-                      v-model="firstName"
+                      v-model="userBirth"
                       type="date"
                       style="margin-left: 12px; height: 40px; font-size: 16px"
                   /></v-col>
@@ -92,96 +89,83 @@
                       label="SĐT*"
                       hint="Số điện thoại liên lạc"
                       variant="outlined"
-                      :rules="rules"
+                      :rules="[rules.sdt]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
                     <v-text-field
-                      v-model="firstName"
+                      v-model="userFacebook"
                       density="compact"
                       label="Facebook"
                       hint="Facebook"
                       variant="outlined"
-                      :rules="rules"
                     ></v-text-field>
                   </v-col>
-
                   <v-col cols="4" sm="4" md="4">
                     <v-text-field
-                      v-model="firstName"
+                      v-model="userLinkedIn"
                       density="compact"
                       label="LinkedIn"
                       hint="LinkedIn"
                       variant="outlined"
-                      :rules="rules"
                     ></v-text-field>
                   </v-col>
 
                   <v-col cols="4" sm="4" md="4">
                     <v-select
+                      v-model="userTinh"
                       label="Tỉnh/thành phố"
-                      :items="[
-                        'California',
-                        'Colorado',
-                        'Florida',
-                        'Georgia',
-                        'Texas',
-                        'Wyoming',
-                      ]"
+                      :items="listTinh"
+                      item-title="name"
+                      persistent-hint
+                      return-object
+                      item-value="code"
                       variant="outlined"
                     ></v-select>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
                     <v-select
+                      v-model="userHuyen"
                       label="Quận/huyện"
-                      :items="[
-                        'California',
-                        'Colorado',
-                        'Florida',
-                        'Georgia',
-                        'Texas',
-                        'Wyoming',
-                      ]"
+                      :items="listHuyen"
                       variant="outlined"
+                      item-title="name"
+                      persistent-hint
+                      return-object
+                      item-value="code"
                     ></v-select>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
                     <v-select
-                      label="Xã phường"
-                      :items="[
-                        'California',
-                        'Colorado',
-                        'Florida',
-                        'Georgia',
-                        'Texas',
-                        'Wyoming',
-                      ]"
+                      v-model="userXa"
+                      label="Xã/phường"
+                      :items="listXa"
+                      item-title="name"
+                      persistent-hint
+                      return-object
+                      item-value="code"
                       variant="outlined"
-                      height="40px"
                     ></v-select>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-select
+                      v-model="userGender"
                       label="Giới tính"
-                      :items="[
-                        'California',
-                        'Colorado',
-                        'Florida',
-                        'Georgia',
-                        'Texas',
-                        'Wyoming',
-                      ]"
+                      :items="listGender"
+                      item-title="genderName"
+                      persistent-hint
+                      return-object
+                      item-value="id"
                       variant="outlined"
                     ></v-select>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-textarea
-                      v-model="firstName"
+                      v-model="userDetail"
                       density="compact"
                       label="Mô tả bản thân"
                       hint="Mô tả bản thân"
                       variant="outlined"
-                      :rules="rules"
                     ></v-textarea>
                   </v-col>
                 </v-row>
@@ -222,6 +206,7 @@
 </template>
 
 <script>
+import UserAPI from "../../apis/APIUser/UserAPI.ts";
 import { mapMutations } from "vuex";
 export default {
   name: "UpdateInfor",
@@ -229,69 +214,103 @@ export default {
     return {
       text: "",
       snackbar: false,
+      selectFile: null,
+      listTinh: [],
+      listHuyen: [],
+      listXa: [],
+      listGender: [],
       firstName: "",
       lastName: "",
+      userAvatarData40x40: "",
       userPhone: "",
-      userGender: "",
+      userBirth: null,
+      userGender: null,
       userDetail: "",
       userFacebook: "",
       userLinkedIn: "",
-      userTinh: "",
-      userHuyen: "",
-      userXa: "",
+      userTinh: null,
+      userHuyen: null,
+      userXa: null,
       dialog: false,
       btnLoading: false,
       rules: {
         validName: (value) =>
           !/[@#$%^&+=! ]/.test(value) || "Tên chứa ký tự không hợp lệ",
         sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
-        validValue: (value) => value || "Tài khoản lớn hơn 8 ký tự",
+        validValue: (value) =>
+          value.trim().length > 0 || "Không được để trống thông tin này!",
       },
     };
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-  },
-  async submit() {
-    //   this.btnLoading = true;
-    //   if (
-    //     this.lessonName.trim().length < 1 ||
-    //     this.lessonDescription.trim().length < 1 ||
-    //     this.lessonTime.trim().length < 1 ||
-    //     this.question.trim().length < 1 ||
-    //     this.answera.trim().length < 1 ||
-    //     this.answerb.trim().length < 1 ||
-    //     this.answerc.trim().length < 1 ||
-    //     this.answerd.trim().length < 1
-    //   ) {
-    //     this.btnLoading = false;
-    //     return;
-    //   }
-    //   const token = localStorage.getItem("token");
-    //   if (result.status == 1) {
-    //     this.text = "Thêm thành công";
-    //     this.dialog = false;
-    //     this.snackbar = true;
-    //     this.lessonName = "";
-    //     this.lessonDescription = "";
-    //     this.lessonTime = "";
-    //     this.question = "";
-    //     this.answera = "";
-    //     this.answerb = "";
-    //     this.answerc = "";
-    //     this.answerd = "";
-    //     this.answer = "A";
-    //     this.getLessonDetail();
-    //   }
-    //   if (result.status == 2) {
-    //     this.text = "Thêm thất bại";
-    //     this.snackbar = true;
-    //   }
-    //   this.btnLoading = false;
+    async submit() {
+      //   this.btnLoading = true;
+      //   if (
+      //     this.lessonName.trim().length < 1 ||
+      //     this.lessonDescription.trim().length < 1 ||
+      //     this.lessonTime.trim().length < 1 ||
+      //     this.question.trim().length < 1 ||
+      //     this.answera.trim().length < 1 ||
+      //     this.answerb.trim().length < 1 ||
+      //     this.answerc.trim().length < 1 ||
+      //     this.answerd.trim().length < 1
+      //   ) {
+      //     this.btnLoading = false;
+      //     return;
+      //   }
+      //   const token = localStorage.getItem("token");
+      //   if (result.status == 1) {
+      //     this.text = "Thêm thành công";
+      //     this.dialog = false;
+      //     this.snackbar = true;
+      //     this.lessonName = "";
+      //     this.lessonDescription = "";
+      //     this.lessonTime = "";
+      //     this.question = "";
+      //     this.answera = "";
+      //     this.answerb = "";
+      //     this.answerc = "";
+      //     this.answerd = "";
+      //     this.answer = "A";
+      //     this.getLessonDetail();
+      //   }
+      //   if (result.status == 2) {
+      //     this.text = "Thêm thất bại";
+      //     this.snackbar = true;
+      //   }
+      //   this.btnLoading = false;
+    },
+    async getOption() {
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.getOptionUpdate(token);
+      this.listGender = data.data.genders;
+      this.listXa = data.data.wards;
+      this.listHuyen = data.data.districts;
+      this.listTinh = data.data.provinces;
+    },
   },
 
+  mounted() {
+    this.getOption();
+    this.userDetail = this.user.userDetail;
+    this.userAvatarData40x40 = this.user.userAvatarData40x40;
+    this.firstName = this.user.userFisrtName;
+    this.lastName = this.user.userLastName;
+    this.userLinkedIn = this.user.userLinkedIn;
+    this.userFacebook = this.user.userFacebook;
+    this.userPhone = this.user.numberPhone;
+    if (this.user.birthday) {
+      const birthday = this.user.birthday.split(" - ");
+      this.userBirth = birthday[2] + "-" + birthday[1] + "-" + birthday[0];
+    }
+    const tt = this.listGender.find((x) => {
+      return (x.id = this.user.genderId);
+    });
+    console.log(tt);
+  },
   props: {
-    getLessonDetail: Function,
+    user: [],
   },
 };
 </script>

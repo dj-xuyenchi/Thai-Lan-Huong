@@ -3,6 +3,7 @@ using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.DTOs.UserDTO;
 using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Enums.ApiEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,25 @@ namespace dj_actionlayer.Business.UserBusiness
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;
+        }
+
+        public async Task<ResponData<OptionUpdateInfor>> optionUpdateInfor()
+        {
+            ResponData<OptionUpdateInfor> result = new ResponData<OptionUpdateInfor>();
+            OptionUpdateInfor data = new OptionUpdateInfor();
+            data.districts = _context.districts.ToList();
+            data.provinces = _context.provinces.ToList();
+            data.wards = _context.wards.ToList();
+            data.genders = _context.gender.ToList();
+            result.Data = data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public Task<ResponData<ActionStatus>> updateInfor(UserInforDTO userInforDTO)
+        {
+            throw new NotImplementedException();
         }
     }
 }

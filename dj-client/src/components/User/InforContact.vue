@@ -26,7 +26,7 @@
             >
             <span class="field-content" style="position: relative"
               >{{ userInfor.userLastName + " " + userInfor.userFisrtName }}
-              <UpdateInfor />
+              <UpdateInfor :user="userInfor" />
             </span>
           </div>
         </li>
@@ -190,7 +190,7 @@ export default {
   components: { AddExperience, UpdateInfor },
   data() {
     return {
-      userInfor: [],
+      userInfor: {},
       snackbarOk: false,
       snackBarContent: "",
     };
@@ -220,7 +220,7 @@ export default {
 
 <style lang="css" scoped>
 .left-avatar {
-  width: 16%;
+  width: 18%;
   float: left;
 }
 .left-avatar img {
@@ -229,7 +229,7 @@ export default {
   border-radius: 50%;
 }
 .right-infor {
-  width: 84%;
+  width: 82%;
   float: left;
 }
 .right-infor ul li {
