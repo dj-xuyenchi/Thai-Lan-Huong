@@ -1,4 +1,5 @@
-﻿using dj_webdesigncore.Entities.UserEntity;
+﻿using dj_webdesigncore.Entities.BusinessEntity;
+using dj_webdesigncore.Entities.UserEntity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,9 +29,13 @@ namespace dj_webdesigncore.DTOs.UserDTO
         public string ProvinceCode { get; set; }
         public string WardCode { get; set; }
         public string DistrictCode { get; set; }
+        public string AddressNow { get; set; }
+        public string Catalog { get; set; }
+        public int CatalogId { get; set; }
         public List<District> districts { get; set; }
         public List<Province> provinces { get; set; }
         public List<Ward> wards { get; set; }
         public List<Gender> genders { get; set; }
+        public List<UserCatalog> catalogs { get; set; }
     }
 }

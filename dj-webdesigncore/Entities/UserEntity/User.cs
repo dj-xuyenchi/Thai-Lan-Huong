@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dj_webdesigncore.Entities.BusinessEntity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,5 +38,8 @@ namespace dj_webdesigncore.Entities.UserEntity
         [ForeignKey("ProvinceCode")]
         public Province? Province { get; set; }
         public UserStatus? UserStatus { get; set; }
+		public int? CatalogId { get; set; }
+		public UserCatalog? Catalog { get; set; }
+		public string? AddressNow { get; set; }
 	}
 }

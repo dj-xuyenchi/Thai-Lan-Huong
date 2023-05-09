@@ -2,6 +2,7 @@
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.DTOs.UserDTO;
+using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using System;
@@ -17,7 +18,7 @@ namespace dj_actionlayer.Business.UserBusiness
         public async Task<ResponData<List<District>>> getDistrict(string provinceCode)
         {
             ResponData<List<District>> result = new ResponData<List<District>>();
-            result.Data = _context.districts.Where(x=>x.province_code==provinceCode).ToList();
+            result.Data = _context.districts.Where(x => x.province_code == provinceCode).ToList();
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;
@@ -37,13 +38,13 @@ namespace dj_actionlayer.Business.UserBusiness
             UserInforDTO dto = new UserInforDTO();
             dto.Birthday = user.Birthday == null ? "Chưa cập nhật" : user.Birthday.Value.Day + " - " + user.Birthday.Value.Month + " - " + user.Birthday.Value.Year;
             Ward ward = await _context.wards.FindAsync(user.WardCode);
-            dto.Ward = ward==null? "Chưa cập nhật!":ward.full_name;
+            dto.Ward = ward == null ? "Chưa cập nhật!" : ward.full_name;
             dto.WardCode = user.WardCode;
             dto.UserFacebook = user.UserFacebook;
             dto.UserEmail = user.UserEmail;
             dto.UserLinkedIn = user.UserLinkedIn;
             dto.UserLastName = user.UserLastName;
-            District district =await _context.districts.FindAsync(user.DistrictCode);
+            District district = await _context.districts.FindAsync(user.DistrictCode);
             dto.DistrictCode = user.DistrictCode;
             dto.District = district == null ? "Chưa cập nhật" : district.full_name;
             dto.UserAvatarData40x40 = user.UserAvatarData40x40;
@@ -53,15 +54,20 @@ namespace dj_actionlayer.Business.UserBusiness
             dto.UserFisrtName = user.UserFisrtName;
             Province province = await _context.provinces.FindAsync(user.ProvinceCode);
             dto.ProvinceCode = user.ProvinceCode;
-            dto.Province = province==null? "Chưa cập nhật!":province.full_name;
+            dto.Province = province == null ? "Chưa cập nhật!" : province.full_name;
             dto.GenderId = (int)user.GenderId;
+            dto.AddressNow = user.AddressNow == null ? "Chưa cập nhật" : user.AddressNow;
+            UserCatalog userCatalog = await _context.user_catalog.FindAsync(user.CatalogId);
+            dto.Catalog = userCatalog == null ? "Chưa cập nhật" : userCatalog.CatalogName;
             dto.UserId = user.Id;
-            if (user.ProvinceCode != null) {
+            if (user.ProvinceCode != null)
+            {
                 dto.provinces = _context.provinces.ToList();
                 dto.districts = _context.districts.Where(x => x.province_code == user.ProvinceCode).ToList();
                 dto.wards = _context.wards.Where(x => x.district_code == user.DistrictCode).ToList();
             }
             dto.genders = _context.gender.ToList();
+            dto.catalogs = _context.user_catalog.ToList();
             result.Data = dto;
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;

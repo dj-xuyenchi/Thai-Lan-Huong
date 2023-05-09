@@ -112,7 +112,16 @@
                       variant="outlined"
                     ></v-text-field>
                   </v-col>
-
+                  <v-col cols="12" sm="12" md="12">
+                    <v-textarea
+                      v-model="userAddressNow"
+                      density="compact"
+                      label="Địa chỉ hiện tại"
+                      hint="Địa chỉ hiện tại"
+                      variant="outlined"
+                      max-rows="5"
+                    ></v-textarea>
+                  </v-col>
                   <v-col cols="4" sm="4" md="4">
                     <v-select
                       v-model="userTinh"
@@ -150,12 +159,24 @@
                       variant="outlined"
                     ></v-select>
                   </v-col>
-                  <v-col cols="12" sm="12" md="12">
+                  <v-col cols="6" sm="6" md="6">
                     <v-select
                       v-model="userGender"
                       label="Giới tính"
                       :items="listGender"
                       item-title="genderName"
+                      persistent-hint
+                      return-object
+                      item-value="id"
+                      variant="outlined"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="6" sm="6" md="6">
+                    <v-select
+                      v-model="userJob"
+                      label="Công việc hiện tại"
+                      :items="listJob"
+                      item-title="catalogName"
                       persistent-hint
                       return-object
                       item-value="id"
@@ -218,17 +239,21 @@ export default {
       text: "",
       snackbar: false,
       selectFile: null,
-      listTinh: [{ code: "", full_name: "" }],
-      listHuyen: [{ code: "", full_name: "" }],
-      listXa: [{ code: "", full_name: "" }],
+      listTinh: [],
+      listHuyen: [],
+      listXa: [],
+      listJob: [],
       listGender: [],
       firstName: "",
       lastName: "",
+      userAddressNow: "",
       userPhone: "",
       userBirth: null,
       userGender: null,
       userGenderId: null,
       userDetail: "",
+      userJob: null,
+      userId: null,
       userFacebook: "",
       userLinkedIn: "",
       userTinh: null,
@@ -313,6 +338,8 @@ export default {
     this.userFacebook = this.user.userFacebook;
     this.userPhone = this.user.numberPhone;
     this.listGender = this.user.genders;
+    this.listJob = this.user.catalogs;
+    this.userJob = this.user.catalog;
     if (this.user.provinces) {
       this.listTinh = this.user.provinces;
       this.listHuyen = this.user.districts;

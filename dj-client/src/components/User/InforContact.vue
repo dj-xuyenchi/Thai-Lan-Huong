@@ -60,6 +60,14 @@
         <li>
           <div>
             <span class="field-title"
+              >Công việc hiện tại <span class="required-star">*</span></span
+            >
+            <span class="field-content">{{ userInfor.catalog }}</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="field-title"
               >Tỉnh/Thành phố <span class="required-star"></span
             ></span>
             <span class="field-content">{{ userInfor.province }}</span>
@@ -79,6 +87,14 @@
               >Xã/Phường <span class="required-star"></span
             ></span>
             <span class="field-content">{{ userInfor.ward }}</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="field-title"
+              >Địa chỉ hiện tại <span class="required-star"></span
+            ></span>
+            <span class="field-content">{{ userInfor.addressNow }}</span>
           </div>
         </li>
         <li>

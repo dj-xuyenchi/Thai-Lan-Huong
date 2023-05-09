@@ -13,8 +13,8 @@ using AppContext = dj_actionlayer.DAO.AppContext;
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230505115214_crea")]
-    partial class crea
+    [Migration("20230509063539_create")]
+    partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,12 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime?>("ContactTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Evaluate")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsContact")
                         .HasColumnType("bit");
 
@@ -40,11 +46,22 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Rate")
+                        .HasColumnType("int");
+
                     b.Property<string>("Sdt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("SendRequest")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserContactId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserContactId");
 
                     b.ToTable("advice_contact");
                 });
@@ -291,6 +308,27 @@ namespace dj_actionlayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("trophic");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserCatalog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CatalogCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CatalogName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("user_catalog");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.UserCourse", b =>
@@ -1207,13 +1245,9 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("province_code")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("code");
-
-                    b.HasIndex("administrative_unit_id");
-
-                    b.HasIndex("province_code");
 
                     b.ToTable("districts");
                 });
@@ -1327,10 +1361,6 @@ namespace dj_actionlayer.Migrations
 
                     b.HasKey("code");
 
-                    b.HasIndex("administrative_region_id");
-
-                    b.HasIndex("administrative_unit_id");
-
                     b.ToTable("provinces");
                 });
 
@@ -1378,8 +1408,14 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AddressNow")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("CatalogId")
+                        .HasColumnType("int");
 
                     b.Property<string>("DistrictCode")
                         .HasColumnType("nvarchar(450)");
@@ -1434,6 +1470,8 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CatalogId");
 
                     b.HasIndex("DistrictCode");
 
@@ -1504,7 +1542,7 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("district_code")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("full_name")
                         .HasColumnType("nvarchar(max)");
@@ -1519,10 +1557,6 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("code");
-
-                    b.HasIndex("administrative_unit_id");
-
-                    b.HasIndex("district_code");
 
                     b.ToTable("wards");
                 });
@@ -1551,6 +1585,15 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_trophic");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.AdviceContact", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "UserContact")
+                        .WithMany()
+                        .HasForeignKey("UserContactId");
+
+                    b.Navigation("UserContact");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.CommentLesson", b =>
@@ -1940,21 +1983,6 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.District", b =>
-                {
-                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeUnits", "AdministrativeUnit")
-                        .WithMany()
-                        .HasForeignKey("administrative_unit_id");
-
-                    b.HasOne("dj_webdesigncore.Entities.UserEntity.Province", "Province")
-                        .WithMany()
-                        .HasForeignKey("province_code");
-
-                    b.Navigation("AdministrativeUnit");
-
-                    b.Navigation("Province");
-                });
-
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Experience", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
@@ -1977,21 +2005,6 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>
-                {
-                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeRegion", "AdministrativeRegion")
-                        .WithMany()
-                        .HasForeignKey("administrative_region_id");
-
-                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeUnits", "AdministrativeUnit")
-                        .WithMany()
-                        .HasForeignKey("administrative_unit_id");
-
-                    b.Navigation("AdministrativeRegion");
-
-                    b.Navigation("AdministrativeUnit");
-                });
-
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.RefreshToken", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
@@ -2005,6 +2018,10 @@ namespace dj_actionlayer.Migrations
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.User", b =>
                 {
+                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.UserCatalog", "Catalog")
+                        .WithMany()
+                        .HasForeignKey("CatalogId");
+
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictCode");
@@ -2029,6 +2046,8 @@ namespace dj_actionlayer.Migrations
                         .WithMany()
                         .HasForeignKey("WardCode");
 
+                    b.Navigation("Catalog");
+
                     b.Navigation("District");
 
                     b.Navigation("Gender");
@@ -2040,21 +2059,6 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("UserStatus");
 
                     b.Navigation("Ward");
-                });
-
-            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Ward", b =>
-                {
-                    b.HasOne("dj_webdesigncore.Entities.UserEntity.AdministrativeUnits", "AdministrativeUnit")
-                        .WithMany()
-                        .HasForeignKey("administrative_unit_id");
-
-                    b.HasOne("dj_webdesigncore.Entities.UserEntity.District", "District")
-                        .WithMany()
-                        .HasForeignKey("district_code");
-
-                    b.Navigation("AdministrativeUnit");
-
-                    b.Navigation("District");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserTrophic", b =>
