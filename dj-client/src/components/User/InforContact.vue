@@ -26,7 +26,10 @@
             >
             <span class="field-content" style="position: relative"
               >{{ userInfor.userLastName + " " + userInfor.userFisrtName }}
-              <UpdateInfor :user="userInfor" />
+              <UpdateInfor
+                v-if="userInfor.userAvatarData40x40"
+                :user="userInfor"
+              />
             </span>
           </div>
         </li>
@@ -190,7 +193,9 @@ export default {
   components: { AddExperience, UpdateInfor },
   data() {
     return {
-      userInfor: {},
+      userInfor: {
+        userAvatarData40x40: "",
+      },
       snackbarOk: false,
       snackBarContent: "",
     };

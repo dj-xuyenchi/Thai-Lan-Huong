@@ -25,5 +25,12 @@ namespace dj_webdesigncore.DTOs.UserDTO
         public string Ward { get; set; }
         public string District { get; set; }
         public string Province { get; set; }
+        public string ProvinceCode { get; set; }
+        public string WardCode { get; set; }
+        public string DistrictCode { get; set; }
+        public List<District> districts { get; set; }
+        public List<Province> provinces { get; set; }
+        public List<Ward> wards { get; set; }
+        public List<Gender> genders { get; set; }
     }
 }

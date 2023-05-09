@@ -25,7 +25,9 @@
                 <v-row
                   ><v-col cols="12" sm="12" md="12">
                     <img
-                      :src="'data:image/jpeg;base64,' + userAvatarData40x40"
+                      :src="
+                        'data:image/jpeg;base64, ' + user.userAvatarData40x40
+                      "
                       alt=""
                       style="height: 100px; width: 100px; border-radius: 50%"
                     />
@@ -116,11 +118,12 @@
                       v-model="userTinh"
                       label="Tỉnh/thành phố"
                       :items="listTinh"
-                      item-title="name"
+                      item-title="full_name"
                       persistent-hint
                       return-object
                       item-value="code"
                       variant="outlined"
+                      @change="getHuyen()"
                     ></v-select>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
@@ -129,7 +132,7 @@
                       label="Quận/huyện"
                       :items="listHuyen"
                       variant="outlined"
-                      item-title="name"
+                      item-title="full_name"
                       persistent-hint
                       return-object
                       item-value="code"
@@ -140,7 +143,7 @@
                       v-model="userXa"
                       label="Xã/phường"
                       :items="listXa"
-                      item-title="name"
+                      item-title="full_name"
                       persistent-hint
                       return-object
                       item-value="code"
@@ -215,22 +218,25 @@ export default {
       text: "",
       snackbar: false,
       selectFile: null,
-      listTinh: [],
-      listHuyen: [],
-      listXa: [],
+      listTinh: [{ code: "", full_name: "" }],
+      listHuyen: [{ code: "", full_name: "" }],
+      listXa: [{ code: "", full_name: "" }],
       listGender: [],
       firstName: "",
       lastName: "",
-      userAvatarData40x40: "",
       userPhone: "",
       userBirth: null,
       userGender: null,
+      userGenderId: null,
       userDetail: "",
       userFacebook: "",
       userLinkedIn: "",
       userTinh: null,
+      userTinhCode: null,
       userHuyen: null,
+      userHuyenCode: null,
       userXa: null,
+      userXaCode: null,
       dialog: false,
       btnLoading: false,
       rules: {
@@ -285,32 +291,54 @@ export default {
       const token = localStorage.getItem("token");
       const data = await UserAPI.getOptionUpdate(token);
       this.listGender = data.data.genders;
-      this.listXa = data.data.wards;
-      this.listHuyen = data.data.districts;
       this.listTinh = data.data.provinces;
     },
+    async getHuyen() {
+      console.log(this.userTinh);
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.getHuyen(this.userTinh.code, token);
+      this.listHuyen = data.data.districts;
+    },
+    async getXa() {
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.getOptionUpdate(token);
+      this.listXa = data.data.wards;
+    },
   },
-
   mounted() {
-    this.getOption();
     this.userDetail = this.user.userDetail;
-    this.userAvatarData40x40 = this.user.userAvatarData40x40;
     this.firstName = this.user.userFisrtName;
     this.lastName = this.user.userLastName;
     this.userLinkedIn = this.user.userLinkedIn;
     this.userFacebook = this.user.userFacebook;
     this.userPhone = this.user.numberPhone;
+    this.listGender = this.user.genders;
+    if (this.user.provinces) {
+      this.listTinh = this.user.provinces;
+      this.listHuyen = this.user.districts;
+      this.listXa = this.user.wards;
+    }
+    this.userTinh = this.user.province;
+    this.userTinhCode = this.user.provinceCode;
+    this.userHuyen = this.user.district;
+    this.userTinhCode = this.user.districtCode;
+    this.userXa = this.user.ward;
+    this.userXaCode = this.user.wardCode;
+    this.userGender = this.user.genderName;
+    this.userGenderId = this.user.genderId;
     if (this.user.birthday) {
       const birthday = this.user.birthday.split(" - ");
       this.userBirth = birthday[2] + "-" + birthday[1] + "-" + birthday[0];
     }
-    const tt = this.listGender.find((x) => {
-      return (x.id = this.user.genderId);
-    });
-    console.log(tt);
+    // this.getOption();
+
+    // const tt = this.listGender.find((x) => {
+    //   return (x.id = this.user.genderId);
+    // });
+    // console.log(tt);
   },
   props: {
-    user: [],
+    user: Object,
   },
 };
 </script>

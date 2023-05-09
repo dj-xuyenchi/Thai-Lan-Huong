@@ -26,5 +26,15 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.optionUpdateInfor());
         }
+        [HttpGet("getdistrict")]
+        public async Task<IActionResult> getDistrict(string provinceCode)
+        {
+            return Ok(await _user.getDistrict(provinceCode));
+        }
+        [HttpGet("getward")]
+        public async Task<IActionResult> getWard(string districtCode)
+        {
+            return Ok(await _user.getWard(districtCode));
+        }
     }
 }
