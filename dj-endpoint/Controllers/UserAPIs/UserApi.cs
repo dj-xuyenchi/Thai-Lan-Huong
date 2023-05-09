@@ -1,6 +1,7 @@
 ﻿using dj_actionlayer.Business.UserBusiness;
 using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.Business.UserIBusiness;
+using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace dj_endpoint.Controllers.UserAPIs
@@ -36,25 +37,11 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.getWard(districtCode));
         }
-        [HttpPost("/updateuser")]
-        public async Task<IActionResult> UploadFile(IFormFile file, string firstName, string lastName)
+        [HttpPost("updateuser")]
+        public async Task<IActionResult> UploadFile([FromForm] IFormFile? avatar,UpdateUserRequest updateUserRequest)
         {
-                 byte[] data;
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                data = stream.ToArray();
-            }
-
-
             return Ok();
         }
-
-
-
-
-
-
 
     }
 }

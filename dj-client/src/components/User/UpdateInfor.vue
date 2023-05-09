@@ -10,7 +10,12 @@
             color="#898989"
           />
         </template>
-        <v-form @submit.prevent="submit()" ref="form" style="overflow: scroll">
+        <v-form
+          @submit.prevent="submit()"
+          ref="form"
+          style="overflow: scroll"
+          enctype="multipart/form-data"
+        >
           <v-card
             class="mx-auto pa-12 pb-8"
             elevation="8"
@@ -278,21 +283,19 @@ export default {
     ...mapMutations(["setIsLoadedData"]),
     getData() {
       return {
+        userId: localStorage.getItem("id"),
         firstName: this.firstName,
         lastName: this.lastName,
         birthday: this.userBirth,
-        fileAvatar: this.selectFile ? this.selectFile[0] : null,
         sdt: this.userPhone,
         facebook: this.userFacebook,
         linkedIn: this.userLinkedIn,
         addressNow: this.userAddressNow,
-        province: this.userTinh.code ? this.userTinh.code : this.userTinhCode,
-        district: this.userHuyen.code
-          ? this.userHuyen.code
-          : this.userHuyenCode,
-        ward: this.userXa.code ? this.userXa.code : this.userXaCode,
+        province: this.userTinh ? this.userTinh.code : this.userTinhCode,
+        district: this.userHuyen ? this.userHuyen.code : this.userHuyenCode,
+        ward: this.userXa ? this.userXa.code : this.userXaCode,
         gender: this.userGender.id ? this.userGender.id : this.userGenderId,
-        catalog: this.userJob.id ? this.userJob.id : this.userJobCode,
+        catalog: this.userJob ? this.userJob.id : this.userJobCode,
         detail: this.userDetail,
       };
     },
@@ -312,7 +315,6 @@ export default {
           this.userAvatarData40x40 = reader.result.split(",")[1];
         };
         reader.readAsDataURL(this.selectFile[0]);
-        console.log(this.userAvatarData40x40);
       } else {
         this.text =
           "Vui lòng chọn đúng file định dạng ảnh! Các định dạng được hỗ trợ: JPG, JPEG, PNG";
@@ -322,22 +324,24 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
-      console.log(this.getData());
-      if (
-        this.lessonName.trim().length < 1 ||
-        this.lessonDescription.trim().length < 1 ||
-        this.lessonTime.trim().length < 1 ||
-        this.question.trim().length < 1 ||
-        this.answera.trim().length < 1 ||
-        this.answerb.trim().length < 1 ||
-        this.answerc.trim().length < 1 ||
-        this.answerd.trim().length < 1
-      ) {
-        this.btnLoading = false;
-        return;
-      }
+      // if (
+      //   this.lessonName.trim().length < 1 ||
+      //   this.lessonDescription.trim().length < 1 ||
+      //   this.lessonTime.trim().length < 1 ||
+      //   this.question.trim().length < 1 ||
+      //   this.answera.trim().length < 1 ||
+      //   this.answerb.trim().length < 1 ||
+      //   this.answerc.trim().length < 1 ||
+      //   this.answerd.trim().length < 1
+      // ) {
+      //   this.btnLoading = false;
+      //   return;
+      // }
       const token = localStorage.getItem("token");
-      const result = await UserAPI.getOptionUpdate(token);
+      const formData = new FormData();
+      formData.append("avatar", this.selectFile ? this.selectFile[0] : null);
+      formData.append("updateUserRequest", this.getData());
+      const result = await UserAPI.updateUser(formData, token);
       if (result.status == 1) {
         this.text = "Thêm thành công";
         this.dialog = false;
@@ -357,7 +361,6 @@ export default {
       this.listTinh = data.data.provinces;
     },
     async getHuyen() {
-      console.log(this.userTinh);
       const token = localStorage.getItem("token");
       const data = await UserAPI.getHuyen(this.userTinh.code, token);
       this.listHuyen = data.data;
@@ -384,10 +387,12 @@ export default {
     this.userJobCode = this.user.catalogId;
     this.userAvatarData40x40 = this.user.userAvatarData40x40;
     this.userAddressNow = this.user.addressNow;
-    if (this.user.provinces) {
+    if (this.listHuyen) {
       this.listTinh = this.user.provinces;
       this.listHuyen = this.user.districts;
       this.listXa = this.user.wards;
+    } else {
+      this.listTinh = this.user.provinces;
     }
     this.userTinh = this.user.province;
     this.userTinhCode = this.user.provinceCode;
@@ -401,12 +406,6 @@ export default {
       const birthday = this.user.birthday.split(" - ");
       this.userBirth = birthday[2] + "-" + birthday[1] + "-" + birthday[0];
     }
-    // this.getOption();
-
-    // const tt = this.listGender.find((x) => {
-    //   return (x.id = this.user.genderId);
-    // });
-    // console.log(tt);
   },
   props: {
     user: Object,

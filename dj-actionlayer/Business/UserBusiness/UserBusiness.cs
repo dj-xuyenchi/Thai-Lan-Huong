@@ -5,6 +5,8 @@ using dj_webdesigncore.DTOs.UserDTO;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
+using dj_webdesigncore.Request.Account;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,13 +61,17 @@ namespace dj_actionlayer.Business.UserBusiness
             dto.AddressNow = user.AddressNow == null ? null : user.AddressNow;
             UserCatalog userCatalog = await _context.user_catalog.FindAsync(user.CatalogId);
             dto.Catalog = userCatalog == null ? null : userCatalog.CatalogName;
-            dto.CatalogId = user.CatalogId==null?null: user.CatalogId;
+            dto.CatalogId = user.CatalogId == null ? null : user.CatalogId;
             dto.UserId = user.Id;
             if (user.ProvinceCode != null)
             {
                 dto.provinces = _context.provinces.ToList();
                 dto.districts = _context.districts.Where(x => x.province_code == user.ProvinceCode).ToList();
                 dto.wards = _context.wards.Where(x => x.district_code == user.DistrictCode).ToList();
+            }
+            else
+            {
+                dto.provinces = _context.provinces.ToList();
             }
             dto.genders = _context.gender.ToList();
             dto.catalogs = _context.user_catalog.ToList();
@@ -97,9 +103,16 @@ namespace dj_actionlayer.Business.UserBusiness
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;
         }
-        public Task<ResponData<ActionStatus>> updateInfor(UserInforDTO userInforDTO)
+
+
+        public async Task<ResponData<ActionStatus>> updateUser(UpdateUserRequest updateUserRequest)
         {
-            throw new NotImplementedException();
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            var stream = new MemoryStream();
+            //file.CopyTo(stream);
+            byte[] avatar = stream.ToArray();
+
+            return result;
         }
     }
 }
