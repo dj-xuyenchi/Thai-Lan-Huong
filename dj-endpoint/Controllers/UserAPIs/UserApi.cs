@@ -36,5 +36,25 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.getWard(districtCode));
         }
+        [HttpPost("/updateuser")]
+        public async Task<IActionResult> UploadFile(IFormFile file, string firstName, string lastName)
+        {
+                 byte[] data;
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                data = stream.ToArray();
+            }
+
+
+            return Ok();
+        }
+
+
+
+
+
+
+
     }
 }

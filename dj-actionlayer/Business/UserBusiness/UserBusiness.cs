@@ -36,9 +36,9 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             UserInforDTO dto = new UserInforDTO();
-            dto.Birthday = user.Birthday == null ? "Chưa cập nhật" : user.Birthday.Value.Day + " - " + user.Birthday.Value.Month + " - " + user.Birthday.Value.Year;
+            dto.Birthday = user.Birthday == null ? null : user.Birthday.Value.Day + " - " + user.Birthday.Value.Month + " - " + user.Birthday.Value.Year;
             Ward ward = await _context.wards.FindAsync(user.WardCode);
-            dto.Ward = ward == null ? "Chưa cập nhật!" : ward.full_name;
+            dto.Ward = ward == null ? null : ward.full_name;
             dto.WardCode = user.WardCode;
             dto.UserFacebook = user.UserFacebook;
             dto.UserEmail = user.UserEmail;
@@ -46,7 +46,7 @@ namespace dj_actionlayer.Business.UserBusiness
             dto.UserLastName = user.UserLastName;
             District district = await _context.districts.FindAsync(user.DistrictCode);
             dto.DistrictCode = user.DistrictCode;
-            dto.District = district == null ? "Chưa cập nhật" : district.full_name;
+            dto.District = district == null ? null : district.full_name;
             dto.UserAvatarData40x40 = user.UserAvatarData40x40;
             dto.UserDetail = user.UserDetail;
             dto.GenderName = _context.gender.Find(user.GenderId).GenderName;
@@ -54,11 +54,12 @@ namespace dj_actionlayer.Business.UserBusiness
             dto.UserFisrtName = user.UserFisrtName;
             Province province = await _context.provinces.FindAsync(user.ProvinceCode);
             dto.ProvinceCode = user.ProvinceCode;
-            dto.Province = province == null ? "Chưa cập nhật!" : province.full_name;
+            dto.Province = province == null ? null : province.full_name;
             dto.GenderId = (int)user.GenderId;
-            dto.AddressNow = user.AddressNow == null ? "Chưa cập nhật" : user.AddressNow;
+            dto.AddressNow = user.AddressNow == null ? null : user.AddressNow;
             UserCatalog userCatalog = await _context.user_catalog.FindAsync(user.CatalogId);
-            dto.Catalog = userCatalog == null ? "Chưa cập nhật" : userCatalog.CatalogName;
+            dto.Catalog = userCatalog == null ? null : userCatalog.CatalogName;
+            dto.CatalogId = user.CatalogId==null?null: user.CatalogId;
             dto.UserId = user.Id;
             if (user.ProvinceCode != null)
             {

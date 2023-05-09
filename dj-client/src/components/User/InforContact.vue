@@ -38,7 +38,9 @@
             <span class="field-title"
               >Ngày sinh <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.birthday }}</span>
+            <span class="field-content">{{
+              userInfor.birthday ? userInfor.birthday : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -60,9 +62,11 @@
         <li>
           <div>
             <span class="field-title"
-              >Công việc hiện tại <span class="required-star">*</span></span
-            >
-            <span class="field-content">{{ userInfor.catalog }}</span>
+              >Công việc hiện tại <span class="required-star"></span
+            ></span>
+            <span class="field-content">{{
+              userInfor.catalog ? userInfor.catalog : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -70,7 +74,9 @@
             <span class="field-title"
               >Tỉnh/Thành phố <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.province }}</span>
+            <span class="field-content">{{
+              userInfor.province ? userInfor.province : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -78,7 +84,9 @@
             <span class="field-title"
               >Quận/Huyện <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.district }}</span>
+            <span class="field-content">{{
+              userInfor.district ? userInfor.district : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -86,7 +94,9 @@
             <span class="field-title"
               >Xã/Phường <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.ward }}</span>
+            <span class="field-content">{{
+              userInfor.ward ? userInfor.ward : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -94,7 +104,9 @@
             <span class="field-title"
               >Địa chỉ hiện tại <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.addressNow }}</span>
+            <span class="field-content">{{
+              userInfor.addressNow ? userInfor.addressNow : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -110,7 +122,9 @@
             <span class="field-title"
               >Facebook <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.userFacebook }}</span>
+            <span class="field-content">{{
+              userInfor.userFacebook ? userInfor.userFacebook : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -118,7 +132,9 @@
             <span class="field-title"
               >LinkedIn <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.userLinkedIn }}</span>
+            <span class="field-content">{{
+              userInfor.userLinkedIn ? userInfor.userLinkedIn : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>
@@ -126,7 +142,9 @@
             <span class="field-title"
               >Mô tả bản thân <span class="required-star"></span
             ></span>
-            <span class="field-content">{{ userInfor.userDetail }}</span>
+            <span class="field-content">{{
+              userInfor.userDetail ? userInfor.userDetail : "Chưa cập nhật!"
+            }}</span>
           </div>
         </li>
         <li>

@@ -25,9 +25,7 @@
                 <v-row
                   ><v-col cols="12" sm="12" md="12">
                     <img
-                      :src="
-                        'data:image/jpeg;base64, ' + user.userAvatarData40x40
-                      "
+                      :src="'data:image/jpeg;base64, ' + userAvatarData40x40"
                       alt=""
                       style="height: 100px; width: 100px; border-radius: 50%"
                     />
@@ -132,7 +130,7 @@
                       return-object
                       item-value="code"
                       variant="outlined"
-                      @change="getHuyen()"
+                      @update:modelValue="getHuyen()"
                     ></v-select>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
@@ -145,6 +143,7 @@
                       persistent-hint
                       return-object
                       item-value="code"
+                      @update:modelValue="getXa()"
                     ></v-select>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
@@ -244,18 +243,20 @@ export default {
       listXa: [],
       listJob: [],
       listGender: [],
-      firstName: "",
-      lastName: "",
-      userAddressNow: "",
-      userPhone: "",
+      firstName: null,
+      lastName: null,
+      userAddressNow: null,
+      userAvatarData40x40: null,
+      userPhone: null,
       userBirth: null,
       userGender: null,
       userGenderId: null,
-      userDetail: "",
+      userDetail: null,
       userJob: null,
+      userJobCode: null,
       userId: null,
-      userFacebook: "",
-      userLinkedIn: "",
+      userFacebook: null,
+      userLinkedIn: null,
       userTinh: null,
       userTinhCode: null,
       userHuyen: null,
@@ -266,7 +267,7 @@ export default {
       btnLoading: false,
       rules: {
         validName: (value) =>
-          !/[@#$%^&+=! ]/.test(value) || "Tên chứa ký tự không hợp lệ",
+          !/[@#$%^&+=!]/.test(value) || "Tên chứa ký tự không hợp lệ",
         sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
         validValue: (value) =>
           value.trim().length > 0 || "Không được để trống thông tin này!",
@@ -275,42 +276,79 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
+    getData() {
+      return {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        birthday: this.userBirth,
+        fileAvatar: this.selectFile ? this.selectFile[0] : null,
+        sdt: this.userPhone,
+        facebook: this.userFacebook,
+        linkedIn: this.userLinkedIn,
+        addressNow: this.userAddressNow,
+        province: this.userTinh.code ? this.userTinh.code : this.userTinhCode,
+        district: this.userHuyen.code
+          ? this.userHuyen.code
+          : this.userHuyenCode,
+        ward: this.userXa.code ? this.userXa.code : this.userXaCode,
+        gender: this.userGender.id ? this.userGender.id : this.userGenderId,
+        catalog: this.userJob.id ? this.userJob.id : this.userJobCode,
+        detail: this.userDetail,
+      };
+    },
+    onFileSelect() {
+      if (
+        this.selectFile[0].type == "image/png" ||
+        this.selectFile[0].type == "image/jpeg" ||
+        this.selectFile[0].type == "image/jpg"
+      ) {
+        if (this.selectFile[0].size > 1048576) {
+          this.text = "File quá nặng chỉ hỗ trợ file dung lượng < 1MB";
+          this.snackbar = true;
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.userAvatarData40x40 = reader.result.split(",")[1];
+        };
+        reader.readAsDataURL(this.selectFile[0]);
+        console.log(this.userAvatarData40x40);
+      } else {
+        this.text =
+          "Vui lòng chọn đúng file định dạng ảnh! Các định dạng được hỗ trợ: JPG, JPEG, PNG";
+        this.snackbar = true;
+        return;
+      }
+    },
     async submit() {
-      //   this.btnLoading = true;
-      //   if (
-      //     this.lessonName.trim().length < 1 ||
-      //     this.lessonDescription.trim().length < 1 ||
-      //     this.lessonTime.trim().length < 1 ||
-      //     this.question.trim().length < 1 ||
-      //     this.answera.trim().length < 1 ||
-      //     this.answerb.trim().length < 1 ||
-      //     this.answerc.trim().length < 1 ||
-      //     this.answerd.trim().length < 1
-      //   ) {
-      //     this.btnLoading = false;
-      //     return;
-      //   }
-      //   const token = localStorage.getItem("token");
-      //   if (result.status == 1) {
-      //     this.text = "Thêm thành công";
-      //     this.dialog = false;
-      //     this.snackbar = true;
-      //     this.lessonName = "";
-      //     this.lessonDescription = "";
-      //     this.lessonTime = "";
-      //     this.question = "";
-      //     this.answera = "";
-      //     this.answerb = "";
-      //     this.answerc = "";
-      //     this.answerd = "";
-      //     this.answer = "A";
-      //     this.getLessonDetail();
-      //   }
-      //   if (result.status == 2) {
-      //     this.text = "Thêm thất bại";
-      //     this.snackbar = true;
-      //   }
-      //   this.btnLoading = false;
+      this.btnLoading = true;
+      console.log(this.getData());
+      if (
+        this.lessonName.trim().length < 1 ||
+        this.lessonDescription.trim().length < 1 ||
+        this.lessonTime.trim().length < 1 ||
+        this.question.trim().length < 1 ||
+        this.answera.trim().length < 1 ||
+        this.answerb.trim().length < 1 ||
+        this.answerc.trim().length < 1 ||
+        this.answerd.trim().length < 1
+      ) {
+        this.btnLoading = false;
+        return;
+      }
+      const token = localStorage.getItem("token");
+      const result = await UserAPI.getOptionUpdate(token);
+      if (result.status == 1) {
+        this.text = "Thêm thành công";
+        this.dialog = false;
+        this.snackbar = true;
+        this.getLessonDetail();
+      }
+      if (result.status == 2) {
+        this.text = "Thêm thất bại";
+        this.snackbar = true;
+      }
+      this.btnLoading = false;
     },
     async getOption() {
       const token = localStorage.getItem("token");
@@ -322,12 +360,15 @@ export default {
       console.log(this.userTinh);
       const token = localStorage.getItem("token");
       const data = await UserAPI.getHuyen(this.userTinh.code, token);
-      this.listHuyen = data.data.districts;
+      this.listHuyen = data.data;
+      this.userHuyen = data.data[0];
+      this.getXa();
     },
     async getXa() {
       const token = localStorage.getItem("token");
-      const data = await UserAPI.getOptionUpdate(token);
-      this.listXa = data.data.wards;
+      const data = await UserAPI.getXa(this.userHuyen.code, token);
+      this.listXa = data.data;
+      this.userXa = data.data[0];
     },
   },
   mounted() {
@@ -340,6 +381,9 @@ export default {
     this.listGender = this.user.genders;
     this.listJob = this.user.catalogs;
     this.userJob = this.user.catalog;
+    this.userJobCode = this.user.catalogId;
+    this.userAvatarData40x40 = this.user.userAvatarData40x40;
+    this.userAddressNow = this.user.addressNow;
     if (this.user.provinces) {
       this.listTinh = this.user.provinces;
       this.listHuyen = this.user.districts;
@@ -348,7 +392,7 @@ export default {
     this.userTinh = this.user.province;
     this.userTinhCode = this.user.provinceCode;
     this.userHuyen = this.user.district;
-    this.userTinhCode = this.user.districtCode;
+    this.userHuyenCode = this.user.districtCode;
     this.userXa = this.user.ward;
     this.userXaCode = this.user.wardCode;
     this.userGender = this.user.genderName;
