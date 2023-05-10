@@ -852,3 +852,5 @@ C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\r
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\dj-actionlayer.pdb
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\dj-actionlayer.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\ref\dj-actionlayer.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Debug\net6.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Debug\net6.0\System.IO.Pipelines.dll

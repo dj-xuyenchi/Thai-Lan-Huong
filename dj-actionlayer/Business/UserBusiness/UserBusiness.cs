@@ -105,13 +105,49 @@ namespace dj_actionlayer.Business.UserBusiness
         }
 
 
-        public async Task<ResponData<ActionStatus>> updateUser(UpdateUserRequest updateUserRequest)
+        public async Task<ResponData<UpdateDTO>> updateUser(IFormFile? avatar, UpdateUserRequest updateUserRequest)
         {
-            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            var stream = new MemoryStream();
-            //file.CopyTo(stream);
-            byte[] avatar = stream.ToArray();
+            ResponData<UpdateDTO> result = new ResponData<UpdateDTO>();
+            UpdateDTO data= new UpdateDTO();
+            User user = await _context.user.FindAsync(updateUserRequest.userId);
+            if (user == null)
+            {
 
+                data.status = ActionStatus.NOTFOUND;
+                result.Data = data;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            if(avatar != null)
+            {
+                var stream = new MemoryStream();
+                avatar.CopyTo(stream);
+                byte[] avatarByte = stream.ToArray();
+                user.UserAvatarData40x40 = avatarByte;
+            }
+            user.AddressNow = updateUserRequest.addressNow;
+            user.Birthday = updateUserRequest.birthday;
+            user.NumberPhone = updateUserRequest.sdt;
+            user.UserFacebook = updateUserRequest.facebook;
+            user.UserFisrtName = updateUserRequest.firstName;
+            user.UserLastName= updateUserRequest.lastName;
+            user.CatalogId = updateUserRequest.catalog;
+            user.DistrictCode = updateUserRequest.district;
+            user.GenderId = updateUserRequest.gender;
+            user.ProvinceCode = updateUserRequest.province;
+            user.UserDetail= updateUserRequest.detail;
+            user.UserLinkedIn= updateUserRequest.linkedIn;
+            user.WardCode = updateUserRequest.ward;
+            user.Update= DateTime.Now;
+            await _context.SaveChangesAsync();
+            data.status = ActionStatus.SECCESSFULLY;
+            data.avatar = user.UserAvatarData40x40;
+            data.name = user.UserLastName + user.UserFisrtName;
+            data.nickName = "Chiến Thần Front End";
+            result.Data =data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;
         }
     }

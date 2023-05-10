@@ -27,6 +27,7 @@
             <span class="field-content" style="position: relative"
               >{{ userInfor.userLastName + " " + userInfor.userFisrtName }}
               <UpdateInfor
+                :getUserInfor="getUserInfor"
                 v-if="userInfor.userAvatarData40x40"
                 :user="userInfor"
               />

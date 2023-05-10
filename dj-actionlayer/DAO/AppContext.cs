@@ -45,6 +45,8 @@ namespace dj_actionlayer.DAO
         public DbSet<Post> post { get; set; }
         public DbSet<PostStatus> post_status { get; set; }
         // User Entities
+        public DbSet<School> school { get; set; }
+        public DbSet<SchoolType> school_type { get; set; }
         public DbSet<LearningExperience> learning_experience { get; set; }
         public DbSet<Experience> experience { get; set; }
         public DbSet<Ward> wards { get; set; }
@@ -76,9 +78,9 @@ namespace dj_actionlayer.DAO
         public DbSet<HomeContent> home_content { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-             optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-           // optionsBuilder.UseSqlServer(Settings.DBConnect());
-            //	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
+          //  optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+          //  optionsBuilder.UseSqlServer(Settings.DBConnect());
+           	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
     }
 }

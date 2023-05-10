@@ -340,16 +340,21 @@ export default {
       const token = localStorage.getItem("token");
       const formData = new FormData();
       formData.append("avatar", this.selectFile ? this.selectFile[0] : null);
-      formData.append("updateUserRequest", this.getData());
+      formData.append("updateUserRequest", JSON.stringify(this.getData()));
       const result = await UserAPI.updateUser(formData, token);
-      if (result.status == 1) {
-        this.text = "Thêm thành công";
+      if (result.data.status == 1) {
+        this.text = "Cập nhật thành công!";
+        localStorage.setItem("nickName", result.data.nickName);
+        localStorage.setItem("avatar", result.data.avatar);
+        localStorage.setItem("name", result.data.name);
+        this.getUserInfor();
         this.dialog = false;
         this.snackbar = true;
+        this.btnLoading = false;
         this.getLessonDetail();
       }
-      if (result.status == 2) {
-        this.text = "Thêm thất bại";
+      if (result.data.status == 4) {
+        this.text = "Cập nhật thất bại!";
         this.snackbar = true;
       }
       this.btnLoading = false;
@@ -409,6 +414,7 @@ export default {
   },
   props: {
     user: Object,
+    getUserInfor: Function,
   },
 };
 </script>

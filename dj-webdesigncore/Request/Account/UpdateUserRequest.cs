@@ -17,13 +17,13 @@ namespace dj_webdesigncore.Request.Account
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string sdt { get; set; }
-        public string? detail { get; set; }
+        public string detail { get; set; }
         public DateTime birthday { get; set; }
-        public int gender { get; set; }
-        public string? province { get; set; }
-        public string? ward { get; set; }
-        public string? district { get; set; }
-        public string? addressNow { get; set; }
+        public int? gender { get; set; }
+        public string province { get; set; }
+        public string ward { get; set; }
+        public string district { get; set; }
+        public string addressNow { get; set; }
         public int? catalog { get; set; }
     }
 }

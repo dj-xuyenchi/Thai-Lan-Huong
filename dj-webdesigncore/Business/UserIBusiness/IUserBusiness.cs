@@ -19,6 +19,6 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<OptionUpdateInfor>> optionUpdateInfor();
         Task<ResponData<List<District>>> getDistrict(string provinceCode);
         Task<ResponData<List<Ward>>> getWard(string districtCode);
-        Task<ResponData<ActionStatus>> updateUser(UpdateUserRequest updateUserRequest);
+        Task<ResponData<UpdateDTO>> updateUser(IFormFile? avatar, UpdateUserRequest updateUserRequest);
     }
 }

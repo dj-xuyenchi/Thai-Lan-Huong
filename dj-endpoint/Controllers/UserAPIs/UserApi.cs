@@ -4,6 +4,9 @@ using dj_webdesigncore.Business.UserIBusiness;
 using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Security.Cryptography.Xml;
+
 namespace dj_endpoint.Controllers.UserAPIs
 {
     [Authorize(Policy = "ADMINANDMEMBER")]
@@ -38,9 +41,10 @@ namespace dj_endpoint.Controllers.UserAPIs
             return Ok(await _user.getWard(districtCode));
         }
         [HttpPost("updateuser")]
-        public async Task<IActionResult> UploadFile([FromForm] IFormFile? avatar,UpdateUserRequest updateUserRequest)
+        public async Task<IActionResult> UploadFile([FromForm] IFormFile? avatar, [FromForm] string updateUserRequest)
         {
-            return Ok();
+            UpdateUserRequest userRequest = JsonConvert.DeserializeObject<UpdateUserRequest>(updateUserRequest);
+            return Ok(await _user.updateUser(avatar, userRequest));
         }
 
     }
