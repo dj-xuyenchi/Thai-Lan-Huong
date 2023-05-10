@@ -11,85 +11,32 @@
           >
           </v-btn>
         </template>
-        <v-form @submit.prevent="submit()" ref="form">
-          <v-card style="overflow: scroll">
+        <v-form
+          @submit.prevent="submit()"
+          ref="form"
+          style="overflow: scroll"
+          enctype="multipart/form-data"
+        >
+          <v-card
+            class="mx-auto pa-12 pb-8"
+            elevation="8"
+            min-width="40%"
+            rounded="lg"
+          >
             <v-card-title>
-              <span class="text-h5">Thêm bài quiz</span>
+              <span class="text-h5">Thêm kinh nghiệm làm việc</span>
             </v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="12" md="12">
+                  <v-col cols="4" sm="4" md="4">
                     <v-text-field
-                      label="Tên bài học*"
-                      hint="Với bài học dạng câu hỏi tên sẽ là Quiz: + tên bài học"
-                      v-model="lessonName"
-                      :rules="rules"
+                      v-model="userFacebook"
+                      density="compact"
+                      label="Facebook"
+                      hint="Facebook"
+                      variant="outlined"
                     ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field
-                      label="Mô tả*"
-                      hint="Mô tả bài học"
-                      :rules="rules"
-                      v-model="lessonDescription"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field
-                      label="Thời lượng*"
-                      hint="Thời lượng của bài học"
-                      :rules="rules"
-                      v-model="lessonTime"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Câu hỏi*"
-                      hint="Câu hỏi hiển thị"
-                      :rules="rules"
-                      v-model="question"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án A*"
-                      hint="Đáp án A"
-                      :rules="rules"
-                      v-model="answera"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án B*"
-                      hint="Đáp án B"
-                      :rules="rules"
-                      v-model="answerb"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án C*"
-                      hint="Đáp án C"
-                      :rules="rules"
-                      v-model="answerc"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Đáp án D*"
-                      hint="Đáp án D"
-                      :rules="rules"
-                      v-model="answerd"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-select
-                      label="Đáp án đúng"
-                      :items="['A', 'B', 'C', 'D']"
-                      :rules="rules"
-                      v-model="answer"
-                    ></v-select>
                   </v-col>
                 </v-row>
               </v-container>
@@ -110,7 +57,7 @@
                 variant="text"
                 type="submit"
               >
-                Thêm bài học
+                Cập nhật
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -129,106 +76,102 @@
 </template>
 
 <script>
+import UserAPI from "../../apis/APIUser/UserAPI.ts";
 import { mapMutations } from "vuex";
 export default {
-  name: "AddExperience",
+  name: "AddExpertience",
   data() {
     return {
       text: "",
       snackbar: false,
-      lessonName: "",
-      lessonDescription: "",
-      lessonTime: "",
-      question: "",
-      answera: "",
-      answerb: "",
-      answerc: "",
-      answerd: "",
-      answer: "A",
+
       dialog: false,
       btnLoading: false,
-      rules: [
-        (value) => {
-          if (value) return true;
-          return "Không được để trống!";
-        },
-      ],
+      rules: {
+        validName: (value) =>
+          !/[@#$%^&+=!]/.test(value) || "Tên chứa ký tự không hợp lệ",
+        sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
+        validValue: (value) =>
+          value.trim().length > 0 || "Không được để trống thông tin này!",
+      },
     };
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    getData() {
-      var answerResult;
-      switch (this.answer) {
-        case "A":
-          answerResult = 1;
-          break;
-        case "B":
-          answerResult = 2;
-          break;
-        case "C":
-          answerResult = 3;
-          break;
-        case "D":
-          answerResult = 4;
-          break;
-        default:
-          break;
-      }
-      return {
-        lessonName: this.lessonName,
-        lessonDescription: this.lessonDescription,
-        lessonTime: this.lessonTime,
-        question: this.question,
-        answerA: this.answera,
-        answerB: this.answerb,
-        answerC: this.answerc,
-        answerD: this.answerd,
-        answer: answerResult,
-      };
-    },
+
     async submit() {
-      //   this.btnLoading = true;
-      //   if (
-      //     this.lessonName.trim().length < 1 ||
-      //     this.lessonDescription.trim().length < 1 ||
-      //     this.lessonTime.trim().length < 1 ||
-      //     this.question.trim().length < 1 ||
-      //     this.answera.trim().length < 1 ||
-      //     this.answerb.trim().length < 1 ||
-      //     this.answerc.trim().length < 1 ||
-      //     this.answerd.trim().length < 1
-      //   ) {
-      //     this.btnLoading = false;
-      //     return;
-      //   }
-      //   const token = localStorage.getItem("token");
-      //   if (result.status == 1) {
-      //     this.text = "Thêm thành công";
-      //     this.dialog = false;
-      //     this.snackbar = true;
-      //     this.lessonName = "";
-      //     this.lessonDescription = "";
-      //     this.lessonTime = "";
-      //     this.question = "";
-      //     this.answera = "";
-      //     this.answerb = "";
-      //     this.answerc = "";
-      //     this.answerd = "";
-      //     this.answer = "A";
-      //     this.getLessonDetail();
-      //   }
-      //   if (result.status == 2) {
-      //     this.text = "Thêm thất bại";
-      //     this.snackbar = true;
-      //   }
+      this.btnLoading = true;
+      // if (
+      //   this.lessonName.trim().length < 1 ||
+      //   this.lessonDescription.trim().length < 1 ||
+      //   this.lessonTime.trim().length < 1 ||
+      //   this.question.trim().length < 1 ||
+      //   this.answera.trim().length < 1 ||
+      //   this.answerb.trim().length < 1 ||
+      //   this.answerc.trim().length < 1 ||
+      //   this.answerd.trim().length < 1
+      // ) {
       //   this.btnLoading = false;
+      //   return;
+      // }
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("avatar", this.selectFile ? this.selectFile[0] : null);
+      formData.append("updateUserRequest", JSON.stringify(this.getData()));
+      const result = await UserAPI.updateUser(formData, token);
+      if (result.data.status == 1) {
+        this.text = "Cập nhật thành công!";
+        localStorage.setItem("nickName", result.data.nickName);
+        localStorage.setItem("avatar", result.data.avatar);
+        localStorage.setItem("name", result.data.name);
+        this.getUserInfor();
+        this.dialog = false;
+        this.snackbar = true;
+        this.btnLoading = false;
+        this.getLessonDetail();
+      }
+      if (result.data.status == 4) {
+        this.text = "Cập nhật thất bại!";
+        this.snackbar = true;
+      }
+      this.btnLoading = false;
+    },
+    async getOption() {
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.getOptionUpdate(token);
+      this.listGender = data.data.genders;
+      this.listTinh = data.data.provinces;
+    },
+    async getHuyen() {
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.getHuyen(this.userTinh.code, token);
+      this.listHuyen = data.data;
+      this.userHuyen = data.data[0];
+      this.getXa();
+    },
+    async getXa() {
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.getXa(this.userHuyen.code, token);
+      this.listXa = data.data;
+      this.userXa = data.data[0];
     },
   },
-  props: {
-    getLessonDetail: Function,
-  },
+  props: {},
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.iconBtn {
+  margin-left: 40px;
+  font-size: 16px;
+  position: absolute;
+  right: 20px;
+}
+.iconBtn:hover {
+  cursor: pointer;
+}
+
+.my-file-input {
+  display: none;
+}
+</style>
