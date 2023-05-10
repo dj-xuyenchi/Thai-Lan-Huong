@@ -29,6 +29,7 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubT
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

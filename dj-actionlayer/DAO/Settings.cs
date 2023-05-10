@@ -18,11 +18,11 @@ namespace dj_actionlayer.DAO
         }
         public static string DBConnectDeploy()
         {
-            return "Server=localhost;Integrated Security=false;Initial Catalog=djxuyen1_coding;MultipleActiveResultSets=True;User ID= djxuyen1_djxuyen1;Password =Mamama99@!";
+            return "Server=localhost;Integrated Security=false;Initial Catalog=djxuyen1_coding;MultipleActiveResultSets=True;User ID= djxuyen1_djxuyen1;Password =Mvmvmv99@";
         }
         public static string DBConnectHostingRemote()
         {
-            return "Server=125.212.224.205;Integrated Security=false;Initial Catalog=djxuyen1_coding;MultipleActiveResultSets=True;User ID= djxuyen1_djxuyen1;Password =Mamama99@!";
+            return "Server=125.212.224.205;Integrated Security=false;Initial Catalog=djxuyen1_coding;MultipleActiveResultSets=True;User ID= djxuyen1_djxuyen1;Password =Mvmvmv99@";
         }
         public static string[] emailConfig()
         {

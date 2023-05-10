@@ -13,7 +13,7 @@ using AppContext = dj_actionlayer.DAO.AppContext;
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230509063539_create")]
+    [Migration("20230510094102_create")]
     partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1313,24 +1313,51 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("Close")
+                    b.Property<DateTime>("Close")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MajorsId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Open")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SchoolName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MajorsId");
+
+                    b.HasIndex("SchoolId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("learning_experience");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Majors", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("MajorsCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MajorsName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Majors");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>
@@ -1400,6 +1427,49 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("refresh_token");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.School", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("SchoolName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SchoolTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolTypeId");
+
+                    b.ToTable("school");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.SchoolType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("SchoolTypeCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SchoolTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("school_type");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.User", b =>
                 {
                     b.Property<int>("Id")
@@ -1428,6 +1498,9 @@ namespace dj_actionlayer.Migrations
 
                     b.Property<string>("ProvinceCode")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("Update")
+                        .HasColumnType("datetime2");
 
                     b.Property<byte[]>("UserAvatarData")
                         .HasColumnType("varbinary(max)");
@@ -1996,11 +2069,27 @@ namespace dj_actionlayer.Migrations
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.LearningExperience", b =>
                 {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.Majors", "Majors")
+                        .WithMany()
+                        .HasForeignKey("MajorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.School", "School")
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Majors");
+
+                    b.Navigation("School");
 
                     b.Navigation("User");
                 });
@@ -2014,6 +2103,17 @@ namespace dj_actionlayer.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.School", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.SchoolType", "SchoolType")
+                        .WithMany()
+                        .HasForeignKey("SchoolTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SchoolType");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.User", b =>

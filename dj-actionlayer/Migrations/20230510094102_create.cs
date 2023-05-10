@@ -194,6 +194,20 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Majors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MajorsCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MajorsName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Majors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "post_status",
                 columns: table => new
                 {
@@ -223,6 +237,20 @@ namespace dj_actionlayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_provinces", x => x.code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "school_type",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SchoolTypeCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SchoolTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_school_type", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -371,6 +399,26 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "school",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SchoolTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_school", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_school_school_type_SchoolTypeId",
+                        column: x => x.SchoolTypeId,
+                        principalTable: "school_type",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "user",
                 columns: table => new
                 {
@@ -388,6 +436,7 @@ namespace dj_actionlayer.Migrations
                     NumberPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Update = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GenderId = table.Column<int>(type: "int", nullable: true),
                     UserRoleId = table.Column<int>(type: "int", nullable: true),
                     UserStatusId = table.Column<int>(type: "int", nullable: true),
@@ -721,13 +770,26 @@ namespace dj_actionlayer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    SchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SchoolId = table.Column<int>(type: "int", nullable: false),
+                    MajorsId = table.Column<int>(type: "int", nullable: false),
                     Open = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Close = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Close = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_learning_experience", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_learning_experience_Majors_MajorsId",
+                        column: x => x.MajorsId,
+                        principalTable: "Majors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_learning_experience_school_SchoolId",
+                        column: x => x.SchoolId,
+                        principalTable: "school",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_learning_experience_user_UserId",
                         column: x => x.UserId,
@@ -1269,6 +1331,16 @@ namespace dj_actionlayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_learning_experience_MajorsId",
+                table: "learning_experience",
+                column: "MajorsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_learning_experience_SchoolId",
+                table: "learning_experience",
+                column: "SchoolId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_learning_experience_UserId",
                 table: "learning_experience",
                 column: "UserId");
@@ -1332,6 +1404,11 @@ namespace dj_actionlayer.Migrations
                 name: "IX_refresh_token_UserId",
                 table: "refresh_token",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_school_SchoolTypeId",
+                table: "school",
+                column: "SchoolTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_test_case_PracticeLessonId",
@@ -1535,6 +1612,12 @@ namespace dj_actionlayer.Migrations
                 name: "course_require");
 
             migrationBuilder.DropTable(
+                name: "Majors");
+
+            migrationBuilder.DropTable(
+                name: "school");
+
+            migrationBuilder.DropTable(
                 name: "question_lesson");
 
             migrationBuilder.DropTable(
@@ -1557,6 +1640,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "course");
+
+            migrationBuilder.DropTable(
+                name: "school_type");
 
             migrationBuilder.DropTable(
                 name: "post");

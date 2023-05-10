@@ -616,3 +616,4 @@ C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\re
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\dj-endpoint.pdb
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\dj-endpoint.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\ref\dj-endpoint.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Release\net6.0\Newtonsoft.Json.dll

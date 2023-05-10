@@ -23,6 +23,7 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public string? NumberPhone { get; set; }
 		public string? UserDetail { get; set; }
 		public DateTime? Birthday { get; set; }
+		public DateTime? Update { get; set; }
 		public int? GenderId { get; set; }
 		public  Gender? Gender { get; set; }
 		public int? UserRoleId { get; set; }
