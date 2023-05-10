@@ -9,7 +9,7 @@ namespace dj_webdesigncore.Entities.UserEntity
     public class School : BaseEntity
     {
         public string SchoolName { get; set; }
-        public int SchoolTypeId { get; set; }
-        public SchoolType SchoolType { get; set; }
+        public int? SchoolTypeId { get; set; }
+        public SchoolType? SchoolType { get; set; }
     }
 }
