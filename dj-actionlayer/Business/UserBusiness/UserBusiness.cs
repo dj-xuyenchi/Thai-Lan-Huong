@@ -17,6 +17,32 @@ namespace dj_actionlayer.Business.UserBusiness
 {
     public class UserBusiness : BaseBusiness, IUserBusiness
     {
+        public async Task<ResponData<ActionStatus>> createExperience(CreateExperience createExperience)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            if (!_context.user.Any(x => x.Id == createExperience.userId))
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            Experience experience = new Experience();
+            if (createExperience.isWorking)
+            {
+                experience.Close = createExperience.end;
+            }
+            experience.Detail = createExperience.detail;
+            experience.Open = createExperience.start;
+            experience.Position = createExperience.position;
+            await _context.AddAsync(experience);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
         public async Task<ResponData<List<District>>> getDistrict(string provinceCode)
         {
             ResponData<List<District>> result = new ResponData<List<District>>();

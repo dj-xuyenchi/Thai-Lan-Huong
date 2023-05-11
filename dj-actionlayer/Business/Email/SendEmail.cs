@@ -51,7 +51,7 @@ namespace dj_actionlayer.Business.Email
             MailMessage message = new MailMessage(FromEmail, toEmail);
             message.Subject = "Xác nhận yêu cầu đổi mật khẩu tài khoản DJ - Coding";
             message.Body = "🌱 Xin chào mình nhận được yêu cầu đổi mật khẩu tài khoản DJ - Coding để hoàn thành xác nhận vui lòng nhập mã xác nhận dưới đây. " +
-                Settings.enviroment()+ "/login#/forwardrequestforgetpass/" + confirmLink +
+                Settings.enviroment()+ "/#/login/forwardrequestforgetpass/" + confirmLink +
                 ". Nếu bạn không có yêu cầu này vui lòng bỏ qua.";
 
             // Tạo đối tượng SmtpClient

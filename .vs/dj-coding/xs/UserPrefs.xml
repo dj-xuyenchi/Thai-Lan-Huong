@@ -1,5 +1,7 @@
 ﻿<Properties StartupConfiguration="{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="dj-webdesigncore/Entities/UserEntity/Ward.cs">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="dj-actionlayer/DAO/AppContext.cs">
     <Files>
       <File FileName="dj-endpoint/Program.cs" />
       <File FileName="dj-endpoint/Controllers/AuthApis/AuthApis.cs" />
@@ -9,21 +11,21 @@
       <File FileName="dj-actionlayer/DAO/AppContext.cs" Line="56" Column="24" />
       <File FileName="dj-webdesigncore/Entities/UserEntity/RefreshToken.cs" />
       <File FileName="dj-actionlayer/Business/Study/StudyBusiness.cs" Line="1" Column="1" />
-      <File FileName="dj-webdesigncore/Business/Study/IStudyBusiness.cs" Line="28" Column="37" />
+      <File FileName="dj-webdesigncore/Business/Study/IStudyBusiness.cs" />
       <File FileName="dj-webdesigncore/DTOs/Study/VideoLessonDTO.cs" />
       <File FileName="dj-webdesigncore/DTOs/Lobby/ChapterDetailDTO.cs" />
       <File FileName="dj-webdesigncore/DTOs/Lobby/CourseDetailDTO.cs" />
       <File FileName="dj-webdesigncore/DTOs/Study/StudyDTO.cs" />
       <File FileName="dj-webdesigncore/Business/Lobby/ILobbyBusiness.cs" />
       <File FileName="dj-endpoint/Controllers/HomeAPIs/LobbyApis.cs" />
-      <File FileName="dj-actionlayer/Business/Lobby/LobbyBusiness.cs" />
+      <File FileName="dj-actionlayer/Business/Lobby/LobbyBusiness.cs" Line="1" Column="1" />
       <File FileName="dj-webdesigncore/AuthModel/AuthDataRespon.cs" />
       <File FileName="dj-webdesigncore/AuthModel/RequestLogin.cs" />
-      <File FileName="dj-actionlayer/Business/Auth/AuthBusiness.cs" />
+      <File FileName="dj-actionlayer/Business/Auth/AuthBusiness.cs" Line="1" Column="1" />
       <File FileName="dj-webdesigncore/Business/Auth/IAuthBusiness.cs" />
       <File FileName="dj-endpoint/Controllers/BaseApi.cs" />
       <File FileName="dj-endpoint/Controllers/StudyAPIs/StudyApis.cs" />
-      <File FileName="dj-actionlayer/Business/Compilerrrrrr/CompileUserCode.cs" />
+      <File FileName="dj-actionlayer/Business/Compilerrrrrr/CompileUserCode.cs" Line="1" Column="1" />
       <File FileName="dj-actionlayer/Program.cs" />
       <File FileName="dj-webdesigncore/Request/Lesson/PracticeLesson.cs" />
       <File FileName="dj-webdesigncore/AuthModel/NewAccount.cs" />
@@ -48,17 +50,19 @@
       <File FileName="dj-webdesigncore/DTOs/Admin/ChapterDetailDTO.cs" />
       <File FileName="dj-webdesigncore/Request/Lesson/TestCaseRequest.cs" />
       <File FileName="dj-webdesigncore/DTOs/Admin/AddTestCaseDTO.cs" />
-      <File FileName="dj-webdesigncore/Business/UserIBusiness/IUserBusiness.cs" Line="13" Column="26" />
-      <File FileName="dj-webdesigncore/DTOs/UserDTO/AddressDTO.cs" Line="10" Column="24" />
-      <File FileName="dj-webdesigncore/DTOs/UserDTO/WardDTO.cs" Line="7" Column="35" />
-      <File FileName="dj-webdesigncore/DTOs/UserDTO/ProvinceDTO.cs" Line="7" Column="41" />
-      <File FileName="dj-webdesigncore/DTOs/ResponData.cs" Line="1" Column="1" />
-      <File FileName="dj-webdesigncore/DTOs/UserDTO/DistrictDTO.cs" Line="7" Column="49" />
-      <File FileName="dj-webdesigncore/DTOs/UserDTO/GenderDTO.cs" Line="5" Column="3" />
-      <File FileName="dj-actionlayer/Business/UserBusiness/UserBusiness.cs" Line="53" Column="26" />
-      <File FileName="dj-webdesigncore/Entities/UserEntity/Ward.cs" Line="15" Column="28" />
-      <File FileName="dj-webdesigncore/Entities/UserEntity/Gender.cs" Line="11" Column="27" />
-      <File FileName="dj-endpoint/Controllers/UserAPIs/UserApi.cs" Line="23" Column="10" />
+      <File FileName="dj-webdesigncore/Business/UserIBusiness/IUserBusiness.cs" Line="16" Column="29" />
+      <File FileName="dj-webdesigncore/DTOs/UserDTO/WardDTO.cs" />
+      <File FileName="dj-webdesigncore/DTOs/UserDTO/ProvinceDTO.cs" />
+      <File FileName="dj-webdesigncore/DTOs/ResponData.cs" />
+      <File FileName="dj-webdesigncore/DTOs/UserDTO/DistrictDTO.cs" />
+      <File FileName="dj-webdesigncore/DTOs/UserDTO/GenderDTO.cs" />
+      <File FileName="dj-actionlayer/Business/UserBusiness/UserBusiness.cs" Line="76" Column="52" />
+      <File FileName="dj-webdesigncore/Entities/UserEntity/Ward.cs" Line="27" Column="16" />
+      <File FileName="dj-webdesigncore/Entities/UserEntity/Gender.cs" />
+      <File FileName="dj-endpoint/Controllers/UserAPIs/UserApi.cs" Line="38" Column="55" />
+      <File FileName="dj-webdesigncore/DTOs/UserDTO/UserInforDTO.cs" Line="38" Column="50" />
+      <File FileName="dj-webdesigncore/Entities/UserEntity/Province.cs" Line="27" Column="74" />
+      <File FileName="dj-webdesigncore/Entities/UserEntity/District.cs" Line="25" Column="41" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -74,38 +78,21 @@
                 <Node name="Study" expanded="True" />
                 <Node name="UserBusiness" expanded="True" />
               </Node>
-              <Node name="DAO" expanded="True" />
+              <Node name="DAO" expanded="True">
+                <Node name="AppContext.cs" selected="True" />
+              </Node>
+              <Node name="Migrations" expanded="True" />
             </Node>
             <Node name="dj-endpoint" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="Admin" expanded="True" />
+                <Node name="AuthApis" expanded="True" />
+                <Node name="HomeAPIs" expanded="True" />
                 <Node name="StudyAPIs" expanded="True" />
                 <Node name="UserAPIs" expanded="True" />
               </Node>
-            </Node>
-            <Node name="dj-webdesigncore" expanded="True">
-              <Node name="AuthModel" expanded="True" />
-              <Node name="Business" expanded="True">
-                <Node name="Admin" expanded="True" />
-                <Node name="Study" expanded="True" />
-                <Node name="UserIBusiness" expanded="True" />
-              </Node>
-              <Node name="DTOs" expanded="True">
-                <Node name="UserDTO" expanded="True" />
-              </Node>
-              <Node name="Entities" expanded="True">
-                <Node name="BusinessEntity" expanded="True" />
-                <Node name="CourseEntity" expanded="True" />
-                <Node name="PostEntity" expanded="True" />
-                <Node name="UserEntity" expanded="True" />
-              </Node>
-              <Node name="Enums" expanded="True">
-                <Node name="ApiEnums" expanded="True" />
-                <Node name="CourseEnums" expanded="True" />
-              </Node>
-              <Node name="Request" expanded="True">
-                <Node name="Chapter" expanded="True" />
-                <Node name="Lesson" expanded="True" />
+              <Node name="Properties" expanded="True">
+                <Node name="PublishProfiles" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -113,13 +100,10 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.dj-actionlayer PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.dj-webdesigncore PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.dj-actionlayer PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

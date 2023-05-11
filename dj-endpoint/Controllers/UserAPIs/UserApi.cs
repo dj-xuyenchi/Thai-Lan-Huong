@@ -46,6 +46,10 @@ namespace dj_endpoint.Controllers.UserAPIs
             UpdateUserRequest userRequest = JsonConvert.DeserializeObject<UpdateUserRequest>(updateUserRequest);
             return Ok(await _user.updateUser(avatar, userRequest));
         }
-
+        [HttpPost("createexperience")]
+        public async Task<IActionResult> createExperience(CreateExperience createExperience)
+        {
+            return Ok(await _user.createExperience(createExperience));
+        }
     }
 }

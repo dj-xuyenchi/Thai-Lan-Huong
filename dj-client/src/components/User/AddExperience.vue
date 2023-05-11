@@ -11,12 +11,7 @@
           >
           </v-btn>
         </template>
-        <v-form
-          @submit.prevent="submit()"
-          ref="form"
-          style="overflow: scroll"
-          enctype="multipart/form-data"
-        >
+        <v-form @submit.prevent="submit()" ref="form" style="overflow: scroll">
           <v-card
             class="mx-auto pa-12 pb-8"
             elevation="8"
@@ -29,14 +24,47 @@
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="4" sm="4" md="4">
+                  <v-col cols="6" sm="6" md="6">
                     <v-text-field
-                      v-model="userFacebook"
+                      v-model="detail"
                       density="compact"
-                      label="Facebook"
-                      hint="Facebook"
+                      label="Công việc*"
+                      hint="Nơi làm việc, tên công ty"
                       variant="outlined"
+                      :rules="[rules.validValue]"
                     ></v-text-field>
+                  </v-col>
+                  <v-col cols="6" sm="6" md="6">
+                    <v-text-field
+                      v-model="position"
+                      density="compact"
+                      label="Vị trí*"
+                      hint="Vị trí làm việc VD: Trưởng nhóm"
+                      variant="outlined"
+                      :rules="[rules.validValue]"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="6" sm="6" md="6">
+                    <v-label>Bắt đầu từ*</v-label>
+                    <input
+                      v-model="start"
+                      type="date"
+                      style="margin-left: 12px; height: 40px; font-size: 16px"
+                  /></v-col>
+                  <v-col cols="6" sm="6" md="6" v-if="!isWorking">
+                    <v-label>Kết thúc</v-label>
+                    <input
+                      v-model="end"
+                      type="date"
+                      style="margin-left: 12px; height: 40px; font-size: 16px"
+                  /></v-col>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-switch
+                      v-model="isWorking"
+                      label="Đang làm việc"
+                      color="secondary"
+                      hide-details
+                    ></v-switch>
                   </v-col>
                 </v-row>
               </v-container>
@@ -84,13 +112,14 @@ export default {
     return {
       text: "",
       snackbar: false,
-
+      isWorking: false,
+      detail: null,
+      position: null,
+      start: null,
+      end: null,
       dialog: false,
       btnLoading: false,
       rules: {
-        validName: (value) =>
-          !/[@#$%^&+=!]/.test(value) || "Tên chứa ký tự không hợp lệ",
-        sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
         validValue: (value) =>
           value.trim().length > 0 || "Không được để trống thông tin này!",
       },
@@ -98,33 +127,46 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-
+    getData() {
+      return {
+        userId: localStorage.getItem("id"),
+        isWorking: this.isWorking,
+        detail: this.detail,
+        position: this.position,
+        start: this.start,
+        end: this.end,
+      };
+    },
     async submit() {
       this.btnLoading = true;
-      // if (
-      //   this.lessonName.trim().length < 1 ||
-      //   this.lessonDescription.trim().length < 1 ||
-      //   this.lessonTime.trim().length < 1 ||
-      //   this.question.trim().length < 1 ||
-      //   this.answera.trim().length < 1 ||
-      //   this.answerb.trim().length < 1 ||
-      //   this.answerc.trim().length < 1 ||
-      //   this.answerd.trim().length < 1
-      // ) {
-      //   this.btnLoading = false;
-      //   return;
-      // }
+      if (
+        !this.detail ||
+        !this.position ||
+        this.position.trim().length == 0 ||
+        this.detail.trim().length == 0
+      ) {
+        this.text = "Không được để trống thông tin!";
+        this.snackbar = true;
+        this.btnLoading = false;
+        return;
+      }
+      if (this.start == null) {
+        this.text = "Không được để trống ngày bắt đầu!";
+        this.snackbar = true;
+        this.btnLoading = false;
+        return;
+      }
+      if (!this.isWorking && this.end == null) {
+        this.text = "Không được để trống ngày kết thúc!";
+        this.snackbar = true;
+        this.btnLoading = false;
+        return;
+      }
       const token = localStorage.getItem("token");
-      const formData = new FormData();
-      formData.append("avatar", this.selectFile ? this.selectFile[0] : null);
-      formData.append("updateUserRequest", JSON.stringify(this.getData()));
-      const result = await UserAPI.updateUser(formData, token);
+      const result = "";
       if (result.data.status == 1) {
         this.text = "Cập nhật thành công!";
-        localStorage.setItem("nickName", result.data.nickName);
-        localStorage.setItem("avatar", result.data.avatar);
-        localStorage.setItem("name", result.data.name);
-        this.getUserInfor();
+
         this.dialog = false;
         this.snackbar = true;
         this.btnLoading = false;
@@ -135,25 +177,6 @@ export default {
         this.snackbar = true;
       }
       this.btnLoading = false;
-    },
-    async getOption() {
-      const token = localStorage.getItem("token");
-      const data = await UserAPI.getOptionUpdate(token);
-      this.listGender = data.data.genders;
-      this.listTinh = data.data.provinces;
-    },
-    async getHuyen() {
-      const token = localStorage.getItem("token");
-      const data = await UserAPI.getHuyen(this.userTinh.code, token);
-      this.listHuyen = data.data;
-      this.userHuyen = data.data[0];
-      this.getXa();
-    },
-    async getXa() {
-      const token = localStorage.getItem("token");
-      const data = await UserAPI.getXa(this.userHuyen.code, token);
-      this.listXa = data.data;
-      this.userXa = data.data[0];
     },
   },
   props: {},

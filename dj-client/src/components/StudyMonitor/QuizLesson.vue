@@ -27,7 +27,7 @@
         />
         Trả lời
       </v-btn>
-      <v-btn
+      <!-- <v-btn
         color="#36ae7c"
         v-bind="props"
         style="width: 120px; margin-left: 12px"
@@ -39,7 +39,7 @@
           style="font-size: 20px; margin-right: 4px"
         />
         ChatGPT
-      </v-btn>
+      </v-btn> -->
     </div>
     <v-card
       style="

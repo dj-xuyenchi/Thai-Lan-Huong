@@ -137,7 +137,7 @@
                       }}</span></span
                     >
                   </div>
-                  <v-btn
+                  <!-- <v-btn
                     v-if="item.result == 2 || item.result == 3"
                     outlined
                     @click="
@@ -146,7 +146,7 @@
                     "
                   >
                     Giải thích lỗi
-                  </v-btn>
+                  </v-btn> -->
                 </v-card-text>
               </v-card>
             </v-window-item>
