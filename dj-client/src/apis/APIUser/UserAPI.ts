@@ -82,5 +82,85 @@ class UserAPI {
         });
     });
   }
+  createExperience(request: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/user/createexperience`, request, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  deleteExperience(id: number, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/user/deleteexperience?experienceId=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  getOption(token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/user/getoption`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  createLearning(request: object, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/user/createlearning`, request, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  deleteLearning(id: number, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/user/deletelearning?learningId=${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new UserAPI();

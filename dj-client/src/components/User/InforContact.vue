@@ -180,7 +180,88 @@
     >
       Mô tả kinh nghiệm làm việc của bạn
     </h5>
-    <AddExperience />
+    <AddExperience :getUserInfor="getUserInfor" />
+    <div
+      style="margin-top: 36px"
+      v-for="(item, index) in userInfor.experienceDTOs"
+      :key="index"
+    >
+      <h4
+        style="
+          color: #898989;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+        "
+      >
+        Công việc <span style="color: red">*</span
+        ><font-awesome-icon
+          icon="fa-regular fa-trash-can"
+          class="iconBtn"
+          color="#898989"
+          style="margin-left: 12px"
+          @click="deleteExperience(item.id)"
+        />
+      </h4>
+      <h4
+        style="
+          color: #black;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 4px;
+          font-family: 'Muli', sans-serif;
+        "
+      >
+        {{ item.detail }}
+      </h4>
+      <h4
+        style="
+          color: #898989;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 8px;
+        "
+      >
+        Vị trí <span style="color: red">*</span>
+      </h4>
+      <h4
+        style="
+          color: #black;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 4px;
+          font-family: 'Muli', sans-serif;
+        "
+      >
+        {{ item.position }}
+      </h4>
+      <h4
+        style="
+          color: #898989;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 8px;
+        "
+      >
+        Thời gian <span style="color: red">*</span>
+      </h4>
+      <h4
+        style="
+          color: #black;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 4px;
+          font-family: 'Muli', sans-serif;
+        "
+      >
+        {{ item.timeLine }}
+      </h4>
+    </div>
     <h4
       style="
         color: #4d96ff;
@@ -204,7 +285,88 @@
     >
       Thêm thông tin học vấn
     </h5>
-    <AddExperience />
+    <AddLearningExperience :getUserInfor="getUserInfor" />
+    <div
+      style="margin-top: 36px"
+      v-for="(item, index) in userInfor.learningDTOs"
+      :key="index"
+    >
+      <h4
+        style="
+          color: #898989;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+        "
+      >
+        Trường <span style="color: red">*</span
+        ><font-awesome-icon
+          icon="fa-regular fa-trash-can"
+          class="iconBtn"
+          color="#898989"
+          style="margin-left: 12px"
+          @click="deleteLearning(item.id)"
+        />
+      </h4>
+      <h4
+        style="
+          color: #black;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 4px;
+          font-family: 'Muli', sans-serif;
+        "
+      >
+        {{ item.schoolName }}
+      </h4>
+      <h4
+        style="
+          color: #898989;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 8px;
+        "
+      >
+        Chuyên nghành <span style="color: red">*</span>
+      </h4>
+      <h4
+        style="
+          color: #black;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 4px;
+          font-family: 'Muli', sans-serif;
+        "
+      >
+        {{ item.majors }}
+      </h4>
+      <h4
+        style="
+          color: #898989;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 8px;
+        "
+      >
+        Thời gian <span style="color: red">*</span>
+      </h4>
+      <h4
+        style="
+          color: #black;
+          font-size: 14px;
+          line-height: 16px;
+          font-weight: normal;
+          margin-top: 4px;
+          font-family: 'Muli', sans-serif;
+        "
+      >
+        {{ item.timeLine }}
+      </h4>
+    </div>
     <div style="height: 40px"></div>
     <v-snackbar v-model="snackbarOk" multi-line>
       {{ snackBarContent }}
@@ -220,12 +382,13 @@
 <script>
 import UserAPI from "../../apis/APIUser/UserAPI.ts";
 import AddExperience from "./AddExperience.vue";
+import AddLearningExperience from "./AddLearningExperience.vue";
 import UpdateInfor from "./UpdateInfor.vue";
 
 import { mapMutations } from "vuex";
 export default {
   name: "InforContact",
-  components: { AddExperience, UpdateInfor },
+  components: { AddExperience, UpdateInfor, AddLearningExperience },
   data() {
     return {
       userInfor: {
@@ -252,6 +415,44 @@ export default {
         return;
       }
       this.userInfor = data.data;
+      this.setIsLoadedData(false);
+    },
+    async deleteExperience(id) {
+      this.setIsLoadedData(true);
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.deleteExperience(id, token);
+      if (data.data == 1) {
+        this.snackbarOk = true;
+        this.snackBarContent = "Thành công!";
+        this.getUserInfor();
+        this.setIsLoadedData(false);
+        return;
+      }
+      if (data.data == 4) {
+        this.snackbarOk = true;
+        this.snackBarContent = "Xóa thất bại!";
+        this.setIsLoadedData(false);
+        return;
+      }
+      this.setIsLoadedData(false);
+    },
+    async deleteLearning(id) {
+      this.setIsLoadedData(true);
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.deleteLearning(id, token);
+      if (data.data == 1) {
+        this.snackbarOk = true;
+        this.snackBarContent = "Thành công!";
+        this.getUserInfor();
+        this.setIsLoadedData(false);
+        return;
+      }
+      if (data.data == 4) {
+        this.snackbarOk = true;
+        this.snackBarContent = "Xóa thất bại!";
+        this.setIsLoadedData(false);
+        return;
+      }
       this.setIsLoadedData(false);
     },
   },
@@ -301,5 +502,8 @@ export default {
   width: 75%;
   display: block;
   float: left;
+}
+.iconBtn:hover {
+  cursor: pointer;
 }
 </style>

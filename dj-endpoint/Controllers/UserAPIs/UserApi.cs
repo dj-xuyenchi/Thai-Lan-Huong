@@ -51,5 +51,25 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.createExperience(createExperience));
         }
+        [HttpGet("deleteexperience")]
+        public async Task<IActionResult> deleteExperience(int experienceId)
+        {
+            return Ok(await _user.deleteExperience(experienceId));
+        }
+        [HttpGet("getoption")]
+        public async Task<IActionResult> getOption()
+        {
+            return Ok(await _user.getOptionAddLearning());
+        }
+        [HttpPost("createlearning")]
+        public async Task<IActionResult> createLearning(AddLearningExperience addLearningExperience)
+        {
+            return Ok(await _user.createLearningExperience(addLearningExperience));
+        }
+        [HttpGet("deletelearning")]
+        public async Task<IActionResult> deleteLearning(int learningId)
+        {
+            return Ok(await _user.deleteLearningExperience(learningId));
+        }
     }
 }

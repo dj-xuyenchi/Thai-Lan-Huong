@@ -39,6 +39,7 @@ import {
   faCalendarDays,
   faComment,
   faComments,
+  faTrashCan,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   faBloggerB,
@@ -55,6 +56,7 @@ library.add(
   faCalendarDays,
   faUsers,
   faPaperPlane,
+  faTrashCan,
   faEnvelope,
   faPhone,
   faLocationDot,

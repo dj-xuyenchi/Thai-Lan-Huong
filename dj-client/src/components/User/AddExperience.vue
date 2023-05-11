@@ -85,7 +85,7 @@
                 variant="text"
                 type="submit"
               >
-                Cập nhật
+                Xác nhận
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -163,23 +163,27 @@ export default {
         return;
       }
       const token = localStorage.getItem("token");
-      const result = "";
-      if (result.data.status == 1) {
-        this.text = "Cập nhật thành công!";
-
+      const result = await UserAPI.createExperience(this.getData(), token);
+      if (result.data == 1) {
+        this.text = "Thêm thành công!";
+        this.detail = null;
+        this.position = null;
+        this.start = null;
+        this.end = null;
+        this.isWorking = false;
         this.dialog = false;
         this.snackbar = true;
         this.btnLoading = false;
-        this.getLessonDetail();
+        this.getUserInfor();
       }
-      if (result.data.status == 4) {
-        this.text = "Cập nhật thất bại!";
+      if (result.data == 4) {
+        this.text = "Thêm thất bại!";
         this.snackbar = true;
       }
       this.btnLoading = false;
     },
   },
-  props: {},
+  props: { getUserInfor: Function },
 };
 </script>
 

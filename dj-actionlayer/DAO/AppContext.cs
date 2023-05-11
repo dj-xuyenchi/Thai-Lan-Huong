@@ -59,6 +59,7 @@ namespace dj_actionlayer.DAO
         public DbSet<UserRole> user_role { get; set; }
         public DbSet<UserStatus> user_status { get; set; }
         // Business Entities
+        public DbSet<Majors> majors { get; set; }
         public DbSet<UserCatalog> user_catalog { get; set; }
         public DbSet<VideoDoneData> video_done_data { get; set; }
         public DbSet<QuestionDoneData> question_done_data { get; set; }

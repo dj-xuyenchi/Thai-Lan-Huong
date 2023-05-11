@@ -28,14 +28,77 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             Experience experience = new Experience();
-            if (createExperience.isWorking)
+            if (!createExperience.isWorking)
             {
                 experience.Close = createExperience.end;
             }
             experience.Detail = createExperience.detail;
             experience.Open = createExperience.start;
+            experience.UserId = createExperience.userId;
             experience.Position = createExperience.position;
             await _context.AddAsync(experience);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> createLearningExperience(AddLearningExperience addLearningExperience)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            if (!_context.user.Any(x => x.Id == addLearningExperience.userId))
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            LearningExperience learningExperience = new LearningExperience();
+            learningExperience.SchoolId = addLearningExperience.school;
+            learningExperience.UserId = addLearningExperience.userId;
+            learningExperience.MajorsId = addLearningExperience.majors;
+            learningExperience.Close = addLearningExperience.end;
+            learningExperience.Open = addLearningExperience.start;
+            await _context.AddAsync(learningExperience);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> deleteExperience(int experienceId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            Experience experience = await _context.experience.FindAsync(experienceId);
+            if (experience == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            _context.Remove(experience);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> deleteLearningExperience(int learningId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            LearningExperience learningExperience = await _context.learning_experience.FindAsync(learningId);
+            if (learningExperience == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            _context.Remove(learningExperience);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -99,9 +162,71 @@ namespace dj_actionlayer.Business.UserBusiness
             {
                 dto.provinces = _context.provinces.ToList();
             }
+            var listExperiance = _context.experience.Where(x => x.UserId == user.Id).OrderBy(x => x.Open).ToList();
+            List<ExperienceDTO> experienceDTOs = new List<ExperienceDTO>();
+            foreach (var experience in listExperiance)
+            {
+                ExperienceDTO experienceDTO = new ExperienceDTO();
+                experienceDTO.Position = experience.Position;
+                experienceDTO.id = experience.Id;
+                experienceDTO.Detail = experience.Detail;
+                if (experience.Close == null)
+                {
+                    experienceDTO.TimeLine = "Từ " + experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year + " đến nay";
+                }
+                else
+                {
+                    experienceDTO.TimeLine ="Từ "+ experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year +" đến "+ experience.Close.Value.Day + "-" + experience.Close.Value.Month + "-" + experience.Close.Value.Year;
+                }
+                experienceDTOs.Add(experienceDTO);
+            }
+            dto.experienceDTOs = experienceDTOs;
+            var listLearning = _context.learning_experience.Where(x => x.UserId == user.Id).OrderBy(x => x.Open).ToList();
+            List<LearningDTO> learningDTOs = new List<LearningDTO>();
+            foreach (var experience in listLearning)
+            {
+                LearningDTO learning = new LearningDTO();
+                learning.Majors = _context.majors.Find(experience.MajorsId).MajorsName;
+                learning.SchoolName = _context.school.Find(experience.SchoolId).SchoolName;
+                learning.TimeLine  = "Từ " + experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year + " đến " + experience.Close.Day + "-" + experience.Close.Month + "-" + experience.Close.Year;
+                learningDTOs.Add(learning);
+            }
+            dto.learningDTOs= learningDTOs;
             dto.genders = _context.gender.ToList();
             dto.catalogs = _context.user_catalog.ToList();
             result.Data = dto;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<OptionAddLearning>> getOptionAddLearning()
+        {
+            ResponData<OptionAddLearning> result = new ResponData<OptionAddLearning>();
+            OptionAddLearning optionAddLearning = new OptionAddLearning();
+            var listSchool = _context.school.ToList();
+            List<SchoolDTO> sch = new List<SchoolDTO>();
+            foreach(var school in listSchool)
+            {
+                sch.Add(new SchoolDTO()
+                {
+                    Id = school.Id,
+                    SchoolName = school.SchoolName
+                });
+            }
+            List<MajorsDTO> majors1 = new List<MajorsDTO>();
+            var listMajors = _context.majors.ToList();
+            foreach (var majors in listMajors)
+            {
+                majors1.Add(new MajorsDTO()
+                {
+                    Id = majors.Id,
+                    MajorsName = majors.MajorsName
+                });
+            }
+            optionAddLearning.majorsDTOs = majors1;
+            optionAddLearning.schoolDTOs = sch;
+            result.Data = optionAddLearning;
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;
@@ -134,7 +259,7 @@ namespace dj_actionlayer.Business.UserBusiness
         public async Task<ResponData<UpdateDTO>> updateUser(IFormFile? avatar, UpdateUserRequest updateUserRequest)
         {
             ResponData<UpdateDTO> result = new ResponData<UpdateDTO>();
-            UpdateDTO data= new UpdateDTO();
+            UpdateDTO data = new UpdateDTO();
             User user = await _context.user.FindAsync(updateUserRequest.userId);
             if (user == null)
             {
@@ -145,7 +270,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
-            if(avatar != null)
+            if (avatar != null)
             {
                 var stream = new MemoryStream();
                 avatar.CopyTo(stream);
@@ -157,21 +282,21 @@ namespace dj_actionlayer.Business.UserBusiness
             user.NumberPhone = updateUserRequest.sdt;
             user.UserFacebook = updateUserRequest.facebook;
             user.UserFisrtName = updateUserRequest.firstName;
-            user.UserLastName= updateUserRequest.lastName;
+            user.UserLastName = updateUserRequest.lastName;
             user.CatalogId = updateUserRequest.catalog;
             user.DistrictCode = updateUserRequest.district;
             user.GenderId = updateUserRequest.gender;
             user.ProvinceCode = updateUserRequest.province;
-            user.UserDetail= updateUserRequest.detail;
-            user.UserLinkedIn= updateUserRequest.linkedIn;
+            user.UserDetail = updateUserRequest.detail;
+            user.UserLinkedIn = updateUserRequest.linkedIn;
             user.WardCode = updateUserRequest.ward;
-            user.Update= DateTime.Now;
+            user.Update = DateTime.Now;
             await _context.SaveChangesAsync();
             data.status = ActionStatus.SECCESSFULLY;
             data.avatar = user.UserAvatarData40x40;
             data.name = user.UserLastName + user.UserFisrtName;
             data.nickName = "Chiến Thần Front End";
-            result.Data =data;
+            result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;

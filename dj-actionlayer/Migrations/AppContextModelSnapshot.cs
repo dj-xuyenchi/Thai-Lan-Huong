@@ -1355,7 +1355,7 @@ namespace dj_actionlayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Majors");
+                    b.ToTable("majors");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>
@@ -1437,7 +1437,7 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SchoolTypeId")
+                    b.Property<int?>("SchoolTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2107,9 +2107,7 @@ namespace dj_actionlayer.Migrations
                 {
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.SchoolType", "SchoolType")
                         .WithMany()
-                        .HasForeignKey("SchoolTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SchoolTypeId");
 
                     b.Navigation("SchoolType");
                 });

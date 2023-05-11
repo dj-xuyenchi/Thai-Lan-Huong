@@ -21,5 +21,9 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<List<Ward>>> getWard(string districtCode);
         Task<ResponData<UpdateDTO>> updateUser(IFormFile? avatar, UpdateUserRequest updateUserRequest);
         Task<ResponData<ActionStatus>> createExperience(CreateExperience createExperience);
+        Task<ResponData<ActionStatus>> deleteExperience(int experienceId);
+        Task<ResponData<OptionAddLearning>> getOptionAddLearning();
+        Task<ResponData<ActionStatus>> createLearningExperience(AddLearningExperience addLearningExperience);
+        Task<ResponData<ActionStatus>> deleteLearningExperience(int learningId);
     }
 }
