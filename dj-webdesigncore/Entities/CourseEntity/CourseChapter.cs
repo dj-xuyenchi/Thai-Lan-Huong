@@ -15,6 +15,5 @@ namespace dj_webdesigncore.Entities.CourseEntity
         public int ChapterLessonCount { get; set; }
         public DateTime ChapterCreateDateTime { get; set; }
         public int SortNumber { get; set; }
-        public DateTime? UpdateTime { get; set; }
     }
 }

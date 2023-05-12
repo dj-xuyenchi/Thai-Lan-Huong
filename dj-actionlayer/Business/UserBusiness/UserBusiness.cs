@@ -186,6 +186,7 @@ namespace dj_actionlayer.Business.UserBusiness
             foreach (var experience in listLearning)
             {
                 LearningDTO learning = new LearningDTO();
+                learning.id = experience.Id;
                 learning.Majors = _context.majors.Find(experience.MajorsId).MajorsName;
                 learning.SchoolName = _context.school.Find(experience.SchoolId).SchoolName;
                 learning.TimeLine  = "Từ " + experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year + " đến " + experience.Close.Day + "-" + experience.Close.Month + "-" + experience.Close.Year;

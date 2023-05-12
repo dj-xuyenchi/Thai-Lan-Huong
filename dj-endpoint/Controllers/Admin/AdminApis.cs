@@ -11,7 +11,7 @@ namespace dj_endpoint.Controllers.Admin
     [Route("/admin")]
     public class AdminApis : BaseApi
     {
-        private readonly IAdminBusiness _admin;
+        private readonly IAdminBusiness _admin; 
 
         public AdminApis()
         {
