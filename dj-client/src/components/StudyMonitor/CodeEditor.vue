@@ -19,7 +19,7 @@
             v-model="tab"
             direction="vertical"
             color="primary"
-            style="width: 10% !important"
+            style="min-width: 100px !important"
           >
             <v-tab
               v-for="(item, index) in listTest"
