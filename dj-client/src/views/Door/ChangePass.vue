@@ -83,8 +83,7 @@ export default {
         Code: localStorage.getItem("codePass"),
         NewPass: this.password,
       };
-      const result = AuthApis.confirmPass(request);
-      console.log(result);
+      const result = await AuthApis.confirmPass(request);
       if (result.success === 0) {
         this.dialog = false;
         this.isUnValidUser = false;
@@ -95,7 +94,7 @@ export default {
         localStorage.setItem("id", result.data.id);
         localStorage.setItem("nickName", result.data.nickName);
         localStorage.setItem("role", result.data.role);
-        localStorage.remove("codePass");
+        localStorage.removeItem("codePass");
         this.$router.push({ path: "/home/lobby" });
       }
       this.dialog = false;

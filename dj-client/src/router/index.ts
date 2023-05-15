@@ -27,7 +27,8 @@ import ChapterAdmin from "@/components/Admin/Chapter/ChapterAdmin.vue";
 import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
 import UserMain from "@/components/User/UserMain.vue";
 import InforContact from "@/components/User/InforContact.vue";
-import ExperienceAndLearn from "@/components/User/ExperienceAndLearn.vue";
+import CourseResisted from "@/components/User/CourseResisted.vue";
+import ChangePassUser from "@/components/User/ChangePassUser.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -46,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/forwardrequestforgetpass/:code",
-    name: "",
+    name: "forwardrequestforgetpass",
     component: ForwardRequestForgetPass,
   },
   {
@@ -89,8 +90,12 @@ const routes: Array<RouteRecordRaw> = [
             component: InforContact,
           },
           {
-            path: "experlearn",
-            component: ExperienceAndLearn,
+            path: "courseresisted",
+            component: CourseResisted,
+          },
+          {
+            path: "changpass",
+            component: ChangePassUser,
           },
         ],
       },

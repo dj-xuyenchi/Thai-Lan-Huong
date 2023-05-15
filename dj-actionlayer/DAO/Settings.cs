@@ -26,10 +26,11 @@ namespace dj_actionlayer.DAO
         }
         public static string[] emailConfig()
         {
-            return new string[] { "do.quanganh99zz@gmail.com", "cugzmhlctsbfssga", "smtp.gmail.com", "587" };
+            return new string[] { "do.quanganh99zz@gmail.com", "hnfoowwjgkagrbxu", "smtp.gmail.com", "587" };
         }
         public static string enviroment()
         {
+          //  return "http://localhost:8080";
             return "https://dj-xuyenchi.edu.vn";
         }
         public static string defaultImage()

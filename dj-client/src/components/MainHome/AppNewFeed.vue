@@ -2,8 +2,8 @@
   <div>
     <HeaderSlider />
     <CourseList />
-    <!-- <PostList /> -->
-    <!-- <BlogList /> -->
+    <PostList />
+    <BlogList />
   </div>
 </template>
 
@@ -19,7 +19,8 @@ export default {
   components: {
     HeaderSlider,
     CourseList,
-    //  PostList, BlogList
+    PostList,
+    BlogList,
   },
   data: () => {
     return {};

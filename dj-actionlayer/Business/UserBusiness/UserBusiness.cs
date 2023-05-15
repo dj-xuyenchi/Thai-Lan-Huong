@@ -17,6 +17,39 @@ namespace dj_actionlayer.Business.UserBusiness
 {
     public class UserBusiness : BaseBusiness, IUserBusiness
     {
+        public async Task<ResponData<ActionStatus>> changePass(RePass request)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User user = await _context.user.FindAsync(request.Id);
+            if (user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            if (!user.UserPass.Equals(request.OldPass))
+            {
+                result.Data = ActionStatus.WRONG;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            if (request.NewPass.Trim().Length < 8)
+            {
+                result.Data = ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            user.UserPass= request.NewPass;
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
         public async Task<ResponData<ActionStatus>> createExperience(CreateExperience createExperience)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
@@ -176,7 +209,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 }
                 else
                 {
-                    experienceDTO.TimeLine ="Từ "+ experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year +" đến "+ experience.Close.Value.Day + "-" + experience.Close.Value.Month + "-" + experience.Close.Value.Year;
+                    experienceDTO.TimeLine = "Từ " + experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year + " đến " + experience.Close.Value.Day + "-" + experience.Close.Value.Month + "-" + experience.Close.Value.Year;
                 }
                 experienceDTOs.Add(experienceDTO);
             }
@@ -189,10 +222,10 @@ namespace dj_actionlayer.Business.UserBusiness
                 learning.id = experience.Id;
                 learning.Majors = _context.majors.Find(experience.MajorsId).MajorsName;
                 learning.SchoolName = _context.school.Find(experience.SchoolId).SchoolName;
-                learning.TimeLine  = "Từ " + experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year + " đến " + experience.Close.Day + "-" + experience.Close.Month + "-" + experience.Close.Year;
+                learning.TimeLine = "Từ " + experience.Open.Day + "-" + experience.Open.Month + "-" + experience.Open.Year + " đến " + experience.Close.Day + "-" + experience.Close.Month + "-" + experience.Close.Year;
                 learningDTOs.Add(learning);
             }
-            dto.learningDTOs= learningDTOs;
+            dto.learningDTOs = learningDTOs;
             dto.genders = _context.gender.ToList();
             dto.catalogs = _context.user_catalog.ToList();
             result.Data = dto;
@@ -207,7 +240,7 @@ namespace dj_actionlayer.Business.UserBusiness
             OptionAddLearning optionAddLearning = new OptionAddLearning();
             var listSchool = _context.school.ToList();
             List<SchoolDTO> sch = new List<SchoolDTO>();
-            foreach(var school in listSchool)
+            foreach (var school in listSchool)
             {
                 sch.Add(new SchoolDTO()
                 {

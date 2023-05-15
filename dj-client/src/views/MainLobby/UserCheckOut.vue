@@ -4,7 +4,28 @@
       <v-btn width="100%" rounded="pill" color="#4FC3F7"> Đăng nhập </v-btn>
     </router-link>
   </div>
-  <div v-else class="user-check login">
+  <div v-else class="user-check">
+    <font-awesome-icon
+      icon="fa-regular fa-bell"
+      class="notification"
+      @click="setShowNotification()"
+    />
+    <v-card width="400" v-if="show" class="notification-container">
+      <v-card-text>
+        <div
+          class="font-weight-bold ms-1 mb-2"
+          style="display: flex; justify-content: space-between"
+        >
+          <span style="font-size: 18px; font-weight: 400">Thông báo</span
+          ><span
+            style="font-size: 14px; font-weight: 400; color: #eb5353"
+            id="notification-seen"
+            >Đánh dấu đã đọc</span
+          >
+        </div>
+        <NotificationItem />
+      </v-card-text>
+    </v-card>
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-list-item
@@ -50,12 +71,15 @@ import AuthApis from "../../apis/AuthApis/AuthApis.ts";
 import TokenModel from "@/entities/AuthEntities/TokenModel";
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
+import NotificationItem from "./NotificationItem";
 export default {
   name: "UserCheckOut",
+  components: { NotificationItem },
   data() {
     return {
       isAdmin: false,
       showSignIn: true,
+      show: true,
       user: {
         avatar: "",
         name: "",
@@ -82,7 +106,7 @@ export default {
           },
         },
         {
-          text: "Khóa học đăng ký",
+          text: "Bài đăng",
           icon: "mdi-bookshelf",
           event: () => {
             this.$router.push({ path: "/user/1" });
@@ -109,23 +133,7 @@ export default {
       ],
     };
   },
-  computed: {},
   mounted() {
-    // const cookie = document.cookie;
-    // console.log(cookie);
-    // const listCookie = cookie.split(";");
-    // const tokenModel = {
-    //   AccessToken: "",
-    //   RefreshToken: "",
-    // };
-    // for (const cookie of listCookie) {
-    //   if (cookie.includes("token=")) {
-    //     tokenModel.AccessToken = cookie.split("=")[1];
-    //   }
-    //   if (cookie.includes("refreshToken=")) {
-    //     tokenModel.RefreshToken = cookie.substring(14, cookie.length);
-    //   }
-    // }
     const token = localStorage.getItem("token");
     const refreshToken = localStorage.getItem("refreshToken");
     const avatar = localStorage.getItem("avatar");
@@ -141,11 +149,6 @@ export default {
         id: id,
         nickName: nickName,
       };
-      // const tokenModel = {
-      //   AccessToken: token,
-      //   RefreshToken: refreshToken,
-      // };
-      // this.isLogin(tokenModel);
     }
     if (role == 1) {
       this.isAdmin = true;
@@ -160,6 +163,9 @@ export default {
     setShowLogin() {
       this.showSignIn = true;
     },
+    setShowNotification() {
+      this.show = !this.show;
+    },
   },
 };
 </script>
@@ -172,8 +178,23 @@ export default {
 .v-list-item__overlay:focus-visible {
   opacity: 0;
 }
-.login:hover {
+.notification:hover {
   cursor: pointer;
   color: rgba(0, 0, 0, 0.5);
+}
+.notification {
+  position: absolute;
+  top: 25%;
+  font-size: 24px;
+  left: -30px;
+}
+.notification-container {
+  position: absolute;
+  top: 110%;
+  left: -400px;
+}
+#notification-seen:hover {
+  cursor: pointer;
+  color: #f5dcdc;
 }
 </style>

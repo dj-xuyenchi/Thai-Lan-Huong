@@ -71,5 +71,10 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.deleteLearningExperience(learningId));
         }
+        [HttpPost("changepass")]
+        public async Task<IActionResult> changePass(RePass request)
+        {
+            return Ok(await _user.changePass(request));
+        }
     }
 }

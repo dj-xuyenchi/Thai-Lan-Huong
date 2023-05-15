@@ -25,5 +25,6 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<OptionAddLearning>> getOptionAddLearning();
         Task<ResponData<ActionStatus>> createLearningExperience(AddLearningExperience addLearningExperience);
         Task<ResponData<ActionStatus>> deleteLearningExperience(int learningId);
+        Task<ResponData<ActionStatus>> changePass(RePass request);
     }
 }

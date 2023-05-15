@@ -22,7 +22,10 @@
             Thông tin & liên hệ
           </li>
         </router-link>
-        <router-link to="/home/user/experlearn" style="text-decoration: none">
+        <router-link
+          to="/home/user/courseresisted"
+          style="text-decoration: none"
+        >
           <li
             :class="getActiveUserNav == 2 ? `active` : `unactive`"
             @click="
@@ -33,7 +36,7 @@
             Hồ sơ khóa học đăng ký
           </li>
         </router-link>
-        <router-link to="/home/user/experlearn" style="text-decoration: none">
+        <router-link to="/home/user/changpass" style="text-decoration: none">
           <li
             :class="getActiveUserNav == 3 ? `active` : `unactive`"
             @click="

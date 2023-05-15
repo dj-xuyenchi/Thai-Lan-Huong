@@ -40,6 +40,7 @@ import {
   faComment,
   faComments,
   faTrashCan,
+  faBell,
 } from "@fortawesome/free-regular-svg-icons";
 import {
   faBloggerB,
@@ -50,6 +51,7 @@ import {
 /* add icons to the library */
 library.add(
   faHouse,
+  faBell,
   faBook,
   faCalendarPlus,
   faBloggerB,
