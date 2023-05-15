@@ -12,6 +12,7 @@
         background-color: #f2f3f5;
         margin: 0px 4px 4px 8px;
         position: relative;
+        width: 92%;
       "
     >
       <span
@@ -120,6 +121,7 @@
               background-color: #f2f3f5;
               margin: 0px 4px 4px 8px;
               position: relative;
+              width: 88%;
             "
           >
             <span

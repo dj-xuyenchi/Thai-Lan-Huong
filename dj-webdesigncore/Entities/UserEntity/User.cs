@@ -15,7 +15,8 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public string UserPass { get; set; }
 		public byte[]? UserAvatarData { get; set; }
 		public byte[]? UserAvatarData40x40 { get; set; }
-		public string? UserEmail { get; set; }
+        public byte[]? UserCoverImg { get; set; }
+        public string? UserEmail { get; set; }
 		public string? UserFacebook { get; set; }
 		public string? UserLinkedIn { get; set; }
 		public string? UserFisrtName { get; set; }
@@ -24,6 +25,7 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public string? UserDetail { get; set; }
 		public DateTime? Birthday { get; set; }
 		public DateTime? Update { get; set; }
+		public DateTime? CreateAccount { get; set; }
 		public int? GenderId { get; set; }
 		public  Gender? Gender { get; set; }
 		public int? UserRoleId { get; set; }
@@ -42,5 +44,6 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public int? CatalogId { get; set; }
 		public UserCatalog? Catalog { get; set; }
 		public string? AddressNow { get; set; }
+		public bool? IsKYC { get; set; }
 	}
 }

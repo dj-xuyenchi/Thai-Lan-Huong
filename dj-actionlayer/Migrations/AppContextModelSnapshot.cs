@@ -228,6 +228,38 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("home_content");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.HomeNotification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Create")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("Img")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserPublicId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserPublicId");
+
+                    b.ToTable("home_notification");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.PracticeDoneData", b =>
                 {
                     b.Property<int>("Id")
@@ -243,6 +275,9 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime?>("DoneTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("LangueId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PracticeLessonId")
                         .HasColumnType("int");
 
@@ -250,6 +285,8 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LangueId");
 
                     b.HasIndex("PracticeLessonId");
 
@@ -837,6 +874,23 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("course_type");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.Langue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("LangueName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Langue");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.Lesson", b =>
                 {
                     b.Property<int>("Id")
@@ -920,6 +974,37 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("lesson_type");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.MultiLangueCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BeginCodeMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CallTestCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LangueId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PracticeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LangueId");
+
+                    b.HasIndex("PracticeId");
+
+                    b.ToTable("multi_langue_code");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", b =>
                 {
                     b.Property<int>("Id")
@@ -943,6 +1028,9 @@ namespace dj_actionlayer.Migrations
 
                     b.Property<string>("Input")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsSupportMultiLangue")
+                        .HasColumnType("bit");
 
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
@@ -1358,6 +1446,43 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("majors");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Create")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SystemNotification")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserSendId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("notification");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Province", b =>
                 {
                     b.Property<string>("code")
@@ -1485,11 +1610,17 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("CatalogId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CreateAccount")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DistrictCode")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("GenderId")
                         .HasColumnType("int");
+
+                    b.Property<bool?>("IsKYC")
+                        .HasColumnType("bit");
 
                     b.Property<string>("NumberPhone")
                         .HasColumnType("nvarchar(max)");
@@ -1504,6 +1635,9 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("UserAvatarData40x40")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("UserCoverImg")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("UserDetail")
@@ -1720,8 +1854,23 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.HomeNotification", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "UserPublic")
+                        .WithMany()
+                        .HasForeignKey("UserPublicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserPublic");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.PracticeDoneData", b =>
                 {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Langue", "Langue")
+                        .WithMany()
+                        .HasForeignKey("LangueId");
+
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", "PracticeLesson")
                         .WithMany()
                         .HasForeignKey("PracticeLessonId")
@@ -1733,6 +1882,8 @@ namespace dj_actionlayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Langue");
 
                     b.Navigation("PracticeLesson");
 
@@ -1984,6 +2135,25 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("LessonType");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.MultiLangueCode", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Langue", "Langue")
+                        .WithMany()
+                        .HasForeignKey("LangueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", "Practice")
+                        .WithMany()
+                        .HasForeignKey("PracticeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Langue");
+
+                    b.Navigation("Practice");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", b =>
                 {
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
@@ -2088,6 +2258,17 @@ namespace dj_actionlayer.Migrations
                     b.Navigation("Majors");
 
                     b.Navigation("School");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.UserEntity.Notification", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

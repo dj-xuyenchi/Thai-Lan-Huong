@@ -18,5 +18,6 @@ namespace dj_webdesigncore.Entities.CourseEntity
         public string? Suggest { get; set; }
         public int LessonId { get; set; }
         public Lesson Lesson { get; set; }
+        public bool? IsSupportMultiLangue { get; set; }
     }
 }

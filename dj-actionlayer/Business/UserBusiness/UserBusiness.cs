@@ -275,6 +275,31 @@ namespace dj_actionlayer.Business.UserBusiness
             return result;
         }
 
+        public async Task<ResponData<List<NotificationDTO>>> notificationUser(int userId)
+        {
+            ResponData<List<NotificationDTO>> result = new ResponData<List<NotificationDTO>>();
+            User user =await _context.user.FindAsync(userId);
+            if(user == null)
+            {
+                result.Data = null;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            List<NotificationDTO> notificationDTOs = new List<NotificationDTO>();
+            var noti = _context.notification.Where(x=>x.UserId==userId).OrderBy(x=>x.Create).ToList();
+            foreach (var item in noti)
+            {
+                NotificationDTO notification = new NotificationDTO();
+             //   notification.
+            //    notificationDTOs.Add(notification);
+            }
+            result.Data = notificationDTOs;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
         public async Task<ResponData<OptionUpdateInfor>> optionUpdateInfor()
         {
             ResponData<OptionUpdateInfor> result = new ResponData<OptionUpdateInfor>();

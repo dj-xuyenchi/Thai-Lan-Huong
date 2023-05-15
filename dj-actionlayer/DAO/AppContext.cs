@@ -22,6 +22,7 @@ namespace dj_actionlayer.DAO
         public DbSet<RefreshToken> refresh_token { get; set; }
 
         // Course Entities
+        public DbSet<MultiLangueCode> multi_langue_code { get; set; }
         public DbSet<LessonStatus> lesson_status { get; set; }
         public DbSet<PracticeLesson> practice_lesson { get; set; }
         public DbSet<VideoLesson> video_lesson { get; set; }
@@ -45,6 +46,7 @@ namespace dj_actionlayer.DAO
         public DbSet<Post> post { get; set; }
         public DbSet<PostStatus> post_status { get; set; }
         // User Entities
+        public DbSet<Notification> notification { get; set; }
         public DbSet<School> school { get; set; }
         public DbSet<SchoolType> school_type { get; set; }
         public DbSet<LearningExperience> learning_experience { get; set; }
@@ -59,6 +61,7 @@ namespace dj_actionlayer.DAO
         public DbSet<UserRole> user_role { get; set; }
         public DbSet<UserStatus> user_status { get; set; }
         // Business Entities
+        public DbSet<HomeNotification> home_notification { get; set; }
         public DbSet<Majors> majors { get; set; }
         public DbSet<UserCatalog> user_catalog { get; set; }
         public DbSet<VideoDoneData> video_done_data { get; set; }
@@ -79,8 +82,8 @@ namespace dj_actionlayer.DAO
         public DbSet<HomeContent> home_content { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-          //  optionsBuilder.UseSqlServer(Settings.DBConnect());
+          //  optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+            optionsBuilder.UseSqlServer(Settings.DBConnect());
          // 	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
     }
