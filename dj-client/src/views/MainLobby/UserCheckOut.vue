@@ -79,7 +79,7 @@ export default {
     return {
       isAdmin: false,
       showSignIn: true,
-      show: true,
+      show: false,
       user: {
         avatar: "",
         name: "",
