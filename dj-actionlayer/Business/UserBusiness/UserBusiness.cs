@@ -1,4 +1,5 @@
-﻿using dj_webdesigncore.Business.UserIBusiness;
+﻿using dj_actionlayer.DAO;
+using dj_webdesigncore.Business.UserIBusiness;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.DTOs.UserDTO;
@@ -42,7 +43,15 @@ namespace dj_actionlayer.Business.UserBusiness
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
-            user.UserPass= request.NewPass;
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Xác nhận đổi mật khẩu thành công lúc " + DateTime.Now + " <3";
+            notification.UserId = user.Id;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
+            user.UserPass = request.NewPass;
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -69,6 +78,14 @@ namespace dj_actionlayer.Business.UserBusiness
             experience.Open = createExperience.start;
             experience.UserId = createExperience.userId;
             experience.Position = createExperience.position;
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Đã thêm mới thông tin về kinh nghiệm làm việc! <3";
+            notification.UserId = createExperience.userId;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
             await _context.AddAsync(experience);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -93,6 +110,14 @@ namespace dj_actionlayer.Business.UserBusiness
             learningExperience.MajorsId = addLearningExperience.majors;
             learningExperience.Close = addLearningExperience.end;
             learningExperience.Open = addLearningExperience.start;
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Đã thêm mới thông tin về học vấn! <3";
+            notification.UserId = addLearningExperience.userId;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
             await _context.AddAsync(learningExperience);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -112,6 +137,14 @@ namespace dj_actionlayer.Business.UserBusiness
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Xóa thành công thông tin quá trình làm việc!";
+            notification.UserId = experience.UserId;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
             _context.Remove(experience);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -131,6 +164,14 @@ namespace dj_actionlayer.Business.UserBusiness
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Xóa thành công thông tin học vấn!";
+            notification.UserId = learningExperience.UserId;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
             _context.Remove(learningExperience);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -278,8 +319,8 @@ namespace dj_actionlayer.Business.UserBusiness
         public async Task<ResponData<List<NotificationDTO>>> notificationUser(int userId)
         {
             ResponData<List<NotificationDTO>> result = new ResponData<List<NotificationDTO>>();
-            User user =await _context.user.FindAsync(userId);
-            if(user == null)
+            User user = await _context.user.FindAsync(userId);
+            if (user == null)
             {
                 result.Data = null;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -287,12 +328,43 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             List<NotificationDTO> notificationDTOs = new List<NotificationDTO>();
-            var noti = _context.notification.Where(x=>x.UserId==userId).OrderBy(x=>x.Create).ToList();
+            var noti = _context.notification.Where(x => x.UserId == userId).OrderByDescending(x => x.Create).ToList();
             foreach (var item in noti)
             {
                 NotificationDTO notification = new NotificationDTO();
-             //   notification.
-            //    notificationDTOs.Add(notification);
+                notification.Content = item.Content;
+                notification.IsSeen = item.IsSeen;
+                notification.NotificationId = item.Id;
+                notification.Link = item.Link;
+                string send = "";
+                int dateDiff = (DateTime.Now - item.Create).Days;
+                if (dateDiff == 0)
+                {
+                    int hourDiff = (DateTime.Now - item.Create).Hours;
+                    if (hourDiff == 0)
+                    {
+                        send = (DateTime.Now - item.Create).Minutes.ToString() + " phút trước";
+                    }
+                    else
+                    {
+                        send = hourDiff.ToString() + " giờ trước";
+                    }
+                }
+                else
+                {
+                    send = dateDiff.ToString() + " ngày trước";
+                }
+                notification.SendTime = send;
+                if (item.SystemNotification)
+                {
+                    notification.Avatar = Convert.FromBase64String(Settings.adminImgae());
+                }
+                else
+                {
+                    User user1 = await _context.user.FindAsync(item.UserSendId);
+                    notification.Avatar = user1.UserAvatarData40x40;
+                }
+                notificationDTOs.Add(notification);
             }
             result.Data = notificationDTOs;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -314,6 +386,48 @@ namespace dj_actionlayer.Business.UserBusiness
             return result;
         }
 
+        public async Task<ResponData<ActionStatus>> seenAllNotifi(int userId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User user = await _context.user.FindAsync(userId);
+            if (user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            var listNoti = _context.notification.Where(x => x.UserId == userId && x.IsSeen == false).ToList();
+            foreach (var item in listNoti)
+            {
+                item.IsSeen = true;
+            }
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> seenNotifi(int notificationId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+
+            Notification notification = await _context.notification.FindAsync(notificationId);
+            if (notification == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            notification.IsSeen = true;
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
 
         public async Task<ResponData<UpdateDTO>> updateUser(IFormFile? avatar, UpdateUserRequest updateUserRequest)
         {
@@ -350,6 +464,14 @@ namespace dj_actionlayer.Business.UserBusiness
             user.UserLinkedIn = updateUserRequest.linkedIn;
             user.WardCode = updateUserRequest.ward;
             user.Update = DateTime.Now;
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Cập nhật thông tin cá nhân thành công! <3";
+            notification.UserId = user.Id;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
             await _context.SaveChangesAsync();
             data.status = ActionStatus.SECCESSFULLY;
             data.avatar = user.UserAvatarData40x40;

@@ -13,5 +13,6 @@ namespace dj_webdesigncore.DTOs.UserDTO
         public byte[] Avatar { get; set; }
         public string Link { get; set; }
         public bool IsSeen { get; set; }
+        public string SendTime { get; set; }
     }
 }

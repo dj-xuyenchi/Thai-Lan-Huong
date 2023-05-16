@@ -76,5 +76,20 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.changePass(request));
         }
+        [HttpGet("getnotifi")]
+        public async Task<IActionResult> notificattionUser(int userId)
+        {
+            return Ok(await _user.notificationUser(userId));
+        }
+        [HttpGet("seennoti")]
+        public async Task<IActionResult> seenNoti(int notificationId)
+        {
+            return Ok(await _user.seenNotifi(notificationId));
+        }
+        [HttpGet("seenallnoti")]
+        public async Task<IActionResult> seenAllNoti(int userId)
+        {
+            return Ok(await _user.seenAllNotifi(userId));
+        }
     }
 }

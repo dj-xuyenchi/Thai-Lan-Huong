@@ -433,4 +433,7 @@ export default {
 .my-file-input {
   display: none;
 }
+::-webkit-scrollbar {
+  width: 0.5em;
+}
 </style>

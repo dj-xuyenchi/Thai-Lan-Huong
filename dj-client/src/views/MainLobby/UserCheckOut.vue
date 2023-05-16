@@ -8,7 +8,7 @@
     <font-awesome-icon
       icon="fa-regular fa-bell"
       class="notification"
-      @click="setShowNotification()"
+      @click="setShow()"
     />
     <v-card width="400" v-if="show" class="notification-container">
       <v-card-text>
@@ -20,10 +20,16 @@
           ><span
             style="font-size: 14px; font-weight: 400; color: #eb5353"
             id="notification-seen"
+            @click="seenAll()"
             >Đánh dấu đã đọc</span
           >
         </div>
-        <NotificationItem />
+        <NotificationItem
+          v-for="(item, index) in notifications"
+          :key="index"
+          :data="item"
+          :setShowNotification="setShowNotification"
+        />
       </v-card-text>
     </v-card>
     <v-menu>
@@ -68,6 +74,7 @@
 
 <script>
 import AuthApis from "../../apis/AuthApis/AuthApis.ts";
+import UserAPI from "../../apis/APIUser/UserAPI.ts";
 import TokenModel from "@/entities/AuthEntities/TokenModel";
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
@@ -78,6 +85,7 @@ export default {
   data() {
     return {
       isAdmin: false,
+      notifications: [],
       showSignIn: true,
       show: false,
       user: {
@@ -99,7 +107,7 @@ export default {
       },
       items: [
         {
-          text: "Thông tin cá nhân",
+          text: "Trang cá nhân",
           icon: "mdi-account",
           event: () => {
             this.$router.push({ path: "/home/user/inforcontact" });
@@ -112,6 +120,14 @@ export default {
             this.$router.push({ path: "/user/1" });
           },
         },
+        {
+          text: "Cài đặt tài khoản",
+          icon: "mdi-cog",
+          event: () => {
+            this.$router.push({ path: "/home/user/inforcontact" });
+          },
+        },
+
         {
           text: "Đăng xuất",
           icon: "mdi-logout",
@@ -163,8 +179,25 @@ export default {
     setShowLogin() {
       this.showSignIn = true;
     },
-    setShowNotification() {
+    async setShowNotification() {
+      var id = localStorage.getItem("id");
+      var token = localStorage.getItem("token");
+      const result = await UserAPI.getNotifi(id, token);
+      this.notifications = result.data;
+    },
+    setShow() {
       this.show = !this.show;
+      if (!this.show) {
+        return;
+      }
+      this.setShowNotification();
+    },
+    async seenAll() {
+      await UserAPI.seenAllNoti(
+        localStorage.getItem("id"),
+        localStorage.getItem("token")
+      );
+      this.setShowNotification();
     },
   },
 };
@@ -191,10 +224,17 @@ export default {
 .notification-container {
   position: absolute;
   top: 110%;
+  border-radius: 15px;
+  max-height: 600px;
+  z-index: 5;
+  overflow: scroll;
   left: -400px;
 }
 #notification-seen:hover {
   cursor: pointer;
   color: #f5dcdc;
+}
+::-webkit-scrollbar {
+  width: 0.5em;
 }
 </style>

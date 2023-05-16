@@ -300,7 +300,7 @@ namespace dj_actionlayer.Business.Auth
                 {
                     code = "DJ" + rand.Next(10000000, 99999999);
                 }
-                confirmEmail.Code =  code;
+                confirmEmail.Code = code;
                 await _context.confirm_email.AddAsync(confirmEmail);
                 await _context.SaveChangesAsync();
                 _sendEmail.SendConfirmCreateAccount(newAccount.email, confirmEmail.Code);
@@ -351,6 +351,15 @@ namespace dj_actionlayer.Business.Auth
                 Token = await GenToken(user),
                 role = (int)user.UserRoleId
             };
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Xin chào mình là Admin của DJ - CodeMaster! chúc cậu có những trải nghiệm tuyệt vời tại đây nhé. Mọi thắc mắc và góp ý vui lòng gửi về do.quanganh99zz@gmail.com hoặc 0968491797. :3";
+            notification.UserId = user.Id;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
+            await _context.SaveChangesAsync();
             return result;
         }
 
@@ -358,14 +367,14 @@ namespace dj_actionlayer.Business.Auth
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
             User user = await _context.user.Where(x => x.UserEmail.Equals(forgetPassRequest.Email)).FirstOrDefaultAsync();
-            if(user == null)
+            if (user == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Status = ActionStatus.SECCESSFULLY;
-                result.Messenger = "Lấy dữ liệu thành công!"; 
+                result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
-            var listConfirm =  _context.confirm_email.Where(x => x.UserId == user.Id).ToList();
+            var listConfirm = _context.confirm_email.Where(x => x.UserId == user.Id).ToList();
             _context.confirm_email.RemoveRange(listConfirm);
             await _context.SaveChangesAsync();
             ConfirmEmail confirmEmail = new ConfirmEmail();
@@ -382,7 +391,7 @@ namespace dj_actionlayer.Business.Auth
             confirmEmail.Code = code;
             await _context.confirm_email.AddAsync(confirmEmail);
             await _context.SaveChangesAsync();
-            _sendEmail.SendForgetPass(forgetPassRequest.Email,  confirmEmail.Code);
+            _sendEmail.SendForgetPass(forgetPassRequest.Email, confirmEmail.Code);
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -407,6 +416,15 @@ namespace dj_actionlayer.Business.Auth
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
+            Notification notification = new Notification();
+            notification.SystemNotification = true;
+            notification.Content = "Bạn đã lấy lại mật khẩu thành công nhớ bảo mật mật khẩu mới nha. mãi yêu :3";
+            notification.UserId = confirmEmail1.UserId;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.Link = null;
+            await _context.AddAsync(notification);
+            await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -416,7 +434,7 @@ namespace dj_actionlayer.Business.Auth
         {
             LoginResponse<AuthDataRespon> result = new LoginResponse<AuthDataRespon>();
 
-            ConfirmEmail confirmEmail =await _context.confirm_email.Where(x => x.Code.Equals(confirmNewPass.Code)).FirstOrDefaultAsync();
+            ConfirmEmail confirmEmail = await _context.confirm_email.Where(x => x.Code.Equals(confirmNewPass.Code)).FirstOrDefaultAsync();
             if (confirmEmail == null)
             {
                 result.Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.FAILED;

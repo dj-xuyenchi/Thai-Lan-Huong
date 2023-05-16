@@ -1,26 +1,37 @@
 <template>
-  <div class="noti-item">
+  <div class="noti-item" @click="seenNoti()">
     <div class="right-img">
       <img
-        src="https://demoda.vn/wp-content/uploads/2022/04/hinh-cute-anh-cute.jpg"
+        :src="'data:image/jpeg;base64, ' + data.avatar"
         alt=""
         style="border-radius: 50%; height: 60px; width: 60px"
       />
     </div>
     <div class="left-content">
       <div class="content">
-        <span>Chào mừng bạn đến với website học lập trình </span>
-        <span style="font-weight: 500">DJ - CodeMaster.</span>
-        <span class="timeline">4 ngày trước</span>
-        <span class="isread"></span>
+        <span>{{ data.content }} </span>
+        <!-- <span style="font-weight: 500">DJ - CodeMaster.</span> -->
+        <span class="timeline">{{ data.sendTime }}</span>
+        <span class="isread" v-if="!data.isSeen"></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import UserAPI from "../../apis/APIUser/UserAPI.ts";
 export default {
+  props: { data: Object, setShowNotification: Function },
   name: "NotificationItem",
+  methods: {
+    async seenNoti() {
+      await UserAPI.seenNoti(
+        this.data.notificationId,
+        localStorage.getItem("token")
+      );
+      this.setShowNotification();
+    },
+  },
 };
 </script>
 
@@ -69,6 +80,9 @@ export default {
   position: absolute;
   bottom: 43%;
   right: -12px;
+}
+.left-content .content .weight {
+  font-weight: bold;
 }
 .noti-item:hover {
   background-color: #dadde1;

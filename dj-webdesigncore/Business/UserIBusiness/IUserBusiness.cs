@@ -27,5 +27,7 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<ActionStatus>> deleteLearningExperience(int learningId);
         Task<ResponData<ActionStatus>> changePass(RePass request);
         Task<ResponData<List<NotificationDTO>>> notificationUser(int userId);
+        Task<ResponData<ActionStatus>> seenNotifi(int notificationId);
+        Task<ResponData<ActionStatus>> seenAllNotifi(int userId);
     }
 }

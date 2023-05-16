@@ -24,7 +24,6 @@ var secretKeyBytes = Encoding.UTF8.GetBytes(Settings.SecretKey());
 // Tạo xác thực
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {
-
     opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         //Tu Cap Token

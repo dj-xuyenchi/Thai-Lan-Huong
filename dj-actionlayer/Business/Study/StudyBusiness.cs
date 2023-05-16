@@ -69,7 +69,7 @@ namespace dj_actionlayer.Business.Study
                     }
                     commentDetail.Comment = comment.Comment;
                     User user =await _context.user.FindAsync(comment.UserId);
-                    commentDetail.UserName = user.UserFisrtName + " " + user.UserLastName;
+                    commentDetail.UserName = user.UserLastName + " " + user.UserFisrtName;
                     commentDetail.LikeCount = (int)comment.LikeCount;
                     commentDetail.UserId = (int)comment.UserId;
                     commentDetail.UserAvatar = _context.user.Find(comment.UserId).UserAvatarData40x40;
@@ -571,6 +571,22 @@ namespace dj_actionlayer.Business.Study
                 newUserCourse.LastTimeStudyDateTime = DateTime.Now;
                 newUserCourse.DonePercent = 0;
                 _context.Add(newUserCourse);
+                Notification notification = new Notification();
+                notification.SystemNotification = true;
+                notification.Content = "Đăng ký thành công khóa học "+ course.CourseName +" chúc cậu có những buổi học thật chất lượng tại DJ - CodeMaster <3";
+                notification.UserId = user.Id;
+                notification.Create = DateTime.Now;
+                notification.IsSeen = false;
+                notification.Link = null;
+                await _context.AddAsync(notification);
+                //Notification notification1 = new Notification();
+                //notification1.SystemNotification = true;
+                //notification1.Content = "Gửi cậu bộ tài liệu học của khóa " + course.CourseName + " nha! Mãi yêu <3";
+                //notification1.UserId = user.Id;
+                //notification1.Create = DateTime.Now;
+                //notification1.IsSeen = false;
+                //notification1.Link = null;
+                //await _context.AddAsync(notification1);
                 await _context.SaveChangesAsync();
                 CourseChapter courseChapter = _context.course_chapter.Where(x => x.CourseId == registerCourse.CourseId && x.SortNumber == 1).SingleOrDefault();
                 if (courseChapter == null)
@@ -696,6 +712,20 @@ namespace dj_actionlayer.Business.Study
             commentLesson.UserId = subCommentLessonRequest.UserId;
             commentLesson.CommentLessonParentId = subCommentLessonRequest.CommentParentId;
             await _context.AddAsync(commentLesson);
+            CommentLesson commentLesson2 = await _context.comment_lesson.FindAsync(subCommentLessonRequest.CommentParentId);
+            if(commentLesson.UserId!= commentLesson2.UserId)
+            {
+                User user2 = await _context.user.FindAsync(commentLesson2.UserId);
+                Notification notification = new Notification();
+                notification.SystemNotification = false;
+                notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã trả lời bình luận của bạn!";
+                notification.UserId = user2.Id;
+                notification.Create = DateTime.Now;
+                notification.IsSeen = false;
+                notification.UserSendId = user.Id;
+                notification.Link = null;
+                await _context.AddAsync(notification);
+            }
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -732,6 +762,7 @@ namespace dj_actionlayer.Business.Study
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
+
             UserLikeCommentLesson userLikeCommentLesson = _context.user_like_comment_lesson.Where(x => x.UserId == likeComment.UserId && x.CommentLessonId == likeComment.CommentId).FirstOrDefault();
             if (userLikeCommentLesson != null)
             {
@@ -741,6 +772,19 @@ namespace dj_actionlayer.Business.Study
             }
             else
             {
+                if (comment.UserId != user.Id)
+                {
+                    User user2 = await _context.user.FindAsync(comment.UserId);
+                    Notification notification = new Notification();
+                    notification.SystemNotification = false;
+                    notification.Content = user.UserFisrtName+" "+user.UserLastName+" đã thích bình luận của bạn!";
+                    notification.UserId = user2.Id;
+                    notification.Create = DateTime.Now;
+                    notification.IsSeen = false;
+                    notification.Link = null;
+                    notification.UserSendId = user.Id;
+                    await _context.AddAsync(notification);
+                }
                 UserLikeCommentLesson newLike = new UserLikeCommentLesson();
                 newLike.CommentLessonId = comment.Id;
                 newLike.UserId = likeComment.UserId;
