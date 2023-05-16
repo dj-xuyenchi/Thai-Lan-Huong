@@ -33,5 +33,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<AddLesson2ChapterDTO>> addLesson2Chapter(UpdateSortNumberLessonRequest updateSortNumberLessonRequest);
         Task<ResponData<AddLesson2ChapterDTO>> deleteLessonOfChapter(int lessonChapterId);
         Task<ResponData<List<LessonDetailDTO>>> getLessonNotInChapter();
+        Task<ResponData<OptionAddCourse>> getOptionAddCourse();
     }
 }

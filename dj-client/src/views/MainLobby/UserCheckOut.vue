@@ -5,33 +5,42 @@
     </router-link>
   </div>
   <div v-else class="user-check">
-    <font-awesome-icon
-      icon="fa-regular fa-bell"
-      class="notification"
-      @click="setShow()"
-    />
-    <v-card width="400" v-if="show" class="notification-container">
-      <v-card-text>
-        <div
-          class="font-weight-bold ms-1 mb-2"
-          style="display: flex; justify-content: space-between"
-        >
-          <span style="font-size: 18px; font-weight: 400">Thông báo</span
-          ><span
-            style="font-size: 14px; font-weight: 400; color: #eb5353"
-            id="notification-seen"
-            @click="seenAll()"
-            >Đánh dấu đã đọc</span
-          >
-        </div>
-        <NotificationItem
-          v-for="(item, index) in notifications"
-          :key="index"
-          :data="item"
-          :setShowNotification="setShowNotification"
+    <v-menu
+      transition="slide-y-transition"
+      :close-on-content-click="false"
+      v-model="menu"
+    >
+      <template v-slot:activator="{ props }">
+        <font-awesome-icon
+          v-bind="props"
+          icon="fa-regular fa-bell"
+          class="notification"
+          @click="setShow()"
         />
-      </v-card-text>
-    </v-card>
+      </template>
+      <v-card width="400" class="notification-container">
+        <v-card-text>
+          <div
+            class="font-weight-bold ms-1 mb-2"
+            style="display: flex; justify-content: space-between"
+          >
+            <span style="font-size: 18px; font-weight: 400">Thông báo</span
+            ><span
+              style="font-size: 14px; font-weight: 400; color: #eb5353"
+              id="notification-seen"
+              @click="seenAll()"
+              >Đánh dấu đã đọc</span
+            >
+          </div>
+          <NotificationItem
+            v-for="(item, index) in notifications"
+            :key="index"
+            :data="item"
+            :setShowNotification="setShowNotification"
+          />
+        </v-card-text>
+      </v-card>
+    </v-menu>
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-list-item
@@ -88,6 +97,7 @@ export default {
       notifications: [],
       showSignIn: true,
       show: false,
+      menu: false,
       user: {
         avatar: "",
         name: "",
@@ -186,10 +196,10 @@ export default {
       this.notifications = result.data;
     },
     setShow() {
-      this.show = !this.show;
-      if (!this.show) {
-        return;
-      }
+      // this.show = !this.show;
+      // if (!this.show) {
+      //   return;
+      // }
       this.setShowNotification();
     },
     async seenAll() {
@@ -222,13 +232,13 @@ export default {
   left: -30px;
 }
 .notification-container {
-  position: absolute;
-  top: 110%;
+  /* position: absolute; */
+  /* top: 110%; */
   border-radius: 15px;
   max-height: 600px;
-  z-index: 5;
+  /* z-index: 5; */
   overflow: scroll;
-  left: -400px;
+  /* left: -400px; */
 }
 #notification-seen:hover {
   cursor: pointer;

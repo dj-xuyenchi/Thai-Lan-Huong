@@ -8,7 +8,8 @@ namespace dj_webdesigncore.Enums.PostEnums
 {
     public enum PostSentenceTypeEnum
     {
-        SENTENCE=1,
-        IMAGE=2
+        SENTENCE = 1,
+        CHAPTER = 2,
+        IMAGE = 3,
     }
 }

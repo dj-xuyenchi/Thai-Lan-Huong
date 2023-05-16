@@ -128,5 +128,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.getLessonNotInChapter());
         }
+        [HttpGet("getoptionaddcourse")]
+        public async Task<IActionResult> getOptionAddCourse()
+        {
+            return Ok(await _admin.getOptionAddCourse());
+        }
     }
 }

@@ -90,7 +90,7 @@ namespace dj_actionlayer.Business.Admin
                     {
                         case 1:
                             VideoLesson videoLesson = await _context.video_lesson.Where(x => x.LessonId == lesson.Id).FirstOrDefaultAsync();
-                            VideoDoneData isExistVideo =await _context.video_done_data.Where(x => x.VideoLessonId == videoLesson.Id && x.UserId == item.Id).FirstOrDefaultAsync();
+                            VideoDoneData isExistVideo = await _context.video_done_data.Where(x => x.VideoLessonId == videoLesson.Id && x.UserId == item.Id).FirstOrDefaultAsync();
                             if (isExistVideo != null)
                             {
                                 break;
@@ -130,7 +130,7 @@ namespace dj_actionlayer.Business.Admin
                             await _context.AddAsync(questionDoneData);
                             break;
                     }
-                    
+
                 }
                 await _context.SaveChangesAsync();
                 data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.SECCESSFULLY;
@@ -501,7 +501,7 @@ namespace dj_actionlayer.Business.Admin
                 foreach (var item in list)
                 {
                     LessonDetailDTO lessonDetailDTO = new LessonDetailDTO();
-                    lessonDetailDTO.LessonName=item.LessonName;
+                    lessonDetailDTO.LessonName = item.LessonName;
                     lessonDetailDTO.LessonId = item.Id;
                     data.Add(lessonDetailDTO);
                 }
@@ -635,6 +635,18 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<OptionAddCourse>> getOptionAddCourse()
+        {
+            ResponData<OptionAddCourse> result = new ResponData<OptionAddCourse>();
+            OptionAddCourse data = new OptionAddCourse();
+            data.Level = _context.course_level.ToList();
+            data.Type = _context.course_type.ToList();
+            result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
         }
 
         public async Task<ResponData<List<SelectCourseForChapter>>> selectCourseForChapter()

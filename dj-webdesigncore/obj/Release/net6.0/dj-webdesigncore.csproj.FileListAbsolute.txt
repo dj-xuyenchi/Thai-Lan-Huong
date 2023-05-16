@@ -92,3 +92,7 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\bin\Release\net6.0
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\bin\Release\net6.0\Microsoft.Extensions.Primitives.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\bin\Release\net6.0\System.IO.Pipelines.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\obj\Release\net6.0\dj-webdesigncore.csproj.CopyComplete
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\bin\Release\net6.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\bin\Release\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\bin\Release\net6.0\System.IO.Pipelines.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-webdesigncore\obj\Release\net6.0\dj-webdesigncore.csproj.CopyComplete
