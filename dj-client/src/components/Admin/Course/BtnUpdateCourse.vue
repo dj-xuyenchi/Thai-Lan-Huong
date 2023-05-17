@@ -14,97 +14,107 @@
           </template>
           <v-card>
             <v-card-title>
-              <span class="text-h5">Thêm bài học thực hành</span>
+              <span class="text-h5">Thêm khóa học</span>
             </v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="12" md="12">
+                    <img
+                      :src="'data:image/jpeg;base64, '"
+                      alt=""
+                      style="height: 100px; width: 280px"
+                    />
+                    <v-label style="width: 100%; margin: 24px 0 8px 0"
+                      >Ảnh đại diện của bạn</v-label
+                    >
+                    <v-btn
+                      color="#4d96ff"
+                      style="
+                        height: 35px;
+                        width: 104px;
+                        font-size: 14px;
+                        font-weight: 400;
+                      "
+                      @click="$refs.fileInput.click()"
+                    >
+                      Chọn ảnh</v-btn
+                    >
+                    <v-file-input
+                      ref="fileInput"
+                      v-model="selectFile"
+                      accept="image/*"
+                      @change="onFileSelect"
+                      outlined
+                      dense
+                      hide-details
+                      style="display: none"
+                    ></v-file-input>
+                  </v-col>
+                  <v-col cols="12" sm="4" md="4">
                     <v-text-field
-                      label="Tên bài học"
-                      hint="Khi hiển thị sẽ là Bài học + tên bài học"
+                      label="Khóa học Code"
+                      hint="Khóa học Code"
                       required
-                      :v-model="lessonName"
+                      :v-model="courseCode"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="8" md="8">
                     <v-text-field
-                      label="Mô tả"
-                      hint="Mô tả bài học"
+                      label="Tên khóa học"
+                      hint="Tên khóa học"
                       required
-                      :v-model="lessonDescription"
+                      :v-model="courseName"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="4" md="4">
                     <v-text-field
-                      label="Thời lượng"
-                      hint="Thời lượng của bài học"
+                      label="Tiêu đề phụ khóa học"
+                      hint="Tiêu đề phụ khóa học"
                       required
-                      :v-model="lessonTime"
+                      :v-model="courseSubTitle"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Vấn đề"
-                      hint="Vấn đề cần giải quyết"
-                      required
-                      :v-model="problem"
-                    ></v-text-field>
+                  <v-col cols="12" sm="4" md="4">
+                    <v-select
+                      label="Độ khó"
+                      :items="optionLevel"
+                      :rules="rules"
+                      v-model="courseLevel"
+                      item-title="levelName"
+                      persistent-hint
+                      return-object
+                      item-value="id"
+                    ></v-select>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="12" sm="4" md="4">
                     <v-text-field
-                      label="Mô tả vấn đề"
-                      hint="Mô tả vấn đề cần giải quyết"
-                      required
-                      :v-model="problemDetail"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-textarea
                       counter
-                      label="Code mặc định"
-                      hint="Đoạn code mặc định hiển thị lên code field"
+                      label="Thời gian học"
+                      hint="Thời gian cần bỏ ra để học xong"
                       required
-                      :v-model="beginCode"
-                    ></v-textarea>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      label="Đầu vào ví dụ"
-                      hint="Input test case ví dụ"
-                      required
-                      :v-model="inputExemple"
+                      :v-model="courseTotalTime"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="6">
-                    <v-text-field
-                      label="Đầu ra ví dụ"
-                      hint="Output test case ví dụ"
-                      required
-                      :v-model="outputExemple"
-                    ></v-text-field>
+                    <v-select
+                      label="Dạng khóa học"
+                      :items="optionType"
+                      :rules="rules"
+                      v-model="courseType"
+                      item-title="courseTypeName"
+                      persistent-hint
+                      return-object
+                      item-value="id"
+                    ></v-select>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
-                      label="Giải thích"
-                      hint="Giải thích ví dụ"
+                      label="Link video giới thiệu"
+                      hint="Link video giới thiệu khóa học"
                       required
-                      :v-model="explain"
+                      :v-model="courseIntro"
                     ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Gợi ý"
-                      hint="Gợi ý bài tập"
-                      required
-                      :v-model="suggest"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-switch
-                      v-model="activeLesson"
-                      label="Active bài học"
-                    ></v-switch>
                   </v-col>
                 </v-row>
               </v-container>
@@ -136,20 +146,20 @@
 </template>
 
 <script>
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 export default {
   name: "BtnUpdateCourse",
   data: () => ({
-    lessonName: "",
-    lessonDescription: "",
-    lessonTime: "",
-    problem: "",
-    problemDetail: "",
-    beginCode: "",
-    inputExemple: "",
-    outputExemple: "",
-    explainCode: "",
-    suggest: "",
-    activeLesson: false,
+    selectFile: null,
+    courseCode: "",
+    courseName: "",
+    courseSubTitle: "",
+    courseLevel: "",
+    courseTotalTime: "",
+    courseType: "",
+    courseIntro: "",
+    optionLevel: [],
+    optionType: [],
     dialog: false,
   }),
   methods: {
@@ -167,9 +177,16 @@ export default {
         suggest: this.suggest,
       };
     },
-    sendData() {
-      console.log(this.getData());
+    async getOption() {
+      const result = await AdminAPI.getOptionAddCourse(
+        localStorage.getItem("token")
+      );
+      this.optionLevel = result.data.level;
+      this.optionType = result.data.type;
     },
+  },
+  mounted() {
+    this.getOption();
   },
 };
 </script>

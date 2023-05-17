@@ -1,177 +1,79 @@
 <template>
   <div>
-    <v-form ref="form" @submit.prevent="submit">
-      <v-row>
-        <v-dialog v-model="dialog" persistent width="1024">
-          <template v-slot:activator="{ props }">
-            <v-btn
-              color="green"
-              v-bind="props"
-              density="compact"
-              icon="mdi-plus"
-            >
+    <v-row justify="center">
+      <v-btn
+        color="green"
+        density="compact"
+        @click="dialog = true"
+        icon="mdi-test-tube"
+      >
+      </v-btn>
+      <v-dialog v-model="dialog" persistent width="auto">
+        <v-card style="height: 90vh; :scroll ; width: 80vw">
+          <!-- <v-card-title> {{ item.lessonName }} </v-card-title> -->
+          <v-card-text>
+            <!-- <AddTestCase
+              :getTestCase="getTestCase"
+              :practiceId="item.practiceId"
+            /> -->
+            <ChapterTable style="margin-top: 12px" />
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" variant="text" @click="dialog = false">
+              Đóng
             </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">Thêm bài học thực hành</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Tên bài học"
-                      hint="Khi hiển thị sẽ là Bài học + tên bài học"
-                      required
-                      :v-model="lessonName"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Mô tả"
-                      hint="Mô tả bài học"
-                      required
-                      :v-model="lessonDescription"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Thời lượng"
-                      hint="Thời lượng của bài học"
-                      required
-                      :v-model="lessonTime"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Vấn đề"
-                      hint="Vấn đề cần giải quyết"
-                      required
-                      :v-model="problem"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Mô tả vấn đề"
-                      hint="Mô tả vấn đề cần giải quyết"
-                      required
-                      :v-model="problemDetail"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-textarea
-                      counter
-                      label="Code mặc định"
-                      hint="Đoạn code mặc định hiển thị lên code field"
-                      required
-                      :v-model="beginCode"
-                    ></v-textarea>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      label="Đầu vào ví dụ"
-                      hint="Input test case ví dụ"
-                      required
-                      :v-model="inputExemple"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-text-field
-                      label="Đầu ra ví dụ"
-                      hint="Output test case ví dụ"
-                      required
-                      :v-model="outputExemple"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Giải thích"
-                      hint="Giải thích ví dụ"
-                      required
-                      :v-model="explain"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      label="Gợi ý"
-                      hint="Gợi ý bài tập"
-                      required
-                      :v-model="suggest"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-switch
-                      v-model="activeLesson"
-                      label="Active bài học"
-                    ></v-switch>
-                  </v-col>
-                </v-row>
-              </v-container>
-              <small>Tất cả các trường là bắt buộc!</small>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue-darken-1"
-                variant="text"
-                @click="dialog = false"
-              >
-                Hủy
-              </v-btn>
-              <v-btn
-                type="sendData"
-                color="blue-darken-1"
-                variant="text"
-                @click="sendData"
-              >
-                Thêm bài tập
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </v-form>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="dialog2" width="auto">
+        <v-card>
+          <v-card-title> Dialog 2 </v-card-title>
+          <v-card-text>
+            <v-btn color="primary" @click="dialog3 = !dialog3">
+              Open Dialog 3
+            </v-btn>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" variant="text" @click="dialog2 = false">
+              Đóng
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </div>
 </template>
-
 <script>
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import ChapterTable from "./ChapterTable";
+// import AddTestCase from "./AddTestCase";
 export default {
   name: "AddChapterToCourse",
-  data: () => ({
-    lessonName: "",
-    lessonDescription: "",
-    lessonTime: "",
-    problem: "",
-    problemDetail: "",
-    beginCode: "",
-    inputExemple: "",
-    outputExemple: "",
-    explainCode: "",
-    suggest: "",
-    activeLesson: false,
-    dialog: false,
-  }),
+  components: { ChapterTable },
+  props: {
+    // item: Object,
+  },
+  data() {
+    return {
+      dialog: false,
+      dialog2: false,
+      dialog3: false,
+      notifications: false,
+      sound: true,
+      widgets: false,
+      listTest: [],
+    };
+  },
   methods: {
-    getData() {
-      return {
-        lessonName: this.lessonName,
-        lessonDescription: this.lessonDescription,
-        lessonTime: this.lessonTime,
-        problem: this.problem,
-        problemDetail: this.problemDetail,
-        beginCode: this.beginCode,
-        inputExemple: this.inputExemple,
-        outputExemple: this.outputExemple,
-        explainCode: this.explainCode,
-        suggest: this.suggest,
-      };
+    async getTestCase() {
+      const token = localStorage.getItem("token");
+      const data = await AdminAPI.getAllTestCase(this.item.practiceId, token);
+      this.listTest = data.data;
     },
-    sendData() {
-      console.log(this.getData());
-    },
+  },
+  created() {
+    // this.getTestCase();
   },
 };
 </script>
-
-<style lang="css" scoped></style>
