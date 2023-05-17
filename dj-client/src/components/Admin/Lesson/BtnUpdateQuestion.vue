@@ -11,8 +11,8 @@
           >
           </v-btn>
         </template>
-        <v-form @submit.prevent="submit()" ref="form">
-          <v-card style="overflow: scroll">
+        <v-form @submit.prevent="submit()" ref="form" style="overflow: scroll">
+          <v-card>
             <v-card-title>
               <span class="text-h5">Cập nhật bài quiz</span>
             </v-card-title>

@@ -5,8 +5,8 @@
         <template v-slot:activator="{ props }">
           <v-btn color="primary" v-bind="props"> Thêm bài quiz</v-btn>
         </template>
-        <v-form @submit.prevent="submit()" ref="form">
-          <v-card style="overflow: scroll">
+        <v-form @submit.prevent="submit()" ref="form" style="overflow: scroll">
+          <v-card>
             <v-card-title>
               <span class="text-h5">Thêm bài quiz</span>
             </v-card-title>
