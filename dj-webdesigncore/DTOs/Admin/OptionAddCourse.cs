@@ -11,5 +11,6 @@ namespace dj_webdesigncore.DTOs.Admin
     {
         public List<CourseType> Type { get; set; }
         public List<CourseLevel> Level { get; set; }
+        public List<CourseStatus> Status { get; set; }
     }
 }

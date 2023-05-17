@@ -676,6 +676,7 @@ namespace dj_actionlayer.Business.Admin
             OptionAddCourse data = new OptionAddCourse();
             data.Level = _context.course_level.ToList();
             data.Type = _context.course_type.ToList();
+            data.Status = _context.course_status.ToList();
             result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";

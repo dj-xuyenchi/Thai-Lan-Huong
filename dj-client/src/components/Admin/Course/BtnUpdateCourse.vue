@@ -13,10 +13,9 @@
             >
             </v-btn>
           </template>
-
-          <v-card>
+          <v-card style="overflow: scroll">
             <v-card-title>
-              <span class="text-h5">Thêm khóa học</span>
+              <span class="text-h5">Cập nhật khóa học</span>
             </v-card-title>
             <v-card-text>
               <v-container>
@@ -92,16 +91,8 @@
                       item-value="id"
                     ></v-select>
                   </v-col>
+
                   <v-col cols="12" sm="4" md="4">
-                    <v-text-field
-                      label="Thời gian học"
-                      hint="Thời gian cần bỏ ra để học xong"
-                      required
-                      v-model="courseTotalTime"
-                      :rules="[rules.validValue]"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="6">
                     <v-select
                       label="Dạng khóa học"
                       :items="optionType"
@@ -112,6 +103,63 @@
                       return-object
                       item-value="id"
                     ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="4" md="4">
+                    <v-text-field
+                      label="Số lượng học phần"
+                      hint="Số lượng học phần"
+                      required
+                      v-model="courseTotalTime"
+                      :rules="[rules.validValue]"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4" md="4">
+                    <v-text-field
+                      label="Số bài lượng bài học"
+                      hint="Số bài lượng bài học"
+                      required
+                      v-model="courseTotalTime"
+                      :rules="[rules.validValue]"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4" md="4">
+                    <v-select
+                      label="Trạng thái khóa học"
+                      :items="optionStatus"
+                      :rules="rules"
+                      v-model="courseStatus"
+                      item-title="courseStatusName"
+                      persistent-hint
+                      return-object
+                      item-value="id"
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="4" md="4">
+                    <v-text-field
+                      label="Thời gian học"
+                      hint="Thời gian cần bỏ ra để học xong"
+                      required
+                      v-model="courseTotalTime"
+                      :rules="[rules.validValue]"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4" md="4">
+                    <v-text-field
+                      label="Số người đăng ký khóa học"
+                      hint="Số người đăng ký khóa học"
+                      required
+                      v-model="courseTotalTime"
+                      :rules="[rules.validValue]"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4" md="4">
+                    <v-text-field
+                      label="Số học viên đã hoàn thành"
+                      hint="Sỗ học viên đã hoàn thành khóa học"
+                      required
+                      v-model="courseTotalTime"
+                      :rules="[rules.validValue]"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
@@ -173,9 +221,11 @@ export default {
     courseLevel: "",
     courseTotalTime: "",
     courseType: "",
+    courseStatus: "",
     courseIntro: "",
     optionLevel: [],
     optionType: [],
+    optionStatus: [],
     dialog: false,
     btnLoading: false,
     text: "",
@@ -259,6 +309,7 @@ export default {
       );
       this.optionLevel = result.data.level;
       this.optionType = result.data.type;
+      this.optionStatus = result.data.status;
     },
   },
   mounted() {
