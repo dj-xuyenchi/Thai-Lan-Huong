@@ -5,7 +5,7 @@
         color="green"
         density="compact"
         @click="dialog = true"
-        icon="mdi-test-tube"
+        icon="mdi-plus"
       >
       </v-btn>
       <v-dialog v-model="dialog" persistent width="auto">

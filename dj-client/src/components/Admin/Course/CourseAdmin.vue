@@ -1,6 +1,6 @@
 <template>
   <div style="display: flex; justify-content: space-between">
-    <AddCourse />
+    <AddCourse :getCoursePage="getCoursePage" />
   </div>
   <CourseTable :data="tableData" style="margin-top: 12px" />
   <div class="text-center" @click="getCoursePage()">

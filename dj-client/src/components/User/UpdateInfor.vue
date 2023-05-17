@@ -324,19 +324,6 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
-      // if (
-      //   this.lessonName.trim().length < 1 ||
-      //   this.lessonDescription.trim().length < 1 ||
-      //   this.lessonTime.trim().length < 1 ||
-      //   this.question.trim().length < 1 ||
-      //   this.answera.trim().length < 1 ||
-      //   this.answerb.trim().length < 1 ||
-      //   this.answerc.trim().length < 1 ||
-      //   this.answerd.trim().length < 1
-      // ) {
-      //   this.btnLoading = false;
-      //   return;
-      // }
       const token = localStorage.getItem("token");
       const formData = new FormData();
       formData.append("avatar", this.selectFile ? this.selectFile[0] : null);

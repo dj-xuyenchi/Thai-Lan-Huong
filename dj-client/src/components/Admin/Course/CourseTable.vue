@@ -35,7 +35,7 @@
               align-items: center;
             "
           >
-            <BtnUpdateCourse />
+            <BtnUpdateCourse :item="item" />
             <AddChapterToCourse />
           </td>
         </tr>

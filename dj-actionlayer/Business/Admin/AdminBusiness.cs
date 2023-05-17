@@ -3,8 +3,12 @@ using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
+using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Chapter;
+using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -49,6 +53,34 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<ActionStatus>> addCourse(IFormFile img, AddCourseRequest addCourseRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            Course course = new Course();
+            course.ChapterCount = 0;
+            course.CourseCode = addCourseRequest.courseCode;
+            course.CourseLevelId = addCourseRequest.levelId;
+            course.CourseName = addCourseRequest.courseName;
+            course.CourseStatusId = 2;
+            course.CourseSubTitle = addCourseRequest.courseSubTitle;
+            course.IntroVideoLink = addCourseRequest.introVideoLink;
+            course.TimeLessonTotal = addCourseRequest.totalTime;
+            course.CourseTypeId = addCourseRequest.typeId;
+            course.RegisterCount = 0;
+            course.DoneCount = 0;
+            var stream = new MemoryStream();
+            img.CopyTo(stream);
+            byte[] avatarByte = stream.ToArray();
+            course.CourseImageData = avatarByte;
+            await _context.AddAsync(course);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+
         }
 
         public async Task<ResponData<AddLesson2ChapterDTO>> addLesson2Chapter(UpdateSortNumberLessonRequest updateSortNumberLessonRequest)
@@ -462,6 +494,7 @@ namespace dj_actionlayer.Business.Admin
                     courseDetailDTO.ChapterCount = item.ChapterCount + " học phần";
                     courseDetailDTO.CourseCode = item.CourseCode;
                     courseDetailDTO.CourseName = item.CourseName;
+                    courseDetailDTO.CourseLevelId = (int)item.CourseLevelId;
                     courseDetailDTO.CourseLevel = _context.course_level.Find(item.CourseLevelId).LevelName;
                     courseDetailDTO.CourseStatus = _context.course_status.Find(item.CourseStatusId).CourseStatusName;
                     courseDetailDTO.CourseImageData = item.CourseImageData;
@@ -702,6 +735,43 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<ActionStatus>> updateCourse(IFormFile? img, AddCourseRequest addCourseRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            Course course = await _context.course.FindAsync(addCourseRequest.id);
+            if (course == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            course.ChapterCount = addCourseRequest.chapterCount;
+            course.CourseCode = addCourseRequest.courseCode;
+            course.CourseLevelId = addCourseRequest.levelId;
+            course.CourseName = addCourseRequest.courseName;
+            course.CourseStatusId = addCourseRequest.statusId;
+            course.CourseSubTitle = addCourseRequest.courseSubTitle;
+            course.IntroVideoLink = addCourseRequest.introVideoLink;
+            course.TimeLessonTotal = addCourseRequest.totalTime;
+            course.CourseTypeId = addCourseRequest.typeId;
+            course.RegisterCount = addCourseRequest.resigterCount;
+            course.DoneCount = addCourseRequest.doneCount;
+            if (img != null)
+            {
+                var stream = new MemoryStream();
+                img.CopyTo(stream);
+                byte[] avatarByte = stream.ToArray();
+                course.CourseImageData = avatarByte;
+            }
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+
         }
 
         public async Task<ResponData<AddLessonDTO>> updatePracticeLesson(int lessonId, dj_webdesigncore.Request.Lesson.PracticeLesson practiceLesson)

@@ -1,9 +1,13 @@
 ﻿using dj_actionlayer.Business.Admin;
 using dj_webdesigncore.Business.Admin;
+using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Request.Account;
 using dj_webdesigncore.Request.Chapter;
+using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace dj_endpoint.Controllers.Admin
 {
@@ -132,6 +136,18 @@ namespace dj_endpoint.Controllers.Admin
         public async Task<IActionResult> getOptionAddCourse()
         {
             return Ok(await _admin.getOptionAddCourse());
+        }
+        [HttpPost("addcourse")]
+        public async Task<IActionResult> addCourse([FromForm] IFormFile img, [FromForm] string data)
+        {
+           AddCourseRequest addCourseRequest = JsonConvert.DeserializeObject<AddCourseRequest>(data);
+            return Ok(await _admin.addCourse(img, addCourseRequest));
+        }
+        [HttpPost("updatecourse")]
+        public async Task<IActionResult> updateCourse([FromForm] IFormFile img, [FromForm] string data)
+        {
+            AddCourseRequest addCourseRequest = JsonConvert.DeserializeObject<AddCourseRequest>(data);
+            return Ok(await _admin.updateCourse(img, addCourseRequest));
         }
     }
 }
