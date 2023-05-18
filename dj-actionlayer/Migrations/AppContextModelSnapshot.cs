@@ -188,6 +188,46 @@ namespace dj_actionlayer.Migrations
                     b.ToTable("confirm_email");
                 });
 
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.Denounce", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CheckTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCheck")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsViolation")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProveLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SendTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserSendId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserViolationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserSendId");
+
+                    b.ToTable("denounce");
+                });
+
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.HomeContent", b =>
                 {
                     b.Property<int>("Id")
@@ -888,7 +928,7 @@ namespace dj_actionlayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Langue");
+                    b.ToTable("langue");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.Lesson", b =>
@@ -1168,11 +1208,9 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<byte[]>("PostAvatar")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PostMiniAvatar")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<int?>("PostStatusId")
@@ -1182,7 +1220,7 @@ namespace dj_actionlayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatePost")
+                    b.Property<DateTime?>("UpdatePost")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserCreateId")
@@ -1622,11 +1660,20 @@ namespace dj_actionlayer.Migrations
                     b.Property<bool?>("IsKYC")
                         .HasColumnType("bit");
 
+                    b.Property<bool?>("IsLock")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("KYCTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("NumberPhone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProvinceCode")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("UnlockTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("Update")
                         .HasColumnType("datetime2");
@@ -1852,6 +1899,17 @@ namespace dj_actionlayer.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.Denounce", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "UserSend")
+                        .WithMany()
+                        .HasForeignKey("UserSendId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserSend");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.HomeNotification", b =>

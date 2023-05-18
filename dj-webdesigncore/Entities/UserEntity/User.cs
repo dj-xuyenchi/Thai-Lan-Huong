@@ -1,6 +1,7 @@
 ﻿using dj_webdesigncore.Entities.BusinessEntity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -44,6 +45,10 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public int? CatalogId { get; set; }
 		public UserCatalog? Catalog { get; set; }
 		public string? AddressNow { get; set; }
-		public bool? IsKYC { get; set; }
+        [DefaultValue(false)]
+        public bool? IsKYC { get; set; }
+		public DateTime? KYCTime { get; set; }
+		public bool? IsLock { get; set; }
+		public DateTime? UnlockTime { get; set; }
 	}
 }
