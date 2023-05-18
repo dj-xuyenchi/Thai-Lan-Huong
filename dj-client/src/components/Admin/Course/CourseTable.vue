@@ -24,8 +24,8 @@
             />
           </td>
           <td>{{ item.courseName }}</td>
-          <td>{{ item.chapterCount }}</td>
-          <td>{{ item.lessonCount }}</td>
+          <td>{{ item.chapterCount + " học phần" }}</td>
+          <td>{{ item.lessonCount + " bài học" }}</td>
           <td>{{ item.timeLessonTotal }}</td>
           <td>{{ item.courseStatus }}</td>
           <td

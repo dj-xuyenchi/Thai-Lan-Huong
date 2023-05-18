@@ -9,6 +9,7 @@ namespace dj_webdesigncore.DTOs.Admin
 {
     public class CourseDetailDTO
     {
+        public int CourseId { get; set; }
         public string CourseCode { get; set; }
         public string CourseName { get; set; }
         public string CourseSubTitle { get; set; }
@@ -21,6 +22,7 @@ namespace dj_webdesigncore.DTOs.Admin
         public int RegisterCount { get; set; }
         public int DoneCount { get; set; }
         public int CourseStatusId { get; set; }
+        public string LinkVideoIntro { get; set; }
         public string CourseStatus { get; set; }
         public int CourseTypeId { get; set; }
         public string CourseType { get; set; }

@@ -110,7 +110,7 @@
                       hint="Số lượng học phần"
                       required
                       v-model="chapterCount"
-                      :rules="[rules.validValue]"
+                      :rules="[rules.validValue, rules.validNumber]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="4" md="4">
@@ -119,7 +119,7 @@
                       hint="Số bài lượng bài học"
                       required
                       v-model="lessonCount"
-                      :rules="[rules.validValue]"
+                      :rules="[rules.validValue, rules.validNumber]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="4" md="4">
@@ -149,7 +149,7 @@
                       hint="Số người đăng ký khóa học"
                       required
                       v-model="registerCount"
-                      :rules="[rules.validValue]"
+                      :rules="[rules.validValue, rules.validNumber]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="4" md="4">
@@ -158,15 +158,15 @@
                       hint="Sỗ học viên đã hoàn thành khóa học"
                       required
                       v-model="doneCount"
-                      :rules="[rules.validValue]"
+                      :rules="[rules.validValue, rules.validNumber]"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       label="Link video giới thiệu"
-                      hint="Link video giới thiệu khóa học"
+                      hint="Link video giới thiệu khóa học chỉ hiển thị khi là link embed api youtube"
                       required
-                      v-model="courseIntro"
+                      v-model="linkVideoIntro"
                       :rules="[rules.validValue]"
                     ></v-text-field>
                   </v-col>
@@ -214,22 +214,26 @@ export default {
   name: "BtnUpdateCourse",
   data: () => ({
     selectFile: null,
-    dataImage: "",
-    courseCode: "",
-    courseName: "",
-    courseSubTitle: "",
-    courseLevel: "",
-    courseTotalTime: "",
-    chapterCount: "",
-    courseStatus: "",
-    lessonCount: "",
-    courseType: "",
-    registerCount: "",
-    doneCount: "",
-    courseIntro: "",
+    dataImage: null,
+    courseCode: null,
+    courseName: null,
+    courseSubTitle: null,
+    courseLevel: null,
+    courseTotalTime: null,
+    chapterCount: null,
+    courseStatus: null,
+    lessonCount: null,
+    courseType: null,
+    registerCount: null,
+    doneCount: null,
+    linkVideoIntro: null,
     optionLevel: [],
     optionType: [],
     optionStatus: [],
+    typeId: "",
+    levelId: "",
+    statusId: "",
+    courseId: "",
     dialog: false,
     btnLoading: false,
     text: "",
@@ -237,6 +241,9 @@ export default {
     rules: {
       validValue: (value) =>
         value.trim().length > 0 || "Không được để trống thông tin này!",
+      validNumber: (value) =>
+        /^(0|[1-9][0-9]*)$/.test(value.trim()) ||
+        "Giá trị phải là số và lớn hơn 0!",
     },
   }),
   methods: {
@@ -245,15 +252,19 @@ export default {
         courseCode: this.courseCode,
         courseName: this.courseName,
         courseSubTitle: this.courseSubTitle,
-        levelId: this.courseLevel.id,
+        levelId:
+          typeof this.courseLevel == "string"
+            ? this.levelId
+            : this.courseLevel.id,
         totalTime: this.courseTotalTime,
-        typeId: this.courseType.id,
-        introVideoLink: this.courseIntro,
+        typeId:
+          typeof this.courseType == "string" ? this.typeId : this.courseType.id,
+        introVideoLink: this.linkVideoIntro,
       };
     },
     async submit() {
       this.btnLoading = true;
-      console.log(this.courseLevel);
+      console.log(this.getData());
       if (
         this.courseCode.trim().length == 0 ||
         this.courseName.trim().length == 0 ||
@@ -321,7 +332,6 @@ export default {
     this.courseCode = this.item.courseCode;
     this.courseName = this.item.courseName;
     this.courseTotalTime = this.item.timeLessonTotal;
-    this.courseIntro = this.item.timeLessonTotal;
     this.courseSubTitle = this.item.courseSubTitle;
     this.courseLevel = this.item.courseLevel;
     this.courseType = this.item.courseType;
@@ -330,6 +340,11 @@ export default {
     this.registerCount = this.item.registerCount;
     this.doneCount = this.item.doneCount;
     this.lessonCount = this.item.lessonCount;
+    this.linkVideoIntro = this.item.linkVideoIntro;
+    this.typeId = this.item.courseTypeId;
+    this.levelId = this.item.courseLevelId;
+    this.statusId = this.item.courseStatusId;
+    this.courseId = this.item.courseId;
   },
   props: {
     item: Object,

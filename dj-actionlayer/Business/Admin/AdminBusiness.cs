@@ -491,17 +491,23 @@ namespace dj_actionlayer.Business.Admin
                 foreach (var item in listCourse)
                 {
                     CourseDetailDTO courseDetailDTO = new CourseDetailDTO();
-                    courseDetailDTO.ChapterCount = item.ChapterCount + " học phần";
+                    courseDetailDTO.CourseId = item.Id;
+                    courseDetailDTO.ChapterCount = item.ChapterCount.ToString();
                     courseDetailDTO.CourseCode = item.CourseCode;
                     courseDetailDTO.CourseName = item.CourseName;
                     courseDetailDTO.CourseLevelId = (int)item.CourseLevelId;
                     courseDetailDTO.CourseLevel = _context.course_level.Find(item.CourseLevelId).LevelName;
+                    courseDetailDTO.CourseStatusId = (int)item.CourseStatusId;
                     courseDetailDTO.CourseStatus = _context.course_status.Find(item.CourseStatusId).CourseStatusName;
                     courseDetailDTO.CourseImageData = item.CourseImageData;
                     courseDetailDTO.CourseSubTitle = item.CourseSubTitle;
                     courseDetailDTO.CourseType = _context.course_type.Find(item.CourseTypeId).CourseTypeName;
                     courseDetailDTO.CourseTypeId = item.CourseTypeId;
                     courseDetailDTO.TimeLessonTotal = item.TimeLessonTotal;
+                    courseDetailDTO.RegisterCount = item.RegisterCount;
+                    courseDetailDTO.DoneCount = item.DoneCount;
+                    courseDetailDTO.LinkVideoIntro = item.IntroVideoLink;
+                    courseDetailDTO.LessonCount = item.LessonCount.ToString();
                     courseDetailDTOs.Add(courseDetailDTO);
                 }
                 data.list = courseDetailDTOs;
