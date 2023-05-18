@@ -109,7 +109,7 @@
                       label="Số lượng học phần"
                       hint="Số lượng học phần"
                       required
-                      v-model="courseTotalTime"
+                      v-model="chapterCount"
                       :rules="[rules.validValue]"
                     ></v-text-field>
                   </v-col>
@@ -118,7 +118,7 @@
                       label="Số bài lượng bài học"
                       hint="Số bài lượng bài học"
                       required
-                      v-model="courseTotalTime"
+                      v-model="lessonCount"
                       :rules="[rules.validValue]"
                     ></v-text-field>
                   </v-col>
@@ -148,7 +148,7 @@
                       label="Số người đăng ký khóa học"
                       hint="Số người đăng ký khóa học"
                       required
-                      v-model="courseTotalTime"
+                      v-model="registerCount"
                       :rules="[rules.validValue]"
                     ></v-text-field>
                   </v-col>
@@ -157,7 +157,7 @@
                       label="Số học viên đã hoàn thành"
                       hint="Sỗ học viên đã hoàn thành khóa học"
                       required
-                      v-model="courseTotalTime"
+                      v-model="doneCount"
                       :rules="[rules.validValue]"
                     ></v-text-field>
                   </v-col>
@@ -220,8 +220,12 @@ export default {
     courseSubTitle: "",
     courseLevel: "",
     courseTotalTime: "",
-    courseType: "",
+    chapterCount: "",
     courseStatus: "",
+    lessonCount: "",
+    courseType: "",
+    registerCount: "",
+    doneCount: "",
     courseIntro: "",
     optionLevel: [],
     optionType: [],
@@ -321,6 +325,11 @@ export default {
     this.courseSubTitle = this.item.courseSubTitle;
     this.courseLevel = this.item.courseLevel;
     this.courseType = this.item.courseType;
+    this.chapterCount = this.item.chapterCount;
+    this.courseStatus = this.item.courseStatus;
+    this.registerCount = this.item.registerCount;
+    this.doneCount = this.item.doneCount;
+    this.lessonCount = this.item.lessonCount;
   },
   props: {
     item: Object,

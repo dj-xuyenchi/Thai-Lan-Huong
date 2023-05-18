@@ -10,12 +10,9 @@
       </v-btn>
       <v-dialog v-model="dialog" persistent width="auto">
         <v-card style="height: 90vh; :scroll ; width: 80vw">
-          <!-- <v-card-title> {{ item.lessonName }} </v-card-title> -->
+          <v-card-title> {{ courseName }} </v-card-title>
           <v-card-text>
-            <!-- <AddTestCase
-              :getTestCase="getTestCase"
-              :practiceId="item.practiceId"
-            /> -->
+            <BtnAddChapter />
             <ChapterTable style="margin-top: 12px" />
           </v-card-text>
           <v-card-actions>
@@ -47,12 +44,13 @@
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import ChapterTable from "./ChapterTable";
-// import AddTestCase from "./AddTestCase";
+import BtnAddChapter from "./BtnAddChapter";
 export default {
   name: "AddChapterToCourse",
-  components: { ChapterTable },
+  components: { ChapterTable, BtnAddChapter },
   props: {
-    // item: Object,
+    courseName: String,
+    courseId: Number,
   },
   data() {
     return {

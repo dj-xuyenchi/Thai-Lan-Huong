@@ -36,7 +36,10 @@
             "
           >
             <BtnUpdateCourse :item="item" />
-            <AddChapterToCourse />
+            <AddChapterToCourse
+              :courseName="item.courseName"
+              :courseId="item.courseName"
+            />
           </td>
         </tr>
       </tbody>
