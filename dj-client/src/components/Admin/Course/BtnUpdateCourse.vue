@@ -249,17 +249,26 @@ export default {
   methods: {
     getData() {
       return {
-        courseCode: this.courseCode,
-        courseName: this.courseName,
-        courseSubTitle: this.courseSubTitle,
+        id: this.item.courseId,
+        courseCode: this.courseCode.trim(),
+        courseName: this.courseName.trim(),
+        courseSubTitle: this.courseSubTitle.trim(),
         levelId:
           typeof this.courseLevel == "string"
             ? this.levelId
             : this.courseLevel.id,
-        totalTime: this.courseTotalTime,
+        totalTime: this.courseTotalTime.trim(),
         typeId:
           typeof this.courseType == "string" ? this.typeId : this.courseType.id,
-        introVideoLink: this.linkVideoIntro,
+        introVideoLink: this.linkVideoIntro.trim(),
+        statusId:
+          typeof this.courseStatus == "string"
+            ? this.statusId
+            : this.courseStatus.id,
+        doneCount: this.doneCount,
+        resigterCount: this.registerCount,
+        lessonCount: this.lessonCount,
+        chapterCount: this.chapterCount,
       };
     },
     async submit() {
@@ -269,11 +278,25 @@ export default {
         this.courseCode.trim().length == 0 ||
         this.courseName.trim().length == 0 ||
         this.courseSubTitle.trim().length == 0 ||
-        this.courseIntro.trim().length == 0 ||
+        this.linkVideoIntro.trim().length == 0 ||
         this.courseTotalTime.trim().length == 0 ||
-        this.selectFile == null
+        this.doneCount.length == 0 ||
+        this.registerCount.length == 0 ||
+        this.lessonCount.length == 0 ||
+        this.chapterCount.length == 0
       ) {
         this.text = "Không được để trông thông tin!";
+        this.snackbar = true;
+        this.btnLoading = false;
+        return;
+      }
+      if (
+        !/^(0|[1-9][0-9]*)$/.test(this.doneCount) ||
+        !/^(0|[1-9][0-9]*)$/.test(this.registerCount) ||
+        !/^(0|[1-9][0-9]*)$/.test(this.lessonCount) ||
+        !/^(0|[1-9][0-9]*)$/.test(this.chapterCount)
+      ) {
+        this.text = "Chưa đúng định dạng!";
         this.snackbar = true;
         this.btnLoading = false;
         return;
@@ -282,12 +305,13 @@ export default {
       const formData = new FormData();
       formData.append("img", this.selectFile ? this.selectFile[0] : null);
       formData.append("data", JSON.stringify(this.getData()));
-      const result = await AdminAPI.addCourse(formData, token);
+      const result = await AdminAPI.updateCourse(formData, token);
       if (result.data == 1) {
         this.text = "Cập nhật khóa học thành công!";
         this.dialog = false;
         this.snackbar = true;
         this.btnLoading = false;
+        this.getCoursePage();
       }
       if (result.data == 4) {
         this.text = "Cập nhật khóa học thất bại!";
@@ -348,6 +372,7 @@ export default {
   },
   props: {
     item: Object,
+    getCoursePage: Function,
   },
 };
 </script>

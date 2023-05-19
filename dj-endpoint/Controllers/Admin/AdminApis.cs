@@ -144,10 +144,15 @@ namespace dj_endpoint.Controllers.Admin
             return Ok(await _admin.addCourse(img, addCourseRequest));
         }
         [HttpPost("updatecourse")]
-        public async Task<IActionResult> updateCourse([FromForm] IFormFile img, [FromForm] string data)
+        public async Task<IActionResult> updateCourse([FromForm] IFormFile? img, [FromForm] string data)
         {
             AddCourseRequest addCourseRequest = JsonConvert.DeserializeObject<AddCourseRequest>(data);
             return Ok(await _admin.updateCourse(img, addCourseRequest));
+        }
+        [HttpGet("getchapterofcourse")]
+        public async Task<IActionResult> getChapterOfCourse(int courseId)
+        {
+            return Ok(await _admin.getChapterOfCourse(courseId));
         }
     }
 }

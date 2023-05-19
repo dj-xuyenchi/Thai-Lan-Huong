@@ -2,7 +2,11 @@
   <div style="display: flex; justify-content: space-between">
     <AddCourse :getCoursePage="getCoursePage" />
   </div>
-  <CourseTable :data="tableData" style="margin-top: 12px" />
+  <CourseTable
+    :data="tableData"
+    style="margin-top: 12px"
+    :getCoursePage="getCoursePage"
+  />
   <div class="text-center" @click="getCoursePage()">
     <v-container>
       <v-row justify="center">

@@ -35,10 +35,10 @@
               align-items: center;
             "
           >
-            <BtnUpdateCourse :item="item" />
+            <BtnUpdateCourse :item="item" :getCoursePage="getCoursePage" />
             <AddChapterToCourse
               :courseName="item.courseName"
-              :courseId="item.courseName"
+              :courseId="item.courseId"
             />
           </td>
         </tr>
@@ -55,6 +55,7 @@ export default {
   components: { BtnUpdateCourse, AddChapterToCourse },
   props: {
     data: [],
+    getCoursePage: Function,
   },
 };
 </script>
