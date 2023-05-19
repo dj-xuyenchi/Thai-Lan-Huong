@@ -10,11 +10,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in listTestCase" :key="index">
+      <tr v-for="(item, index) in listChapter" :key="index">
         <td>{{ item.sortNumber }}</td>
-        <td>{{ item.testCaseDetail }}</td>
-        <td>{{ item.input }}</td>
-        <td>{{ item.isLock ? "Case ẩn" : "Case mở" }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.lessonCount }}</td>
+        <td>{{ item.totalTime }}</td>
         <td
           style="
             display: flex;
@@ -22,7 +22,7 @@
             align-items: center;
           "
         >
-          <BtnUpdateChapter
+          <!-- <BtnUpdateChapter
             :testCaseId="item.testCaseId"
             :getTestCase="getTestCase"
             :item="item"
@@ -30,7 +30,7 @@
           <BtnRemoveChapter
             :testCaseId="item.testCaseId"
             :getTestCase="getTestCase"
-          />
+          /> -->
         </td>
       </tr>
     </tbody>
@@ -40,12 +40,12 @@
 import BtnUpdateChapter from "./BtnUpdateChapter";
 import BtnRemoveChapter from "./BtnRemoveChapter";
 export default {
-  components: { BtnUpdateChapter, BtnRemoveChapter },
+  // components: { BtnUpdateChapter, BtnRemoveChapter },
   data() {
     return {};
   },
   props: {
-    listTestCase: [],
+    listChapter: [],
     getTestCase: Function,
   },
 };

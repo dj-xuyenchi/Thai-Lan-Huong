@@ -39,5 +39,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<OptionAddCourse>> getOptionAddCourse();
         Task<ResponData<ActionStatus>> addCourse(IFormFile img, AddCourseRequest addCourseRequest);
         Task<ResponData<ActionStatus>> updateCourse(IFormFile? img, AddCourseRequest addCourseRequest);
+        Task<ResponData<List<ChapterCourseInfo>>> getChapterOfCourse(int courseId);
     }
 }

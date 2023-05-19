@@ -12,8 +12,7 @@
         <v-card style="height: 90vh; :scroll ; width: 80vw">
           <v-card-title> {{ courseName }} </v-card-title>
           <v-card-text>
-            <BtnAddChapter />
-            <ChapterTable style="margin-top: 12px" />
+            <ChapterTable style="margin-top: 12px" :listChapter="listChapter" />
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" variant="text" @click="dialog = false">
@@ -44,10 +43,9 @@
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import ChapterTable from "./ChapterTable";
-import BtnAddChapter from "./BtnAddChapter";
 export default {
   name: "AddChapterToCourse",
-  components: { ChapterTable, BtnAddChapter },
+  components: { ChapterTable },
   props: {
     courseName: String,
     courseId: Number,
@@ -60,18 +58,18 @@ export default {
       notifications: false,
       sound: true,
       widgets: false,
-      listTest: [],
+      listChapter: [],
     };
   },
   methods: {
-    async getTestCase() {
+    async getChapterOfCourse() {
       const token = localStorage.getItem("token");
-      const data = await AdminAPI.getAllTestCase(this.item.practiceId, token);
-      this.listTest = data.data;
+      const data = await AdminAPI.getChapterOfCourse(this.courseId, token);
+      this.listChapter = data.data;
     },
   },
   created() {
-    // this.getTestCase();
+    this.getChapterOfCourse();
   },
 };
 </script>

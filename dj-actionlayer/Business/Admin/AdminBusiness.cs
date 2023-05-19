@@ -441,6 +441,26 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
+        public async Task<ResponData<List<ChapterCourseInfo>>> getChapterOfCourse(int courseId)
+        {
+            ResponData<List<ChapterCourseInfo>> result = new ResponData<List<ChapterCourseInfo>>();
+            var listChapter = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x=>x.SortNumber).ToList();
+            List<ChapterCourseInfo> data = new List<ChapterCourseInfo>();
+            foreach (var item in listChapter)
+            {
+                ChapterCourseInfo chapterCourseInfo = new ChapterCourseInfo();
+                chapterCourseInfo.sortNumber= item.SortNumber;
+                chapterCourseInfo.name = item.ChapterName;
+                chapterCourseInfo.lessonCount = item.ChapterLessonCount;
+                chapterCourseInfo.totalTime = item.ChapterTotalTime;
+                data.Add(chapterCourseInfo);
+            }
+            result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         public async Task<ResponData<GetChapterDTO>> getChapterPage(int page)
         {
             ResponData<GetChapterDTO> result = new ResponData<GetChapterDTO>();
