@@ -22,15 +22,14 @@
             align-items: center;
           "
         >
-          <!-- <BtnUpdateChapter
-            :testCaseId="item.testCaseId"
-            :getTestCase="getTestCase"
-            :item="item"
+          <BtnUpdateChapter
+            :courseChapterId="item.id"
+            :getChapterOfCourse="getChapterOfCourse"
           />
           <BtnRemoveChapter
-            :testCaseId="item.testCaseId"
-            :getTestCase="getTestCase"
-          /> -->
+            :courseChapterId="item.id"
+            :getChapterOfCourse="getChapterOfCourse"
+          />
         </td>
       </tr>
     </tbody>
@@ -40,13 +39,13 @@
 import BtnUpdateChapter from "./BtnUpdateChapter";
 import BtnRemoveChapter from "./BtnRemoveChapter";
 export default {
-  // components: { BtnUpdateChapter, BtnRemoveChapter },
+  components: { BtnUpdateChapter, BtnRemoveChapter },
   data() {
     return {};
   },
   props: {
     listChapter: [],
-    getTestCase: Function,
+    getChapterOfCourse: Function,
   },
 };
 </script>

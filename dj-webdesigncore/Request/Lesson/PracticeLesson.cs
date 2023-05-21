@@ -20,5 +20,7 @@ namespace dj_webdesigncore.Request.Lesson
         public string outputExemple  { get; set; }
         public string explainCode { get; set; }
         public string suggest { get; set; }
+        public int langueId { get; set; }
+        public bool isSupportMutilLangue { get; set; }
     }
 }

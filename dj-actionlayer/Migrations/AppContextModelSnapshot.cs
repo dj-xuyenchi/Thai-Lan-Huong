@@ -1072,6 +1072,9 @@ namespace dj_actionlayer.Migrations
                     b.Property<bool?>("IsSupportMultiLangue")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("LangueDefaultId")
+                        .HasColumnType("int");
+
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
@@ -1087,6 +1090,8 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LangueDefaultId");
 
                     b.HasIndex("LessonId");
 
@@ -2214,11 +2219,17 @@ namespace dj_actionlayer.Migrations
 
             modelBuilder.Entity("dj_webdesigncore.Entities.CourseEntity.PracticeLesson", b =>
                 {
+                    b.HasOne("dj_webdesigncore.Entities.CourseEntity.Langue", "LangueDefault")
+                        .WithMany()
+                        .HasForeignKey("LangueDefaultId");
+
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
                         .WithMany()
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("LangueDefault");
 
                     b.Navigation("Lesson");
                 });

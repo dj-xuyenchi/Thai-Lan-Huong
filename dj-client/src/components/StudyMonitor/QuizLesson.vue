@@ -143,7 +143,7 @@ export default {
       if (result.data == 6) {
         this.snackBarContent = "Đáp án sai!";
         this.snackbarOk = true;
-        this.callTest();
+        // this.callTest();
         return;
       }
       if (result.data == 7) {

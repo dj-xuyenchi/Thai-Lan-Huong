@@ -1,6 +1,7 @@
 ﻿using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Study;
+using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
@@ -27,5 +28,6 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<ActionStatus>> SendPracticeOk(SendPracticeRequest sendPracticeRequest);
         Task<ResponData<ActionStatus>> SendQuestionAnswer(SendQuestionRequest sendQuestionRequest);
         Task<ResponData<ActionStatus>> SendVideoDoneRequest(SendVideoDoneRequest sendVideoDoneRequest);
+        Task<ResponData<List<Langue>>> getAllLangue();
     }
 }

@@ -204,7 +204,9 @@ namespace dj_actionlayer.Business.Admin
                 practiceNew.Problem = practiceLesson.problem;
                 practiceNew.ProblemDetail = practiceLesson.problemDetail;
                 practiceNew.CallTestCode = practiceLesson.callTestCode;
+                practiceNew.LangueDefaultId = practiceLesson.langueId;
                 practiceNew.ExpectOutput = practiceLesson.outputExemple;
+                practiceNew.IsSupportMultiLangue = practiceLesson.isSupportMutilLangue;
                 practiceNew.Input = practiceLesson.inputExemple;
                 practiceNew.Suggest = practiceLesson.suggest;
                 practiceNew.Explain = practiceLesson.explainCode;
@@ -340,6 +342,25 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
+        public async Task<ResponData<ActionStatus>> deleteCourseChapter(int courseChapterId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            CourseChapter courseChapter = await _context.course_chapter.FindAsync(courseChapterId);
+            if (courseChapter == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            _context.Remove(courseChapter);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         public async Task<ResponData<AddLesson2ChapterDTO>> deleteLessonOfChapter(int lessonChapterId)
         {
             ResponData<AddLesson2ChapterDTO> result = new ResponData<AddLesson2ChapterDTO>();
@@ -449,6 +470,7 @@ namespace dj_actionlayer.Business.Admin
             foreach (var item in listChapter)
             {
                 ChapterCourseInfo chapterCourseInfo = new ChapterCourseInfo();
+                chapterCourseInfo.id = item.Id;
                 chapterCourseInfo.sortNumber= item.SortNumber;
                 chapterCourseInfo.name = item.ChapterName;
                 chapterCourseInfo.lessonCount = item.ChapterLessonCount;
@@ -663,6 +685,8 @@ namespace dj_actionlayer.Business.Admin
                         lessonDetail.outputExemple = practiceLesson.ExpectOutput;
                         lessonDetail.suggest = practiceLesson.Suggest;
                         lessonDetail.inputExemple = practiceLesson.Input;
+                        lessonDetail.isSupportMultiLangue = (bool)practiceLesson.IsSupportMultiLangue;
+                        lessonDetail.langue = await _context.langue.FindAsync(practiceLesson.LangueDefaultId);
                         lessonDetail.beginCode = practiceLesson.BeginCodeMethod;
                         lessonDetail.callTestCode = practiceLesson.CallTestCode;
                         lessonDetail.caseDefaultDetail = testCase.InputDetail;
@@ -801,6 +825,25 @@ namespace dj_actionlayer.Business.Admin
 
         }
 
+        public async Task<ResponData<ActionStatus>> updateCourseChapterSortNumber(int courseChapterId, int newSortNumber)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            CourseChapter courseChapter = await _context.course_chapter.FindAsync(courseChapterId);
+            if (courseChapter == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            courseChapter.SortNumber= newSortNumber;
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         public async Task<ResponData<AddLessonDTO>> updatePracticeLesson(int lessonId, dj_webdesigncore.Request.Lesson.PracticeLesson practiceLesson)
         {
             ResponData<AddLessonDTO> result = new ResponData<AddLessonDTO>();
@@ -825,6 +868,8 @@ namespace dj_actionlayer.Business.Admin
                 practice.BeginCodeMethod = practiceLesson.beginCode;
                 practice.CallTestCode = practiceLesson.callTestCode;
                 practice.ExpectOutput = practiceLesson.outputExemple;
+                practice.IsSupportMultiLangue = practiceLesson.isSupportMutilLangue;
+                practice.LangueDefaultId = practiceLesson.langueId;
                 practice.Explain = practiceLesson.explainCode;
                 practice.Input = practiceLesson.inputExemple;
                 practice.Problem = practiceLesson.problem;

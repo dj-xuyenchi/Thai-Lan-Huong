@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dj_webdesigncore.Entities.CourseEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,5 +36,7 @@ namespace dj_webdesigncore.DTOs.Admin
         public string outputExemple { get; set; }
         public string explainCode { get; set; }
         public string suggest { get; set; }
+        public bool isSupportMultiLangue { get; set; }
+        public Langue langue { get; set; }
     }
 }

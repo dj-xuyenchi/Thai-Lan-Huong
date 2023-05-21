@@ -3,71 +3,33 @@
     <v-row>
       <v-dialog v-model="dialog" persistent width="1024">
         <template v-slot:activator="{ props }">
-          <v-btn
-            color="green"
-            v-bind="props"
-            density="compact"
-            icon="mdi-pencil"
-          >
+          <v-btn color="red" v-bind="props" density="compact" icon="mdi-delete">
           </v-btn>
         </template>
-        <v-form @submit.prevent="submit()" ref="form">
-          <v-card style="overflow: scroll">
-            <v-card-title>
-              <span class="text-h5">Cập nhật học phần</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Tên học phần*"
-                      hint="Tên học phần"
-                      v-model="chapterName"
-                      :rules="rules"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Tổng thời gian học*"
-                      hint="Tổng thời gian học"
-                      :rules="rules"
-                      v-model="chapterTime"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Số bài học*"
-                      hint="Số bài học"
-                      :rules="rules"
-                      type="number"
-                      v-model="lessonCount"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-              <small>* là trường là bắt buộc. !</small>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue-darken-1"
-                variant="text"
-                @click="dialog = false"
-              >
-                Hủy
-              </v-btn>
-              <v-btn
-                color="blue-darken-1"
-                :loading="btnLoading"
-                variant="text"
-                type="submit"
-              >
-                Cập nhật
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-form>
+        <v-card>
+          <v-card-title class="text-h5"> Xoá học phần? </v-card-title>
+          <v-card-text
+            >Sếp có chắc muốn xóa học phần này sau khi xóa sẽ không thể khôi
+            phục lại.</v-card-text
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green-darken-1"
+              variant="text"
+              @click="dialog = false"
+            >
+              Hủy
+            </v-btn>
+            <v-btn
+              color="green-darken-1"
+              variant="text"
+              @click="deleteCourseChapter()"
+            >
+              Đồng ý
+            </v-btn>
+          </v-card-actions>
+        </v-card>
       </v-dialog>
     </v-row>
   </div>
@@ -80,80 +42,40 @@
     </template>
   </v-snackbar>
 </template>
-
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
-import { mapMutations } from "vuex";
 export default {
-  name: "BtnRemoveChapter",
+  name: "BtnDeleteChapter",
   data() {
     return {
+      dialog: false,
       text: "",
       snackbar: false,
-      chapterName: "",
-      chapterTime: "",
-      lessonCount: 0,
-      dialog: false,
-      btnLoading: false,
-      rules: [
-        (value) => {
-          if (value) return true;
-          return "Không được để trống!";
-        },
-      ],
     };
   },
   methods: {
-    ...mapMutations(["setIsLoadedData"]),
-    async submit() {
-      this.btnLoading = true;
-      if (
-        this.chapterName.trim().length < 1 ||
-        this.chapterTime.trim().length < 1
-      ) {
-        this.btnLoading = false;
-        return;
-      }
+    async deleteCourseChapter() {
       const token = localStorage.getItem("token");
-      const result = await AdminAPI.updateChapter(
-        {
-          ChapterId: this.chapterId,
-          ChapterName: this.chapterName,
-          ChapterTotalTime: this.chapterTime,
-          LessonCount: this.lessonCount,
-        },
+      const result = await AdminAPI.deleteCourseChapter(
+        this.courseChapterId,
         token
       );
-      if (result.status == 1) {
-        this.text = "Cập nhật thành công";
+      if (result.data == 1) {
+        this.text = "Xóa thành công";
         this.dialog = false;
         this.snackbar = true;
-        this.getChapterDetail();
+        this.getChapterOfCourse();
       }
-      if (result.status == 2) {
-        this.text = "Cập nhật thất bại";
+      if (result.data == 4) {
+        this.text = "Xóa thất bại";
         this.snackbar = true;
       }
-      this.btnLoading = false;
-    },
-    async getCourseForSelect() {
-      const token = localStorage.getItem("token");
-      const data = await AdminAPI.getCourseForChapter(token);
-      this.courseList = data.data;
+      this.dialog = false;
     },
   },
   props: {
-    getChapterDetail: Function,
-    chapterId: Number,
-    item: Object,
-  },
-  created() {
-    this.getCourseForSelect();
-    this.chapterName = this.item.chapterName;
-    this.chapterTime = this.item.timeTotal;
-    this.lessonCount = this.item.lessonCount;
+    getChapterOfCourse: Function,
+    courseChapterId: Number,
   },
 };
 </script>
-
-<style lang="css" scoped></style>

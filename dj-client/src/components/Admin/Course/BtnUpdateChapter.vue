@@ -14,34 +14,18 @@
         <v-form @submit.prevent="submit()" ref="form">
           <v-card style="overflow: scroll">
             <v-card-title>
-              <span class="text-h5">Cập nhật học phần</span>
+              <span class="text-h5">Cập nhật thứ tự</span>
             </v-card-title>
             <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                      label="Tên học phần*"
-                      hint="Tên học phần"
-                      v-model="chapterName"
-                      :rules="rules"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Tổng thời gian học*"
-                      hint="Tổng thời gian học"
-                      :rules="rules"
-                      v-model="chapterTime"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      label="Số bài học*"
-                      hint="Số bài học"
+                      label="Thứ tự mới*"
+                      hint="Thứ tự khi hiển thị"
+                      v-model="sortNumber"
                       :rules="rules"
                       type="number"
-                      v-model="lessonCount"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -90,9 +74,7 @@ export default {
     return {
       text: "",
       snackbar: false,
-      chapterName: "",
-      chapterTime: "",
-      lessonCount: 0,
+      sortNumber: null,
       dialog: false,
       btnLoading: false,
       rules: [
@@ -107,51 +89,35 @@ export default {
     ...mapMutations(["setIsLoadedData"]),
     async submit() {
       this.btnLoading = true;
-      if (
-        this.chapterName.trim().length < 1 ||
-        this.chapterTime.trim().length < 1
-      ) {
+      if (this.sortNumber <= 0) {
+        this.text = "Sort Number phải lớn hơn 0";
+        this.snackbar = true;
+        this.dialog = false;
         this.btnLoading = false;
         return;
       }
       const token = localStorage.getItem("token");
-      const result = await AdminAPI.updateChapter(
-        {
-          ChapterId: this.chapterId,
-          ChapterName: this.chapterName,
-          ChapterTotalTime: this.chapterTime,
-          LessonCount: this.lessonCount,
-        },
+      const result = await AdminAPI.updateSortNumberCourseChapter(
+        this.courseChapterId,
+        this.sortNumber,
         token
       );
-      if (result.status == 1) {
+      if (result.data == 1) {
         this.text = "Cập nhật thành công";
         this.dialog = false;
         this.snackbar = true;
-        this.getChapterDetail();
+        this.getChapterOfCourse();
       }
-      if (result.status == 2) {
-        this.text = "Cập nhật thất bại";
+      if (result.data == 4) {
+        this.text = "Không tồn tại";
         this.snackbar = true;
       }
       this.btnLoading = false;
     },
-    async getCourseForSelect() {
-      const token = localStorage.getItem("token");
-      const data = await AdminAPI.getCourseForChapter(token);
-      this.courseList = data.data;
-    },
   },
   props: {
-    getChapterDetail: Function,
-    chapterId: Number,
-    item: Object,
-  },
-  created() {
-    this.getCourseForSelect();
-    this.chapterName = this.item.chapterName;
-    this.chapterTime = this.item.timeTotal;
-    this.lessonCount = this.item.lessonCount;
+    getChapterOfCourse: Function,
+    courseChapterId: Number,
   },
 };
 </script>

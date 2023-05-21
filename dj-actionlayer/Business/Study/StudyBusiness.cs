@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using dj_webdesigncore.Enums.StudyEnums;
 
 namespace dj_actionlayer.Business.Study
 {
@@ -68,7 +69,7 @@ namespace dj_actionlayer.Business.Study
                         commentDetail.CommentDate = dateDiff.ToString() + " ngày trước";
                     }
                     commentDetail.Comment = comment.Comment;
-                    User user =await _context.user.FindAsync(comment.UserId);
+                    User user = await _context.user.FindAsync(comment.UserId);
                     commentDetail.UserName = user.UserLastName + " " + user.UserFisrtName;
                     commentDetail.LikeCount = (int)comment.LikeCount;
                     commentDetail.UserId = (int)comment.UserId;
@@ -105,7 +106,7 @@ namespace dj_actionlayer.Business.Study
                             sub.CommentDate = dateDiffSub.ToString() + " ngày trước";
                         }
                         sub.Comment = subComment.Comment;
-                        User subUser =await _context.user.FindAsync(subComment.UserId);
+                        User subUser = await _context.user.FindAsync(subComment.UserId);
                         sub.UserName = subUser.UserFisrtName + " " + subUser.UserLastName;
                         sub.LikeCount = (int)subComment.LikeCount;
                         sub.UserId = (int)subComment.UserId;
@@ -235,17 +236,41 @@ namespace dj_actionlayer.Business.Study
                 PracticeLessonDTO practiceLessonDTO = new PracticeLessonDTO();
                 practiceLessonDTO.Input = practiceLesson.Input;
                 practiceLessonDTO.Suggest = practiceLesson.Suggest;
-                practiceLessonDTO.BeginCodeMethod = practiceLesson.BeginCodeMethod;
                 practiceLessonDTO.Problem = practiceLesson.Problem;
                 practiceLessonDTO.ProblemDetail = practiceLesson.ProblemDetail;
-                practiceLessonDTO.Explain = practiceLesson.Explain;
+                practiceLessonDTO.Explain = practiceLesson.Explain; 
+                practiceLessonDTO.BeginCodeMethod = practiceLesson.BeginCodeMethod;
                 practiceLessonDTO.CallTestCode = practiceLesson.CallTestCode;
                 practiceLessonDTO.ExpectOutput = practiceLesson.ExpectOutput;
                 practiceLessonDTO.PracticeLessonId = practiceLesson.Id;
-                PracticeDoneData practiceDoneData = await _context.practice_done_data.Where(x => x.UserId == userId && x.PracticeLessonId == practiceLesson.Id).FirstOrDefaultAsync();
+                practiceLessonDTO.isSupportMultiLangue = (bool)practiceLesson.IsSupportMultiLangue;
+                if ((bool)practiceLesson.IsSupportMultiLangue)
+                {
+                    List<Langue> listLangueSupport = new List<Langue>();
+                    List<MultiLangueDTO> listMultiDTO = new List<MultiLangueDTO>();
+                    var listMulti = _context.multi_langue_code.Where(x => x.PracticeId == practiceLesson.Id).ToList();
+                    foreach (var item in listMulti)
+                    {
+                        MultiLangueDTO multiLangueDTO = new MultiLangueDTO();
+                        listLangueSupport.Add(await _context.langue.FindAsync(item.LangueId));
+                        multiLangueDTO.id = item.Id;
+                        multiLangueDTO.LangueId = item.LangueId;
+                        multiLangueDTO.PracticeId = item.PracticeId;
+                        multiLangueDTO.BeginCodeMethod = item.BeginCodeMethod;
+                        multiLangueDTO.CallTestCode = item.CallTestCode;
+                        listMultiDTO.Add(multiLangueDTO);
+                    }
+                    practiceLessonDTO.multiLangueDTOs = listMultiDTO;
+                    practiceLessonDTO.listLangue = listLangueSupport;
+                }
+                practiceLessonDTO.defaultLangue = await _context.langue.FindAsync(practiceLesson.LangueDefaultId);
+                var practiceDoneData = await _context.practice_done_data.Where(x => x.UserId == userId && x.PracticeLessonId == practiceLesson.Id).FirstOrDefaultAsync();
                 if (practiceDoneData != null)
                 {
-                    practiceLessonDTO.CodeOk = practiceDoneData.DoneData;
+                    CodeOkDTO ok = new CodeOkDTO();
+                    ok.langue = await _context.langue.FindAsync(practiceDoneData.LangueId);
+                    ok.CodeOk = practiceDoneData.DoneData;
+                    practiceLessonDTO.CodeOk = ok;
                 }
                 var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == practiceLesson.Id).OrderBy(x => x.SortNumber).ToList();
                 List<TryTestCaseDTO> tryTest = new List<TryTestCaseDTO>();
@@ -421,7 +446,7 @@ namespace dj_actionlayer.Business.Study
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
                         callTestCode = callTestCode.Replace("variable", item.Input);
-                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code+callTestCode);
+                        var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code + callTestCode);
                         callTestCode = practiceLesson.CallTestCode;
                         testDTO.Input = item.Input;
                         testDTO.ExpectOutput = item.ExpectOutput;
@@ -573,7 +598,7 @@ namespace dj_actionlayer.Business.Study
                 _context.Add(newUserCourse);
                 Notification notification = new Notification();
                 notification.SystemNotification = true;
-                notification.Content = "Đăng ký thành công khóa học "+ course.CourseName +" chúc cậu có những buổi học thật chất lượng tại DJ - CodeMaster <3";
+                notification.Content = "Đăng ký thành công khóa học " + course.CourseName + " chúc cậu có những buổi học thật chất lượng tại DJ - CodeMaster <3";
                 notification.UserId = user.Id;
                 notification.Create = DateTime.Now;
                 notification.IsSeen = false;
@@ -713,7 +738,7 @@ namespace dj_actionlayer.Business.Study
             commentLesson.CommentLessonParentId = subCommentLessonRequest.CommentParentId;
             await _context.AddAsync(commentLesson);
             CommentLesson commentLesson2 = await _context.comment_lesson.FindAsync(subCommentLessonRequest.CommentParentId);
-            if(commentLesson.UserId!= commentLesson2.UserId)
+            if (commentLesson.UserId != commentLesson2.UserId)
             {
                 User user2 = await _context.user.FindAsync(commentLesson2.UserId);
                 Notification notification = new Notification();
@@ -777,7 +802,7 @@ namespace dj_actionlayer.Business.Study
                     User user2 = await _context.user.FindAsync(comment.UserId);
                     Notification notification = new Notification();
                     notification.SystemNotification = false;
-                    notification.Content = user.UserFisrtName+" "+user.UserLastName+" đã thích bình luận của bạn!";
+                    notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã thích bình luận của bạn!";
                     notification.UserId = user2.Id;
                     notification.Create = DateTime.Now;
                     notification.IsSeen = false;
@@ -827,6 +852,8 @@ namespace dj_actionlayer.Business.Study
             practiceDoneData.UserId = sendPracticeRequest.UserId;
             practiceDoneData.PracticeLessonId = practiceLesson.Id;
             practiceDoneData.DoneData = sendPracticeRequest.Code;
+            practiceDoneData.DoneTime = DateTime.Now;
+            practiceDoneData.LangueId = sendPracticeRequest.langueId;
             ChapterLesson chapterLesson = await _context.chapter_lesson.Where(x => x.LessonId == sendPracticeRequest.LessonId && x.CourseChapterId == sendPracticeRequest.ChapterId).FirstOrDefaultAsync();
             ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendPracticeRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
             if (chapterLessonNext != null)
@@ -1005,6 +1032,15 @@ namespace dj_actionlayer.Business.Study
                 await _context.SaveChangesAsync();
                 return result;
             }
+        }
+
+        public async Task<ResponData<List<Langue>>> getAllLangue()
+        {
+            ResponData<List<Langue>> result = new ResponData<List<Langue>>();
+            result.Data = _context.langue.ToList();
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = ActionStatus.SECCESSFULLY;
+            return result;
         }
     }
 }

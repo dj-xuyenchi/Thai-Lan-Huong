@@ -69,12 +69,24 @@
                       v-model="callTestCode"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="6">
                     <v-text-field
                       label="Case mặc định giải thích tham số"
                       hint="Giải thích truyền tham số case mặc định"
                       v-model="caseDefaultDetail"
                     ></v-text-field>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-select
+                      label="Ngôn ngữ lập trình hiển thị mặc định"
+                      :items="listLangue"
+                      :rules="rules"
+                      v-model="defaultLangue"
+                      item-title="langueName"
+                      persistent-hint
+                      return-object
+                      item-value="id"
+                    ></v-select>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field
@@ -106,6 +118,14 @@
                       :rules="rules"
                       v-model="suggest"
                     ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-switch
+                      v-model="isSupportMutilLangue"
+                      label="Hỗ trợ sử dụng nhiều ngôn ngữ"
+                      color="secondary"
+                      hide-details
+                    ></v-switch>
                   </v-col>
                 </v-row>
               </v-container>
@@ -165,6 +185,9 @@ export default {
       outputExemple: "",
       explainCode: "",
       suggest: "",
+      isSupportMutilLangue: false,
+      listLangue: null,
+      defaultLangue: null,
       dialog: false,
       btnLoading: false,
       rules: [
@@ -191,7 +214,13 @@ export default {
         outputExemple: this.outputExemple,
         explainCode: this.explainCode,
         suggest: this.suggest,
+        langueId: this.defaultLangue.id,
+        isSupportMutilLangue: this.isSupportMutilLangue,
       };
+    },
+    async getLangueOption() {
+      const data = await AdminAPI.getAllLangue(localStorage.getItem("token"));
+      this.listLangue = data.data;
     },
     async submit() {
       this.btnLoading = true;
@@ -203,7 +232,8 @@ export default {
         this.problem.trim().length < 1 ||
         this.outputExemple.trim().length < 1 ||
         this.explainCode.trim().length < 1 ||
-        this.suggest.trim().length < 1
+        this.suggest.trim().length < 1 ||
+        !this.defaultLangue
       ) {
         this.btnLoading = false;
         return;
@@ -215,6 +245,8 @@ export default {
         this.dialog = false;
         this.snackbar = true;
         this.lessonName = "";
+        this.isSupportMutilLangue = false;
+        this.defaultLangue = null;
         this.lessonDescription = "";
         this.lessonTime = "";
         this.problem = "";
@@ -237,6 +269,9 @@ export default {
   },
   props: {
     getLessonDetail: Function,
+  },
+  created() {
+    this.getLangueOption();
   },
 };
 </script>

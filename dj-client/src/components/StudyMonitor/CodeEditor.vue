@@ -1,5 +1,36 @@
 <template>
   <div>
+    <v-row style="margin-top: 12px">
+      <v-col cols="2" sm="2" md="2">
+        <v-select
+          label="Ngôn ngữ"
+          :items="listLangueActive"
+          hide-details="true"
+          variant="outlined"
+          v-model="langue"
+          density="compact"
+          return-object
+          item-value="id"
+          item-title="langueName"
+          @update:modelValue="changeLangue()"
+        ></v-select>
+      </v-col>
+      <v-col cols="2" sm="2" md="2">
+        <v-btn
+          color="#36ae7c"
+          v-bind="props"
+          style="width: 128px; margin-left: 12px"
+          @click="content = defaultCode"
+        >
+          <font-awesome-icon
+            icon="fa-solid fa-rotate-right"
+            color="black"
+            style="font-size: 20px; margin-right: 4px"
+          />
+          Reset Code
+        </v-btn>
+      </v-col>
+    </v-row>
     <v-ace-editor
       v-model:value="content"
       :highlightActiveLine="true"
@@ -7,7 +38,7 @@
       :theme="'chrome'"
       :options="option"
       @input="onInput"
-      style="height: 60vh"
+      style="height: 60vh; margin-top: 8px"
     />
     <div style="margin-left: 45%; margin-top: 12px">
       <v-card style="margin-bottom: 12px">
@@ -179,19 +210,7 @@
         />
         Nộp bài
       </v-btn>
-      <v-btn
-        color="#36ae7c"
-        v-bind="props"
-        style="width: 128px; margin-left: 12px"
-        @click="content = beginCodeMethod"
-      >
-        <font-awesome-icon
-          icon="fa-solid fa-rotate-right"
-          color="black"
-          style="font-size: 20px; margin-right: 4px"
-        />
-        Reset Code
-      </v-btn>
+
       <!-- <v-btn
         color="#36ae7c"
         v-bind="props"
@@ -266,8 +285,10 @@
 <script>
 import { VAceEditor } from "vue3-ace-editor";
 import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
-import HeyGPT from "../../apis/OpenAI";
-import ChatGPT from "./ChatGPT";
+// import HeyGPT from "../../apis/OpenAI";
+// import ChatGPT from "./ChatGPT";
+import { fixCodeCSharp } from "./CompileOption/CSharp.ts";
+import { fixCodeJS } from "./CompileOption/JS.ts";
 import { mapMutations } from "vuex";
 import "brace/mode/csharp";
 import "brace/theme/chrome";
@@ -282,8 +303,11 @@ export default {
   data() {
     return {
       content: "",
+      langue: null,
+      defaultCode: "",
       tab: "option-0",
       listTest: [],
+      listLangueActive: [],
       listGPTResponse: [],
       showChat: false,
       thinking: false,
@@ -308,15 +332,27 @@ export default {
     testCase: [],
     beginCodeMethod: String,
     practiceLessonId: Number,
-    codeOk: String,
+    codeOk: Object,
+    isSupportMultiLangue: Boolean,
+    defaultLangue: Object,
+    listLangue: [],
+    multiLangueDTOs: [],
   },
   mounted() {
     if (this.codeOk) {
-      this.content = this.codeOk;
+      this.content = this.codeOk.codeOk;
+      this.langue = this.codeOk.langue;
     } else {
       this.content = this.beginCodeMethod ? this.beginCodeMethod : " ";
+      this.langue = this.defaultLangue;
     }
     this.listTest = this.testCase;
+    this.defaultCode = this.beginCodeMethod;
+    if (this.isSupportMultiLangue) {
+      this.listLangueActive = this.listLangue;
+    } else {
+      this.listLangueActive.push(this.defaultLangue);
+    }
   },
   setup(props) {
     return { props };
@@ -331,12 +367,45 @@ export default {
       }
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      var code = this.fixCode(this.content);
+
+      var code = "";
+      switch (this.langue.id) {
+        case 1:
+          code = fixCodeCSharp(this.content);
+          break;
+        case 2:
+          code = fixCodeCSharp(this.content);
+          break;
+        case 3:
+          code = fixCodeJS(this.content);
+          break;
+        case 4:
+          code = fixCodeJS(this.content);
+          break;
+        default:
+          break;
+      }
       const codeRequest = {
         Code: code,
         PracticeLessonId: this.practiceLessonId,
       };
-      const data = await StudyAPI.tryTestCase(codeRequest, token);
+      var data = null;
+      switch (this.langue.id) {
+        case 1:
+          break;
+        case 2:
+          data = await StudyAPI.tryTestCase(codeRequest, token);
+          break;
+        case 3:
+          code = fixCodeJS(this.content);
+          break;
+        case 4:
+          code = fixCodeJS(this.content);
+          break;
+        default:
+          break;
+      }
+
       this.listTest = data.data.testCase;
       this.isOk = true;
       for (var item of this.listTest) {
@@ -347,96 +416,15 @@ export default {
       }
       this.setIsLoadedData(false);
     },
-    fixCode(code) {
-      code = code
-        .replaceAll("\n", "")
-        .replaceAll("\r", "")
-        .replaceAll("\t", "");
-      while (code.includes("do ")) {
-        code = code.replace("do ", "do");
+    changeLangue() {
+      if (!this.isSupportMultiLangue) {
+        return;
       }
-      while (code.includes(") ")) {
-        code = code.replace(") ", ")");
-      }
-      code = code.replaceAll(
-        "do{",
-        'do{timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > 3000) { Console.WriteLine("ERROR###");break;}'
+      const newLangue = this.multiLangueDTOs.find(
+        (x) => x.langueId == this.langue.id
       );
-      for (var i = 0; i < code.length - 5; i++) {
-        if (
-          code[i] == "w" &&
-          code[i + 1] == "h" &&
-          code[i + 2] == "i" &&
-          code[i + 3] == "l" &&
-          code[i + 4] == "e"
-        ) {
-          for (var j = i + 5; j < code.length - 5; j++) {
-            if (code[j] == ")" && code[j + 1] == "{") {
-              code =
-                code.substring(0, j + 2) +
-                `timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > 3000) { Console.WriteLine("ERROR###");break;}` +
-                code.substring(j + 2);
-              break;
-            }
-          }
-        }
-      }
-      for (var e = 0; e < code.length - 3; e++) {
-        if (code[e] == "f" && code[e + 1] == "o" && code[e + 2] == "r") {
-          for (var r = e + 3; r < code.length - 3; r++) {
-            if (code[r] == ")" && code[r + 1] == "{") {
-              code =
-                code.substring(0, r + 2) +
-                `timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > 3000) { Console.WriteLine("ERROR###");break;}` +
-                code.substring(r + 2);
-              break;
-            }
-          }
-        }
-      }
-      for (var f = 0; f < code.length - 6; f++) {
-        if (
-          code[f] == "f" &&
-          code[f + 1] == "o" &&
-          code[f + 2] == "r" &&
-          code[f + 3] == "e" &&
-          code[f + 4] == "a" &&
-          code[f + 5] == "c" &&
-          code[f + 6] == "h"
-        ) {
-          for (var g = i + 6; g < code.length - 6; g++) {
-            if (code[g] == ")" && code[g + 1] == "{") {
-              code =
-                code.substring(0, g + 2) +
-                `timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > 3000) { Console.WriteLine("ERROR###");break;}` +
-                code.substring(g + 2);
-              break;
-            }
-          }
-        }
-      }
-      return code;
-    },
-    async callTest(option, content) {
-      if (option == 1) {
-        this.thinking = true;
-        const respon = await HeyGPT.sayToGPTWrong(
-          this.content,
-          content.expectOutput,
-          content.output
-        );
-        this.listGPTResponse.push(respon.choices[0].message.content);
-        this.thinking = false;
-      }
-      if (option == 2) {
-        this.thinking = true;
-        const respon = await HeyGPT.sayToGPTExeption(
-          this.content,
-          content.output
-        );
-        this.listGPTResponse.push(respon.choices[0].message.content);
-        this.thinking = false;
-      }
+      this.content = newLangue.beginCodeMethod;
+      this.defaultCode = newLangue.beginCodeMethod;
     },
     onInput(code) {
       this.$emit("input", code);
@@ -455,6 +443,7 @@ export default {
         LessonId: this.$route.params.id,
         ChapterId: this.$route.params.idChapter,
         Code: this.content,
+        langueId: this.langue.id,
       };
       const token = localStorage.getItem("token");
       const data = await StudyAPI.sendCodeOk(senData, token);
@@ -481,5 +470,8 @@ export default {
 }
 .test-case-info .test-case-result {
   font-weight: 400;
+}
+::-webkit-scrollbar {
+  width: 0.5em;
 }
 </style>

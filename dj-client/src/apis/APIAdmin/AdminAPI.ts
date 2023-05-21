@@ -477,5 +477,63 @@ class AdminAPI {
         });
     });
   }
+  updateSortNumberCourseChapter(
+    courseChapterId: number,
+    sortNumber: number,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/admin/updatecoursechaptersortnumber?courseChapterId=${courseChapterId}&newSortNumber=${sortNumber}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  deleteCourseChapter(courseChapterId: number, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/admin/deletecoursechapter?courseChapterId=${courseChapterId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  getAllLangue(token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/study/getalllangue`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new AdminAPI();

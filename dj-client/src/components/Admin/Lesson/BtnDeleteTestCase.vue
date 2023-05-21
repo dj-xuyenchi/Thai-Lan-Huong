@@ -9,7 +9,7 @@
         <v-card>
           <v-card-title class="text-h5"> Xoá test case? </v-card-title>
           <v-card-text
-            >Sếp có chắc muốn xóa test case này sau khi xóa se không thể khôi
+            >Sếp có chắc muốn xóa test case này sau khi xóa sẽ không thể khôi
             phục lại.</v-card-text
           >
           <v-card-actions>

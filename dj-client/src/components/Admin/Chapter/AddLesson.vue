@@ -3,7 +3,7 @@
     <v-row>
       <v-dialog v-model="dialog" persistent width="1024">
         <template v-slot:activator="{ props }">
-          <v-btn color="primary" v-bind="props"
+          <v-btn color="primary" v-bind="props" @click="getLessonNotInChapter()"
             >Thêm bài học vào học phần</v-btn
           >
         </template>
@@ -52,6 +52,14 @@
         </v-form>
       </v-dialog>
     </v-row>
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+      <template v-slot:actions>
+        <v-btn color="green" variant="text" @click="snackbar = false">
+          Đóng
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -63,7 +71,9 @@ export default {
     return {
       dialog: false,
       items: [],
-      select: "Chọn bài học",
+      select: null,
+      text: "",
+      snackbar: false,
       btnLoading: false,
     };
   },
@@ -75,6 +85,11 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
+      if (this.select == null) {
+        this.text = "Vui lòng chọn bài học!";
+        this.snackbar = true;
+        this.btnLoading = false;
+      }
       const token = localStorage.getItem("token");
       const result = await AdminAPI.addLesson2Chapter(
         {
@@ -87,7 +102,9 @@ export default {
         this.text = "Thêm thành công";
         this.dialog = false;
         this.snackbar = true;
+        this.select = null;
         this.getLessonOfChapter();
+        this.getLessonNotInChapter();
       }
       if (result.status == 2) {
         this.text = "Thêm thất bại";
@@ -96,9 +113,9 @@ export default {
       this.btnLoading = false;
     },
   },
-  created() {
-    this.getLessonNotInChapter();
-  },
+  // created() {
+  //   this.getLessonNotInChapter();
+  // },
   props: {
     CourseChapterId: Number,
     getLessonOfChapter: Function,

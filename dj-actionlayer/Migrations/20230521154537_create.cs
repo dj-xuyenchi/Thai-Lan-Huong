@@ -617,11 +617,17 @@ namespace dj_actionlayer.Migrations
                     Explain = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Suggest = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LessonId = table.Column<int>(type: "int", nullable: false),
-                    IsSupportMultiLangue = table.Column<bool>(type: "bit", nullable: true)
+                    IsSupportMultiLangue = table.Column<bool>(type: "bit", nullable: true),
+                    LangueDefaultId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_practice_lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_practice_lesson_langue_LangueDefaultId",
+                        column: x => x.LangueDefaultId,
+                        principalTable: "langue",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_practice_lesson_lesson_LessonId",
                         column: x => x.LessonId,
@@ -1538,6 +1544,11 @@ namespace dj_actionlayer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_practice_lesson_LangueDefaultId",
+                table: "practice_lesson",
+                column: "LangueDefaultId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_practice_lesson_LessonId",
                 table: "practice_lesson",
                 column: "LessonId");
@@ -1787,9 +1798,6 @@ namespace dj_actionlayer.Migrations
                 name: "school");
 
             migrationBuilder.DropTable(
-                name: "langue");
-
-            migrationBuilder.DropTable(
                 name: "question_lesson");
 
             migrationBuilder.DropTable(
@@ -1815,6 +1823,9 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "school_type");
+
+            migrationBuilder.DropTable(
+                name: "langue");
 
             migrationBuilder.DropTable(
                 name: "post");

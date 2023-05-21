@@ -6,6 +6,10 @@
       :testCase="practiceData.testCase"
       :practiceLessonId="practiceData.practiceLessonId"
       :codeOk="practiceData.codeOk"
+      :isSupportMultiLangue="practiceData.isSupportMultiLangue"
+      :defaultLangue="practiceData.defaultLangue"
+      :listLangue="practiceData.listLangue"
+      :multiLangueDTOs="practiceData.multiLangueDTOs"
     />
   </div>
 </template>
@@ -25,5 +29,8 @@ export default {
 <style lang="css" scoped>
 .practice-container {
   margin-top: 52px;
+}
+::-webkit-scrollbar {
+  width: 0.5em;
 }
 </style>

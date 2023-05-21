@@ -93,5 +93,10 @@ namespace dj_endpoint.Controllers.StudyAPIs
         {
             return Ok(await _study.LessonListOfUser(userId, courseId));
         }
+        [HttpGet("getalllangue")]
+        public async Task<IActionResult> getAllLangue()
+        {
+            return Ok(await _study.getAllLangue());
+        }
     }
 }

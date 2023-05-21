@@ -12,7 +12,11 @@
         <v-card style="height: 90vh; :scroll ; width: 80vw">
           <v-card-title> {{ courseName }} </v-card-title>
           <v-card-text>
-            <ChapterTable style="margin-top: 12px" :listChapter="listChapter" />
+            <ChapterTable
+              style="margin-top: 12px"
+              :listChapter="listChapter"
+              :getChapterOfCourse="getChapterOfCourse"
+            />
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" variant="text" @click="dialog = false">

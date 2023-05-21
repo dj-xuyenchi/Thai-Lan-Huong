@@ -154,5 +154,15 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.getChapterOfCourse(courseId));
         }
+        [HttpGet("updatecoursechaptersortnumber")]
+        public async Task<IActionResult> updateCourseChapterSortNumber(int courseChapterId, int newSortNumber)
+        {
+            return Ok(await _admin.updateCourseChapterSortNumber(courseChapterId, newSortNumber));
+        }
+        [HttpGet("deletecoursechapter")]
+        public async Task<IActionResult> deleteCourseChapter(int courseChapterId)
+        {
+            return Ok(await _admin.deleteCourseChapter(courseChapterId));
+        }
     }
 }

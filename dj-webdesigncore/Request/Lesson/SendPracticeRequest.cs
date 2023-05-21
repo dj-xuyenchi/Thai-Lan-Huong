@@ -12,5 +12,6 @@ namespace dj_webdesigncore.Request.Lesson
         public int LessonId { get; set; }
         public int ChapterId { get; set; }
         public string Code { get; set; }
+        public int langueId { get; set; }
     }
 }
