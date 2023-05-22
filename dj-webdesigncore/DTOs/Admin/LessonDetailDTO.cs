@@ -38,5 +38,7 @@ namespace dj_webdesigncore.DTOs.Admin
         public string suggest { get; set; }
         public bool isSupportMultiLangue { get; set; }
         public Langue langue { get; set; }
+        //
+        public int stt { get; set; }
     }
 }

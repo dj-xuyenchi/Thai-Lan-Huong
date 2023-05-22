@@ -288,7 +288,7 @@ import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 // import HeyGPT from "../../apis/OpenAI";
 // import ChatGPT from "./ChatGPT";
 import { fixCodeCSharp } from "./CompileOption/CSharp.ts";
-import { fixCodeJS } from "./CompileOption/JS.ts";
+import { fixCodeJS, runCode } from "./CompileOption/JS.ts";
 import { mapMutations } from "vuex";
 import "brace/mode/csharp";
 import "brace/theme/chrome";
@@ -397,8 +397,9 @@ export default {
           data = await StudyAPI.tryTestCase(codeRequest, token);
           break;
         case 3:
-          code = fixCodeJS(this.content);
-          break;
+          data = await StudyAPI.tryTestCase(codeRequest, token);
+          alert(code);
+          return;
         case 4:
           code = fixCodeJS(this.content);
           break;

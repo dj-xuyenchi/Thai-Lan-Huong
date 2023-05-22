@@ -666,11 +666,15 @@ namespace dj_actionlayer.Business.Admin
             GetLessonDTO data = new GetLessonDTO();
             try
             {
+                int stt = 1;
                 List<LessonDetailDTO> lessonDetailDTO = new List<LessonDetailDTO>();
-                var listLesson = _context.lesson.OrderByDescending(x => x.CreateDateTime).Skip((page - 1) * 10).Take(10).ToList();
+                var listLesson = _context.lesson.OrderByDescending(x => x.CreateDateTime).Skip((page - 1) * 15).Take(15).ToList();
+        //        var listLesson = _context.lesson.OrderByDescending(x => x.CreateDateTime).ToList();
                 foreach (var item in listLesson)
                 {
                     LessonDetailDTO lessonDetail = new LessonDetailDTO();
+                    lessonDetail.stt = stt;
+                    stt++;
                     lessonDetail.LessonId = item.Id;
                     lessonDetail.LessonDescription = item.LessonDescription;
                     lessonDetail.LessonName = item.LessonName;

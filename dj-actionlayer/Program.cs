@@ -34,80 +34,55 @@ namespace dj_actionlayer
         }
         static async Task Main(string[] args)
         {
-          
 
+        //    string code = @"
+        //    #include <stdio.h>
 
-            //}
+        //    int main()
+        //    {
+        //        printf(""Hello World"");
+        //        return 0;
+        //    }
+        //";
 
-            //string code1 = "int sum(int a, int b)\n\r{\r\n   while(true){}\r\nreturn a+b;\r\n}\r\nConsole.Write(sum(1,2));";
-            //code1 = code1.Replace("\n", "");
-            //code1 = code1.Replace("\t", "");
-            //code1 = code1.Replace("\r", "");
+        //    LLVMInitializeCore(LLVMBool.False);
+        //    LLVMInitializeTarget(LLVMBool.True);
+        //    LLVMInitializeAllAsmParsers();
+        //    LLVMInitializeAllAsmPrinters();
+        //    LLVMInitializeAllTargetInfos();
+        //    LLVMInitializeAllTargets();
 
-            //StringBuilder str = new StringBuilder(code1);
-            //for (int i = 0; i < code1.Length - 5; i++)
-            //{
-            //    if (code1[i] == 'w' && code1[i+1] == 'h' && code1[i+2] == 'i' && code1[i+3] == 'l' && code1[i+4] == 'e')
-            //    {
-            //        for (int j = i+5; j < code1.Length - 5; j++)
-            //        {
-            //            if (code1[j] == ')' && code1[j+1] == '{')
-            //            {
-            //                str.Insert(j + 2,"123");
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-            //code1=str.ToString();
-        
-            Console.WriteLine(remixName("đỖ LINH"));
-      
+        //    var context = LLVMContextRef.Create();
+        //    var module = context.ModuleCreateWithName("my_module");
+        //    var builder = context.CreateBuilder();
+        //    var error = new LLVMBool();
 
+        //    var moduleRef = module.ParseIRString(code, out error);
 
+        //    if (error.Value == 1)
+        //    {
+        //        Console.WriteLine("Error parsing the module:");
+        //        Console.WriteLine(LLVM.GetErrorMessage());
+        //        return;
+        //    }
 
+        //    LLVM.VerifyModule(moduleRef, LLVMVerifierFailureAction.LLVMPrintMessageAction, out var verifyError);
 
+        //    if (verifyError.Value == 1)
+        //    {
+        //        Console.WriteLine("Error verifying the module:");
+        //        Console.WriteLine(LLVM.GetErrorMessage());
+        //        return;
+        //    }
 
+        //    var executionEngineRef = moduleRef.CreateExecutionEngine();
 
+        //    var mainFunction = moduleRef.GetNamedFunction("main");
+        //    var result = executionEngineRef.RunFunctionAsInt32(mainFunction, null);
 
+        //    Console.WriteLine("Result: " + result);
 
-
-
-
-
-
-
-            //Thread thread1 = new Thread(new ThreadStart(MyMethod1));
-            //Stopwatch stopwatch = new Stopwatch();
-            //    TimeSpan timeSpan;
-            //    //thread1.Start();
-            //    stopwatch.Start();
-            //    //MyMethod1();
-            // while (true)
-            //    {
-            //        timeSpan = stopwatch.Elapsed;
-            //        if (timeSpan.TotalMilliseconds > 3000)
-            //        {
-            //            Console.WriteLine("ERROR###"); System.Environment.Exit(0);
-            //        }
-
-            //    }
-            //StringWriter stringWriter = new StringWriter();
-            //stringWriter.WriteLine("Hello, world!");
-            //string result = stringWriter.ToString();
-            //Console.WriteLine(result);
-            //string code = "int sum(int a, int b)\n\r{\r\n   do{}while(true);\r\nreturn a+b;\r\n}\r\nConsole.Write(sum(1,2));";
-
-            //var result = await CompileUserCode.RunCSharpCode(code);
-            //Console.WriteLine(result.result);
-            //Console.WriteLine(result.success);
-            //Console.WriteLine(result.exeption);
-            //string[] input = "1".Split(",");
-            //Console.WriteLine(input.Length);
-            //foreach (var item in input)
-            //{
-            //    Console.WriteLine(item);
-            //}
+        //    context.Dispose();
 
         }
         static string  remixName(string input)

@@ -1,5 +1,8 @@
 export const fixCodeJS = (code: string) => {
   const time = 1000;
+  code =
+    "const logToVariable = function (message) { logOutput += message; };  console.log = logToVariable; const startTime = new Date();" +
+    code;
   code = code.replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", "");
   while (code.includes("do ")) {
     code = code.replace("do ", "do");
@@ -9,7 +12,7 @@ export const fixCodeJS = (code: string) => {
   }
   code = code.replaceAll(
     "do{",
-    `do{timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > ${time}) { Console.WriteLine("ERROR###");break;}`
+    `do{const endTime = new Date();if (endTime - startTime>${time}) { console.log("ERROR###");break;}`
   );
   for (let i = 0; i < code.length - 5; i++) {
     if (
@@ -23,7 +26,7 @@ export const fixCodeJS = (code: string) => {
         if (code[j] == ")" && code[j + 1] == "{") {
           code =
             code.substring(0, j + 2) +
-            `timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > ${time}) { Console.WriteLine("ERROR###");break;}` +
+            `const endTime = new Date();if (endTime - startTime>${time}) { console.log("ERROR###");break;}` +
             code.substring(j + 2);
           break;
         }
@@ -36,33 +39,28 @@ export const fixCodeJS = (code: string) => {
         if (code[r] == ")" && code[r + 1] == "{") {
           code =
             code.substring(0, r + 2) +
-            `timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > ${time}) { Console.WriteLine("ERROR###");break;}` +
+            `const endTime = new Date();if (endTime - startTime>${time}) { console.log("ERROR###");break;}` +
             code.substring(r + 2);
           break;
         }
       }
     }
   }
-  for (let f = 0; f < code.length - 6; f++) {
-    if (
-      code[f] == "f" &&
-      code[f + 1] == "o" &&
-      code[f + 2] == "r" &&
-      code[f + 3] == "e" &&
-      code[f + 4] == "a" &&
-      code[f + 5] == "c" &&
-      code[f + 6] == "h"
-    ) {
-      for (let g = f + 6; g < code.length - 6; g++) {
-        if (code[g] == ")" && code[g + 1] == "{") {
-          code =
-            code.substring(0, g + 2) +
-            `timeSpan = stopwatch.Elapsed;if (timeSpan.TotalMilliseconds > ${time}) { Console.WriteLine("ERROR###");break;}` +
-            code.substring(g + 2);
-          break;
-        }
-      }
-    }
-  }
+  code =
+    code +
+    "const endTime1 = new Date();const executionTime = endTime1 - startTime;console.log('RESULT###'+ executionTime);";
+
   return code;
+};
+
+export const runCode = (code: string, variable: string) => {
+  code = code.replace("variable", variable);
+  let logOutput = "";
+  logOutput += " ";
+  try {
+    eval(code); // Chạy mã JavaScript
+    return logOutput;
+  } catch (error: any) {
+    return error.message; // Thông báo lỗi
+  }
 };

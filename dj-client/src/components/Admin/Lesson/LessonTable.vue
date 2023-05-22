@@ -1,9 +1,26 @@
 <template>
   <div>
+    <!-- <v-data-table
+      v-model:items-per-page="itemsPerPage"
+      :headers="headers"
+      :items="desserts"
+      item-value="name"
+      class="elevation-1"
+    >
+      <template v-slot:item.actions="{ item }">
+        <v-icon size="small" class="me-2" @click="editItem(item.raw)">
+          mdi-pencil
+        </v-icon>
+        <v-icon size="small" @click="deleteItem(item.raw)"> mdi-delete </v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn color="primary" @click="initialize"> Reset </v-btn>
+      </template>
+    </v-data-table> -->
     <v-table>
       <thead>
         <tr>
-          <th class="text-left">STT</th>
+          <th class="text-left">#</th>
           <th class="text-left">Tên bài học</th>
           <th class="text-left">Ngày tạo</th>
           <th class="text-left">Cập nhật</th>
@@ -14,7 +31,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in data" :key="index">
-          <td>{{ index + 1 }}</td>
+          <td>{{ item.stt }}</td>
           <td>{{ item.lessonName }}</td>
           <td>{{ item.createDateTime }}</td>
           <td>{{ item.updateDateTime }}</td>
@@ -92,6 +109,21 @@ import ListTestCase from "./ListTestCase";
 import MultiLangueTable from "./MultiLangueTable";
 export default {
   name: "LessonTable",
+  data() {
+    return {
+      itemsPerPage: 15,
+      headers: [
+        { title: "#", align: "start", key: "stt", sortable: false },
+        { title: "Tên bài học", align: "start", key: "lessonName" },
+        { title: "Ngày tạo", align: "start", key: "createDateTime" },
+        { title: "Cập nhật", align: "start", key: "updateDateTime" },
+        { title: "Loại bài học", align: "start", key: "lessonType" },
+        { title: "Thời lượng", align: "start", key: "videoTime" },
+        { title: "Action", align: "start", key: "actions" },
+      ],
+      desserts: [],
+    };
+  },
   components: {
     BtnUpdatePractice,
     BtnUpdateTheory,
@@ -102,6 +134,9 @@ export default {
   props: {
     data: [],
     getLessonDetail: Function,
+  },
+  created() {
+    this.desserts = this.data;
   },
 };
 </script>
