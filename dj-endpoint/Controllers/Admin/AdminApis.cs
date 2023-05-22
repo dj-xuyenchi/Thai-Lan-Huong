@@ -164,5 +164,25 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.deleteCourseChapter(courseChapterId));
         }
+        [HttpGet("getlanguesupport")]
+        public async Task<IActionResult> getLangueSupport(int practiceLessonId)
+        {
+            return Ok(await _admin.getMultiLangueSuport(practiceLessonId));
+        }
+        [HttpGet("getlanguehavenot")]
+        public async Task<IActionResult> getLangueHaveNote(int practiceLessonId)
+        {
+            return Ok(await _admin.getLangueHaveNot(practiceLessonId));
+        }
+        [HttpPost("addmultilangue")]
+        public async Task<IActionResult> addMultiLangue(AddMultiLangue addMultiLangue)
+        {
+            return Ok(await _admin.addMultiLangue(addMultiLangue));
+        }
+        [HttpPost("updatemultilangue")]
+        public async Task<IActionResult> updateMultiLangue(AddMultiLangue addMultiLangue)
+        {
+            return Ok(await _admin.updateMultiLangue(addMultiLangue));
+        }
     }
 }

@@ -19,7 +19,7 @@
         <v-btn
           color="#36ae7c"
           v-bind="props"
-          style="width: 128px; margin-left: 12px"
+          style="width: 140px; margin-left: 12px"
           @click="content = defaultCode"
         >
           <font-awesome-icon

@@ -23,29 +23,60 @@
           <td
             style="
               display: flex;
-              justify-content: space-evenly;
+              justify-content: space-between;
               align-items: center;
             "
+            v-if="item.lessonTypeId == 2 && item.isSupportMultiLangue"
           >
-            <BtnUpdateTheory
+            <BtnUpdatePractice
               :lessonId="item.lessonId"
-              v-if="item.lessonTypeId == 1"
               :item="item"
               :getLessonDetail="getLessonDetail"
             />
+
+            <ListTestCase v-if="item.lessonTypeId == 2" :item="item" />
+            <MultiLangueTable
+              :practiceId="item.practiceId"
+              :item="item"
+              :getLessonDetail="getLessonDetail"
+            />
+          </td>
+          <td
+            style="
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+            "
+            v-if="item.lessonTypeId == 2 && !item.isSupportMultiLangue"
+          >
             <BtnUpdatePractice
               :lessonId="item.lessonId"
               v-if="item.lessonTypeId == 2"
               :item="item"
               :getLessonDetail="getLessonDetail"
             />
-            <BtnUpdateQuestion
+
+            <ListTestCase v-if="item.lessonTypeId == 2" :item="item" />
+          </td>
+          <td
+            style="display: flex; justify-content: center; align-items: center"
+            v-if="item.lessonTypeId == 1"
+          >
+            <BtnUpdateTheory
               :lessonId="item.lessonId"
-              v-if="item.lessonTypeId == 3"
               :item="item"
               :getLessonDetail="getLessonDetail"
             />
-            <ListTestCase v-if="item.lessonTypeId == 2" :item="item" />
+          </td>
+          <td
+            style="display: flex; justify-content: center; align-items: center"
+            v-if="item.lessonTypeId == 3"
+          >
+            <BtnUpdateQuestion
+              :lessonId="item.lessonId"
+              :item="item"
+              :getLessonDetail="getLessonDetail"
+            />
           </td>
         </tr>
       </tbody>
@@ -58,6 +89,7 @@ import BtnUpdatePractice from "./BtnUpdatePractice";
 import BtnUpdateTheory from "./BtnUpdateTheory";
 import BtnUpdateQuestion from "./BtnUpdateQuestion";
 import ListTestCase from "./ListTestCase";
+import MultiLangueTable from "./MultiLangueTable";
 export default {
   name: "LessonTable",
   components: {
@@ -65,6 +97,7 @@ export default {
     BtnUpdateTheory,
     BtnUpdateQuestion,
     ListTestCase,
+    MultiLangueTable,
   },
   props: {
     data: [],

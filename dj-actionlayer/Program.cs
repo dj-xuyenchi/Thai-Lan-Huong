@@ -13,15 +13,28 @@ namespace dj_actionlayer
 {
     internal class Program
     {
+
+
+
+
+        void MyMethod2()
+        {
+            // non static
+          
+        }
+
+
+
+
+
         static void MyMethod1()
         {
+            // static
             System.Environment.Exit(0);
         }
         static async Task Main(string[] args)
         {
-            //List<string> list = new List<string>();
-            //foreach (var item in list)
-            //{
+          
 
 
             //}

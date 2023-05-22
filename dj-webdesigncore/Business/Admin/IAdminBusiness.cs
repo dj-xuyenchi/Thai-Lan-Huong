@@ -1,5 +1,6 @@
 ﻿using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
+using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
@@ -18,8 +19,8 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<GetLessonDTO>> getLessonPage(int page);
         Task<ResponData<GetChapterDTO>> getChapterPage(int page);
         Task<ResponData<GetCourseDTO>> getCoursePage(int page);
-        Task<ResponData<AddLessonDTO>> addPracticeLesson(PracticeLesson practiceLesson);
-        Task<ResponData<AddLessonDTO>> updatePracticeLesson(int lessonId, PracticeLesson practiceLesson);
+        Task<ResponData<AddLessonDTO>> addPracticeLesson(Request.Lesson.PracticeLesson practiceLesson);
+        Task<ResponData<AddLessonDTO>> updatePracticeLesson(int lessonId, Request.Lesson.PracticeLesson practiceLesson);
         Task<ResponData<AddLessonDTO>> addTheoryLesson(TheoryLessonRequest theoryLessonRequest);
         Task<ResponData<AddLessonDTO>> updateTheoryLesson(int lessonId, TheoryLessonRequest theoryLessonRequest);
         Task<ResponData<AddLessonDTO>> addQuestionLesson(QuestionLessonRequest questionLessonRequest);
@@ -42,5 +43,9 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<List<ChapterCourseInfo>>> getChapterOfCourse(int courseId);
         Task<ResponData<ActionStatus>> updateCourseChapterSortNumber(int courseChapterId, int newSortNumber);
         Task<ResponData<ActionStatus>> deleteCourseChapter(int courseChapterId);
+        Task<ResponData<List<MultiLangueDTO>>> getMultiLangueSuport(int practiceLessonId);
+        Task<ResponData<List<Langue>>> getLangueHaveNot(int practiceLessonId);
+        Task<ResponData<ActionStatus>> addMultiLangue(AddMultiLangue addMultiLangue);
+        Task<ResponData<ActionStatus>> updateMultiLangue(AddMultiLangue addMultiLangue);
     }
 }

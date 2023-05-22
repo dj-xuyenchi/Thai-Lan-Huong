@@ -183,6 +183,22 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
+        public async Task<ResponData<ActionStatus>> addMultiLangue(AddMultiLangue addMultiLangue)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            MultiLangueCode multiLangueCode = new MultiLangueCode();
+            multiLangueCode.PracticeId = addMultiLangue.practiceLessonId;
+            multiLangueCode.BeginCodeMethod = addMultiLangue.beginCode;
+            multiLangueCode.CallTestCode = addMultiLangue.callTestCode;
+            multiLangueCode.LangueId = addMultiLangue.langueId;
+            await _context.AddAsync(multiLangueCode);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         public async Task<ResponData<AddLessonDTO>> addPracticeLesson(dj_webdesigncore.Request.Lesson.PracticeLesson practiceLesson)
         {
             ResponData<AddLessonDTO> result = new ResponData<AddLessonDTO>();
@@ -234,6 +250,11 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public Task<ResponData<AddLessonDTO>> addPracticeLesson(dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ResponData<AddLessonDTO>> addQuestionLesson(QuestionLessonRequest questionLessonRequest)
@@ -465,13 +486,13 @@ namespace dj_actionlayer.Business.Admin
         public async Task<ResponData<List<ChapterCourseInfo>>> getChapterOfCourse(int courseId)
         {
             ResponData<List<ChapterCourseInfo>> result = new ResponData<List<ChapterCourseInfo>>();
-            var listChapter = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x=>x.SortNumber).ToList();
+            var listChapter = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x => x.SortNumber).ToList();
             List<ChapterCourseInfo> data = new List<ChapterCourseInfo>();
             foreach (var item in listChapter)
             {
                 ChapterCourseInfo chapterCourseInfo = new ChapterCourseInfo();
                 chapterCourseInfo.id = item.Id;
-                chapterCourseInfo.sortNumber= item.SortNumber;
+                chapterCourseInfo.sortNumber = item.SortNumber;
                 chapterCourseInfo.name = item.ChapterName;
                 chapterCourseInfo.lessonCount = item.ChapterLessonCount;
                 chapterCourseInfo.totalTime = item.ChapterTotalTime;
@@ -570,6 +591,25 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<List<Langue>>> getLangueHaveNot(int practiceLessonId)
+        {
+            ResponData<List<Langue>> result = new ResponData<List<Langue>>();
+            var listLangue = _context.langue.ToList();
+            List<Langue> data = new List<Langue>();
+            foreach (var item in listLangue)
+            {
+                if (_context.multi_langue_code.Any(x => x.LangueId == item.Id && x.PracticeId == practiceLessonId))
+                {
+                    continue;
+                }
+                data.Add(item);
+            }
+            result.Data = data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = ActionStatus.SECCESSFULLY;
+            return result;
         }
 
         public async Task<ResponData<List<LessonDetailDTO>>> getLessonNotInChapter()
@@ -720,6 +760,36 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
+        public async Task<ResponData<List<MultiLangueDTO>>> getMultiLangueSuport(int practiceLessonId)
+        {
+            ResponData<List<MultiLangueDTO>> result = new ResponData<List<MultiLangueDTO>>();
+            dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = await _context.practice_lesson.FindAsync(practiceLessonId);
+            if (practiceLesson == null)
+            {
+                result.Data = null;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            List<MultiLangueDTO> data = new List<MultiLangueDTO>();
+            var listSupport = _context.multi_langue_code.Where(x => x.PracticeId == practiceLessonId).ToList();
+            foreach (var item in listSupport)
+            {
+                MultiLangueDTO multiLangueDTO = new MultiLangueDTO();
+                multiLangueDTO.id = item.Id;
+                multiLangueDTO.LangueCode = _context.langue.Find(item.LangueId).LangueName;
+                multiLangueDTO.BeginCode = item.BeginCodeMethod;
+                multiLangueDTO.CallTestCode = item.CallTestCode;
+                multiLangueDTO.langue = await _context.langue.FindAsync(item.LangueId);
+                data.Add(multiLangueDTO);
+
+            }
+            result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         public async Task<ResponData<OptionAddCourse>> getOptionAddCourse()
         {
             ResponData<OptionAddCourse> result = new ResponData<OptionAddCourse>();
@@ -836,7 +906,27 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
-            courseChapter.SortNumber= newSortNumber;
+            courseChapter.SortNumber = newSortNumber;
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> updateMultiLangue(AddMultiLangue addMultiLangue)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            MultiLangueCode multiLangueCode = await _context.multi_langue_code.FindAsync(addMultiLangue.id);
+            if (multiLangueCode == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            multiLangueCode.BeginCodeMethod = addMultiLangue.beginCode;
+            multiLangueCode.CallTestCode = addMultiLangue.callTestCode;
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -894,6 +984,11 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public Task<ResponData<AddLessonDTO>> updatePracticeLesson(int lessonId, dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ResponData<AddLessonDTO>> updateQuestionLesson(int lessonId, QuestionLessonRequest questionLessonRequest)
