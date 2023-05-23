@@ -98,5 +98,10 @@ namespace dj_endpoint.Controllers.StudyAPIs
         {
             return Ok(await _study.getAllLangue());
         }
+        [HttpGet("gettestcaseofpracticeid")]
+        public async Task<IActionResult> getTestCaseOfPractice(int practiceLessonId)
+        {
+            return Ok(await _study.getTestCaseOfPractice(practiceLessonId));
+        }
     }
 }

@@ -452,6 +452,103 @@ namespace dj_actionlayer.Business.Admin
 
         }
 
+        public async Task<ResponData<GetLessonDTO>> findLesson(string key)
+        {
+            ResponData<GetLessonDTO> result = new ResponData<GetLessonDTO>();
+            GetLessonDTO data = new GetLessonDTO();
+            try
+            {
+                int stt = 1;
+                List<LessonDetailDTO> lessonDetailDTO = new List<LessonDetailDTO>();
+                        var listLesson = _context.lesson.Where(x=>x.LessonName.Contains(key)).OrderByDescending(x => x.CreateDateTime).ToList();
+                foreach (var item in listLesson)
+                {
+                    LessonDetailDTO lessonDetail = new LessonDetailDTO();
+                    lessonDetail.stt = stt;
+                    stt++;
+                    lessonDetail.LessonId = item.Id;
+                    lessonDetail.LessonDescription = item.LessonDescription;
+                    lessonDetail.LessonName = item.LessonName;
+                    lessonDetail.CreateDateTime = item.CreateDateTime.Day + " - " + item.CreateDateTime.Month + " - " + item.CreateDateTime.Year;
+                    lessonDetail.VideoTime = item.VideoTime;
+                    lessonDetail.LessonType = _context.lesson_type.Find(item.LessonTypeId).LessonTypeName;
+                    lessonDetail.LessonTypeId = (int)item.LessonTypeId;
+                    if (item.UpdateDateTime != null)
+                    {
+                        lessonDetail.UpdateDateTime = item.UpdateDateTime.Value.Day + " - " + item.UpdateDateTime.Value.Month + " - " + item.UpdateDateTime.Value.Year;
+                    }
+                    else
+                    {
+                        lessonDetail.UpdateDateTime = "";
+                    }
+                    if (item.LessonTypeId == 3)
+                    {
+                        QuestionLesson questionLesson = await _context.question_lesson.Where(x => x.LessonId == item.Id).FirstOrDefaultAsync();
+                        if (questionLesson == null)
+                        {
+                            continue;
+                        }
+                        lessonDetail.question = questionLesson.Question;
+                        lessonDetail.answerA = questionLesson.AnswerA;
+                        lessonDetail.answerB = questionLesson.AnswerB;
+                        lessonDetail.answerC = questionLesson.AnswerC;
+                        lessonDetail.answerD = questionLesson.AnswerD;
+                        switch (questionLesson.Answer)
+                        {
+                            case 1:
+                                lessonDetail.answer = "A";
+                                break;
+                            case 2:
+                                lessonDetail.answer = "B";
+                                break;
+                            case 3:
+                                lessonDetail.answer = "C";
+                                break;
+                            case 4:
+                                lessonDetail.answer = "D";
+                                break;
+                        }
+                    }
+                    if (item.LessonTypeId == 2)
+                    {
+                        dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = await _context.practice_lesson.Where(x => x.LessonId == item.Id).FirstOrDefaultAsync();
+                        TestCase testCase = await _context.test_case.Where(x => x.PracticeLessonId == practiceLesson.Id && x.SortNumber == 1).FirstOrDefaultAsync();
+                        if (testCase == null) { continue; }
+                        lessonDetail.problem = practiceLesson.Problem;
+                        lessonDetail.practiceId = practiceLesson.Id;
+                        lessonDetail.problemDetail = practiceLesson.ProblemDetail;
+                        lessonDetail.outputExemple = practiceLesson.ExpectOutput;
+                        lessonDetail.suggest = practiceLesson.Suggest;
+                        lessonDetail.inputExemple = practiceLesson.Input;
+                        lessonDetail.isSupportMultiLangue = (bool)practiceLesson.IsSupportMultiLangue;
+                        lessonDetail.langue = await _context.langue.FindAsync(practiceLesson.LangueDefaultId);
+                        lessonDetail.beginCode = practiceLesson.BeginCodeMethod;
+                        lessonDetail.callTestCode = practiceLesson.CallTestCode;
+                        lessonDetail.caseDefaultDetail = testCase.InputDetail;
+                        lessonDetail.explainCode = practiceLesson.Explain;
+                    }
+                    if (item.LessonTypeId == 1)
+                    {
+                        VideoLesson videoLesson = _context.video_lesson.Where(x => x.LessonId == item.Id).FirstOrDefault();
+
+                        lessonDetail.linkVideo = videoLesson.LessonLinkUrl;
+                    }
+                    lessonDetailDTO.Add(lessonDetail);
+                }
+                data.list = lessonDetailDTO;
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+        }
+
         public async Task<ResponData<List<TestCaseDTO>>> getAllTestCase(int practiceId)
         {
             ResponData<List<TestCaseDTO>> result = new ResponData<List<TestCaseDTO>>();

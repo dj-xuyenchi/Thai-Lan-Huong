@@ -184,5 +184,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.updateMultiLangue(addMultiLangue));
         }
+        [HttpGet("findlesson")]
+        public async Task<IActionResult> findLessonByName(string key)
+        {
+            return Ok(await _admin.findLesson(key));
+        }
     }
 }

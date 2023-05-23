@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using dj_webdesigncore.Enums.StudyEnums;
+using dj_webdesigncore.DTOs.Admin;
 
 namespace dj_actionlayer.Business.Study
 {
@@ -134,19 +135,19 @@ namespace dj_actionlayer.Business.Study
         public async Task<ChapterLessonStudy> LessonListOfUser(int? userId, int? courseId)
         {
             ChapterLessonStudy data = new ChapterLessonStudy();
-            List<ChapterDetailDTO> chapterDetailResult = new List<ChapterDetailDTO>();
+            List<dj_webdesigncore.DTOs.Lobby.ChapterDetailDTO> chapterDetailResult = new List<dj_webdesigncore.DTOs.Lobby.ChapterDetailDTO>();
             List<CourseChapter> chapterOfCourse = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x => x.SortNumber).ToList();
             foreach (var item in chapterOfCourse)
             {
-                ChapterDetailDTO chapterDetailDTO = new ChapterDetailDTO();
+                dj_webdesigncore.DTOs.Lobby.ChapterDetailDTO chapterDetailDTO = new dj_webdesigncore.DTOs.Lobby.ChapterDetailDTO();
                 chapterDetailDTO.ChapterTitle = item.ChapterName;
                 chapterDetailDTO.ChapterId = item.Id;
                 chapterDetailDTO.LessonCount = item.ChapterLessonCount;
-                List<LessonDetailDTO> lessonDetailDTOResult = new List<LessonDetailDTO>();
+                List<dj_webdesigncore.DTOs.Lobby.LessonDetailDTO> lessonDetailDTOResult = new List<dj_webdesigncore.DTOs.Lobby.LessonDetailDTO>();
                 List<ChapterLesson> lessonOfChapter = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).OrderBy(x => x.SortNumber).ToList();
                 foreach (var item1 in lessonOfChapter)
                 {
-                    LessonDetailDTO lessonDetailDTO = new LessonDetailDTO();
+                    dj_webdesigncore.DTOs.Lobby.LessonDetailDTO lessonDetailDTO = new dj_webdesigncore.DTOs.Lobby.LessonDetailDTO();
                     User user = await _context.user.FindAsync(userId);
                     UserLessonCheckpoint checkPoint = _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).SingleOrDefault();
                     if (checkPoint != null)
@@ -247,11 +248,11 @@ namespace dj_actionlayer.Business.Study
                 if ((bool)practiceLesson.IsSupportMultiLangue)
                 {
                     List<Langue> listLangueSupport = new List<Langue>();
-                    List<MultiLangueDTO> listMultiDTO = new List<MultiLangueDTO>();
+                    List<dj_webdesigncore.DTOs.Study.MultiLangueDTO> listMultiDTO = new List<dj_webdesigncore.DTOs.Study.MultiLangueDTO>();
                     var listMulti = _context.multi_langue_code.Where(x => x.PracticeId == practiceLesson.Id).ToList();
                     foreach (var item in listMulti)
                     {
-                        MultiLangueDTO multiLangueDTO = new MultiLangueDTO();
+                        dj_webdesigncore.DTOs.Study.MultiLangueDTO multiLangueDTO = new dj_webdesigncore.DTOs.Study.MultiLangueDTO();
                         listLangueSupport.Add(await _context.langue.FindAsync(item.LangueId));
                         multiLangueDTO.id = item.Id;
                         multiLangueDTO.LangueId = item.LangueId;
@@ -598,7 +599,7 @@ namespace dj_actionlayer.Business.Study
                 _context.Add(newUserCourse);
                 Notification notification = new Notification();
                 notification.SystemNotification = true;
-                notification.Content = "Đăng ký thành công khóa học " + course.CourseName + " chúc cậu có những buổi học thật chất lượng tại DJ - CodeMaster <3";
+                notification.Content = "Đăng ký thành công khóa học " + course.CourseName;
                 notification.UserId = user.Id;
                 notification.Create = DateTime.Now;
                 notification.IsSeen = false;
@@ -1041,6 +1042,38 @@ namespace dj_actionlayer.Business.Study
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = ActionStatus.SECCESSFULLY;
             return result;
+        }
+
+        public async Task<ResponData<List<dj_webdesigncore.DTOs.Admin.TestCaseDTO>>> getTestCaseOfPractice(int practiceLessonId)
+        {
+            ResponData<List<TestCaseDTO>> result = new ResponData<List<TestCaseDTO>>();
+            try
+            {
+                List<TestCaseDTO> data = new List<TestCaseDTO>();
+                var testList = _context.test_case.Where(x => x.PracticeLessonId == practiceLessonId).OrderBy(x => x.SortNumber).ToList();
+                foreach (var item in testList)
+                {
+                    TestCaseDTO testCaseDTO = new TestCaseDTO();
+                    testCaseDTO.TestCaseId = item.Id;
+                    testCaseDTO.Input = item.Input;
+                    testCaseDTO.Output = item.ExpectOutput;
+                    testCaseDTO.SortNumber = item.SortNumber;
+                    testCaseDTO.ExpectOutput=item.ExpectOutput;
+                    testCaseDTO.TestCaseDetail = item.InputDetail;
+                    testCaseDTO.IsLock = item.LockTestCase;
+                    data.Add(testCaseDTO);
+                }
+                result.Data = data;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
         }
     }
 }

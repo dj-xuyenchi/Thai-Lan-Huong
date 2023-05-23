@@ -8,6 +8,7 @@ namespace dj_webdesigncore.DTOs.Admin
 		public string TestCaseDetail { get; set; }
 		public string Input { get; set; }
 		public string Output { get; set; }
+		public string ExpectOutput { get; set; }
 		public bool IsLock { get; set; }
 	}
 }

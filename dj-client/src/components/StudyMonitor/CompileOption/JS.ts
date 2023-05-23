@@ -1,4 +1,4 @@
-export const fixCodeJS = (code: string) => {
+export const fixCodeJS = (code: string, callTest: string) => {
   const time = 1000;
   code =
     "const logToVariable = function (message) { logOutput += message; };  console.log = logToVariable; const startTime = new Date();" +
@@ -48,6 +48,7 @@ export const fixCodeJS = (code: string) => {
   }
   code =
     code +
+    callTest +
     "const endTime1 = new Date();const executionTime = endTime1 - startTime;console.log('RESULT###'+ executionTime);";
 
   return code;
@@ -57,6 +58,7 @@ export const runCode = (code: string, variable: string) => {
   code = code.replace("variable", variable);
   let logOutput = "";
   logOutput += " ";
+  console.log(code);
   try {
     eval(code); // Chạy mã JavaScript
     return logOutput;

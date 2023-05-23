@@ -1,4 +1,5 @@
 ﻿using dj_webdesigncore.DTOs;
+using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.Entities.CourseEntity;
@@ -29,5 +30,6 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<ActionStatus>> SendQuestionAnswer(SendQuestionRequest sendQuestionRequest);
         Task<ResponData<ActionStatus>> SendVideoDoneRequest(SendVideoDoneRequest sendVideoDoneRequest);
         Task<ResponData<List<Langue>>> getAllLangue();
+        Task<ResponData<List<TestCaseDTO>>> getTestCaseOfPractice(int practiceLessonId);
     }
 }

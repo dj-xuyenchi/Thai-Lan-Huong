@@ -357,7 +357,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 notification.SendTime = send;
                 if (item.SystemNotification)
                 {
-                    notification.Avatar = Convert.FromBase64String(Settings.adminImgae());
+                    notification.Avatar = Convert.FromBase64String(Settings.adminQA());
                 }
                 else
                 {

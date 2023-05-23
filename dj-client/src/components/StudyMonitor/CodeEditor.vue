@@ -377,7 +377,8 @@ export default {
           code = fixCodeCSharp(this.content);
           break;
         case 3:
-          code = fixCodeJS(this.content);
+          var multi = this.multiLangueDTOs.find((x) => x.langueId == 3);
+          code = fixCodeJS(this.content, multi.callTestCode);
           break;
         case 4:
           code = fixCodeJS(this.content);
@@ -397,9 +398,11 @@ export default {
           data = await StudyAPI.tryTestCase(codeRequest, token);
           break;
         case 3:
-          data = await StudyAPI.tryTestCase(codeRequest, token);
-          alert(code);
-          return;
+          for (const testCase of this.listTest) {
+            const result = runCode(code, testCase.input);
+            alert(result);
+          }
+          break;
         case 4:
           code = fixCodeJS(this.content);
           break;

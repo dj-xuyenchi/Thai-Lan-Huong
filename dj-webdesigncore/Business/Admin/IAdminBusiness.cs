@@ -47,5 +47,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<List<Langue>>> getLangueHaveNot(int practiceLessonId);
         Task<ResponData<ActionStatus>> addMultiLangue(AddMultiLangue addMultiLangue);
         Task<ResponData<ActionStatus>> updateMultiLangue(AddMultiLangue addMultiLangue);
+        Task<ResponData<GetLessonDTO>> findLesson(string key);
     }
 }

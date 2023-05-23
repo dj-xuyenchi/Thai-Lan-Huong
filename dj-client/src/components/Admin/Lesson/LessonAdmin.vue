@@ -1,10 +1,21 @@
 <template>
-  <div style="display: flex; justify-content: space-between">
-    <AddPractice :getLessonDetail="getLessonDetail" />
+  <div style="display: flex; justify-content: flex-end">
+    <!-- <AddPractice :getLessonDetail="getLessonDetail" /> -->
     <!-- <CustomGen :setContext="setContext" /> -->
-    <AddQuestion :getLessonDetail="getLessonDetail" />
-    <AddTheory :getLessonDetail="getLessonDetail" />
+    <!-- <AddQuestion :getLessonDetail="getLessonDetail" /> -->
+    <!-- <AddTheory :getLessonDetail="getLessonDetail" /> -->
     <!-- <GenPracticeGPT v-if="show" :context="context" :setShow="setShow" /> -->
+    <div style="width: 360px; margin-right: 12px">
+      <v-text-field
+        v-model="key"
+        label="Tìm kiếm"
+        hide-details="auto"
+        density="compact"
+        variant="outlined"
+        @keydown.enter="findLessonByName()"
+      ></v-text-field>
+    </div>
+    <AddModel :getLessonDetail="getLessonDetail" style="margin-top: 12px" />
   </div>
   <LessonTable
     :getLessonDetail="getLessonDetail"
@@ -30,21 +41,23 @@
 </template>
 
 <script>
-import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import { mapMutations } from "vuex";
-import AddPractice from "./AddPractice";
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import LessonTable from "./LessonTable";
+import AddPractice from "./AddPractice";
 import AddTheory from "./AddTheory";
-import CustomGen from "./CustomGen";
 import AddQuestion from "./AddQuestion";
+import CustomGen from "./CustomGen";
 import GenPracticeGPT from "./GenPracticeGPT";
+import AddModel from "./AddModel";
 export default {
   name: "LessonAdmin",
   components: {
-    AddPractice,
+    // AddPractice,
     LessonTable,
-    AddTheory,
-    AddQuestion,
+    // AddTheory,
+    // AddQuestion,
+    AddModel,
     // CustomGen,
     // GenPracticeGPT,
   },
@@ -53,6 +66,7 @@ export default {
     page: 1,
     context: "",
     maxPage: 1,
+    key: null,
     show: false,
   }),
   created() {
@@ -60,6 +74,17 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
+    async findLessonByName() {
+      this.setIsLoadedData(true);
+      if (!this.key) {
+        this.setIsLoadedData(false);
+        return;
+      }
+      const token = localStorage.getItem("token");
+      const data = await AdminAPI.findLessonByName(this.key, token);
+      this.tableData = data.data.list;
+      this.setIsLoadedData(false);
+    },
     async getLessonDetail() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
