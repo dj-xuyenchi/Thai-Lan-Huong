@@ -13,5 +13,6 @@ namespace dj_webdesigncore.DTOs.Study
         public string Mes { get; set; }
         public int CourseId { get; set; }
         public int LessonId { get; set; }
+        public int ChapterId { get; set; }
     }
 }

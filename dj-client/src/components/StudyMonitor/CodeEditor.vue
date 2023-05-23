@@ -365,9 +365,9 @@ export default {
         this.snackbarNotOk = true;
         return;
       }
+      this.listTest = this.testCase;
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-
       var code = "";
       switch (this.langue.id) {
         case 1:
@@ -396,11 +396,55 @@ export default {
           break;
         case 2:
           data = await StudyAPI.tryTestCase(codeRequest, token);
+          this.listTest = data.data.testCase;
+          this.isOk = true;
+          for (var itemCSharp of this.listTest) {
+            if (itemCSharp.result != 1) {
+              this.isOk = false;
+              break;
+            }
+          }
           break;
         case 3:
+          var listResult = [];
           for (const testCase of this.listTest) {
             const result = runCode(code, testCase.input);
-            alert(result);
+            if (result.includes("ERROR###")) {
+              listResult.push({
+                result: 3,
+                runTimeTotal: "Không tính được",
+                input: testCase.input,
+                output: "Error expected something",
+                expectOutput: testCase.expectOutput,
+              });
+              continue;
+            }
+            var resultJS = result.split("RESULT###");
+            if (resultJS[0].includes(testCase.expectOutput)) {
+              listResult.push({
+                result: 1,
+                runTimeTotal: resultJS[1] + " ms",
+                input: testCase.input,
+                output: resultJS[0],
+                expectOutput: testCase.expectOutput,
+              });
+            } else {
+              listResult.push({
+                result: 2,
+                runTimeTotal: resultJS[1] + " ms",
+                input: testCase.input,
+                output: resultJS[0],
+                expectOutput: testCase.expectOutput,
+              });
+            }
+          }
+          this.listTest = listResult;
+          this.isOk = true;
+          for (var itemJS of listResult) {
+            if (itemJS.result != 1) {
+              this.isOk = false;
+              break;
+            }
           }
           break;
         case 4:
@@ -408,15 +452,6 @@ export default {
           break;
         default:
           break;
-      }
-
-      this.listTest = data.data.testCase;
-      this.isOk = true;
-      for (var item of this.listTest) {
-        if (item.result != 1) {
-          this.isOk = false;
-          break;
-        }
       }
       this.setIsLoadedData(false);
     },

@@ -40,7 +40,7 @@
                 <v-col cols="12">
                   <v-text-field
                     label="Vấn đề*"
-                    hint="Vấn đề cần giải quyết"
+                    hint="Sẽ hiển thị trong bài Title lớn"
                     :rules="rules"
                     v-model="problem"
                   ></v-text-field>
@@ -48,7 +48,7 @@
                 <v-col cols="12">
                   <v-text-field
                     label="Mô tả vấn đề*"
-                    hint="Mô tả vấn đề cần giải quyết"
+                    hint="Sub title hiển thị phía dưới"
                     :rules="rules"
                     v-model="problemDetail"
                   ></v-text-field>

@@ -227,7 +227,7 @@ export default {
           `/` +
           data.data.courseId +
           "/" +
-          this.chapterId,
+          data.data.chapterId,
       });
       this.setIsLoadedData(false);
     },

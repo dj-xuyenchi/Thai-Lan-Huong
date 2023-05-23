@@ -643,6 +643,7 @@ namespace dj_actionlayer.Business.Study
                 await _context.SaveChangesAsync();
                 data.CourseId = registerCourse.CourseId;
                 data.LessonId = chapterLesson.LessonId;
+                data.ChapterId = courseChapter.Id;
                 data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.SECCESSFULLY;
                 result.Data = data;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
