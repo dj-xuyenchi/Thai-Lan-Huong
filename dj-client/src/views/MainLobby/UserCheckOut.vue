@@ -124,6 +124,13 @@ export default {
           },
         },
         {
+          text: "Viết bài",
+          icon: "mdi-pencil",
+          event: () => {
+            this.$router.push({ path: "/user/1" });
+          },
+        },
+        {
           text: "Bài đăng",
           icon: "mdi-bookshelf",
           event: () => {

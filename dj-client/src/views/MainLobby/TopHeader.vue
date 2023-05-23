@@ -89,6 +89,9 @@ export default {
 h4:hover {
   cursor: pointer;
 }
+#logo:hover {
+  cursor: pointer;
+}
 .logo-header {
   height: 52px;
   z-index: 1;
@@ -132,7 +135,9 @@ h4:hover {
   #logo {
     display: none !important;
   }
-
+  .cf-title-07:hover {
+    cursor: pointer;
+  }
   .cf-title-07 {
     display: none !important;
   }

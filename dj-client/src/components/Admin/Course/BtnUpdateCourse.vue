@@ -22,7 +22,7 @@
                 <v-row>
                   <v-col cols="12" sm="12" md="12">
                     <img
-                      :src="'data:image/jpeg;base64, ' + item.courseImageData"
+                      :src="'data:image/jpeg;base64, ' + dataImage"
                       alt=""
                       style="height: 160px; width: 280px"
                     />
@@ -260,7 +260,7 @@ export default {
         totalTime: this.courseTotalTime.trim(),
         typeId:
           typeof this.courseType == "string" ? this.typeId : this.courseType.id,
-        introVideoLink: this.linkVideoIntro.trim(),
+        introVideoLink: this.linkVideoIntro,
         statusId:
           typeof this.courseStatus == "string"
             ? this.statusId
@@ -273,7 +273,6 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
-      console.log(this.getData());
       if (
         this.courseCode.trim().length == 0 ||
         this.courseName.trim().length == 0 ||
@@ -369,6 +368,7 @@ export default {
     this.levelId = this.item.courseLevelId;
     this.statusId = this.item.courseStatusId;
     this.courseId = this.item.courseId;
+    this.dataImage = this.item.courseImageData;
   },
   props: {
     item: Object,
