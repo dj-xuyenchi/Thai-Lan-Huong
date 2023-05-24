@@ -22,7 +22,9 @@
               font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial,
                 sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
                 'Segoe UI Symbol';
-              margin-left: 12px;
+              display: block;
+              width: 90%;
+              margin-left: 5%;
             "
           >
             <font-awesome-icon
@@ -80,7 +82,15 @@
             :key="index"
             style="width: 100%; display: block; height: 220px"
           >
-            <div style="width: 30%; float: left"></div>
+            <div style="width: 30%; float: left">
+              <img
+                :src="'data:image/jpeg;base64, ' + item.courseAvatar"
+                alt=""
+                style="width: 240px; height: 200px"
+              />
+              <h4>{{ item.courseName }}</h4>
+              <span>{{ item.courseDescription }}</span>
+            </div>
             <div style="width: 70%; float: left"></div>
           </div>
         </div>
