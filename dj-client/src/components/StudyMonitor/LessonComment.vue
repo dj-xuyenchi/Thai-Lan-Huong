@@ -145,4 +145,7 @@ export default {
   z-index: 1;
   color: #a8a8a8;
 }
+::-webkit-scrollbar {
+  width: 0.5em;
+}
 </style>
