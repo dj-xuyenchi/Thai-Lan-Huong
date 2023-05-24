@@ -1,6 +1,6 @@
 <template>
   <div class="header-profile">
-    <div class="icon-back-logo">
+    <div class="icon-back-logo" @click="back2Home()">
       <img class="logo-header" :src="require('../../assets/logo-web.png')" />
       <font-awesome-icon
         icon="fa-solid fa-chevron-left"
@@ -62,6 +62,9 @@ export default {
     };
   },
   methods: {
+    back2Home() {
+      this.$router.push({ path: "/home/lobby" });
+    },
     async setShowNotification() {
       var id = localStorage.getItem("id");
       var token = localStorage.getItem("token");
@@ -86,10 +89,15 @@ export default {
 }
 .header-profile .icon-back-logo {
   height: 80px;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
-  width: 180px;
   align-items: center;
+  margin-left: 36px;
+}
+
+.header-profile .icon-back-logo:hover {
+  cursor: pointer;
+  color: black !important;
 }
 .header-profile .icon-back-logo .logo-header {
   height: 56px;
