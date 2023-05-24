@@ -22,8 +22,14 @@
           font-size: 16px;
           display: block;
         "
-        >{{ data.userName }}</span
-      >
+        >{{ data.userName
+        }}<img
+          v-if="data.isKYC"
+          :src="require('../../assets/kyc.png')"
+          alt=""
+          class="kyc"
+      /></span>
+
       <span
         style="padding: 0px 12px 8px 12px; font-size: 16px; display: block"
         >{{ data.comment }}</span
@@ -131,8 +137,13 @@
                 font-size: 16px;
                 display: block;
               "
-              >{{ item.userName }}</span
-            >
+              >{{ item.userName
+              }}<img
+                v-if="item.isKYC"
+                :src="require('../../assets/kyc.png')"
+                alt=""
+                class="kyc"
+            /></span>
             <span
               style="
                 padding: 0px 12px 8px 12px;
@@ -335,5 +346,11 @@ export default {
   cursor: pointer;
   z-index: 1;
   color: #a8a8a8;
+}
+.kyc {
+  height: 16px;
+  width: 16px;
+  margin-bottom: -2px;
+  margin-left: 4px;
 }
 </style>

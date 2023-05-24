@@ -16,5 +16,6 @@ namespace dj_webdesigncore.DTOs.Study
         public byte[] UserAvatar { get; set; }
         public string Comment { get; set; }
         public string CommentDate { get; set; }
+        public bool IsKYC { get; set; }
     }
 }

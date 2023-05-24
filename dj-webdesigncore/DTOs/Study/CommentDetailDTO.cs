@@ -17,5 +17,6 @@ namespace dj_webdesigncore.DTOs.Study
         public string Comment { get; set; }
         public List<SubComment>  SubComment { get; set; }
         public string CommentDate { get; set; }
+        public bool IsKYC { get; set; }
     }
 }

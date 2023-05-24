@@ -74,6 +74,7 @@ namespace dj_actionlayer.Business.Study
                     commentDetail.UserName = user.UserLastName + " " + user.UserFisrtName;
                     commentDetail.LikeCount = (int)comment.LikeCount;
                     commentDetail.UserId = (int)comment.UserId;
+                    commentDetail.IsKYC = (bool)user.IsKYC;
                     commentDetail.UserAvatar = _context.user.Find(comment.UserId).UserAvatarData40x40;
                     List<SubComment> subComments = new List<SubComment>();
                     var listSubComment = _context.comment_lesson.Where(x => x.CommentLessonParentId == comment.Id).OrderBy(x => x.CreateDateTime).ToList();
@@ -111,6 +112,7 @@ namespace dj_actionlayer.Business.Study
                         sub.UserName = subUser.UserFisrtName + " " + subUser.UserLastName;
                         sub.LikeCount = (int)subComment.LikeCount;
                         sub.UserId = (int)subComment.UserId;
+                        sub.IsKYC = (bool)subUser.IsKYC;
                         sub.UserAvatar = _context.user.Find(subComment.UserId).UserAvatarData40x40;
                         subComments.Add(sub);
                     }
