@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj": {}
+    "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj": {
+    "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
+        "projectUniqueName": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
         "projectName": "dj-actionlayer",
-        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\obj\\",
+        "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
+        "packagesPath": "C:\\Users\\LTS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LTS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj"
+              "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
+                "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj"
               }
             }
           }
@@ -89,21 +94,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj": {
+    "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
+        "projectUniqueName": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
         "projectName": "dj-endpoint",
-        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\obj\\",
+        "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
+        "packagesPath": "C:\\Users\\LTS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LTS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -111,17 +120,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj"
+              "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj": {
+                "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj"
               },
-              "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj"
+              "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
+                "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj"
               }
             }
           }
@@ -172,21 +182,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
+    "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
+        "projectUniqueName": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
         "projectName": "dj-webdesigncore",
-        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\obj\\",
+        "projectPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
+        "packagesPath": "C:\\Users\\LTS\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\LTS\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -194,6 +208,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -233,7 +248,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -29,5 +29,6 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<List<NotificationDTO>>> notificationUser(int userId);
         Task<ResponData<ActionStatus>> seenNotifi(int notificationId);
         Task<ResponData<ActionStatus>> seenAllNotifi(int userId);
+        Task<ResponData<UserProfileDTO>> getProfile(int userId);
     }
 }

@@ -5,7 +5,7 @@
       cycle
       hide-delimiter-background
       show-arrows="hover"
-      height="600"
+      height="400"
     >
       <v-carousel-item v-for="(slide, i) in slides" :key="i">
         <v-sheet height="100%" width="100%">

@@ -35,54 +35,78 @@ namespace dj_actionlayer
         static async Task Main(string[] args)
         {
 
-        //    string code = @"
-        //    #include <stdio.h>
 
-        //    int main()
-        //    {
-        //        printf(""Hello World"");
-        //        return 0;
-        //    }
-        //";
+            
+            string chuoi1 = "anhdq1";
+            string chuoi2 = "anhdq2";
+            List<string> list = new List<string>();
+            list.Add(chuoi1);
+            list.Add(chuoi2);
+            string chuoi3 = "anhdq";
+            string chuoiTrung = "";
+            int index = 1;
+            for(int i = 0; i< list.Count; i++)
+            {
+                if (list[i].Contains(chuoi3))
+                {
+                    chuoiTrung=list[i];
+                    index++;
+                }
+            }
 
-        //    LLVMInitializeCore(LLVMBool.False);
-        //    LLVMInitializeTarget(LLVMBool.True);
-        //    LLVMInitializeAllAsmParsers();
-        //    LLVMInitializeAllAsmPrinters();
-        //    LLVMInitializeAllTargetInfos();
-        //    LLVMInitializeAllTargets();
+            chuoiTrung = chuoiTrung.Replace("1", "");
+            chuoiTrung = chuoiTrung.Replace("2", "");
+            chuoiTrung = chuoiTrung.Replace("3", "");
+            Console.WriteLine(chuoiTrung);
+            Console.WriteLine(index);
+            //    string code = @"
+            //    #include <stdio.h>
 
-        //    var context = LLVMContextRef.Create();
-        //    var module = context.ModuleCreateWithName("my_module");
-        //    var builder = context.CreateBuilder();
-        //    var error = new LLVMBool();
+            //    int main()
+            //    {
+            //        printf(""Hello World"");
+            //        return 0;
+            //    }
+            //";
 
-        //    var moduleRef = module.ParseIRString(code, out error);
+            //    LLVMInitializeCore(LLVMBool.False);
+            //    LLVMInitializeTarget(LLVMBool.True);
+            //    LLVMInitializeAllAsmParsers();
+            //    LLVMInitializeAllAsmPrinters();
+            //    LLVMInitializeAllTargetInfos();
+            //    LLVMInitializeAllTargets();
 
-        //    if (error.Value == 1)
-        //    {
-        //        Console.WriteLine("Error parsing the module:");
-        //        Console.WriteLine(LLVM.GetErrorMessage());
-        //        return;
-        //    }
+            //    var context = LLVMContextRef.Create();
+            //    var module = context.ModuleCreateWithName("my_module");
+            //    var builder = context.CreateBuilder();
+            //    var error = new LLVMBool();
 
-        //    LLVM.VerifyModule(moduleRef, LLVMVerifierFailureAction.LLVMPrintMessageAction, out var verifyError);
+            //    var moduleRef = module.ParseIRString(code, out error);
 
-        //    if (verifyError.Value == 1)
-        //    {
-        //        Console.WriteLine("Error verifying the module:");
-        //        Console.WriteLine(LLVM.GetErrorMessage());
-        //        return;
-        //    }
+            //    if (error.Value == 1)
+            //    {
+            //        Console.WriteLine("Error parsing the module:");
+            //        Console.WriteLine(LLVM.GetErrorMessage());
+            //        return;
+            //    }
 
-        //    var executionEngineRef = moduleRef.CreateExecutionEngine();
+            //    LLVM.VerifyModule(moduleRef, LLVMVerifierFailureAction.LLVMPrintMessageAction, out var verifyError);
 
-        //    var mainFunction = moduleRef.GetNamedFunction("main");
-        //    var result = executionEngineRef.RunFunctionAsInt32(mainFunction, null);
+            //    if (verifyError.Value == 1)
+            //    {
+            //        Console.WriteLine("Error verifying the module:");
+            //        Console.WriteLine(LLVM.GetErrorMessage());
+            //        return;
+            //    }
 
-        //    Console.WriteLine("Result: " + result);
+            //    var executionEngineRef = moduleRef.CreateExecutionEngine();
 
-        //    context.Dispose();
+            //    var mainFunction = moduleRef.GetNamedFunction("main");
+            //    var result = executionEngineRef.RunFunctionAsInt32(mainFunction, null);
+
+            //    Console.WriteLine("Result: " + result);
+
+            //    context.Dispose();
 
         }
         static string  remixName(string input)

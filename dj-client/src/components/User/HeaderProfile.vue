@@ -125,4 +125,7 @@ export default {
 .header-profile .user-logo .notification:hover {
   cursor: pointer;
 }
+::-webkit-scrollbar {
+  width: 0.5em;
+}
 </style>

@@ -6,26 +6,32 @@
       style="border-bottom-right-radius: 15px; border-bottom-left-radius: 15px"
     />
     <div class="backgound-avatar">
-      <img :src="`data:image/jpeg;base64,` + avatar" alt="" class="avatar" />
+      <img
+        :src="`data:image/jpeg;base64,` + item.avatar"
+        alt=""
+        class="avatar"
+      />
     </div>
     <div class="user-name">
       <span
-        >Đỗ Quang Anh
-        <img :src="require('../../assets/kyc.png')" alt="" class="kyc" />
+        >{{ item.fullName }}
+        <img
+          :src="require('../../assets/kyc.png')"
+          alt=""
+          class="kyc"
+          v-if="item.isKYC"
+        />
       </span>
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
-    return {
-      avatar: "",
-    };
+    return {};
   },
-  mounted() {
-    this.avatar = localStorage.getItem(`avatar`);
+  props: {
+    item: Object,
   },
 };
 </script>
@@ -63,7 +69,8 @@ export default {
   font-size: 24px;
   font-weight: bold;
   position: absolute;
-  left: 23%;
+  left: 5%;
+  margin-left: 180px;
   bottom: -12%;
 }
 
@@ -71,5 +78,21 @@ export default {
   height: 20px;
   width: 20px;
   margin-bottom: -2px;
+}
+.body-profile .information {
+  width: 100%;
+  position: absolute;
+}
+
+.body-profile .information .left {
+  width: 30%;
+  margin-left: 2%;
+}
+
+.body-profile .information .left .introduce {
+  height: 120px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 </style>

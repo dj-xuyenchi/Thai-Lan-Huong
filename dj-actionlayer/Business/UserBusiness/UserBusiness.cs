@@ -4,6 +4,7 @@ using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.DTOs.UserDTO;
 using dj_webdesigncore.Entities.BusinessEntity;
+using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Account;
@@ -302,6 +303,42 @@ namespace dj_actionlayer.Business.UserBusiness
             optionAddLearning.majorsDTOs = majors1;
             optionAddLearning.schoolDTOs = sch;
             result.Data = optionAddLearning;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<UserProfileDTO>> getProfile(int userId)
+        {
+            ResponData<UserProfileDTO> result = new ResponData<UserProfileDTO>();
+            User user = await _context.user.FindAsync(userId);
+            if (user == null)
+            {
+                result.Data = null;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            UserProfileDTO data = new UserProfileDTO();
+            data.FullName = user.UserFisrtName + " " + user.UserLastName;
+            data.IsKYC = (bool)user.IsKYC;
+            data.Avatar = user.UserAvatarData40x40;
+            data.JoinTime = user.CreateAccount.Value.Day + " - " + user.CreateAccount.Value.Month + " - " + user.CreateAccount.Value.Year;
+            data.WallImg = user.UserCoverImg == null ? null : user.UserCoverImg;
+            List<ResigtedUserCourseDTO> registerCourseDTOs = new List<ResigtedUserCourseDTO>();
+            var listCourse = _context.user_course.Where(x => x.UserId == userId).OrderBy(x=>x.ResisterDateTime).ToList();
+           foreach(var item in listCourse)
+            {
+                ResigtedUserCourseDTO registerCourse = new ResigtedUserCourseDTO();
+                Course course = await _context.course.FindAsync(item.CourseId);
+                registerCourse.CourseName = course.CourseName;
+                registerCourse.CourseAvatar = course.CourseImageData;
+                registerCourse.CourseDescription = course.CourseSubTitle;
+                registerCourse.CourseLink = course.Id.ToString();
+                registerCourseDTOs.Add(registerCourse);
+            }
+            data.ResigtedCourse = registerCourseDTOs;
+            result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;

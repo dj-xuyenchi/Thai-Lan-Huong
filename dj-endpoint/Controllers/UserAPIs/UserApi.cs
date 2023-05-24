@@ -91,5 +91,10 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.seenAllNotifi(userId));
         }
+        [HttpGet("getprofile")]
+        public async Task<IActionResult> getProfile(int userId)
+        {
+            return Ok(await _user.getProfile(userId));
+        }
     }
 }
