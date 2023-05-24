@@ -29,11 +29,17 @@ import UserMain from "@/components/User/UserMain.vue";
 import InforContact from "@/components/User/InforContact.vue";
 import CourseResisted from "@/components/User/CourseResisted.vue";
 import ChangePassUser from "@/components/User/ChangePassUser.vue";
+import UserProfile from "@/components/User/UserProfile.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
     name: "",
     component: ForwardToHome,
+  },
+  {
+    path: "/profile/:id",
+    name: "",
+    component: UserProfile,
   },
   {
     path: "/forget",

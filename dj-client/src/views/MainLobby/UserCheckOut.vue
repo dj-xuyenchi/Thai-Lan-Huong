@@ -120,7 +120,8 @@ export default {
           text: "Trang cá nhân",
           icon: "mdi-account",
           event: () => {
-            this.$router.push({ path: "/home/user/inforcontact" });
+            const user = localStorage.getItem("id");
+            this.$router.push({ path: `/profile/${user}` });
           },
         },
         {
@@ -144,7 +145,6 @@ export default {
             this.$router.push({ path: "/home/user/inforcontact" });
           },
         },
-
         {
           text: "Đăng xuất",
           icon: "mdi-logout",
