@@ -1,6 +1,6 @@
 <template>
   <div class="body-profile">
-    <img :src="require('../../assets/iloveyou.jpeg')" alt="" />
+    <img :src="require('../../assets/banner.png')" alt="" />
   </div>
 </template>
 
@@ -17,6 +17,6 @@ export default {};
 }
 .body-profile img {
   width: 100%;
-  height: 400px;
+  height: 360px;
 }
 </style>
