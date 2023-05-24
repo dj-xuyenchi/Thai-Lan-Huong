@@ -77,29 +77,21 @@
           >
             Các khóa học đã đăng ký
           </h4>
-          <div
+          <CourseResigterItem
             v-for="(item, index) in item.resigtedCourse"
             :key="index"
-            style="width: 100%; display: block; height: 220px"
+            :item="item"
           >
-            <div style="width: 30%; float: left">
-              <img
-                :src="'data:image/jpeg;base64, ' + item.courseAvatar"
-                alt=""
-                style="width: 240px; height: 200px"
-              />
-              <h4>{{ item.courseName }}</h4>
-              <span>{{ item.courseDescription }}</span>
-            </div>
-            <div style="width: 70%; float: left"></div>
-          </div>
+          </CourseResigterItem>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import CourseResigterItem from "./CourseResigtedItem";
 export default {
+  components: { CourseResigterItem },
   data() {
     return {
       course: [{}],

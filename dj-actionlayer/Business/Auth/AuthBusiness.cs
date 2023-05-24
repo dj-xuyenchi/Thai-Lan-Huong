@@ -287,6 +287,7 @@ namespace dj_actionlayer.Business.Auth
                 user.GenderId = 4;
                 user.UserStatusId = 3;
                 user.CreateAccount = DateTime.Now;
+                user.IsKYC = false;
                 user.UserAvatarData40x40 = Convert.FromBase64String(Settings.defaultImage());
                 await _context.user.AddAsync(user);
                 await _context.SaveChangesAsync();
