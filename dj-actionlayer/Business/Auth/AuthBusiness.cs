@@ -59,7 +59,7 @@ namespace dj_actionlayer.Business.Auth
                     avatar = user.UserAvatarData40x40,
                     nickName = "Chiến thần Front End",
                     email = user.UserEmail,
-                    name = user.UserLastName + " " + user.UserFisrtName,
+                    name = user.UserFisrtName + " " + user.UserLastName,
                     Token = await GenToken(user),
                     role = (int)user.UserRoleId
                 }
@@ -348,7 +348,7 @@ namespace dj_actionlayer.Business.Auth
                 id = user.Id,
                 avatar = user.UserAvatarData40x40,
                 nickName = "Chiến thần Front End",
-                name = user.UserLastName + " " + user.UserFisrtName,
+                name = user.UserFisrtName + " " + user.UserLastName,
                 Token = await GenToken(user),
                 role = (int)user.UserRoleId
             };
@@ -460,7 +460,7 @@ namespace dj_actionlayer.Business.Auth
                 id = user.Id,
                 avatar = user.UserAvatarData40x40,
                 nickName = "Chiến thần Front End",
-                name = user.UserLastName + " " + user.UserFisrtName,
+                name = user.UserFisrtName + " " + user.UserLastName,
                 Token = await GenToken(user),
                 role = (int)user.UserRoleId
             };

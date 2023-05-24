@@ -71,7 +71,7 @@ namespace dj_actionlayer.Business.Study
                     }
                     commentDetail.Comment = comment.Comment;
                     User user = await _context.user.FindAsync(comment.UserId);
-                    commentDetail.UserName = user.UserLastName + " " + user.UserFisrtName;
+                    commentDetail.UserName = user.UserFisrtName + " " + user.UserLastName;
                     commentDetail.LikeCount = (int)comment.LikeCount;
                     commentDetail.UserId = (int)comment.UserId;
                     commentDetail.IsKYC = (bool)user.IsKYC;
@@ -109,7 +109,7 @@ namespace dj_actionlayer.Business.Study
                         }
                         sub.Comment = subComment.Comment;
                         User subUser = await _context.user.FindAsync(subComment.UserId);
-                        sub.UserName = subUser.UserFisrtName + " " + subUser.UserLastName;
+                        sub.UserName = user.UserFisrtName + " " + user.UserLastName;
                         sub.LikeCount = (int)subComment.LikeCount;
                         sub.UserId = (int)subComment.UserId;
                         sub.IsKYC = (bool)subUser.IsKYC;

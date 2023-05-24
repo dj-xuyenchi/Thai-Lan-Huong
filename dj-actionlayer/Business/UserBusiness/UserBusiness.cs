@@ -512,7 +512,7 @@ namespace dj_actionlayer.Business.UserBusiness
             await _context.SaveChangesAsync();
             data.status = ActionStatus.SECCESSFULLY;
             data.avatar = user.UserAvatarData40x40;
-            data.name = user.UserLastName + user.UserFisrtName;
+            data.name = user.UserFisrtName + " " + user.UserLastName;
             data.nickName = "Chiến Thần Front End";
             result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";
