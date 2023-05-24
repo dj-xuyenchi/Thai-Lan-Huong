@@ -80,4 +80,7 @@ export default {
 .v-list {
   padding: unset;
 }
+::-webkit-scrollbar {
+  width: 0.5em;
+}
 </style>
