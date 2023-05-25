@@ -34,8 +34,10 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-, "src/components/StudyMonitor/CsharpHighlightRules.js"  ],
+    "tests/**/*.tsx",
+    "src/components/StudyMonitor/CsharpHighlightRules.js",
+    "node_modules/@kangc/v-md-editor/lib/lang/vi.js"
+  ],
   "exclude": [
     "node_modules"
   ],

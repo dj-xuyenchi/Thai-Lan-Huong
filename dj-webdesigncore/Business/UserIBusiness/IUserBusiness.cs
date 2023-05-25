@@ -30,5 +30,7 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<ActionStatus>> seenNotifi(int notificationId);
         Task<ResponData<ActionStatus>> seenAllNotifi(int userId);
         Task<ResponData<UserProfileDTO>> getProfile(int userId);
+        Task<ResponData<ActionStatus>> createPost(string data,int userId);
+        Task<ResponData<string>> getWaitPost(int userId);
     }
 }

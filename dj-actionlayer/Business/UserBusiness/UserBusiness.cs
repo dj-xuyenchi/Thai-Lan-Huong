@@ -5,10 +5,12 @@ using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.DTOs.UserDTO;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
+using dj_webdesigncore.Entities.PostEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +122,30 @@ namespace dj_actionlayer.Business.UserBusiness
             notification.Link = null;
             await _context.AddAsync(notification);
             await _context.AddAsync(learningExperience);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> createPost(string data, int userId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            if(await _context.user.AnyAsync(x=>x.Id== userId))
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            Post post = new Post();
+            post.PostData = data;
+            post.CreatePost=DateTime.Now;
+            post.PostStatusId = 4;
+            post.LikeCount = 0;
+            post.CommentCount = 0;
+            await _context.AddAsync(post);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -339,6 +365,22 @@ namespace dj_actionlayer.Business.UserBusiness
             }
             data.ResigtedCourse = registerCourseDTOs;
             result.Data = data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<string>> getWaitPost(int userId)
+        {
+            ResponData<string> result = new ResponData<string>();
+            Post post = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
+            if(post == null) {
+                result.Data = null;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            result.Data = post.PostData;
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;

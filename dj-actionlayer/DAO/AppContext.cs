@@ -43,7 +43,7 @@ namespace dj_actionlayer.DAO
         public DbSet<Lesson> lesson { get; set; }
         public DbSet<LessonType> lesson_type { get; set; }
         // Post Entities
-        public DbSet<PostSentence> post_sentence { get; set; }
+        //public DbSet<PostSentence> post_sentence { get; set; }
         public DbSet<Post> post { get; set; }
         public DbSet<PostStatus> post_status { get; set; }
         // User Entities
@@ -84,8 +84,8 @@ namespace dj_actionlayer.DAO
         public DbSet<HomeContent> home_content { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-    //    optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-            optionsBuilder.UseSqlServer(Settings.DBConnect());
+        optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+         //   optionsBuilder.UseSqlServer(Settings.DBConnect());
         //	optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
     }

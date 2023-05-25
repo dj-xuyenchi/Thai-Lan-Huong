@@ -13,6 +13,7 @@ namespace dj_webdesigncore.Entities.PostEntity
 		public byte[]? PostAvatar { get; set; }
 		public byte[]? PostMiniAvatar { get; set; }
 		public int? UserCreateId { get; set; }
+		public string PostData { get; set; }
 		public User? UserCreate { get; set; }
 		public DateTime CreatePost { get; set; }
 		public DateTime? UpdatePost { get; set; }

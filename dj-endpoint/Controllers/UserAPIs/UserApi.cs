@@ -96,5 +96,15 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.getProfile(userId));
         }
+        [HttpGet("createpost")]
+        public async Task<IActionResult> createPost(string data, int userId)
+        {
+            return Ok(await _user.createPost(data, userId));
+        }
+        [HttpGet("getwaitpost")]
+        public async Task<IActionResult> getWaitPost(int userId)
+        {
+            return Ok(await _user.getWaitPost(userId));
+        }
     }
 }

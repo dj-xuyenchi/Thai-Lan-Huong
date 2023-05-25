@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace dj_webdesigncore.Entities.PostEntity
 {
+    /// <summary>
+    /// Hủy class này do dùng v-md-editor
+    /// </summary>
     public class PostSentence : BaseEntity
     {
         public int PostId { get; set; }

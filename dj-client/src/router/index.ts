@@ -31,6 +31,7 @@ import CourseResisted from "@/components/User/CourseResisted.vue";
 import ChangePassUser from "@/components/User/ChangePassUser.vue";
 import UserProfile from "@/components/User/UserProfile.vue";
 import UserCreatePost from "@/components/User/UserCreatePost.vue";
+import PostPreview from "@/components/User/PostPreview.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -109,6 +110,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "create-post",
         component: UserCreatePost,
+      },
+      {
+        path: "review",
+        component: PostPreview,
       },
     ],
   },
