@@ -39,6 +39,7 @@
           </div>
         </div>
       </div>
+      <br />
       <div class="course-lesson">
         <h2 style="font-weight: 700; font-size: 20px">Danh sách bài học.</h2>
         <ul style="display: block; margin: 8px 0 24px 0">
