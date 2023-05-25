@@ -238,6 +238,22 @@ export default {
     item: Object,
     lessonId: Number,
   },
+  watch: {
+    item: {
+      immediate: true,
+      handler(newItem) {
+        this.lessonName = newItem.lessonName;
+        this.lessonDescription = newItem.lessonDescription;
+        this.lessonTime = newItem.videoTime;
+        this.question = newItem.question;
+        this.answera = newItem.answerA;
+        this.answerb = newItem.answerB;
+        this.answerc = newItem.answerC;
+        this.answerd = newItem.answerD;
+        this.answer = newItem.answer;
+      },
+    },
+  },
 };
 </script>
 

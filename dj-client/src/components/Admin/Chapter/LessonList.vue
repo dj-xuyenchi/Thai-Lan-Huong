@@ -62,5 +62,13 @@ export default {
   created() {
     this.getLessonOfChapter();
   },
+  watch: {
+    listLesson: {
+      immediate: true,
+      handler() {
+        this.getLessonOfChapter();
+      },
+    },
+  },
 };
 </script>

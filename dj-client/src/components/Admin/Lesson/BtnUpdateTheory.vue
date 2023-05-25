@@ -162,6 +162,17 @@ export default {
     item: Object,
     lessonId: Number,
   },
+  watch: {
+    item: {
+      immediate: true,
+      handler(newItem) {
+        this.lessonName = newItem.lessonName;
+        this.lessonDescription = newItem.lessonDescription;
+        this.lessonTime = newItem.videoTime;
+        this.linkVideo = newItem.linkVideo;
+      },
+    },
+  },
 };
 </script>
 

@@ -133,8 +133,9 @@ export default {
         this.text = "Thêm thành công";
         this.dialog = false;
         this.snackbar = true;
+        this.chapterName = "";
+        this.chapterTime = "";
         this.getChapterDetail();
-        this.getLessonDetail();
       }
       if (result.status == 2) {
         this.text = "Thêm thất bại";

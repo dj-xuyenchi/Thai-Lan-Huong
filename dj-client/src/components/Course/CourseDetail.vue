@@ -39,7 +39,6 @@
           </div>
         </div>
       </div>
-      <br />
       <div class="course-lesson">
         <h2 style="font-weight: 700; font-size: 20px">Danh sách bài học.</h2>
         <ul style="display: block; margin: 8px 0 24px 0">
@@ -362,7 +361,7 @@ export default {
     width: 100% !important;
   }
 }
-@media screen and (max-width: 1023px) and (min-width: 740px) {
+@media screen and (max-width: 1360px) and (min-width: 740px) {
   .require-profit .require-profit-detail {
     width: 100% !important;
   }

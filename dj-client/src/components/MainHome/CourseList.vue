@@ -124,7 +124,7 @@ export default {
 
 @media screen and (max-width: 1370px) and (min-width: 1023px) {
   .course-item {
-    width: 33.33% !important;
+    /* width: 33.33% !important; */
   }
 }
 </style>

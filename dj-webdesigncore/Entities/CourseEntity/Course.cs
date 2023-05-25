@@ -24,5 +24,6 @@ namespace dj_webdesigncore.Entities.CourseEntity
 		public int CourseTypeId { get; set; }
 		public CourseType CourseType { get; set; }
 		public string? IntroVideoLink { get; set; }
+		public string? ResourceLink { get; set; }
     }
 }

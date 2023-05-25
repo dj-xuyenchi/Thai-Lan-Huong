@@ -145,6 +145,7 @@ namespace dj_actionlayer.Business.Admin
                             practiceDoneData.UserId = (int)item.UserId;
                             practiceDoneData.DoneData = practiceLesson.BeginCodeMethod;
                             practiceDoneData.DoneTime = DateTime.Now;
+                            practiceDoneData.LangueId = practiceLesson.LangueDefaultId;
                             await _context.AddAsync(practiceDoneData);
                             break;
                         case 3:

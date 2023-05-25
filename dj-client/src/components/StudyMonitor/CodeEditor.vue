@@ -339,7 +339,7 @@ export default {
     multiLangueDTOs: [],
   },
   mounted() {
-    if (this.codeOk) {
+    if (this.codeOk.langue) {
       this.content = this.codeOk.codeOk;
       this.langue = this.codeOk.langue;
     } else {
@@ -420,7 +420,7 @@ export default {
               continue;
             }
             var resultJS = result.split("RESULT###");
-            if (resultJS[0].includes(testCase.expectOutput)) {
+            if (resultJS[0] === testCase.expectOutput) {
               listResult.push({
                 result: 1,
                 runTimeTotal: resultJS[1] + " ms",

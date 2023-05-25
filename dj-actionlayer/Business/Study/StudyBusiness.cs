@@ -109,7 +109,7 @@ namespace dj_actionlayer.Business.Study
                         }
                         sub.Comment = subComment.Comment;
                         User subUser = await _context.user.FindAsync(subComment.UserId);
-                        sub.UserName = user.UserFisrtName + " " + user.UserLastName;
+                        sub.UserName = subUser.UserFisrtName + " " + subUser.UserLastName;
                         sub.LikeCount = (int)subComment.LikeCount;
                         sub.UserId = (int)subComment.UserId;
                         sub.IsKYC = (bool)subUser.IsKYC;

@@ -215,6 +215,24 @@ export default {
         this.dialog = false;
         this.snackbar = true;
         this.btnLoading = false;
+        this.courseCode = "";
+        this.courseName = "";
+        this.courseTotalTime = "";
+        this.courseSubTitle = "";
+        this.courseLevel = "";
+        this.courseType = "";
+        this.chapterCount = "";
+        this.courseStatus = "";
+        this.registerCount = "";
+        this.doneCount = "";
+        this.lessonCount = "";
+        this.linkVideoIntro = "";
+        this.typeId = "";
+        this.levelId = "";
+        this.statusId = "";
+        this.courseId = "";
+        this.courseIntro = "";
+        this.dataImage = "";
         this.getCoursePage();
       }
       if (result.data == 4) {

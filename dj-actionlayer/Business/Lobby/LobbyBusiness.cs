@@ -181,7 +181,11 @@ namespace dj_actionlayer.Business.Lobby
                     CourseListDTO courseListDTO = new CourseListDTO();
                     List<CourseDTO> courseDTOs = new List<CourseDTO>();
 
-                    var courseListOfType = _context.course.Where(x => x.CourseTypeId == courseType.Id).ToList();
+                    var courseListOfType = _context.course.Where(x => x.CourseTypeId == courseType.Id &&( x.CourseStatusId==1||x.CourseStatusId==3)).ToList();
+                    if (courseListOfType.Count == 0)
+                    {
+                        continue;
+                    }
                     courseListDTO.CourseType = courseType.CourseTypeName;
                     if (courseListOfType.Count == 0)
                     {

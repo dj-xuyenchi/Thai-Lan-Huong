@@ -374,6 +374,30 @@ export default {
     item: Object,
     getCoursePage: Function,
   },
+  watch: {
+    item: {
+      immediate: true,
+      handler(newItem) {
+        this.courseCode = newItem.courseCode;
+        this.courseName = newItem.courseName;
+        this.courseTotalTime = newItem.timeLessonTotal;
+        this.courseSubTitle = newItem.courseSubTitle;
+        this.courseLevel = newItem.courseLevel;
+        this.courseType = newItem.courseType;
+        this.chapterCount = newItem.chapterCount;
+        this.courseStatus = newItem.courseStatus;
+        this.registerCount = newItem.registerCount;
+        this.doneCount = newItem.doneCount;
+        this.lessonCount = newItem.lessonCount;
+        this.linkVideoIntro = newItem.linkVideoIntro;
+        this.typeId = newItem.courseTypeId;
+        this.levelId = newItem.courseLevelId;
+        this.statusId = newItem.courseStatusId;
+        this.courseId = newItem.courseId;
+        this.dataImage = newItem.courseImageData;
+      },
+    },
+  },
 };
 </script>
 

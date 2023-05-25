@@ -30,6 +30,7 @@ import InforContact from "@/components/User/InforContact.vue";
 import CourseResisted from "@/components/User/CourseResisted.vue";
 import ChangePassUser from "@/components/User/ChangePassUser.vue";
 import UserProfile from "@/components/User/UserProfile.vue";
+import UserCreatePost from "@/components/User/UserCreatePost.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -104,6 +105,10 @@ const routes: Array<RouteRecordRaw> = [
             component: ChangePassUser,
           },
         ],
+      },
+      {
+        path: "create-post",
+        component: UserCreatePost,
       },
     ],
   },

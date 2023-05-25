@@ -153,6 +153,17 @@ export default {
     this.chapterTime = this.item.timeTotal;
     this.lessonCount = this.item.lessonCount;
   },
+  watch: {
+    item: {
+      immediate: true,
+      handler(newItem) {
+        // Cập nhật dữ liệu khi prop item thay đổi
+        this.chapterName = newItem.chapterName;
+        this.chapterTime = newItem.timeTotal;
+        this.lessonCount = newItem.lessonCount;
+      },
+    },
+  },
 };
 </script>
 

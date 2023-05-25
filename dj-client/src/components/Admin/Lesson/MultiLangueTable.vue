@@ -81,5 +81,13 @@ export default {
   created() {
     this.getLangueSupport();
   },
+  watch: {
+    listSupport: {
+      immediate: true,
+      handler(newItem) {
+        this.getLangueSupport();
+      },
+    },
+  },
 };
 </script>

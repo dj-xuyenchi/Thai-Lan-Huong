@@ -128,7 +128,7 @@ export default {
           text: "Viết bài",
           icon: "mdi-pencil",
           event: () => {
-            this.$router.push({ path: "/user/1" });
+            this.$router.push({ path: "/home/create-post" });
           },
         },
         {

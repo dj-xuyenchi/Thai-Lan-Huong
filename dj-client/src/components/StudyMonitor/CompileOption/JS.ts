@@ -57,8 +57,7 @@ export const fixCodeJS = (code: string, callTest: string) => {
 export const runCode = (code: string, variable: string) => {
   code = code.replace("variable", variable);
   let logOutput = "";
-  logOutput += " ";
-  console.log(code);
+  logOutput = "";
   try {
     eval(code); // Chạy mã JavaScript
     return logOutput;

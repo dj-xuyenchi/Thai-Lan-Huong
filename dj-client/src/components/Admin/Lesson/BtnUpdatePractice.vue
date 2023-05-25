@@ -290,6 +290,27 @@ export default {
   created() {
     this.getLangueOption();
   },
+  watch: {
+    item: {
+      immediate: true,
+      handler(newItem) {
+        this.lessonName = newItem.lessonName;
+        this.lessonDescription = newItem.lessonDescription;
+        this.lessonTime = newItem.videoTime;
+        this.problem = newItem.problem;
+        this.problemDetail = newItem.problemDetail;
+        this.beginCode = newItem.beginCode;
+        this.caseDefaultDetail = newItem.caseDefaultDetail;
+        this.callTestCode = newItem.callTestCode;
+        this.inputExemple = newItem.inputExemple;
+        this.outputExemple = newItem.outputExemple;
+        this.explainCode = newItem.explainCode;
+        this.suggest = newItem.suggest;
+        this.isSupportMutilLangue = newItem.isSupportMultiLangue;
+        this.defaultLangue = newItem.langue;
+      },
+    },
+  },
 };
 </script>
 
