@@ -127,8 +127,16 @@ export default {
         {
           text: "Viết bài",
           icon: "mdi-pencil",
-          event: () => {
-            this.$router.push({ path: "/home/create-post" });
+          event: async () => {
+            const check = await UserAPI.isHaveWaitPost(
+              localStorage.getItem("id"),
+              localStorage.getItem("token")
+            );
+            if (check.data == 1) {
+              this.$router.push({ path: "/home/review" });
+            } else {
+              this.$router.push({ path: "/home/create-post" });
+            }
           },
         },
         {

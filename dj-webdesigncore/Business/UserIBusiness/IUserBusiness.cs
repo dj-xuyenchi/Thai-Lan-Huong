@@ -10,6 +10,7 @@ using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Http;
+using dj_webdesigncore.Enums.PostEnums;
 
 namespace dj_webdesigncore.Business.UserIBusiness
 {
@@ -32,5 +33,7 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<UserProfileDTO>> getProfile(int userId);
         Task<ResponData<ActionStatus>> createPost(string data,int userId);
         Task<ResponData<string>> getWaitPost(int userId);
+        Task<ResponData<IsHaveWaitPost>> isHaveWaitPost(int userId);
+        Task<ResponData<ActionStatus>> deleteWaitPost(int userId);
     }
 }

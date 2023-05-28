@@ -9,7 +9,7 @@ namespace dj_webdesigncore.Entities.PostEntity
 {
 	public class Post : BaseEntity
 	{
-		public string PostTitle { get; set; }
+		public string? PostTitle { get; set; }
 		public byte[]? PostAvatar { get; set; }
 		public byte[]? PostMiniAvatar { get; set; }
 		public int? UserCreateId { get; set; }

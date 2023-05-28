@@ -106,5 +106,15 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.getWaitPost(userId));
         }
+        [HttpGet("ishavewaitpost")]
+        public async Task<IActionResult> isHaveWaitPost(int userId)
+        {
+            return Ok(await _user.isHaveWaitPost(userId));
+        }
+        [HttpGet("deletewaitpost")]
+        public async Task<IActionResult> deleteWaitPost(int userId)
+        {
+            return Ok(await _user.deleteWaitPost(userId));
+        }
     }
 }

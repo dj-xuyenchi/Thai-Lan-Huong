@@ -1,33 +1,130 @@
 <template>
-  <div style="width: 60%; margin-left: 5%">
+  <div style="width: 60%; margin-left: 5%; min-height: 80vh">
+    <img
+      :src="'data:image/jpeg;base64, ' + dataImage"
+      alt=""
+      style="height: 160px; width: 280px"
+    />
+    <v-label style="width: 100%; margin: 24px 0 8px 0"
+      >Ảnh đại diện của bạn</v-label
+    >
+    <v-btn
+      color="#4d96ff"
+      style="height: 35px; width: 104px; font-size: 14px; font-weight: 400"
+      @click="$refs.fileInput.click()"
+    >
+      Chọn ảnh</v-btn
+    >
+    <v-file-input
+      ref="fileInput"
+      v-model="selectFile"
+      accept="image/*"
+      @change="onFileSelect"
+      outlined
+      dense
+      hide-details
+      style="display: none"
+    ></v-file-input>
+    <v-text-field
+      label="Khóa học Code"
+      hint="Khóa học Code"
+      required
+      v-model="courseCode"
+      :rules="[rules.validValue]"
+    ></v-text-field>
+
     <div style="white-space: pre-line" v-html="renderedHTML"></div>
+    <v-btn
+      @click="createPost()"
+      variant="text"
+      style="margin-bottom: 8px"
+      color="red"
+    >
+      Xuất bản
+    </v-btn>
+    <v-btn
+      @click="updatePost()"
+      variant="text"
+      style="margin-bottom: 8px"
+      color="red"
+    >
+      Sửa lại
+    </v-btn>
+    <v-btn
+      @click="deleteWaitPost()"
+      variant="text"
+      style="margin-bottom: 8px"
+      color="red"
+    >
+      Hủy bài viết
+    </v-btn>
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+      <template v-slot:actions>
+        <v-btn color="green" variant="text" @click="snackbar = false">
+          Đóng
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
 <script>
 import MarkdownIt from "markdown-it";
-
+import { mapMutations } from "vuex";
 import VMdEditor from "@kangc/v-md-editor";
 import UserAPI from "../../apis/APIUser/UserAPI.ts";
 export default {
   data() {
     return {
       renderedHTML: "",
+      beforeRender: "",
+      text: "",
+      snackbar: false,
     };
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     async getWaitPost() {
+      this.setIsLoadedData(true);
       const data = await UserAPI.getWaitPost(
         localStorage.getItem("id"),
         localStorage.getItem("token")
       );
       if (data.data == null) {
+        this.setIsLoadedData(false);
         return;
       }
       this.renderedHTML = data.data;
+      this.beforeRender = data.data;
       const md = new MarkdownIt();
       const htmlContent = md.render(this.renderedHTML);
       this.renderedHTML = htmlContent;
+      this.setIsLoadedData(false);
+    },
+    async deleteWaitPost() {
+      this.setIsLoadedData(true);
+      const data = await UserAPI.deleteWaitPost(
+        localStorage.getItem("id"),
+        localStorage.getItem("token")
+      );
+      if (data.data == 4) {
+        this.text = "Không tồn tại bài đăng";
+        this.snackbar = true;
+        this.setIsLoadedData(false);
+        return;
+      }
+      if (data.data == 1) {
+        this.text = "Xóa thành công";
+        this.snackbar = true;
+        this.setIsLoadedData(false);
+        this.$router.push({ path: `/home/lobby` });
+        return;
+      }
+    },
+    updatePost() {
+      localStorage.setItem("post_data", this.beforeRender);
+      this.$router.push({ path: `/home/create-post` });
     },
   },
   created() {

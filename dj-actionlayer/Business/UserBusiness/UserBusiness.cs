@@ -8,6 +8,7 @@ using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.PostEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
+using dj_webdesigncore.Enums.PostEnums;
 using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -132,25 +133,38 @@ namespace dj_actionlayer.Business.UserBusiness
         public async Task<ResponData<ActionStatus>> createPost(string data, int userId)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            if(await _context.user.AnyAsync(x=>x.Id== userId))
+            if(!await _context.user.AnyAsync(x=>x.Id== userId))
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
-            Post post = new Post();
-            post.PostData = data;
-            post.CreatePost=DateTime.Now;
-            post.PostStatusId = 4;
-            post.LikeCount = 0;
-            post.CommentCount = 0;
-            await _context.AddAsync(post);
-            await _context.SaveChangesAsync();
-            result.Data = ActionStatus.SECCESSFULLY;
-            result.Messenger = "Lấy dữ liệu thành công!";
-            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
-            return result;
+            Post check = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
+            if(check == null) {
+                Post post = new Post();
+                post.PostData = data;
+                post.CreatePost = DateTime.Now;
+                post.PostStatusId = 4;
+                post.LikeCount = 0;
+                post.UserCreateId= userId;
+                post.CommentCount = 0;
+                await _context.AddAsync(post);
+                await _context.SaveChangesAsync();
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            else
+            {
+                check.PostData = data;
+                await _context.SaveChangesAsync();
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
         }
 
         public async Task<ResponData<ActionStatus>> deleteExperience(int experienceId)
@@ -200,6 +214,33 @@ namespace dj_actionlayer.Business.UserBusiness
             notification.Link = null;
             await _context.AddAsync(notification);
             _context.Remove(learningExperience);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> deleteWaitPost(int userId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User user = await _context.user.FindAsync(userId);
+            if(user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            Post check = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
+            if(check == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            _context.Remove(check);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -393,6 +434,34 @@ namespace dj_actionlayer.Business.UserBusiness
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             return result;
+        }
+
+        public async Task<ResponData<IsHaveWaitPost>> isHaveWaitPost(int userId)
+        {
+            ResponData<IsHaveWaitPost> result = new ResponData<IsHaveWaitPost>();
+            User user = await _context.user.FindAsync(userId);
+            if (user == null)
+            {
+                result.Data = IsHaveWaitPost.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            Post post = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
+            if(post == null)
+            {
+                result.Data = IsHaveWaitPost.NO;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            else
+            {
+                result.Data = IsHaveWaitPost.YES;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
         }
 
         public async Task<ResponData<List<NotificationDTO>>> notificationUser(int userId)
