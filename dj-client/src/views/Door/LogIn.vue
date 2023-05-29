@@ -11,11 +11,13 @@
       max-width="448"
       rounded="lg"
     >
-      <div class="text-subtitle-1 text-medium-emphasis">Tên đăng nhập</div>
+      <div class="text-subtitle-1 text-medium-emphasis">
+        Email hoặc tên đăng nhập
+      </div>
       <v-text-field
         v-model="userName"
         density="compact"
-        placeholder="Tên đăng nhập."
+        placeholder="Email hoặc tên đăng nhập"
         prepend-inner-icon="mdi-account"
         variant="outlined"
         :rules="[rules.minUser]"

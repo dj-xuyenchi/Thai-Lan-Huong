@@ -133,7 +133,7 @@ namespace dj_actionlayer.Business.UserBusiness
         public async Task<ResponData<ActionStatus>> createPost(string data, int userId)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            if(!await _context.user.AnyAsync(x=>x.Id== userId))
+            if (!await _context.user.AnyAsync(x => x.Id == userId))
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -141,13 +141,14 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             Post check = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
-            if(check == null) {
+            if (check == null)
+            {
                 Post post = new Post();
                 post.PostData = data;
                 post.CreatePost = DateTime.Now;
                 post.PostStatusId = 4;
                 post.LikeCount = 0;
-                post.UserCreateId= userId;
+                post.UserCreateId = userId;
                 post.CommentCount = 0;
                 await _context.AddAsync(post);
                 await _context.SaveChangesAsync();
@@ -225,7 +226,7 @@ namespace dj_actionlayer.Business.UserBusiness
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
             User user = await _context.user.FindAsync(userId);
-            if(user == null)
+            if (user == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -233,7 +234,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             Post check = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
-            if(check == null)
+            if (check == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -393,8 +394,8 @@ namespace dj_actionlayer.Business.UserBusiness
             data.JoinTime = user.CreateAccount.Value.Day + " - " + user.CreateAccount.Value.Month + " - " + user.CreateAccount.Value.Year;
             data.WallImg = user.UserCoverImg == null ? null : user.UserCoverImg;
             List<ResigtedUserCourseDTO> registerCourseDTOs = new List<ResigtedUserCourseDTO>();
-            var listCourse = _context.user_course.Where(x => x.UserId == userId).OrderBy(x=>x.ResisterDateTime).ToList();
-           foreach(var item in listCourse)
+            var listCourse = _context.user_course.Where(x => x.UserId == userId).OrderBy(x => x.ResisterDateTime).ToList();
+            foreach (var item in listCourse)
             {
                 ResigtedUserCourseDTO registerCourse = new ResigtedUserCourseDTO();
                 Course course = await _context.course.FindAsync(item.CourseId);
@@ -415,7 +416,8 @@ namespace dj_actionlayer.Business.UserBusiness
         {
             ResponData<string> result = new ResponData<string>();
             Post post = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
-            if(post == null) {
+            if (post == null)
+            {
                 result.Data = null;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -448,7 +450,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             Post post = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
-            if(post == null)
+            if (post == null)
             {
                 result.Data = IsHaveWaitPost.NO;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -584,7 +586,6 @@ namespace dj_actionlayer.Business.UserBusiness
             User user = await _context.user.FindAsync(updateUserRequest.userId);
             if (user == null)
             {
-
                 data.status = ActionStatus.NOTFOUND;
                 result.Data = data;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -598,19 +599,34 @@ namespace dj_actionlayer.Business.UserBusiness
                 byte[] avatarByte = stream.ToArray();
                 user.UserAvatarData40x40 = avatarByte;
             }
+            if (updateUserRequest.catalog != null)
+            {
+                user.CatalogId = updateUserRequest.catalog;
+            }
+            if (updateUserRequest.district != null)
+            {
+                user.DistrictCode = updateUserRequest.district;
+            }
+            if (updateUserRequest.province != null)
+            {
+                user.ProvinceCode = updateUserRequest.province;
+            }
+            if (updateUserRequest.ward != null)
+            {
+                user.WardCode = updateUserRequest.ward;
+            }
+            if (updateUserRequest.birthday.Year != 1000)
+            {
+                user.Birthday = updateUserRequest.birthday;
+            }
             user.AddressNow = updateUserRequest.addressNow;
-            user.Birthday = updateUserRequest.birthday;
             user.NumberPhone = updateUserRequest.sdt;
             user.UserFacebook = updateUserRequest.facebook;
             user.UserFisrtName = updateUserRequest.firstName;
             user.UserLastName = updateUserRequest.lastName;
-            user.CatalogId = updateUserRequest.catalog;
-            user.DistrictCode = updateUserRequest.district;
             user.GenderId = updateUserRequest.gender;
-            user.ProvinceCode = updateUserRequest.province;
             user.UserDetail = updateUserRequest.detail;
             user.UserLinkedIn = updateUserRequest.linkedIn;
-            user.WardCode = updateUserRequest.ward;
             user.Update = DateTime.Now;
             Notification notification = new Notification();
             notification.SystemNotification = true;

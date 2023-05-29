@@ -55,6 +55,7 @@ export default {
   methods: {
     async getLessonOfChapter() {
       const token = localStorage.getItem("token");
+
       const data = await AdminAPI.getLessonOfChapter(this.chapterId, token);
       this.listLesson = data.data;
     },
@@ -65,8 +66,8 @@ export default {
   watch: {
     listLesson: {
       immediate: true,
-      handler() {
-        this.getLessonOfChapter();
+      handler(newData) {
+        this.listLesson = newData;
       },
     },
   },

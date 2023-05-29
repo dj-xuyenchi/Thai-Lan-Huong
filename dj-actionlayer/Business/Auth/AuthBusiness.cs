@@ -28,7 +28,15 @@ namespace dj_actionlayer.Business.Auth
         private readonly SendEmail _sendEmail = new SendEmail(Settings.emailConfig()[0], Settings.emailConfig()[1], Settings.emailConfig()[2], int.Parse(Settings.emailConfig()[3]));
         public async Task<LoginResponse<AuthDataRespon>> Login(RequestLogin request)
         {
-            var user = _context.user.SingleOrDefault(x => x.UserPass == request.Password && x.UserName == request.UserName);
+            User user;
+            if (request.UserName.Contains("@"))
+            {
+                user = _context.user.SingleOrDefault(x => x.UserPass == request.Password && x.UserEmail == request.UserName);
+            }
+            else
+            {
+                user = _context.user.SingleOrDefault(x => x.UserPass == request.Password && x.UserName == request.UserName);
+            }
             if (user == null)
             {
                 return new LoginResponse<AuthDataRespon>

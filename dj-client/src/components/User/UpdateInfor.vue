@@ -286,7 +286,7 @@ export default {
         userId: localStorage.getItem("id"),
         firstName: this.firstName,
         lastName: this.lastName,
-        birthday: this.userBirth,
+        birthday: this.userBirth ? this.userBirth : "1000-01-01",
         sdt: this.userPhone,
         facebook: this.userFacebook,
         linkedIn: this.userLinkedIn,
