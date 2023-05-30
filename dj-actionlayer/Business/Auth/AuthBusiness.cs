@@ -363,7 +363,7 @@ namespace dj_actionlayer.Business.Auth
             };
             Notification notification = new Notification();
             notification.SystemNotification = true;
-            notification.Content = "Xin chào mình là Admin của DJ - CodeMaster! chúc cậu có những trải nghiệm tuyệt vời tại đây nhé. Mọi thắc mắc và góp ý vui lòng gửi về do.quanganh99zz@gmail.com hoặc 0968491797. :3";
+            notification.Content = "Đăng ký tài khoản thành công. Mọi thắc mắc và góp ý vui lòng gửi về do.quanganh99zz@gmail.com hoặc 0968491797.";
             notification.UserId = user.Id;
             notification.Create = DateTime.Now;
             notification.IsSeen = false;

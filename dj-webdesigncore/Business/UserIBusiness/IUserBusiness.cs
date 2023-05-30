@@ -11,6 +11,8 @@ using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Request.Account;
 using Microsoft.AspNetCore.Http;
 using dj_webdesigncore.Enums.PostEnums;
+using dj_webdesigncore.Request.Course;
+using dj_webdesigncore.Request.SomeThingElse;
 
 namespace dj_webdesigncore.Business.UserIBusiness
 {
@@ -31,9 +33,10 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<ActionStatus>> seenNotifi(int notificationId);
         Task<ResponData<ActionStatus>> seenAllNotifi(int userId);
         Task<ResponData<UserProfileDTO>> getProfile(int userId);
-        Task<ResponData<ActionStatus>> createPost(string data,int userId);
+        Task<ResponData<ActionStatus>> createPost(PostCreateRequest request);
         Task<ResponData<string>> getWaitPost(int userId);
         Task<ResponData<IsHaveWaitPost>> isHaveWaitPost(int userId);
         Task<ResponData<ActionStatus>> deleteWaitPost(int userId);
+        Task<ResponData<ActionStatus>> confirmPost(IFormFile img, string title, int userId);
     }
 }

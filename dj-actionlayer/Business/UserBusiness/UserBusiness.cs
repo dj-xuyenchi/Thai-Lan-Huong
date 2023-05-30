@@ -10,6 +10,7 @@ using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Enums.PostEnums;
 using dj_webdesigncore.Request.Account;
+using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -56,6 +57,38 @@ namespace dj_actionlayer.Business.UserBusiness
             notification.Link = null;
             await _context.AddAsync(notification);
             user.UserPass = request.NewPass;
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> confirmPost(IFormFile img, string title,int userId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User user = await _context.user.FindAsync(userId);
+            if(user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            Post check = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
+            if (check == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            check.PostStatusId = 5;
+            check.PostTitle = title;
+            var stream = new MemoryStream();
+            img.CopyTo(stream);
+            byte[] avatarByte = stream.ToArray();
+            check.PostAvatar = avatarByte;
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -130,25 +163,25 @@ namespace dj_actionlayer.Business.UserBusiness
             return result;
         }
 
-        public async Task<ResponData<ActionStatus>> createPost(string data, int userId)
+        public async Task<ResponData<ActionStatus>> createPost(PostCreateRequest request)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            if (!await _context.user.AnyAsync(x => x.Id == userId))
+            if (!await _context.user.AnyAsync(x => x.Id == request.UserId))
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 return result;
             }
-            Post check = await _context.post.Where(x => x.UserCreateId == userId && x.PostStatusId == 4).FirstOrDefaultAsync();
+            Post check = await _context.post.Where(x => x.UserCreateId == request.UserId && x.PostStatusId == 4).FirstOrDefaultAsync();
             if (check == null)
             {
                 Post post = new Post();
-                post.PostData = data;
+                post.PostData = request.Data;
                 post.CreatePost = DateTime.Now;
                 post.PostStatusId = 4;
                 post.LikeCount = 0;
-                post.UserCreateId = userId;
+                post.UserCreateId = request.UserId;
                 post.CommentCount = 0;
                 await _context.AddAsync(post);
                 await _context.SaveChangesAsync();
@@ -159,7 +192,7 @@ namespace dj_actionlayer.Business.UserBusiness
             }
             else
             {
-                check.PostData = data;
+                check.PostData = request.Data;
                 await _context.SaveChangesAsync();
                 result.Data = ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";

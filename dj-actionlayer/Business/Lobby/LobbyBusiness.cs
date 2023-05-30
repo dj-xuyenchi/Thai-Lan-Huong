@@ -255,6 +255,23 @@ namespace dj_actionlayer.Business.Lobby
                 }
                 listActiveCourse.courseDTOs = courseDTOs;
                 lobbyDTO.ListActiveCourse = listActiveCourse;
+                // post
+                List<PostDTO> listPost = new List<PostDTO>();
+                var getPost = _context.post.Where(x => x.PostStatusId == 1).OrderBy(x => x.LikeCount).Take(10).ToList();
+                foreach (var post in getPost)
+                {
+                    PostDTO postDTO  =new PostDTO();
+                    postDTO.Id = post.Id;
+                    User user = await _context.user.FindAsync(post.UserCreateId);
+                    postDTO.CreaterFullName = user.UserFisrtName + " " + user.UserLastName;
+                    postDTO.CreaterAvatar = user.UserAvatarData40x40;
+                    postDTO.PostTitle = post.PostTitle;
+                    postDTO.CmtCount = post.CommentCount;
+                    postDTO.LikeCount= post.LikeCount;
+                    postDTO.PostImg = post.PostAvatar;
+                    listPost.Add(postDTO);
+                }
+                lobbyDTO.ListPost= listPost;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 result.Data = lobbyDTO;
                 result.Messenger = "Lấy dữ liệu thành công!";

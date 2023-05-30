@@ -241,7 +241,7 @@ namespace dj_actionlayer.Business.Study
                 practiceLessonDTO.Suggest = practiceLesson.Suggest;
                 practiceLessonDTO.Problem = practiceLesson.Problem;
                 practiceLessonDTO.ProblemDetail = practiceLesson.ProblemDetail;
-                practiceLessonDTO.Explain = practiceLesson.Explain; 
+                practiceLessonDTO.Explain = practiceLesson.Explain;
                 practiceLessonDTO.BeginCodeMethod = practiceLesson.BeginCodeMethod;
                 practiceLessonDTO.CallTestCode = practiceLesson.CallTestCode;
                 practiceLessonDTO.ExpectOutput = practiceLesson.ExpectOutput;
@@ -690,6 +690,13 @@ namespace dj_actionlayer.Business.Study
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
+            if (commentLessonRequest.CommentContent.Trim().Length == 0)
+            {
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
             CommentLesson commentLesson = new CommentLesson();
             commentLesson.LessonId = commentLessonRequest.LessonId;
             commentLesson.CreateDateTime = DateTime.Now;
@@ -729,6 +736,13 @@ namespace dj_actionlayer.Business.Study
             if (lesson == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            if (subCommentLessonRequest.CommentContent.Trim().Length == 0)
+            {
+                result.Data = ActionStatus.SECCESSFULLY;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
@@ -845,6 +859,39 @@ namespace dj_actionlayer.Business.Study
             PracticeDoneData isExist = await _context.practice_done_data.Where(x => x.PracticeLessonId == practiceLesson.Id && x.UserId == sendPracticeRequest.UserId).FirstOrDefaultAsync();
             if (isExist != null)
             {
+                //
+                ChapterLesson chapterLesson1 = await _context.chapter_lesson.Where(x => x.LessonId == sendPracticeRequest.LessonId && x.CourseChapterId == sendPracticeRequest.ChapterId).FirstOrDefaultAsync();
+                ChapterLesson chapterLessonNext1 = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendPracticeRequest.ChapterId && x.SortNumber == chapterLesson1.SortNumber + 1).FirstOrDefaultAsync();
+                if (chapterLessonNext1 != null)
+                {
+                    UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                    newUserLessonCheckPoint.LessonId = chapterLessonNext1.LessonId;
+                    newUserLessonCheckPoint.UserId = sendPracticeRequest.UserId;
+                    newUserLessonCheckPoint.IsDone = false;
+                    newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                    await _context.AddAsync(newUserLessonCheckPoint);
+                }
+                else
+                {
+                    CourseChapter courseChapter = await _context.course_chapter.FindAsync(sendPracticeRequest.ChapterId);
+                    CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
+                    if (courseChapterNext != null)
+                    {
+                        ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
+                        UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                        newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
+                        newUserLessonCheckPoint.UserId = sendPracticeRequest.UserId;
+                        newUserLessonCheckPoint.IsDone = false;
+                        newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                        await _context.AddAsync(newUserLessonCheckPoint);
+                    }
+                    else
+                    {
+                        // Không còn học phần tốt nghiệp khóa
+                    }
+                }
+                //
+
                 isExist.DoneData = sendPracticeRequest.Code;
                 await _context.SaveChangesAsync();
                 result.Data = ActionStatus.EXIST;
@@ -919,6 +966,41 @@ namespace dj_actionlayer.Business.Study
             }
             if (_context.question_done_data.Any(x => x.QuestionLessonId == questionLesson.Id && x.UserId == sendQuestionRequest.UserId))
             {
+
+                //
+                ChapterLesson chapterLesson = await _context.chapter_lesson.Where(x => x.LessonId == sendQuestionRequest.LessonId && x.CourseChapterId == sendQuestionRequest.ChapterId).FirstOrDefaultAsync();
+                ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendQuestionRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
+                if (chapterLessonNext != null)
+                {
+                    UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                    newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
+                    newUserLessonCheckPoint.UserId = sendQuestionRequest.UserId;
+                    newUserLessonCheckPoint.IsDone = false;
+                    newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                    await _context.AddAsync(newUserLessonCheckPoint);
+                }
+                else
+                {
+                    CourseChapter courseChapter = await _context.course_chapter.FindAsync(sendQuestionRequest.ChapterId);
+                    CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
+                    if (courseChapterNext != null)
+                    {
+                        ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
+                        UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                        newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
+                        newUserLessonCheckPoint.UserId = sendQuestionRequest.UserId;
+                        newUserLessonCheckPoint.IsDone = false;
+                        newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                        await _context.AddAsync(newUserLessonCheckPoint);
+                    }
+                    else
+                    {
+                        // Không còn học phần tốt nghiệp khóa
+                    }
+                }
+                //
+
+                await _context.SaveChangesAsync();
                 result.Data = ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = ActionStatus.SECCESSFULLY;
@@ -986,6 +1068,41 @@ namespace dj_actionlayer.Business.Study
             VideoLesson videoLesson = await _context.video_lesson.Where(x => x.LessonId == lesson.Id).FirstOrDefaultAsync();
             if (_context.video_done_data.Any(x => x.VideoLessonId == videoLesson.Id && x.UserId == sendVideoDoneRequest.UserId))
             {
+
+                //
+                ChapterLesson chapterLesson = await _context.chapter_lesson.Where(x => x.LessonId == sendVideoDoneRequest.LessonId && x.CourseChapterId == sendVideoDoneRequest.ChapterId).FirstOrDefaultAsync();
+                ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendVideoDoneRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
+                if (chapterLessonNext != null)
+                {
+                    UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                    newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
+                    newUserLessonCheckPoint.UserId = sendVideoDoneRequest.UserId;
+                    newUserLessonCheckPoint.IsDone = false;
+                    newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                    await _context.AddAsync(newUserLessonCheckPoint);
+                }
+                else
+                {
+                    CourseChapter courseChapter = await _context.course_chapter.FindAsync(sendVideoDoneRequest.ChapterId);
+                    CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
+                    if (courseChapterNext != null)
+                    {
+                        ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
+                        UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
+                        newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
+                        newUserLessonCheckPoint.UserId = sendVideoDoneRequest.UserId;
+                        newUserLessonCheckPoint.IsDone = false;
+                        newUserLessonCheckPoint.OpenLessonDateTime = DateTime.Now;
+                        await _context.AddAsync(newUserLessonCheckPoint);
+                    }
+                    else
+                    {
+                        // Không còn học phần tốt nghiệp khóa
+                    }
+                }
+                //
+
+                await _context.SaveChangesAsync();
                 result.Data = ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 result.Status = ActionStatus.SECCESSFULLY;
@@ -1061,7 +1178,7 @@ namespace dj_actionlayer.Business.Study
                     testCaseDTO.Input = item.Input;
                     testCaseDTO.Output = item.ExpectOutput;
                     testCaseDTO.SortNumber = item.SortNumber;
-                    testCaseDTO.ExpectOutput=item.ExpectOutput;
+                    testCaseDTO.ExpectOutput = item.ExpectOutput;
                     testCaseDTO.TestCaseDetail = item.InputDetail;
                     testCaseDTO.IsLock = item.LockTestCase;
                     data.Add(testCaseDTO);

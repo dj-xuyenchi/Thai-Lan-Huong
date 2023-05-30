@@ -25,7 +25,7 @@
               >Họ và tên <span class="required-star">*</span></span
             >
             <span class="field-content" style="position: relative"
-              >{{ userInfor.userLastName + " " + userInfor.userFisrtName }}
+              >{{ userInfor.userFisrtName + " " + userInfor.userLastName }}
               <UpdateInfor
                 :getUserInfor="getUserInfor"
                 v-if="userInfor.userAvatarData40x40"

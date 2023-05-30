@@ -13,52 +13,34 @@ namespace dj_actionlayer
 {
     internal class Program
     {
+       
 
-
-
-
-        void MyMethod2()
-        {
-            // non static
-          
-        }
-
-
-
-
-
-        static void MyMethod1()
-        {
-            // static
-            System.Environment.Exit(0);
-        }
         static async Task Main(string[] args)
         {
+           
 
+            //string chuoi1 = "anhdq1";
+            //string chuoi2 = "anhdq2";
+            //List<string> list = new List<string>();
+            //list.Add(chuoi1);
+            //list.Add(chuoi2);
+            //string chuoi3 = "anhdq";
+            //string chuoiTrung = "";
+            //int index = 1;
+            //for(int i = 0; i< list.Count; i++)
+            //{
+            //    if (list[i].Contains(chuoi3))
+            //    {
+            //        chuoiTrung=list[i];
+            //        index++;
+            //    }
+            //}
 
-            
-            string chuoi1 = "anhdq1";
-            string chuoi2 = "anhdq2";
-            List<string> list = new List<string>();
-            list.Add(chuoi1);
-            list.Add(chuoi2);
-            string chuoi3 = "anhdq";
-            string chuoiTrung = "";
-            int index = 1;
-            for(int i = 0; i< list.Count; i++)
-            {
-                if (list[i].Contains(chuoi3))
-                {
-                    chuoiTrung=list[i];
-                    index++;
-                }
-            }
-
-            chuoiTrung = chuoiTrung.Replace("1", "");
-            chuoiTrung = chuoiTrung.Replace("2", "");
-            chuoiTrung = chuoiTrung.Replace("3", "");
-            Console.WriteLine(chuoiTrung);
-            Console.WriteLine(index);
+            //chuoiTrung = chuoiTrung.Replace("1", "");
+            //chuoiTrung = chuoiTrung.Replace("2", "");
+            //chuoiTrung = chuoiTrung.Replace("3", "");
+            //Console.WriteLine(chuoiTrung);
+            //Console.WriteLine(index);
             //    string code = @"
             //    #include <stdio.h>
 

@@ -2,6 +2,8 @@
 using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.Business.UserIBusiness;
 using dj_webdesigncore.Request.Account;
+using dj_webdesigncore.Request.Course;
+using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -96,10 +98,10 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.getProfile(userId));
         }
-        [HttpGet("createpost")]
-        public async Task<IActionResult> createPost(string data, int userId)
+        [HttpPost("createpost")]
+        public async Task<IActionResult> createPost(PostCreateRequest request)
         {
-            return Ok(await _user.createPost(data, userId));
+            return Ok(await _user.createPost(request));
         }
         [HttpGet("getwaitpost")]
         public async Task<IActionResult> getWaitPost(int userId)
@@ -115,6 +117,11 @@ namespace dj_endpoint.Controllers.UserAPIs
         public async Task<IActionResult> deleteWaitPost(int userId)
         {
             return Ok(await _user.deleteWaitPost(userId));
+        }
+        [HttpPost("confirmpost")]
+        public async Task<IActionResult> confirmPost([FromForm] IFormFile img, [FromForm] string title, [FromForm] int userId)
+        {
+            return Ok(await _user.confirmPost(img, title, userId));
         }
     }
 }

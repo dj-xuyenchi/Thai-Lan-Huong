@@ -30,7 +30,7 @@
       hint="Tiêu đề bài viết"
       required
       variant="outlined"
-      v-model="courseCode"
+      v-model="title"
       :rules="[rules.validValue]"
       style="margin-top: 40px"
     ></v-text-field>
@@ -81,14 +81,14 @@ export default {
   data() {
     return {
       renderedHTML: "",
+      selectFile: null,
       beforeRender: "",
       dataImage: "",
       text: "",
+      title: "",
+      btnLoading: false,
       snackbar: false,
       rules: {
-        validName: (value) =>
-          !/[@#$%^&+=!]/.test(value) || "Tên chứa ký tự không hợp lệ",
-        sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
         validValue: (value) =>
           value.trim().length > 0 || "Không được để trống thông tin này!",
       },
@@ -96,6 +96,31 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
+    async createPost() {
+      this.btnLoading = true;
+      if (this.title.trim().length == 0 || this.selectFile === null) {
+        this.text = "Không được để trông thông tin!";
+        this.snackbar = true;
+        this.btnLoading = false;
+        return;
+      }
+      const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("img", this.selectFile ? this.selectFile[0] : null);
+      formData.append("title", this.title);
+      formData.append("userId", localStorage.getItem("id"));
+      const result = await UserAPI.confirmPost(formData, token);
+      if (result.data == 1) {
+        this.text = "Tạo bài viết thành công vui lòng chờ kiểm duyệt!";
+        this.dialog = false;
+        this.$router.push({ path: `/home/lobby` });
+      }
+      if (result.data == 4) {
+        this.text = "Tạo bài viết thất bại!";
+        this.snackbar = true;
+      }
+      this.btnLoading = false;
+    },
     async getWaitPost() {
       this.setIsLoadedData(true);
       const data = await UserAPI.getWaitPost(

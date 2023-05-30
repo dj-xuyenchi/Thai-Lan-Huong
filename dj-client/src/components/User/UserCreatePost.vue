@@ -67,8 +67,7 @@ export default {
       }
       this.setIsLoadedData(true);
       const data = await UserAPI.createWaitPost(
-        this.content,
-        localStorage.getItem("id"),
+        { Data: this.content, UserId: localStorage.getItem("id") },
         localStorage.getItem("token")
       );
       if (data.data == 1) {
