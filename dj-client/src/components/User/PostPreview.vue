@@ -6,7 +6,7 @@
       style="height: 160px; width: 280px"
     />
     <v-label style="width: 100%; margin: 24px 0 8px 0"
-      >Ảnh đại diện của bạn</v-label
+      >Ảnh đại diện bài viết</v-label
     >
     <v-btn
       color="#4d96ff"
@@ -26,11 +26,13 @@
       style="display: none"
     ></v-file-input>
     <v-text-field
-      label="Khóa học Code"
-      hint="Khóa học Code"
+      label="Tiêu đề bài viết"
+      hint="Tiêu đề bài viết"
       required
+      variant="outlined"
       v-model="courseCode"
       :rules="[rules.validValue]"
+      style="margin-top: 40px"
     ></v-text-field>
 
     <div style="white-space: pre-line" v-html="renderedHTML"></div>
@@ -71,6 +73,7 @@
 
 <script>
 import MarkdownIt from "markdown-it";
+import { holdingImg } from "./file.ts";
 import { mapMutations } from "vuex";
 import VMdEditor from "@kangc/v-md-editor";
 import UserAPI from "../../apis/APIUser/UserAPI.ts";
@@ -79,8 +82,16 @@ export default {
     return {
       renderedHTML: "",
       beforeRender: "",
+      dataImage: "",
       text: "",
       snackbar: false,
+      rules: {
+        validName: (value) =>
+          !/[@#$%^&+=!]/.test(value) || "Tên chứa ký tự không hợp lệ",
+        sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
+        validValue: (value) =>
+          value.trim().length > 0 || "Không được để trống thông tin này!",
+      },
     };
   },
   methods: {
@@ -126,9 +137,33 @@ export default {
       localStorage.setItem("post_data", this.beforeRender);
       this.$router.push({ path: `/home/create-post` });
     },
+    onFileSelect() {
+      if (
+        this.selectFile[0].type == "image/png" ||
+        this.selectFile[0].type == "image/jpeg" ||
+        this.selectFile[0].type == "image/jpg"
+      ) {
+        if (this.selectFile[0].size > 1048576) {
+          this.text = "File quá nặng chỉ hỗ trợ file dung lượng < 1MB";
+          this.snackbar = true;
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.dataImage = reader.result.split(",")[1];
+        };
+        reader.readAsDataURL(this.selectFile[0]);
+      } else {
+        this.text =
+          "Vui lòng chọn đúng file định dạng ảnh! Các định dạng được hỗ trợ: JPG, JPEG, PNG";
+        this.snackbar = true;
+        return;
+      }
+    },
   },
   created() {
     this.getWaitPost();
+    this.dataImage = holdingImg;
   },
 };
 </script>

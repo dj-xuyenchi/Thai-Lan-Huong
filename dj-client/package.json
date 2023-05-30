@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "vue-cli-service lint",
     "mixue": "vue-cli-service serve",
-    "yeuem": "vue-cli-service build"
+    "ulatroi": "vue-cli-service build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
