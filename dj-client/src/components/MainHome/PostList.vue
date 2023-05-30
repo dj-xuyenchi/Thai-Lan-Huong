@@ -13,28 +13,14 @@
     </span>
     <div class="course-list">
       <PostItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        authorAvatar="@/assets/user-avatar/1.jpg"
-        postAuthor="Bé Na"
-        likeCount="112"
-        cmtCount="200"
-      />
-      <PostItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách hack NASA bằng HTML CSS"
-        authorAvatar="@/assets/user-avatar/2.jpg"
-        postAuthor="Bé Chíp"
-        likeCount="222"
-        cmtCount="11"
-      />
-      <PostItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Trộm tiền mẹ nạp Tài Xỉu"
-        authorAvatar="@/assets/user-avatar/3.jpg"
-        postAuthor="Bé Mai"
-        likeCount="231"
-        cmtCount="12"
+        v-for="(item, index) in postList"
+        :key="index"
+        :postImg="item.postImg"
+        :postTitle="item.postTitle"
+        :authorAvatar="item.createrAvatar"
+        :postAuthor="item.createrFullName"
+        :likeCount="item.likeCount"
+        :cmtCount="item.cmtCount"
       />
     </div>
   </div>
@@ -46,6 +32,9 @@ export default {
   name: "PostList",
   components: {
     PostItem,
+  },
+  props: {
+    postList: [],
   },
 };
 </script>

@@ -9,7 +9,7 @@
         width="380px"
         height="220px"
       >
-        <img :src="postImg" alt="" />
+        <img :src="`data:image/png;base64,` + postImg" alt="" />
         <v-overlay
           :model-value="isHovering"
           contained
@@ -36,7 +36,7 @@
         >
       </div>
       <div class="author-info">
-        <img :src="require(`../../assets/user-avatar/1.jpg`)" alt="" />
+        <img :src="`data:image/png;base64,` + authorAvatar" alt="" />
         <span>{{ postAuthor }}</span>
         <div class="react-info">
           <font-awesome-icon icon="fa-solid fa-heart" class="react-icon" />

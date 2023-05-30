@@ -1,8 +1,13 @@
 <template>
   <div>
     <HeaderSlider />
-    <CourseList />
-    <PostList />
+    <CourseList
+      :courseList="courseList"
+      :studentStudyed="studentStudyed"
+      :studentStudying="studentStudying"
+    />
+    <PostList :postList="postList" />
+    <br />
     <BlogList />
   </div>
 </template>
@@ -23,10 +28,27 @@ export default {
     BlogList,
   },
   data: () => {
-    return {};
+    return {
+      courseList: [],
+      studentStudyed: 0,
+      studentStudying: 0,
+      postList: [],
+    };
+  },
+  mounted() {
+    this.getLobbyData();
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
+    async getLobbyData() {
+      this.setIsLoadedData(true);
+      const data = await HomeAPI.getLobbyData();
+      this.courseList = data.data.listActiveCourse.courseDTOs;
+      this.postList = data.data.listPost;
+      this.studentStudyed = data.data.listActiveCourse.studyedStudent;
+      this.studentStudying = data.data.listActiveCourse.studyingStudent;
+      this.setIsLoadedData(false);
+    },
   },
 };
 </script>
