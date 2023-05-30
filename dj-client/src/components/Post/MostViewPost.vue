@@ -1,14 +1,17 @@
 <template>
   <div class="mostviewpost-container">
-    <div style="width: 120px">
-      <img
-        style="width: 120px; height: 72px"
-        src="https://gaixinh.photo/wp-content/uploads/2021/10/anh-hot-girl-6.jpg"
-        alt=""
-      />
-    </div>
-    <div style="width: 160px; margin-left: 8px">
-      <router-link to="event" style="text-decoration: none; color: black">
+    <router-link
+      :to="`/home/post/` + item.id"
+      style="text-decoration: none; color: black"
+    >
+      <div style="width: 120px">
+        <img
+          style="width: 120px; height: 72px"
+          :src="`data:image/png;base64,` + item.postImg"
+          alt=""
+        />
+      </div>
+      <div style="width: 160px; margin-left: 8px">
         <span
           style="
             font-family: `Merriweather`, serif;
@@ -16,21 +19,27 @@
             line-height: 160%;
           "
           class="mostviewpost-title"
-          >Hot Girl Hoàng Công Chất lộ clip cùng bạn trai 90 múi.<v-icon
+          >{{ item.title
+          }}<v-icon
             size="small"
             color="#93908a"
             icon="mdi-message-text"
             style="margin-left: 8px"
           ></v-icon
-          ><span style="margin-left: 4px; color: #29b6f6">81</span></span
+          ><span style="margin-left: 4px; color: #29b6f6">{{
+            item.cmtCount
+          }}</span></span
         >
-      </router-link>
-    </div>
+      </div>
+    </router-link>
   </div>
 </template>
 <script>
 export default {
   name: "MostViewPost",
+  props: {
+    item: Object,
+  },
 };
 </script>
 

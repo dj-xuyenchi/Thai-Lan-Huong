@@ -15,5 +15,6 @@ namespace dj_webdesigncore.DTOs.Lobby
         public string PostTitle { get; set; }
         public int LikeCount { get; set; }
         public int CmtCount { get; set; }
+        public bool IsCreaterKYC { get; set; }
     }
 }

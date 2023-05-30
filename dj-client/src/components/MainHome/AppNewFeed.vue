@@ -7,7 +7,6 @@
       :studentStudying="studentStudying"
     />
     <PostList :postList="postList" />
-    <br />
     <BlogList />
   </div>
 </template>

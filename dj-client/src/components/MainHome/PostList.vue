@@ -21,6 +21,8 @@
         :postAuthor="item.createrFullName"
         :likeCount="item.likeCount"
         :cmtCount="item.cmtCount"
+        :isKYC="item.isCreaterKYC"
+        :id="item.id"
       />
     </div>
   </div>

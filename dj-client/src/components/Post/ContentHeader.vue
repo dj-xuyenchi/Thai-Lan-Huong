@@ -1,15 +1,19 @@
 <template>
   <div class="content-container">
-    <h1>
-      Cách tán crush bằng HTML CSS Cách tán crush bằng HTML CSS Cách tán crush
-      bằng HTML CSS.
-    </h1>
+    <h1>{{ post.title }}</h1>
     <v-list-item
       lines="one"
-      prepend-avatar="https://randomuser.me/api/portraits/women/81.jpg"
-      title="Jane Smith"
+      :prepend-avatar="`data:image/png;base64,` + post.createrImg"
+      :title="post.createrFullName"
       style="padding: unset; position: relative; margin-bottom: 20px"
+      append-avatar="require('../../assets/kyc.png')"
     >
+      <!-- <img
+        v-if="post.isCreaterKYC"
+        :src="require('../../assets/kyc.png')"
+        alt=""
+        class="kyc"
+      /> -->
       <template v-slot:append>
         <v-btn
           variant="text"
@@ -17,7 +21,7 @@
           icon="mdi-heart"
           @click="fav = !fav"
         ></v-btn>
-        <span>Bạn và 2.123 người khác</span>
+        <span>{{ post.likeCount }}</span>
       </template>
     </v-list-item>
   </div>
@@ -32,6 +36,9 @@ export default {
     message: false,
     hints: true,
   }),
+  props: {
+    post: Object,
+  },
 };
 </script>
 
@@ -45,5 +52,9 @@ export default {
   font-weight: bold;
   margin-bottom: 15px;
   font-family: Arial;
+}
+.content-container .kyc {
+  height: 16px;
+  width: 16px;
 }
 </style>

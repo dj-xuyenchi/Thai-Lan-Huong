@@ -1,5 +1,7 @@
 ﻿using dj_actionlayer.Business.Lobby;
+using dj_actionlayer.Business.PostBusiness;
 using dj_webdesigncore.Business.Lobby;
+using dj_webdesigncore.Business.Post;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.Request.SomeThingElse;
@@ -11,10 +13,12 @@ namespace dj_endpoint.Controllers.HomeAPIs
     public class LobbyApis : BaseApi
     {
         private readonly ILobbyBusiness _lobby;
+        private readonly IPostBusiness _post;
 
         public LobbyApis()
         {
             this._lobby = new LobbyBusiness();
+            this._post = new PostBusiness();
         }
         [HttpGet("lobbyhomedata")]
         public async Task<IActionResult> getLobbyData()
@@ -35,6 +39,11 @@ namespace dj_endpoint.Controllers.HomeAPIs
         public async Task<IActionResult> sendAdvice(AdviceMentorRequest adviceMentorRequest)
         {
             return Ok(await _lobby.AdviceMentor(adviceMentorRequest));
+        }
+        [HttpGet("getpostdetail")]
+        public async Task<IActionResult> getPostDetail(int postId, int userId)
+        {
+            return Ok(await _post.getPostDetail(postId, userId));
         }
     }
 }

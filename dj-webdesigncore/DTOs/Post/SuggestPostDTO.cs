@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace dj_webdesigncore.DTOs.Post
+{
+    public class SuggestPostDTO
+    {
+        public int Id { get; set; }
+        public byte[] PostImg { get; set; }
+        public string Title { get; set; }
+        public int CmtCount { get; set; }
+    }
+}

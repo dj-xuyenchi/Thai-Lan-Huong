@@ -26,7 +26,7 @@
           font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
             'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
         "
-        >{{ now }}</span
+        >{{ post.createPostTime }}</span
       >
     </div>
     <div style="margin-left: 14px; margin-top: 20px">
@@ -52,7 +52,7 @@
         </v-tooltip>
       </div>
       <div class="post-content">
-        <ContentHeader />
+        <ContentHeader :post="post" />
         <PostContentBody />
       </div>
       <div class="post-shortlink">
@@ -65,14 +65,14 @@
             font-weight: bold;
           "
         >
-          Xem nhiều
+          Bài viết mới
         </h4>
         <div style="border-bottom: 1px solid red; width: 12%"></div>
-        <MostViewPost />
-        <MostViewPost />
-        <MostViewPost />
-        <MostViewPost />
-        <MostViewPost />
+        <MostViewPost
+          v-for="(item, index) in post.suggestPost"
+          :key="index"
+          :item="item"
+        />
       </div>
     </div>
   </div>
@@ -82,56 +82,35 @@
 import ContentHeader from "./ContentHeader.vue";
 import PostContentBody from "./PostContentBody.vue";
 import MostViewPost from "./MostViewPost.vue";
+import PostAPI from "../../apis/APIPost/PostAPI";
 export default {
   name: "PostMonitor",
   components: { ContentHeader, PostContentBody, MostViewPost },
-  props: {
-    title: String,
-  },
   data() {
     return {
-      now: "",
+      post: {},
     };
   },
-  created() {
-    const now = new Date();
-    switch (now.getDay()) {
-      case 0:
-        this.now = "Chủ nhật, ";
-        break;
-      case 1:
-        this.now = "Thứ hai, ";
-        break;
-      case 2:
-        this.now = "Thứ ba, ";
-        break;
-      case 3:
-        this.now = "Thứ tư, ";
-        break;
-      case 4:
-        this.now = "Thứ năm, ";
-        break;
-      case 5:
-        this.now = "Thứ sáu, ";
-        break;
-      case 6:
-        this.now = "Thứ bảy, ";
-        break;
-      default:
-        break;
-    }
-    this.now =
-      this.now +
-      now.getDate() +
-      "/" +
-      Number(now.getMonth() + 1) +
-      "/" +
-      now.getFullYear() +
-      ", " +
-      now.getHours() +
-      ":" +
-      now.getMinutes() +
-      "  (GMT+7)";
+  methods: {
+    async getPostDetail() {
+      const data = await PostAPI.getPostDetail(
+        this.$route.params.id,
+        localStorage.getItem("id") ? localStorage.getItem("id") : -1
+      );
+      this.post = data.data;
+      localStorage.setItem("postData", this.post.content);
+    },
+  },
+  beforeMount() {
+    this.getPostDetail();
+  },
+  watch: {
+    post: {
+      immediate: true,
+      handler(newItem) {
+        this.post = newItem;
+      },
+    },
   },
 };
 </script>

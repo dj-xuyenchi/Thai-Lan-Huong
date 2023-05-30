@@ -16,7 +16,7 @@
           scrim="#036358"
           class="align-center justify-center"
         >
-          <router-link :to="`/home/post/` + 1" style="text-decoration: none">
+          <router-link :to="`/home/post/` + id" style="text-decoration: none">
             <v-btn variant="flat rounded-xl">Xem bài viết</v-btn>
           </router-link>
         </v-overlay>
@@ -32,12 +32,18 @@
             font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
               'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
           "
-          >{{ postTitle }}</span
+          >{{ titleFix }}</span
         >
       </div>
       <div class="author-info">
         <img :src="`data:image/png;base64,` + authorAvatar" alt="" />
         <span>{{ postAuthor }}</span>
+        <img
+          v-if="isKYC"
+          :src="require('../../assets/kyc.png')"
+          alt=""
+          class="kyc"
+        />
         <div class="react-info">
           <font-awesome-icon icon="fa-solid fa-heart" class="react-icon" />
           <span style="margin-right: 18px">{{ likeCount }}</span>
@@ -53,6 +59,7 @@ export default {
   name: "CourseItem",
   data: () => ({
     // v-card--variant-elevated
+    titleFix: "",
     overlay: false,
   }),
   props: {
@@ -62,10 +69,15 @@ export default {
     postAuthor: String,
     likeCount: String,
     cmtCount: String,
+    isKYC: Boolean,
+    id: Number,
   },
   mounted() {
-    const g = this.$refs.gg;
-    console.log(g);
+    if (this.postTitle.length > 45) {
+      this.titleFix = this.postTitle.substring(0, 42) + "...";
+    } else {
+      this.titleFix = this.postTitle;
+    }
   },
 };
 </script>
@@ -101,6 +113,11 @@ export default {
   display: flex;
   align-items: center;
   position: relative;
+}
+.author-info .kyc {
+  height: 16px;
+  width: 16px;
+  margin-left: -4px;
 }
 .author-info img {
   width: 32px;

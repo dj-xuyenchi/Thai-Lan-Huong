@@ -269,6 +269,7 @@ namespace dj_actionlayer.Business.Lobby
                     postDTO.CmtCount = post.CommentCount;
                     postDTO.LikeCount= post.LikeCount;
                     postDTO.PostImg = post.PostAvatar;
+                    postDTO.IsCreaterKYC = (bool)user.IsKYC;
                     listPost.Add(postDTO);
                 }
                 lobbyDTO.ListPost= listPost;
