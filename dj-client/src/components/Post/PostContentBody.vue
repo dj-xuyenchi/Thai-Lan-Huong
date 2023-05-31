@@ -22,11 +22,13 @@ export default {
     const htmlContent = md.render(localStorage.getItem("postData"));
     this.renderedHTML = htmlContent;
   },
+  mounted() {
+    const listImg = document.querySelectorAll("img");
+    for (var item of listImg) {
+      item.classList.add("fixImg");
+    }
+  },
 };
 </script>
 
-<style lang="css" scoped>
-.content-body-container img {
-  max-width: 600px !important;
-}
-</style>
+<style lang="css" scoped></style>

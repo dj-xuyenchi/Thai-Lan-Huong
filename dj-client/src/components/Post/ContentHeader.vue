@@ -1,30 +1,41 @@
 <template>
   <div class="content-container">
     <h1>{{ post.title }}</h1>
-    <v-list-item
-      lines="one"
-      :prepend-avatar="`data:image/png;base64,` + post.createrImg"
-      :title="post.createrFullName"
-      style="padding: unset; position: relative; margin-bottom: 20px"
-      append-avatar="require('../../assets/kyc.png')"
+
+    <img
+      :src="`data:image/png;base64,` + post.createrImg"
+      alt=""
+      style="height: 40px; width: 40px; border-radius: 50%; float: left"
+    />
+    <span
+      style="
+        height: 40px;
+        float: left;
+        display: inline-flex;
+        align-items: center;
+        margin-left: 8px;
+      "
+      >{{ post.createrFullName }}</span
     >
-      <!-- <img
-        v-if="post.isCreaterKYC"
-        :src="require('../../assets/kyc.png')"
-        alt=""
-        class="kyc"
-      /> -->
-      <template v-slot:append>
-        <v-btn
-          variant="text"
-          :class="fav ? 'text-red' : ''"
-          icon="mdi-heart"
-          @click="fav = !fav"
-        ></v-btn>
-        <span>{{ post.likeCount }}</span>
-      </template>
-    </v-list-item>
+    <img
+      v-if="post.isCreaterKYC"
+      :src="require('../../assets/kyc.png')"
+      alt=""
+      class="kyc"
+    />
+    <div style="float: right">
+      <v-btn
+        variant="text"
+        :class="fav ? 'text-red' : ''"
+        icon="mdi-heart"
+        @click="fav = !fav"
+      >
+      </v-btn>
+      <span>{{ post.likeCount }}</span>
+    </div>
   </div>
+  <br />
+  <br />
 </template>
 
 <script>
@@ -54,7 +65,10 @@ export default {
   font-family: Arial;
 }
 .content-container .kyc {
-  height: 16px;
-  width: 16px;
+  height: 18px;
+  width: 18px;
+  float: left;
+  margin-top: 10px;
+  margin-left: 4px;
 }
 </style>

@@ -86,7 +86,7 @@ const routes: Array<RouteRecordRaw> = [
         component: CourseMonitor,
       },
       {
-        path: "post/:id",
+        path: "post/:id/:name",
         component: PostMonitor,
       },
       {

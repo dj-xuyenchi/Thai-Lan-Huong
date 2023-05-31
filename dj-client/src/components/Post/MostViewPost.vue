@@ -1,17 +1,18 @@
 <template>
   <div class="mostviewpost-container">
     <router-link
-      :to="`/home/post/` + item.id"
+      :to="`/home/post/` + item.id + `/` + titleFix"
       style="text-decoration: none; color: black"
+      @click="setId(item.id)"
     >
-      <div style="width: 120px">
+      <div style="width: 120px; float: left">
         <img
           style="width: 120px; height: 72px"
           :src="`data:image/png;base64,` + item.postImg"
           alt=""
         />
       </div>
-      <div style="width: 160px; margin-left: 8px">
+      <div style="width: 160px; margin-left: 8px; float: left">
         <span
           style="
             font-family: `Merriweather`, serif;
@@ -19,7 +20,7 @@
             line-height: 160%;
           "
           class="mostviewpost-title"
-          >{{ item.title
+          >{{ titleFix
           }}<v-icon
             size="small"
             color="#93908a"
@@ -37,8 +38,21 @@
 <script>
 export default {
   name: "MostViewPost",
+  data() {
+    return {
+      titleFix: "",
+    };
+  },
   props: {
     item: Object,
+    setId: Function,
+  },
+  created() {
+    if (this.item.title.length > 45) {
+      this.titleFix = this.item.title.substring(0, 45) + "...";
+    } else {
+      this.titleFix = this.item.title;
+    }
   },
 };
 </script>

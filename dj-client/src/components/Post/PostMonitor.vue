@@ -72,6 +72,7 @@
           v-for="(item, index) in post.suggestPost"
           :key="index"
           :item="item"
+          :setId="setId"
         />
       </div>
     </div>
@@ -82,6 +83,7 @@
 import ContentHeader from "./ContentHeader.vue";
 import PostContentBody from "./PostContentBody.vue";
 import MostViewPost from "./MostViewPost.vue";
+import { mapMutations } from "vuex";
 import PostAPI from "../../apis/APIPost/PostAPI";
 export default {
   name: "PostMonitor",
@@ -89,16 +91,24 @@ export default {
   data() {
     return {
       post: {},
+      id: 0,
     };
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
     async getPostDetail() {
+      this.setIsLoadedData(true);
+      this.id = localStorage.getItem("id");
       const data = await PostAPI.getPostDetail(
         this.$route.params.id,
-        localStorage.getItem("id") ? localStorage.getItem("id") : -1
+        this.id ? this.id : -1
       );
       this.post = data.data;
       localStorage.setItem("postData", this.post.content);
+      this.setIsLoadedData(false);
+    },
+    setId(id) {
+      this.id = id;
     },
   },
   beforeMount() {
@@ -108,7 +118,7 @@ export default {
     post: {
       immediate: true,
       handler(newItem) {
-        this.post = newItem;
+        this.getPostDetail();
       },
     },
   },

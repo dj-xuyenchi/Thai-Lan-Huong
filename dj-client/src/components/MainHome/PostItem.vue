@@ -16,7 +16,10 @@
           scrim="#036358"
           class="align-center justify-center"
         >
-          <router-link :to="`/home/post/` + id" style="text-decoration: none">
+          <router-link
+            :to="`/home/post/` + id + `/` + postTitle"
+            style="text-decoration: none"
+          >
             <v-btn variant="flat rounded-xl">Xem bài viết</v-btn>
           </router-link>
         </v-overlay>
