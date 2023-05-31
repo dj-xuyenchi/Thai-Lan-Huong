@@ -16,13 +16,13 @@ export default {
       renderedHTML: "",
     };
   },
-  created() {
-    const md = new MarkdownIt();
-    const htmlContent = md.render(localStorage.getItem("postData"));
-    this.renderedHTML = htmlContent;
-    localStorage.removeItem("postData");
+  props: {
+    dataHTML: String,
   },
   mounted() {
+    const md = new MarkdownIt();
+    const htmlContent = md.render(this.dataHTML);
+    this.renderedHTML = htmlContent;
     const listImg = document.querySelectorAll("img");
     for (var item of listImg) {
       item.classList.add("fixImg");

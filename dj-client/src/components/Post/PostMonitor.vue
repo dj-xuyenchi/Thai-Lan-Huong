@@ -53,7 +53,8 @@
       </div>
       <div class="post-content">
         <ContentHeader :post="post" :getPostDetail="getPostDetail" />
-        <PostContentBody />
+        <div style="white-space: pre-line" v-html="renderedHTML"></div>
+        <FooterPost />
       </div>
       <div class="post-shortlink">
         <h4
@@ -80,17 +81,19 @@
 
 <script>
 import ContentHeader from "./ContentHeader.vue";
-import PostContentBody from "./PostContentBody.vue";
+import FooterPost from "./FooterPost.vue";
 import MostViewPost from "./MostViewPost.vue";
 import { mapMutations } from "vuex";
 import PostAPI from "../../apis/APIPost/PostAPI";
+
+import MarkdownIt from "markdown-it";
 export default {
   name: "PostMonitor",
-  components: { ContentHeader, PostContentBody, MostViewPost },
+  components: { ContentHeader, FooterPost, MostViewPost },
   data() {
     return {
       post: {},
-      id: 0,
+      renderedHTML: "",
     };
   },
   methods: {
@@ -103,7 +106,9 @@ export default {
         this.id ? this.id : -1
       );
       this.post = data.data;
-      localStorage.setItem("postData", this.post.content);
+      const md = new MarkdownIt();
+      const htmlContent = md.render(this.post.content);
+      this.renderedHTML = htmlContent;
       this.setIsLoadedData(false);
     },
   },

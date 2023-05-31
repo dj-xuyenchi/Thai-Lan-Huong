@@ -92,7 +92,7 @@ export default {
   margin-bottom: 36px;
   padding: 0 14px 0 14px;
   margin-left: 1%;
-  margin-bottom: 60px;
+  margin-bottom: 80px;
 }
 
 .post-item img {
