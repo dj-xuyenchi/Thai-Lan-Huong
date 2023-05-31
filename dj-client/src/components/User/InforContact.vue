@@ -461,7 +461,7 @@ export default {
 
 <style lang="css" scoped>
 .left-avatar {
-  width: 18%;
+  width: 22%;
   float: left;
 }
 .left-avatar img {
@@ -470,7 +470,7 @@ export default {
   border-radius: 50%;
 }
 .right-infor {
-  width: 82%;
+  width: 78%;
   float: left;
 }
 .right-infor ul li {
@@ -483,7 +483,7 @@ export default {
   font-weight: normal;
   font-family: "Muli", sans-serif;
   letter-spacing: 1px;
-  width: 25%;
+  width: 28%;
   display: block;
   float: left;
 }
@@ -499,7 +499,7 @@ export default {
   font-family: "Muli", sans-serif;
   letter-spacing: 1px;
   font-weight: 400;
-  width: 75%;
+  width: 72%;
   display: block;
   float: left;
 }
