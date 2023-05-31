@@ -52,7 +52,7 @@
         </v-tooltip>
       </div>
       <div class="post-content">
-        <ContentHeader :post="post" />
+        <ContentHeader :post="post" :getPostDetail="getPostDetail" />
         <PostContentBody />
       </div>
       <div class="post-shortlink">
@@ -72,7 +72,6 @@
           v-for="(item, index) in post.suggestPost"
           :key="index"
           :item="item"
-          :setId="setId"
         />
       </div>
     </div>
@@ -107,20 +106,9 @@ export default {
       localStorage.setItem("postData", this.post.content);
       this.setIsLoadedData(false);
     },
-    setId(id) {
-      this.id = id;
-    },
   },
-  beforeMount() {
+  created() {
     this.getPostDetail();
-  },
-  watch: {
-    post: {
-      immediate: true,
-      handler(newItem) {
-        this.getPostDetail();
-      },
-    },
   },
 };
 </script>

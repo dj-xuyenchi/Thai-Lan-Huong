@@ -11,5 +11,16 @@ class PostAPI {
         });
     });
   }
+  commentOfPost(postId: number, userId: number): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/lobby/commentofpost?postId=${postId}&userId=${userId}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 export default new PostAPI();

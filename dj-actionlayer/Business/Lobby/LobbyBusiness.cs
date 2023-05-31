@@ -257,7 +257,7 @@ namespace dj_actionlayer.Business.Lobby
                 lobbyDTO.ListActiveCourse = listActiveCourse;
                 // post
                 List<PostDTO> listPost = new List<PostDTO>();
-                var getPost = _context.post.Where(x => x.PostStatusId == 1).OrderBy(x => x.LikeCount).Take(10).ToList();
+                var getPost = _context.post.Where(x => x.PostStatusId == 1).OrderByDescending(x => x.LikeCount).Take(10).ToList();
                 foreach (var post in getPost)
                 {
                     PostDTO postDTO  =new PostDTO();

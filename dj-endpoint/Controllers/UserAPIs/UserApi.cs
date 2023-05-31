@@ -1,4 +1,6 @@
-﻿using dj_actionlayer.Business.UserBusiness;
+﻿using dj_actionlayer.Business.PostBusiness;
+using dj_actionlayer.Business.UserBusiness;
+using dj_webdesigncore.Business.Post;
 using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.Business.UserIBusiness;
 using dj_webdesigncore.Request.Account;
@@ -16,10 +18,11 @@ namespace dj_endpoint.Controllers.UserAPIs
     public class UserApi : BaseApi
     {
         private readonly IUserBusiness _user;
-
+        private readonly IPostBusiness _post;
         public UserApi()
         {
             _user = new UserBusiness();
+            _post = new PostBusiness();
         }
 
         [HttpGet("getuserinformation")]
@@ -122,6 +125,21 @@ namespace dj_endpoint.Controllers.UserAPIs
         public async Task<IActionResult> confirmPost([FromForm] IFormFile img, [FromForm] string title, [FromForm] int userId)
         {
             return Ok(await _user.confirmPost(img, title, userId));
+        }
+        [HttpGet("userlikepost")]
+        public async Task<IActionResult> userlikePost(int userId, int postId)
+        {
+            return Ok(await _post.userLikePost(userId, postId));
+        }
+        [HttpGet("usercmtpost")]
+        public async Task<IActionResult> userCmtPost(int userId, int postId, string content)
+        {
+            return Ok(await _post.userCmtPost(userId, postId, content));
+        }
+        [HttpGet("usersubcmtpost")]
+        public async Task<IActionResult> userSubCmtPost(int userId, string content, int cmtId)
+        {
+            return Ok(await _post.userSubCmtPost(userId, content, cmtId));
         }
     }
 }

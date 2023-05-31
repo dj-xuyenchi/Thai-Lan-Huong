@@ -7,7 +7,6 @@
 
 <script>
 import FooterPost from "./FooterPost.vue";
-
 import MarkdownIt from "markdown-it";
 export default {
   name: "PostContentBody",
@@ -21,6 +20,7 @@ export default {
     const md = new MarkdownIt();
     const htmlContent = md.render(localStorage.getItem("postData"));
     this.renderedHTML = htmlContent;
+    localStorage.removeItem("postData");
   },
   mounted() {
     const listImg = document.querySelectorAll("img");

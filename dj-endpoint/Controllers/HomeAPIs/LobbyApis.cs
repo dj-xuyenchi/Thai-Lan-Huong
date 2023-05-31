@@ -45,5 +45,10 @@ namespace dj_endpoint.Controllers.HomeAPIs
         {
             return Ok(await _post.getPostDetail(postId, userId));
         }
+        [HttpGet("commentofpost")]
+        public async Task<IActionResult> commentOfPost(int postId, int userId)
+        {
+            return Ok(await _post.CommentOfPost(postId, userId));
+        }
     }
 }

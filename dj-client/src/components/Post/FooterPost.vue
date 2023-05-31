@@ -3,14 +3,69 @@
     <h4 style="margin-bottom: 24px">Bình luận!</h4>
     <v-text-field
       placeholder="Ý kiến của bạn."
-      variant="outlined"
-      style="height: 40px; width: 100%"
-    ></v-text-field>
+      variant="underlined"
+      density="compact"
+      style="height: 40px; width: 100%; margin-bottom: 40px"
+    >
+      <font-awesome-icon
+        icon="fa-solid fa-chevron-right"
+        color="black"
+        class="comment-enter"
+        style="font-size: 20px; margin-right: 4px; position: absolute; right: 0"
+        @click="subcommentResquest()"
+    /></v-text-field>
+    <CommentPost
+      v-for="(item, i) in commentList"
+      :key="i"
+      :data="item"
+      :commentId="item.commentId"
+      :reLoadComment="handleGetComment"
+      :resetClicked="resetClicked"
+    />
   </div>
 </template>
 <script>
+import PostAPI from "../../apis/APIPost/PostAPI";
+import CommentPost from "./CommentPost";
 export default {
   name: "FooterPost",
+  components: { CommentPost },
+  data() {
+    return {
+      commentList: [],
+      commentCount: 0,
+    };
+  },
+  created() {
+    this.handleGetComment();
+  },
+  methods: {
+    async handleGetComment() {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("id");
+      const refreshToken = localStorage.getItem("refreshToken");
+      const data = await PostAPI.commentOfPost(this.$route.params.id, userId);
+      this.commentList = data.data.listComment;
+      this.commentCount = data.data.commentCount;
+      this.isClicked = true;
+    },
+    async commentRequest() {
+      this.isClicked = false;
+      const token = localStorage.getItem("token");
+      const commentLesson = {
+        UserId: localStorage.getItem("id"),
+        LessonId: this.$route.params.id,
+        CourseId: this.$route.params.idCourse,
+        CommentContent: this.comment,
+      };
+      const data = await PostAPI.commentLesson(commentLesson, token);
+      this.comment = "";
+      this.handleGetComment();
+    },
+    resetClicked() {
+      this.isClicked = false;
+    },
+  },
 };
 </script>
 

@@ -1,6 +1,7 @@
 ﻿using dj_webdesigncore.Business.Post;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Post;
+using dj_webdesigncore.DTOs.Study;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.PostEntity;
 using dj_webdesigncore.Entities.UserEntity;
@@ -102,6 +103,239 @@ namespace dj_actionlayer.Business.PostBusiness
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> userCmtPost(int userId, int postId, string content)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            if (!await _context.user.AnyAsync(x => x.Id == userId))
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Post post = await _context.post.FindAsync(postId);
+            if (post == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            CommentPost comment = new CommentPost();
+            comment.PostId = postId;
+            comment.UserId = userId;
+            comment.Comment = content;
+            comment.CreateDateTime = DateTime.Now;
+            comment.LikeCount = 0;
+            comment.IsDeleted= false;
+            await _context.AddAsync(comment);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+        public async Task<ResponData<ActionStatus>> userSubCmtPost(int userId, string content,int cmtId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User user = await _context.user.FindAsync(userId);
+            if (user==null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            CommentPost cmt = await _context.comment_post.FindAsync(cmtId);
+            if (cmt == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            CommentPost comment = new CommentPost();
+            comment.PostId = cmt.PostId;
+            comment.UserId = userId;
+            comment.Comment = content;
+            comment.CreateDateTime = DateTime.Now;
+            comment.LikeCount = 0;
+            comment.CommentPostParentId= cmt.Id;
+            comment.IsDeleted = false;
+            Notification notification = new Notification();
+            notification.SystemNotification = false;
+            notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã trả lời bình luận của bạn!";
+            notification.UserId = (int)cmt.UserId;
+            notification.Create = DateTime.Now;
+            notification.IsSeen = false;
+            notification.UserSendId = user.Id;
+            notification.Link = null;
+            await _context.AddAsync(notification);
+            await _context.AddAsync(comment);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> userLikePost(int userId, int postId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            if (!await _context.user.AnyAsync(x => x.Id == userId))
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Post post = await _context.post.FindAsync(postId);
+            if (post == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            UserLikePost userLikePost;
+            if (await _context.user_like_post.AnyAsync(x => x.UserId == userId && x.PostId == postId))
+            {
+                userLikePost = await _context.user_like_post.Where(x => x.UserId == userId && x.PostId == postId).FirstOrDefaultAsync();
+                post.LikeCount--;
+                _context.Remove(userLikePost);
+                await _context.SaveChangesAsync();
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            else
+            {
+                userLikePost = new UserLikePost();
+                post.LikeCount++;
+                userLikePost.UserId = userId;
+                userLikePost.PostId = postId;
+                userLikePost.IsDeleted = false;
+                userLikePost.LikeDateTime = DateTime.Now;
+                await _context.AddAsync(userLikePost);
+                await _context.SaveChangesAsync();
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+        }
+
+        public async Task<ResponData<CommentDTO>> CommentOfPost(int postId, int userId)
+        {
+            ResponData<CommentDTO> result = new ResponData<CommentDTO>();
+            if (postId == null)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại không nhận được lessonId!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
+                return result;
+            }
+            try
+            {
+                CommentDTO commentDTO = new CommentDTO();
+                int commentCout = 0;
+                var listCommentOfPost = _context.comment_post.Where(x => x.PostId == postId && x.CommentPostParentId == null).OrderByDescending(x => x.CreateDateTime).ToList();
+                List<CommentDetailDTO> listCommentDetail = new List<CommentDetailDTO>();
+                foreach (var comment in listCommentOfPost)
+                {
+                    commentCout++;
+                    CommentDetailDTO commentDetail = new CommentDetailDTO();
+                    commentDetail.CommentId = comment.Id;
+                    if (_context.user_like_comment_post.Any(x => x.CommentPostId == comment.Id && x.UserId == userId))
+                    {
+                        commentDetail.IsLike = true;
+                    }
+                    else
+                    {
+                        commentDetail.IsLike = false;
+                    }
+                    int dateDiff = (DateTime.Now - comment.CreateDateTime).Days;
+                    if (dateDiff == 0)
+                    {
+                        int hourDiff = (DateTime.Now - comment.CreateDateTime).Hours;
+                        if (hourDiff == 0)
+                        {
+                            commentDetail.CommentDate = (DateTime.Now - comment.CreateDateTime).Minutes.ToString() + " phút trước";
+                        }
+                        else
+                        {
+                            commentDetail.CommentDate = hourDiff.ToString() + " giờ trước";
+                        }
+                    }
+                    else
+                    {
+                        commentDetail.CommentDate = dateDiff.ToString() + " ngày trước";
+                    }
+                    commentDetail.Comment = comment.Comment;
+                    User user = await _context.user.FindAsync(comment.UserId);
+                    commentDetail.UserName = user.UserFisrtName + " " + user.UserLastName;
+                    commentDetail.LikeCount = (int)comment.LikeCount;
+                    commentDetail.UserId = (int)comment.UserId;
+                    commentDetail.IsKYC = (bool)user.IsKYC;
+                    commentDetail.UserAvatar = _context.user.Find(comment.UserId).UserAvatarData40x40;
+                    List<SubComment> subComments = new List<SubComment>();
+                    var listSubComment = _context.comment_post.Where(x => x.CommentPostParentId == comment.Id).OrderBy(x => x.CreateDateTime).ToList();
+                    foreach (var subComment in listSubComment)
+                    {
+                        SubComment sub = new SubComment();
+                        sub.CommentId = subComment.Id;
+                        if (_context.user_like_comment_post.Any(x => x.CommentPostId == subComment.Id && x.UserId == userId))
+                        {
+                            sub.IsLike = true;
+                        }
+                        else
+                        {
+                            sub.IsLike = false;
+                        }
+                        int dateDiffSub = (DateTime.Now - subComment.CreateDateTime).Days;
+                        if (dateDiffSub == 0)
+                        {
+                            int hourDiffSub = (DateTime.Now - subComment.CreateDateTime).Hours;
+                            if (hourDiffSub == 0)
+                            {
+                                sub.CommentDate = (DateTime.Now - subComment.CreateDateTime).Minutes.ToString() + " phút trước";
+                            }
+                            else
+                            {
+                                sub.CommentDate = hourDiffSub.ToString() + " giờ trước";
+                            }
+                        }
+                        else
+                        {
+                            sub.CommentDate = dateDiffSub.ToString() + " ngày trước";
+                        }
+                        sub.Comment = subComment.Comment;
+                        User subUser = await _context.user.FindAsync(subComment.UserId);
+                        sub.UserName = subUser.UserFisrtName + " " + subUser.UserLastName;
+                        sub.LikeCount = (int)subComment.LikeCount;
+                        sub.UserId = (int)subComment.UserId;
+                        sub.IsKYC = (bool)subUser.IsKYC;
+                        sub.UserAvatar = _context.user.Find(subComment.UserId).UserAvatarData40x40;
+                        subComments.Add(sub);
+                    }
+                    commentDetail.SubComment = subComments;
+                    listCommentDetail.Add(commentDetail);
+                }
+                commentDTO.CommentCount = commentCout;
+                commentDTO.ListComment = listCommentDetail;
+                result.Data = commentDTO;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                return result;
+            }
         }
     }
 }

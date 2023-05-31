@@ -323,5 +323,69 @@ class UserAPI {
         });
     });
   }
+  userLikePost(userId: number, postId: number, token: string): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/user/userlikepost?userId=${userId}&postId=${postId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  userCmtPost(
+    userId: number,
+    postId: number,
+    content: string,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/user/usercmtpost?userId=${userId}&postId=${postId}&content=${content}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
+  userSubCmtPost(
+    userId: number,
+    content: string,
+    cmtId: number,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/user/usersubcmtpost?userId=${userId}&content=${content}&cmtId=${cmtId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new UserAPI();

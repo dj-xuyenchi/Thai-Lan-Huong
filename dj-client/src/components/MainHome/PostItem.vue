@@ -7,7 +7,7 @@
         v-bind="props"
         variant="none"
         width="380px"
-        height="220px"
+        height="240px"
       >
         <img :src="`data:image/png;base64,` + postImg" alt="" />
         <v-overlay
@@ -61,7 +61,6 @@
 export default {
   name: "CourseItem",
   data: () => ({
-    // v-card--variant-elevated
     titleFix: "",
     overlay: false,
   }),
@@ -89,7 +88,7 @@ export default {
 .post-item {
   margin-top: 14px;
   width: 380px;
-  height: 220px;
+  height: 240px;
   margin-bottom: 36px;
   padding: 0 14px 0 14px;
   margin-left: 1%;
@@ -98,7 +97,7 @@ export default {
 
 .post-item img {
   width: 380px;
-  height: 220px;
+  height: 240px;
 }
 .post-item .post-detail {
   width: 100%;

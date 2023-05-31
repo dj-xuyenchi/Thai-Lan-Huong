@@ -1,9 +1,11 @@
 <template>
   <div class="mostviewpost-container">
-    <router-link
-      :to="`/home/post/` + item.id + `/` + titleFix"
+    <a
+      :href="
+        `https://dj-xuyenchi.edu.vn/#/home/post/` + item.id + `/` + titleFix
+      "
       style="text-decoration: none; color: black"
-      @click="setId(item.id)"
+      target="_blank"
     >
       <div style="width: 120px; float: left">
         <img
@@ -32,7 +34,7 @@
           }}</span></span
         >
       </div>
-    </router-link>
+    </a>
   </div>
 </template>
 <script>
@@ -45,7 +47,6 @@ export default {
   },
   props: {
     item: Object,
-    setId: Function,
   },
   created() {
     if (this.item.title.length > 45) {

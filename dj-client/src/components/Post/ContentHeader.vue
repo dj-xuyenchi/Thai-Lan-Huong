@@ -28,7 +28,7 @@
         variant="text"
         :class="fav ? 'text-red' : ''"
         icon="mdi-heart"
-        @click="fav = !fav"
+        @click="userLikePost()"
       >
       </v-btn>
       <span>{{ post.likeCount }}</span>
@@ -39,16 +39,42 @@
 </template>
 
 <script>
+import UserAPI from "../../apis/APIUser/UserAPI.ts";
 export default {
   name: "ContentHeader",
   data: () => ({
-    fav: true,
+    fav: false,
     menu: false,
     message: false,
     hints: true,
   }),
+  methods: {
+    async userLikePost() {
+      if (!localStorage.getItem("id")) {
+        this.$router.push({ path: "/login" });
+        return;
+      }
+      const data = await UserAPI.userLikePost(
+        localStorage.getItem("id"),
+        this.$route.params.id,
+        localStorage.getItem("token")
+      );
+      if (data.data == 1) {
+        this.fav = true;
+        this.getPostDetail();
+      }
+    },
+  },
   props: {
     post: Object,
+    getPostDetail: Function,
+  },
+  created() {
+    if (this.post.isLiked) {
+      this.fav = true;
+    } else {
+      this.fav = false;
+    }
   },
 };
 </script>
