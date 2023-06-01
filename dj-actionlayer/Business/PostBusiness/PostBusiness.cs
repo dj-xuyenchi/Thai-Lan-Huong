@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -447,6 +448,46 @@ namespace dj_actionlayer.Business.PostBusiness
                 await _context.SaveChangesAsync();
             }
             result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<PostMain>> getPostMain()
+        {
+            ResponData<PostMain> result = new ResponData<PostMain>();
+            PostMain data = new PostMain();
+            Post hot = await _context.post.OrderByDescending(x => x.LikeCount).FirstOrDefaultAsync();
+            if (hot == null)
+            {
+                result.Data = null;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            PostItem hotItem = new PostItem();
+            hotItem.Id = hot.Id;
+            User createrHot = await _context.user.FindAsync(hot.UserCreateId);
+            hotItem.CreaterImg = createrHot.UserAvatarData40x40;
+            hotItem.CreaterFullName = createrHot.UserFisrtName + " " + createrHot.UserLastName;
+            hotItem.Title = hot.PostTitle;
+            hotItem.Img = hot.PostAvatar;
+            data.HotPost = hotItem;
+            var listPost = _context.post.Where(x => x.Id != hot.Id).OrderByDescending(x => x.CreatePost).ToList();
+            List<PostItem> list = new List<PostItem>();
+            foreach (var item in listPost)
+            {
+                PostItem itemCreate = new PostItem();
+                itemCreate.Id = item.Id;
+                User user = await _context.user.FindAsync(hot.UserCreateId);
+                itemCreate.CreaterImg = user.UserAvatarData40x40;
+                itemCreate.CreaterFullName = user.UserFisrtName + " " + user.UserLastName;
+                itemCreate.Title = item.PostTitle;
+                itemCreate.Img = item.PostAvatar;
+                list.Add(itemCreate);
+            }
+            data.PostCreateOrderBy= list;
+            result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;

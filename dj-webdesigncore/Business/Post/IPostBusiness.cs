@@ -20,5 +20,6 @@ namespace dj_webdesigncore.Business.Post
         Task<ResponData<ActionStatus>> userSubCmtPost(int userId, string content, int cmtId);
         Task<ResponData<CommentDTO>> CommentOfPost(int postId, int userId);
         Task<ResponData<MyPostDTO>> myPost(int userId);
+        Task<ResponData<PostMain>> getPostMain();
     }
 }
