@@ -165,6 +165,15 @@ namespace dj_actionlayer.Business.PostBusiness
             comment.LikeCount = 0;
             comment.CommentPostParentId = cmt.Id;
             comment.IsDeleted = false;
+            if (cmt.UserId == userId)
+            {
+                await _context.AddAsync(comment);
+                await _context.SaveChangesAsync();
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
             Notification notification = new Notification();
             notification.SystemNotification = false;
             notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã trả lời bình luận của bạn!";
