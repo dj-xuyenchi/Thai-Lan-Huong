@@ -1,35 +1,34 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj": {}
+    "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-actionlayer/dj-actionlayer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj": {
+    "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-actionlayer/dj-actionlayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
+        "projectUniqueName": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-actionlayer/dj-actionlayer.csproj",
         "projectName": "dj-actionlayer",
-        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\obj\\",
+        "projectPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-actionlayer/dj-actionlayer.csproj",
+        "packagesPath": "/Users/quanganhdo/.nuget/packages/",
+        "outputPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-actionlayer/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/quanganhdo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj"
+              "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj": {
+                "projectPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj"
               }
             }
           }
@@ -89,28 +88,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj": {
+    "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
+        "projectUniqueName": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj",
         "projectName": "dj-webdesigncore",
-        "projectPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\obj\\",
+        "projectPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj",
+        "packagesPath": "/Users/quanganhdo/.nuget/packages/",
+        "outputPath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/quanganhdo/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -150,7 +148,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
         }
       }
     }

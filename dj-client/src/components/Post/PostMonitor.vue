@@ -107,7 +107,11 @@ export default {
       );
       this.post = data.data;
       const md = new MarkdownIt();
-      const htmlContent = md.render(this.post.content);
+      var htmlContent = md.render(this.post.content);
+      htmlContent = htmlContent.replaceAll(
+        "<img ",
+        "<img style=max-width:100% "
+      );
       this.renderedHTML = htmlContent;
       this.setIsLoadedData(false);
     },

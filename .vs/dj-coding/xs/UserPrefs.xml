@@ -1,20 +1,16 @@
 ﻿<Properties StartupConfiguration="{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}|Default">
-  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.dj-actionlayer PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="dj-webdesigncore/Entities/UserEntity/User.cs">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="dj-actionlayer/DAO/Settings.cs">
     <Files>
       <File FileName="dj-endpoint/Program.cs" />
       <File FileName="dj-endpoint/Controllers/AuthApis/AuthApis.cs" />
       <File FileName="dj-endpoint/Controllers/HomeAPIs/HomeAPIs.cs" />
       <File FileName="dj-webdesigncore/AuthModel/TokenModel.cs" />
       <File FileName="dj-webdesigncore/AuthModel/LoginResponse.cs" />
-      <File FileName="dj-actionlayer/DAO/AppContext.cs" />
+      <File FileName="dj-actionlayer/DAO/AppContext.cs" Line="89" Column="41" />
       <File FileName="dj-webdesigncore/Entities/UserEntity/RefreshToken.cs" />
       <File FileName="dj-actionlayer/Business/Study/StudyBusiness.cs" />
       <File FileName="dj-webdesigncore/Business/Study/IStudyBusiness.cs" />
@@ -38,13 +34,13 @@
       <File FileName="../../../../../usr/local/share/dotnet/sdk/7.0.203/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets" />
       <File FileName="dj-webdesigncore/Request/Lesson/CommentLessonRequest.cs" />
       <File FileName="dj-webdesigncore/Entities/BusinessEntity/CommentLesson.cs" />
-      <File FileName="dj-actionlayer/DAO/Settings.cs" />
+      <File FileName="dj-actionlayer/DAO/Settings.cs" Line="9" Column="18" />
       <File FileName="dj-actionlayer/Business/Compilerrrrrr/ResultCode.cs" />
       <File FileName="dj-actionlayer/Business/Email/SendEmail.cs" />
       <File FileName="dj-webdesigncore/Business/Admin/IAdminBusiness.cs" />
       <File FileName="dj-webdesigncore/DTOs/Admin/AddLessonDTO.cs" />
       <File FileName="dj-webdesigncore/Request/Lesson/TheoryLessonRequest.cs" />
-      <File FileName="dj-actionlayer/Business/Admin/AdminBusiness.cs" Line="59" Column="10" />
+      <File FileName="dj-actionlayer/Business/Admin/AdminBusiness.cs" />
       <File FileName="dj-endpoint/Controllers/Admin/AdminApis.cs" />
       <File FileName="dj-webdesigncore/Request/Lesson/QuestionLessonRequest.cs" />
       <File FileName="dj-webdesigncore/DTOs/Admin/LessonDetailDTO.cs" />
@@ -85,7 +81,9 @@
                 <Node name="Study" expanded="True" />
                 <Node name="UserBusiness" expanded="True" />
               </Node>
-              <Node name="DAO" expanded="True" />
+              <Node name="DAO" expanded="True">
+                <Node name="Settings.cs" selected="True" />
+              </Node>
               <Node name="Migrations" expanded="True" />
             </Node>
             <Node name="dj-endpoint" expanded="True">
@@ -102,9 +100,7 @@
             </Node>
             <Node name="dj-webdesigncore" expanded="True">
               <Node name="Entities" expanded="True">
-                <Node name="UserEntity" expanded="True">
-                  <Node name="User.cs" selected="True" />
-                </Node>
+                <Node name="UserEntity" expanded="True" />
               </Node>
             </Node>
           </Node>
@@ -112,4 +108,8 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

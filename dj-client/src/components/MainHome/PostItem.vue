@@ -75,8 +75,8 @@ export default {
     id: Number,
   },
   mounted() {
-    if (this.postTitle.length > 45) {
-      this.titleFix = this.postTitle.substring(0, 42) + "...";
+    if (this.postTitle.length > 40) {
+      this.titleFix = this.postTitle.substring(0, 40) + "...";
     } else {
       this.titleFix = this.postTitle;
     }
