@@ -39,6 +39,7 @@
       "
       >Danh sách khóa học
     </span>
+    <span class="showAll" @click="redirect()">Xem tất cả </span>
     <v-badge
       color="info"
       content="Free"
@@ -72,6 +73,9 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
+    redirect() {
+      this.$router.push({ path: "/home/courselist" });
+    },
   },
   props: {
     courseList: [],
@@ -91,6 +95,20 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+.showAll {
+  color: red;
+  font-size: 14px;
+  font-weight: 900;
+  padding-left: 14px;
+  float: right;
+  font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.showAll:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #eb5353;
 }
 @media screen and (max-width: 739px) {
   .course-item {

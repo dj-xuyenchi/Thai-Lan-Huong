@@ -16,7 +16,7 @@
         @click="setActiveMenu(2)"
       />
     </router-link>
-    <router-link to="/home" style="text-decoration: none">
+    <router-link to="/home/post" style="text-decoration: none">
       <BtnNav
         icon="fa-regular fa-calendar-plus"
         title="Bài viết"

@@ -141,5 +141,15 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _post.userSubCmtPost(userId, content, cmtId));
         }
+        [HttpGet("mypost")]
+        public async Task<IActionResult> getMyPost(int userId)
+        {
+            return Ok(await _post.myPost(userId));
+        }
+        [HttpGet("likecmtpost")]
+        public async Task<IActionResult> likeCmtPost(int userId, int cmtId)
+        {
+            return Ok(await _post.userLikeCmtPost(userId, cmtId));
+        }
     }
 }

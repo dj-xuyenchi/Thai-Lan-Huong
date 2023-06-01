@@ -39,7 +39,11 @@
         >
       </div>
       <div class="author-info">
-        <img :src="`data:image/png;base64,` + authorAvatar" alt="" />
+        <img
+          :src="`data:image/png;base64,` + authorAvatar"
+          alt=""
+          v-if="authorAvatar != ` `"
+        />
         <span>{{ postAuthor }}</span>
         <img
           v-if="isKYC"

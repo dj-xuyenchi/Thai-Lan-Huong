@@ -11,6 +11,7 @@
       "
       >Bài viết nổi bật
     </span>
+    <span class="showAll" @click="redirect()">Xem tất cả </span>
     <div class="course-list">
       <PostItem
         v-for="(item, index) in postList"
@@ -38,6 +39,11 @@ export default {
   props: {
     postList: [],
   },
+  methods: {
+    redirect() {
+      this.$router.push({ path: "/home/post" });
+    },
+  },
 };
 </script>
 
@@ -52,7 +58,20 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 }
-
+.showAll {
+  color: red;
+  font-size: 14px;
+  font-weight: 900;
+  padding-left: 14px;
+  float: right;
+  font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.showAll:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #eb5353;
+}
 @media screen and (max-width: 739px) {
   .post-item {
     width: 100% !important;

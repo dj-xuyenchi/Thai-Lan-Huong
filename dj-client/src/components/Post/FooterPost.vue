@@ -5,6 +5,8 @@
       placeholder="Ý kiến của bạn."
       variant="underlined"
       density="compact"
+      v-model="content"
+      @keydown.enter="commentRequest()"
       style="height: 40px; width: 100%; margin-bottom: 40px"
     >
       <font-awesome-icon
@@ -12,7 +14,7 @@
         color="black"
         class="comment-enter"
         style="font-size: 20px; margin-right: 4px; position: absolute; right: 0"
-        @click="subcommentResquest()"
+        @click="commentRequest()"
     /></v-text-field>
     <CommentPost
       v-for="(item, i) in commentList"
@@ -22,6 +24,14 @@
       :reLoadComment="handleGetComment"
       :resetClicked="resetClicked"
     />
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+      <template v-slot:actions>
+        <v-btn color="green" variant="text" @click="snackbar = false">
+          Đóng
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -34,6 +44,9 @@ export default {
     return {
       commentList: [],
       commentCount: 0,
+      content: "",
+      snackbar: false,
+      text: "",
     };
   },
   created() {
@@ -47,23 +60,22 @@ export default {
       const data = await PostAPI.commentOfPost(this.$route.params.id, userId);
       this.commentList = data.data.listComment;
       this.commentCount = data.data.commentCount;
-      this.isClicked = true;
     },
     async commentRequest() {
-      this.isClicked = false;
+      if (!localStorage.getItem("id")) {
+        this.text = "Bạn chưa đăng nhập!";
+        this.snackbar = true;
+        return;
+      }
       const token = localStorage.getItem("token");
-      const commentLesson = {
-        UserId: localStorage.getItem("id"),
-        LessonId: this.$route.params.id,
-        CourseId: this.$route.params.idCourse,
-        CommentContent: this.comment,
-      };
-      const data = await PostAPI.commentLesson(commentLesson, token);
-      this.comment = "";
+      const data = await PostAPI.commmentPost(
+        this.$route.params.id,
+        localStorage.getItem("id"),
+        this.content,
+        token
+      );
+      this.content = "";
       this.handleGetComment();
-    },
-    resetClicked() {
-      this.isClicked = false;
     },
   },
 };

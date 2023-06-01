@@ -12,5 +12,7 @@ namespace dj_webdesigncore.DTOs.Post
         public byte[] PostImg { get; set; }
         public string Title { get; set; }
         public int CmtCount { get; set; }
+        public int LikeCount { get; set; }
+        public int Status { get; set; }
     }
 }

@@ -113,7 +113,7 @@ export default {
       if (result.data == 1) {
         this.text = "Tạo bài viết thành công vui lòng chờ kiểm duyệt!";
         this.dialog = false;
-        this.$router.push({ path: `/home/lobby` });
+        this.$router.push({ path: `/home/my-post` });
       }
       if (result.data == 4) {
         this.text = "Tạo bài viết thất bại!";

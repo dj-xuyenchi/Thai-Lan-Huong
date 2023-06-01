@@ -32,6 +32,8 @@ import ChangePassUser from "@/components/User/ChangePassUser.vue";
 import UserProfile from "@/components/User/UserProfile.vue";
 import UserCreatePost from "@/components/User/UserCreatePost.vue";
 import PostPreview from "@/components/User/PostPreview.vue";
+import MyPost from "@/components/User/MyPost.vue";
+import PostMain from "@/components/Post/PostMain.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -114,6 +116,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "review",
         component: PostPreview,
+      },
+      {
+        path: "my-post",
+        component: MyPost,
+      },
+      {
+        path: "post",
+        component: PostMain,
       },
     ],
   },

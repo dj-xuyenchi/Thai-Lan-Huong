@@ -226,7 +226,7 @@
             color="primary"
             variant="underlined"
             placeholder="Ý kiến của bạn."
-            v-model="comment"
+            v-model="content"
             @keydown.enter="subcommentResquest()"
           >
             <font-awesome-icon
@@ -248,6 +248,7 @@
 </template>
 
 <script>
+import PostAPI from "../../apis/APIPost/PostAPI";
 import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 export default {
   name: "CommentPost",
@@ -261,7 +262,7 @@ export default {
         commentContent: "Hí hí hí",
       },
     ],
-    comment: "",
+    content: "",
     commentRespon: false,
     avatar: "",
   }),
@@ -270,28 +271,32 @@ export default {
       this.commentRespon = !this.commentRespon;
     },
     async subcommentResquest() {
+      if (!localStorage.getItem("id")) {
+        this.text = "Bạn chưa đăng nhập!";
+        this.snackbar = true;
+        return;
+      }
       const token = localStorage.getItem("token");
-      const commentLesson = {
-        UserId: localStorage.getItem("id"),
-        LessonId: this.$route.params.id,
-        CourseId: this.$route.params.idCourse,
-        CommentContent: this.comment,
-        CommentParentId: this.commentId,
-      };
-      const data = await StudyAPI.subCommentLesson(commentLesson, token);
-      this.comment = "";
-      this.resetClicked();
+      const data = await PostAPI.commmentSubPost(
+        this.commentId,
+        localStorage.getItem("id"),
+        this.content,
+        token
+      );
+      this.content = "";
       this.reLoadComment();
     },
     async likeComment(commentId) {
-      const token = localStorage.getItem("token");
-      const userId = localStorage.getItem("id");
-      const likeComment = {
-        UserId: userId,
-        CommentId: commentId,
-      };
-      const data = await StudyAPI.likeComment(likeComment, token);
-      this.resetClicked();
+      if (!localStorage.getItem("id")) {
+        this.text = "Bạn chưa đăng nhập!";
+        this.snackbar = true;
+        return;
+      }
+      const data = await PostAPI.likeComment(
+        localStorage.getItem("id"),
+        commentId,
+        localStorage.getItem("token")
+      );
       this.reLoadComment();
     },
   },

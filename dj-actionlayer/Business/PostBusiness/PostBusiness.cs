@@ -6,6 +6,7 @@ using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.PostEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
+using dj_webdesigncore.Request.Lesson;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -87,7 +88,7 @@ namespace dj_actionlayer.Business.PostBusiness
             data.CreatePostTime = createTime;
             data.CreaterFullName = creater.UserFisrtName + " " + creater.UserLastName;
 
-            var listSuggest = _context.post.Where(x => x.Id != postId && x.PostStatusId == 1).OrderBy(x => x.CreatePost).Take(5).ToList();
+            var listSuggest = _context.post.Where(x => x.Id != postId && x.PostStatusId == 1).OrderByDescending(x => x.CreatePost).Take(5).ToList();
             List<SuggestPostDTO> suggestPostDTOs = new List<SuggestPostDTO>();
             foreach (var item in listSuggest)
             {
@@ -129,7 +130,7 @@ namespace dj_actionlayer.Business.PostBusiness
             comment.Comment = content;
             comment.CreateDateTime = DateTime.Now;
             comment.LikeCount = 0;
-            comment.IsDeleted= false;
+            comment.IsDeleted = false;
             await _context.AddAsync(comment);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -137,11 +138,11 @@ namespace dj_actionlayer.Business.PostBusiness
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
         }
-        public async Task<ResponData<ActionStatus>> userSubCmtPost(int userId, string content,int cmtId)
+        public async Task<ResponData<ActionStatus>> userSubCmtPost(int userId, string content, int cmtId)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
             User user = await _context.user.FindAsync(userId);
-            if (user==null)
+            if (user == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -162,7 +163,7 @@ namespace dj_actionlayer.Business.PostBusiness
             comment.Comment = content;
             comment.CreateDateTime = DateTime.Now;
             comment.LikeCount = 0;
-            comment.CommentPostParentId= cmt.Id;
+            comment.CommentPostParentId = cmt.Id;
             comment.IsDeleted = false;
             Notification notification = new Notification();
             notification.SystemNotification = false;
@@ -336,6 +337,110 @@ namespace dj_actionlayer.Business.PostBusiness
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
                 return result;
             }
+        }
+
+        public async Task<ResponData<MyPostDTO>> myPost(int userId)
+        {
+            ResponData<MyPostDTO> result = new ResponData<MyPostDTO>();
+            if (!await _context.user.AnyAsync(x => x.Id == userId))
+            {
+                result.Data = null;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                return result;
+            }
+            MyPostDTO data = new MyPostDTO();
+            var listPost = _context.post.Where(x => x.UserCreateId == userId).ToList();
+            List<SuggestPostDTO> waitPost = new List<SuggestPostDTO>();
+            List<SuggestPostDTO> activePost = new List<SuggestPostDTO>();
+            List<SuggestPostDTO> unActivePost = new List<SuggestPostDTO>();
+            foreach (var item in listPost)
+            {
+                SuggestPostDTO post = new SuggestPostDTO();
+                post.Id = item.Id;
+                post.PostImg = item.PostAvatar;
+                post.Title = item.PostTitle;
+                post.CmtCount = item.CommentCount;
+                post.LikeCount = item.LikeCount;
+                post.Status = (int)item.PostStatusId;
+                switch (item.PostStatusId)
+                {
+                    case 1:
+                        activePost.Add(post);
+                        break;
+                    case 2:
+                        unActivePost.Add(post);
+                        break;
+                    case 6:
+                    case 5:
+                        waitPost.Add(post);
+                        break;
+                }
+            }
+            data.ActivePost = activePost;
+            data.UnactivePost= unActivePost;
+            data.WaitPost = waitPost;
+            result.Data = data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> userLikeCmtPost(int userId, int cmtId)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+           
+            User user =await _context.user.FindAsync(userId);
+            if (user == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            CommentPost comment =await _context.comment_post.FindAsync(cmtId);
+            if (comment == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+
+            UserLikeCommentPost userLikeCommentPost =await _context.user_like_comment_post.Where(x => x.UserId == userId && x.CommentPostId == cmtId).FirstOrDefaultAsync();
+            if (userLikeCommentPost != null)
+            {
+                _context.Remove(userLikeCommentPost);
+                comment.LikeCount -= 1;
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                if (comment.UserId != user.Id)
+                {
+                    User user2 = await _context.user.FindAsync(comment.UserId);
+                    Notification notification = new Notification();
+                    notification.SystemNotification = false;
+                    notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã thích bình luận của bạn!";
+                    notification.UserId = user2.Id;
+                    notification.Create = DateTime.Now;
+                    notification.IsSeen = false;
+                    notification.Link = null;
+                    notification.UserSendId = user.Id;
+                    await _context.AddAsync(notification);
+                }
+                UserLikeCommentPost newLike = new UserLikeCommentPost();
+                newLike.CommentPostId = comment.Id;
+                newLike.UserId = userId;
+                newLike.CreateDateTime = DateTime.Now;
+                comment.LikeCount++;
+                await _context.AddAsync(newLike);
+                await _context.SaveChangesAsync();
+            }
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
         }
     }
 }

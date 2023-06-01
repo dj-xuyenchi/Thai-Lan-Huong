@@ -143,7 +143,7 @@ export default {
           text: "Bài đăng",
           icon: "mdi-bookshelf",
           event: () => {
-            this.$router.push({ path: "/user/1" });
+            this.$router.push({ path: "/home/my-post" });
           },
         },
         {
