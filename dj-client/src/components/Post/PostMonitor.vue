@@ -113,20 +113,23 @@ export default {
         "<img style=max-width:100% "
       );
       this.renderedHTML = htmlContent;
-      SeoTool(
-        this.post.title,
-        this.post.des,
-        this.post.imgLink,
-        "https://dj-xuyenchi.edu.vn/#/home/post/" +
-          this.post.id +
-          "/" +
-          this.post.title
-      );
+
       this.setIsLoadedData(false);
     },
   },
   created() {
     this.getPostDetail();
+  },
+  mounted() {
+    SeoTool(
+      this.post.title,
+      this.post.des,
+      this.post.imgLink,
+      "https://dj-xuyenchi.edu.vn/#/home/post/" +
+        this.post.id +
+        "/" +
+        this.post.title
+    );
   },
 };
 </script>

@@ -54,6 +54,7 @@ namespace dj_actionlayer.Business.PostBusiness
                     }
                 }
             }
+            data.Id = post.Id;
             data.Title = post.PostTitle;
             data.Des = post.PostDescription;
             data.ImgLink = post.PostImgLinkMeta;
