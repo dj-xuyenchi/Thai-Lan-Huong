@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
-
 using AppContext = dj_actionlayer.DAO.AppContext;
+
 #nullable disable
 
 namespace dj_actionlayer.Migrations
@@ -1312,6 +1312,12 @@ namespace dj_actionlayer.Migrations
 
                     b.Property<string>("PostData")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostImgLinkMeta")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("PostMiniAvatar")

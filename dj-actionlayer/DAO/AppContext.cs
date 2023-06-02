@@ -89,8 +89,8 @@ namespace dj_actionlayer.DAO
         public DbSet<HomeContent> home_content { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-       //   optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-      //   optionsBuilder.UseSqlServer(Settings.DBConnect());
+         // optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+      //  optionsBuilder.UseSqlServer(Settings.DBConnect());
        optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
     }

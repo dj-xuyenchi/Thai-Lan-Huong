@@ -34,6 +34,24 @@
       :rules="[rules.validValue]"
       style="margin-top: 40px"
     ></v-text-field>
+    <v-text-field
+      label="Mô tả bài viết"
+      hint="SEO meta"
+      required
+      variant="outlined"
+      v-model="des"
+      :rules="[rules.validValue]"
+      style="margin-top: 40px"
+    ></v-text-field>
+    <v-text-field
+      label="Link anh đại diện bài viết"
+      hint="SEO meta"
+      required
+      variant="outlined"
+      v-model="imgLink"
+      :rules="[rules.validValue]"
+      style="margin-top: 40px"
+    ></v-text-field>
 
     <div style="white-space: pre-line" v-html="renderedHTML"></div>
     <v-btn
@@ -86,6 +104,8 @@ export default {
       dataImage: "",
       text: "",
       title: "",
+      des: "",
+      imgLink: "",
       btnLoading: false,
       snackbar: false,
       rules: {
@@ -98,7 +118,12 @@ export default {
     ...mapMutations(["setIsLoadedData"]),
     async createPost() {
       this.btnLoading = true;
-      if (this.title.trim().length == 0 || this.selectFile === null) {
+      if (
+        this.title.trim().length == 0 ||
+        this.des.trim().length == 0 ||
+        this.imgLink.trim().length == 0 ||
+        this.selectFile === null
+      ) {
         this.text = "Không được để trông thông tin!";
         this.snackbar = true;
         this.btnLoading = false;
@@ -107,7 +132,14 @@ export default {
       const token = localStorage.getItem("token");
       const formData = new FormData();
       formData.append("img", this.selectFile ? this.selectFile[0] : null);
-      formData.append("title", this.title);
+      formData.append(
+        "data",
+        JSON.stringify({
+          title: this.title,
+          des: this.des,
+          imgLink: this.imgLink,
+        })
+      );
       formData.append("userId", localStorage.getItem("id"));
       const result = await UserAPI.confirmPost(formData, token);
       if (result.data == 1) {

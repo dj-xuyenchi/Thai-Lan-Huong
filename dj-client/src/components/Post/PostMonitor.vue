@@ -85,7 +85,7 @@ import FooterPost from "./FooterPost.vue";
 import MostViewPost from "./MostViewPost.vue";
 import { mapMutations } from "vuex";
 import PostAPI from "../../apis/APIPost/PostAPI";
-
+import { SeoTool } from "../../plugins/seometa.ts";
 import MarkdownIt from "markdown-it";
 export default {
   name: "PostMonitor",
@@ -113,6 +113,15 @@ export default {
         "<img style=max-width:100% "
       );
       this.renderedHTML = htmlContent;
+      SeoTool(
+        this.post.title,
+        this.post.des,
+        this.post.imgLink,
+        "https://dj-xuyenchi.edu.vn/#/home/post/" +
+          this.post.id +
+          "/" +
+          this.post.title
+      );
       this.setIsLoadedData(false);
     },
   },
