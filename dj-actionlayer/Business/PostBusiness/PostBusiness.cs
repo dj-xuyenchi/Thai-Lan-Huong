@@ -388,7 +388,7 @@ namespace dj_actionlayer.Business.PostBusiness
                 }
             }
             data.ActivePost = activePost;
-            data.UnactivePost= unActivePost;
+            data.UnactivePost = unActivePost;
             data.WaitPost = waitPost;
             result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -399,8 +399,8 @@ namespace dj_actionlayer.Business.PostBusiness
         public async Task<ResponData<ActionStatus>> userLikeCmtPost(int userId, int cmtId)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-           
-            User user =await _context.user.FindAsync(userId);
+
+            User user = await _context.user.FindAsync(userId);
             if (user == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
@@ -408,7 +408,7 @@ namespace dj_actionlayer.Business.PostBusiness
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
-            CommentPost comment =await _context.comment_post.FindAsync(cmtId);
+            CommentPost comment = await _context.comment_post.FindAsync(cmtId);
             if (comment == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
@@ -417,7 +417,7 @@ namespace dj_actionlayer.Business.PostBusiness
                 return result;
             }
 
-            UserLikeCommentPost userLikeCommentPost =await _context.user_like_comment_post.Where(x => x.UserId == userId && x.CommentPostId == cmtId).FirstOrDefaultAsync();
+            UserLikeCommentPost userLikeCommentPost = await _context.user_like_comment_post.Where(x => x.UserId == userId && x.CommentPostId == cmtId).FirstOrDefaultAsync();
             if (userLikeCommentPost != null)
             {
                 _context.Remove(userLikeCommentPost);
@@ -473,7 +473,7 @@ namespace dj_actionlayer.Business.PostBusiness
             hotItem.Title = hot.PostTitle;
             hotItem.Img = hot.PostAvatar;
             data.HotPost = hotItem;
-            var listPost = _context.post.Where(x => x.Id != hot.Id).OrderByDescending(x => x.CreatePost).ToList();
+            var listPost = _context.post.Where(x => x.Id != hot.Id && x.PostStatusId == 1).OrderByDescending(x => x.CreatePost).ToList();
             List<PostItem> list = new List<PostItem>();
             foreach (var item in listPost)
             {
@@ -486,7 +486,7 @@ namespace dj_actionlayer.Business.PostBusiness
                 itemCreate.Img = item.PostAvatar;
                 list.Add(itemCreate);
             }
-            data.PostCreateOrderBy= list;
+            data.PostCreateOrderBy = list;
             result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";

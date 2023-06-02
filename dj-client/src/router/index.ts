@@ -35,6 +35,7 @@ import UserCreatePost from "@/components/User/UserCreatePost.vue";
 import PostPreview from "@/components/User/PostPreview.vue";
 import MyPost from "@/components/User/MyPost.vue";
 import PostMain from "@/components/Post/PostMain.vue";
+import EventMain from "@/components/Even/EventMain.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "",
@@ -125,6 +126,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "post",
         component: PostMain,
+      },
+      {
+        path: "event-main",
+        component: EventMain,
       },
     ],
   },

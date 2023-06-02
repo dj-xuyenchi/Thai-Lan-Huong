@@ -1,7 +1,9 @@
 ﻿using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
+using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Enums.ApiEnums;
+using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
@@ -32,11 +34,11 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<AddTestCaseDTO>> addTestCase(TestCaseRequest testCaseRequest);
         Task<ResponData<AddTestCaseDTO>> updateTestCase(int testCaseId, TestCaseRequest testCaseRequest);
         Task<ResponData<AddTestCaseDTO>> deleteTestCase(int testCaseId);
-        Task<ResponData<List<LessonDetailDTO>>> getLessonOfChapter(int chapterId);
+        Task<ResponData<List<DTOs.Admin.LessonDetailDTO>>> getLessonOfChapter(int chapterId);
         Task<ResponData<AddLesson2ChapterDTO>> updateSortNumberLesson(UpdateSortNumberLessonRequest updateSortNumberLessonRequest);
         Task<ResponData<AddLesson2ChapterDTO>> addLesson2Chapter(UpdateSortNumberLessonRequest updateSortNumberLessonRequest);
         Task<ResponData<AddLesson2ChapterDTO>> deleteLessonOfChapter(int lessonChapterId);
-        Task<ResponData<List<LessonDetailDTO>>> getLessonNotInChapter();
+        Task<ResponData<List<DTOs.Admin.LessonDetailDTO>>> getLessonNotInChapter();
         Task<ResponData<OptionAddCourse>> getOptionAddCourse();
         Task<ResponData<ActionStatus>> addCourse(IFormFile img, AddCourseRequest addCourseRequest);
         Task<ResponData<ActionStatus>> updateCourse(IFormFile? img, AddCourseRequest addCourseRequest);
@@ -48,5 +50,7 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<ActionStatus>> addMultiLangue(AddMultiLangue addMultiLangue);
         Task<ResponData<ActionStatus>> updateMultiLangue(AddMultiLangue addMultiLangue);
         Task<ResponData<GetLessonDTO>> findLesson(string key);
+        Task<ResponData<ActionStatus>> addBlog(IFormFile img, AddBlogRequest addBlogRequest);
+        Task<ResponData<List<BlogDTO>>> getBlog(int page);
     }
 }

@@ -10,6 +10,11 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubT
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-endpoint.deps.json
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-endpoint.runtimeconfig.json
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-endpoint.pdb
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.Auth.PlatformServices.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.Auth.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.Core.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.YouTube.v3.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.Google.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Microsoft.CodeAnalysis.dll

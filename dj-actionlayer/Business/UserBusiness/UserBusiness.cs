@@ -511,7 +511,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             List<NotificationDTO> notificationDTOs = new List<NotificationDTO>();
-            var noti = _context.notification.Where(x => x.UserId == userId).OrderByDescending(x => x.Create).ToList();
+            var noti = _context.notification.Where(x => x.UserId == userId).OrderByDescending(x => x.Create).Take(20).ToList();
             foreach (var item in noti)
             {
                 NotificationDTO notification = new NotificationDTO();

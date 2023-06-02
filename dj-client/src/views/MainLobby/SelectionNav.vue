@@ -24,15 +24,19 @@
         @click="setActiveMenu(3)"
       />
     </router-link>
-    <router-link to="/home" style="text-decoration: none">
+    <a
+      href="https://www.youtube.com/playlist?list=PLMghwUOMNMIqgqzXDhfh2D2ED57Suoi77"
+      style="text-decoration: none"
+      target="_blank"
+    >
       <BtnNav
         icon="fa-brands fa-blogger-b"
         title="Blog"
         :class="getActiveMenu == 4 ? `active` : ``"
         @click="setActiveMenu(4)"
       />
-    </router-link>
-    <router-link to="/home" style="text-decoration: none">
+    </a>
+    <router-link to="/home/event-main" style="text-decoration: none">
       <BtnNav
         icon="fa-regular fa-calendar-days"
         title="Sự kiện"

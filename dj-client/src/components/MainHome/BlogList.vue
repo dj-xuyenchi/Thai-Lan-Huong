@@ -27,10 +27,13 @@
     </div>
     <div class="blog-list">
       <BlogItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        likeCount="112"
-        cmtCount="200"
+        v-for="(item, index) in blogList"
+        :key="index"
+        :postImg="item.blogImg"
+        :postTitle="item.title"
+        :likeCount="item.viewCount"
+        :cmtCount="item.cmtCount"
+        :postLink="item.blogLink"
       />
     </div>
   </div>
@@ -42,6 +45,9 @@ export default {
   name: "BlogList",
   components: {
     BlogItem,
+  },
+  props: {
+    blogList: [],
   },
 };
 </script>

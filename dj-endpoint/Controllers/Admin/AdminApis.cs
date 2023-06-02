@@ -2,6 +2,7 @@
 using dj_webdesigncore.Business.Admin;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Request.Account;
+using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
@@ -188,6 +189,17 @@ namespace dj_endpoint.Controllers.Admin
         public async Task<IActionResult> findLessonByName(string key)
         {
             return Ok(await _admin.findLesson(key));
+        }
+        [HttpPost("addblog")]
+        public async Task<IActionResult> addBlog([FromForm] IFormFile img, [FromForm] string data)
+        {
+            AddBlogRequest addBlog = JsonConvert.DeserializeObject<AddBlogRequest>(data);
+            return Ok(await _admin.addBlog(img, addBlog));
+        }
+        [HttpGet("getblog")]
+        public async Task<IActionResult> getBlogPage(int page)
+        {
+            return Ok(await _admin.getBlog(page));
         }
     }
 }

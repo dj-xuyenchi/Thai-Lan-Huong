@@ -9,14 +9,20 @@
         width="380px"
         height="240px"
       >
-        <img :src="postImg" alt="" />
+        <img :src="`data:image/jpeg;base64,` + postImg" alt="" />
         <v-overlay
           :model-value="isHovering"
           contained
           scrim="#036358"
           class="align-center justify-center"
         >
-          <v-btn variant="flat rounded-xl">Xem bài viết</v-btn>
+          <a
+            :href="`https://youtu.be/` + postLink"
+            style="text-decoration: none"
+            target="_blank"
+          >
+            <v-btn variant="flat rounded-xl">Xem Vlog</v-btn>
+          </a>
         </v-overlay>
       </v-card>
     </v-hover>
@@ -59,6 +65,7 @@ export default {
     postTitle: String,
     likeCount: String,
     cmtCount: String,
+    postLink: String,
   },
 };
 </script>

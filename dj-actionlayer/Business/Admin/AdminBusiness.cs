@@ -1,10 +1,13 @@
 ﻿using dj_webdesigncore.Business.Admin;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
+using dj_webdesigncore.DTOs.Lobby;
+using dj_webdesigncore.Entities.BlogEntity;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
+using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
@@ -15,11 +18,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ChapterDetailDTO = dj_webdesigncore.DTOs.Admin.ChapterDetailDTO;
+using CourseDetailDTO = dj_webdesigncore.DTOs.Admin.CourseDetailDTO;
+using LessonDetailDTO = dj_webdesigncore.DTOs.Admin.LessonDetailDTO;
 
 namespace dj_actionlayer.Business.Admin
 {
     public class AdminBusiness : BaseBusiness, IAdminBusiness
     {
+        public async Task<ResponData<ActionStatus>> addBlog(IFormFile img, AddBlogRequest addBlogRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            Blog blog = new Blog();
+            blog.BlogLink = addBlogRequest.Link;
+            blog.BlogTitle = addBlogRequest.Title;
+            blog.CreateTime = DateTime.Now;
+            blog.BlogTypeId = 1;
+            blog.StatusId = 1;
+            blog.CmtCount = 0;
+            blog.ViewCount = 0;
+            var stream = new MemoryStream();
+            img.CopyTo(stream);
+            byte[] avatarByte = stream.ToArray();
+            blog.BlogImg = avatarByte;
+            await _context.AddAsync(blog);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         public async Task<ResponData<AddChapterDTO>> addChapter(AddChapterRequest addChapterRequest)
         {
             ResponData<AddChapterDTO> result = new ResponData<AddChapterDTO>();
@@ -80,7 +109,6 @@ namespace dj_actionlayer.Business.Admin
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
-
         }
 
         public async Task<ResponData<AddLesson2ChapterDTO>> addLesson2Chapter(UpdateSortNumberLessonRequest updateSortNumberLessonRequest)
@@ -461,7 +489,7 @@ namespace dj_actionlayer.Business.Admin
             {
                 int stt = 1;
                 List<LessonDetailDTO> lessonDetailDTO = new List<LessonDetailDTO>();
-                        var listLesson = _context.lesson.Where(x=>x.LessonName.Contains(key)).OrderByDescending(x => x.CreateDateTime).ToList();
+                var listLesson = _context.lesson.Where(x => x.LessonName.Contains(key)).OrderByDescending(x => x.CreateDateTime).ToList();
                 foreach (var item in listLesson)
                 {
                     LessonDetailDTO lessonDetail = new LessonDetailDTO();
@@ -579,6 +607,28 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<List<dj_webdesigncore.DTOs.Lobby.BlogDTO>>> getBlog(int page)
+        {
+            ResponData<List<dj_webdesigncore.DTOs.Lobby.BlogDTO>> result = new ResponData<List<dj_webdesigncore.DTOs.Lobby.BlogDTO>>();
+            List<dj_webdesigncore.DTOs.Lobby.BlogDTO> data = new List<BlogDTO>();
+            var listLesson = _context.blog.OrderByDescending(x => x.CreateTime).Skip((page - 1) * 15).Take(15).ToList();
+            foreach (var item in listLesson)
+            {
+                BlogDTO blog = new BlogDTO();
+                blog.CreateTime = item.CreateTime;
+                blog.UpdateTime = item.UpdateTime;
+                blog.Title = item.BlogTitle;
+                blog.CmtCount = item.CmtCount;
+                blog.ViewCount = item.ViewCount;
+                blog.BlogImg = item.BlogImg;
+                data.Add(blog);
+            }
+            result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
         }
 
         public async Task<ResponData<List<ChapterCourseInfo>>> getChapterOfCourse(int courseId)
@@ -767,7 +817,7 @@ namespace dj_actionlayer.Business.Admin
                 int stt = 1;
                 List<LessonDetailDTO> lessonDetailDTO = new List<LessonDetailDTO>();
                 var listLesson = _context.lesson.OrderByDescending(x => x.CreateDateTime).Skip((page - 1) * 15).Take(15).ToList();
-        //        var listLesson = _context.lesson.OrderByDescending(x => x.CreateDateTime).ToList();
+                //        var listLesson = _context.lesson.OrderByDescending(x => x.CreateDateTime).ToList();
                 foreach (var item in listLesson)
                 {
                     LessonDetailDTO lessonDetail = new LessonDetailDTO();
@@ -1273,5 +1323,7 @@ namespace dj_actionlayer.Business.Admin
                 return result;
             }
         }
+
+
     }
 }

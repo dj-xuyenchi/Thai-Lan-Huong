@@ -21,6 +21,7 @@
       <thead>
         <tr>
           <th class="text-left">#</th>
+          <th class="text-left">Ảnh đại diện</th>
           <th class="text-left">Tiêu đề Vlog</th>
           <th class="text-left">Ngày tạo</th>
           <th class="text-left">Cập nhật</th>
@@ -30,12 +31,20 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in data" :key="index">
+        <tr v-for="(item, index) in tableData" :key="index">
           <td>{{ item.stt }}</td>
-          <td>{{ item.lessonName }}</td>
-          <td>{{ item.createDateTime }}</td>
-          <td>{{ item.updateDateTime }}</td>
-          <td>{{ item.lessonType }}</td>
+          <td>
+            <img
+              :src="`data:image/jpeg;base64,` + item.blogImg"
+              alt=""
+              style="height: 60px; width: 100px"
+            />
+          </td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.createTime }}</td>
+          <td>{{ item.updateTime }}</td>
+          <td>{{ item.viewCount }}</td>
+          <td>{{ item.cmtCount }}</td>
           <td>{{ item.videoTime }}</td>
           <td></td>
         </tr>
@@ -46,24 +55,15 @@
 
 <script>
 export default {
-  name: "LessonTable",
+  name: "BlogTable",
   data() {
     return {
       itemsPerPage: 15,
-      headers: [
-        { title: "#", align: "start", key: "stt", sortable: false },
-        { title: "Tiêu đề Vlog", align: "start", key: "title" },
-        { title: "Ngày tạo", align: "start", key: "create" },
-        { title: "Cập nhật", align: "start", key: "update" },
-        { title: "Comment", align: "start", key: "comment" },
-        { title: "View", align: "start", key: "view" },
-        { title: "Action", align: "start", key: "actions" },
-      ],
       desserts: [],
     };
   },
   props: {
-    data: [],
+    tableData: [],
     getLessonDetail: Function,
   },
 };

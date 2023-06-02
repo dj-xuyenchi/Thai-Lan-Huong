@@ -7,7 +7,7 @@
       :studentStudying="studentStudying"
     />
     <PostList :postList="postList" />
-    <BlogList />
+    <BlogList :blogList="blogList" />
   </div>
 </template>
 
@@ -32,9 +32,10 @@ export default {
       studentStudyed: 0,
       studentStudying: 0,
       postList: [],
+      blogList: [],
     };
   },
-  mounted() {
+  created() {
     this.getLobbyData();
   },
   methods: {
@@ -42,8 +43,9 @@ export default {
     async getLobbyData() {
       this.setIsLoadedData(true);
       const data = await HomeAPI.getLobbyData();
-      this.courseList = data.data.listActiveCourse.courseDTOs;
+      this.courseList = data.data.listActiveCourse?.courseDTOs;
       this.postList = data.data.listPost;
+      this.blogList = data.data.blog;
       this.studentStudyed = data.data.listActiveCourse.studyedStudent;
       this.studentStudying = data.data.listActiveCourse.studyingStudent;
       this.setIsLoadedData(false);

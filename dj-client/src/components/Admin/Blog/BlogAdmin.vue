@@ -15,9 +15,9 @@
         @keydown.enter="findLessonByName()"
       ></v-text-field>
     </div>
-    <!-- <AddModel :getLessonDetail="getLessonDetail" style="margin-top: 12px" /> -->
+    <AddBlog style="margin-top: 12px" :getBlogPage="getBlogPage" />
   </div>
-  <BlogTable />
+  <BlogTable :tableData="tableData" />
   <div class="text-center" @click="getLessonDetail()">
     <v-container>
       <v-row justify="center">
@@ -40,11 +40,12 @@
 import { mapMutations } from "vuex";
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import BlogTable from "./BlogTable";
+import AddBlog from "./AddBlog";
 export default {
   name: "BlogAdmin",
   components: {
     BlogTable,
-    // LessonTable,
+    AddBlog,
     // AddTheory,
     // AddQuestion,
     // AddModel,
@@ -60,7 +61,7 @@ export default {
     show: false,
   }),
   created() {
-    this.getLessonDetail();
+    this.getBlogPage();
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
@@ -72,14 +73,14 @@ export default {
       }
       const token = localStorage.getItem("token");
       const data = await AdminAPI.findLessonByName(this.key, token);
-      this.tableData = data.data.list;
+      this.tableData = data.data;
       this.setIsLoadedData(false);
     },
-    async getLessonDetail() {
+    async getBlogPage() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await AdminAPI.getLessonPage(this.page, token);
-      this.tableData = data.data.list;
+      const data = await AdminAPI.getBlogPage(this.page, token);
+      this.tableData = data.data;
       this.maxPage = data.data.maxPage;
       this.setIsLoadedData(false);
     },
