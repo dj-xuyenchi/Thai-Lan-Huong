@@ -164,7 +164,7 @@ export default {
             {
               icon: "mdi mdi-note-multiple-outline",
               title: "Danh sách blog",
-              to: "/admin/courses",
+              to: "/admin/blog",
             },
           ],
         },

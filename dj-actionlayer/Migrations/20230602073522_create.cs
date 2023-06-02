@@ -44,6 +44,34 @@ namespace dj_actionlayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "blog_status",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StatusCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StatusName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_blog_status", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "blog_type",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TypeCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_blog_type", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "course_level",
                 columns: table => new
                 {
@@ -338,6 +366,39 @@ namespace dj_actionlayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_wards", x => x.code);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "blog",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ViewCount = table.Column<int>(type: "int", nullable: false),
+                    CmtCount = table.Column<int>(type: "int", nullable: false),
+                    BlogImg = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    BlogLink = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BlogTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    BlogTypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_blog", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_blog_blog_status_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "blog_status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_blog_blog_type_BlogTypeId",
+                        column: x => x.BlogTypeId,
+                        principalTable: "blog_type",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -905,7 +966,7 @@ namespace dj_actionlayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PostTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostAvatar = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PostMiniAvatar = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserCreateId = table.Column<int>(type: "int", nullable: true),
@@ -1348,6 +1409,16 @@ namespace dj_actionlayer.Migrations
                 column: "UserContactId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_blog_BlogTypeId",
+                table: "blog",
+                column: "BlogTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_blog_StatusId",
+                table: "blog",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_chapter_lesson_CourseChapterId",
                 table: "chapter_lesson",
                 column: "CourseChapterId");
@@ -1685,6 +1756,9 @@ namespace dj_actionlayer.Migrations
                 name: "advice_contact");
 
             migrationBuilder.DropTable(
+                name: "blog");
+
+            migrationBuilder.DropTable(
                 name: "chapter_lesson");
 
             migrationBuilder.DropTable(
@@ -1752,6 +1826,12 @@ namespace dj_actionlayer.Migrations
 
             migrationBuilder.DropTable(
                 name: "video_done_data");
+
+            migrationBuilder.DropTable(
+                name: "blog_status");
+
+            migrationBuilder.DropTable(
+                name: "blog_type");
 
             migrationBuilder.DropTable(
                 name: "course_chapter");

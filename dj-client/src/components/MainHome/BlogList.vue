@@ -18,6 +18,12 @@
       >
         Xuyên Chi Vlog
       </span>
+      <a
+        href="https://www.youtube.com/channel/UCeJJbBp9ZSYwFK-U0YBY1pw"
+        class="showAll"
+        target="_blank"
+        >Xem tất cả
+      </a>
     </div>
     <div class="blog-list">
       <BlogItem
@@ -50,7 +56,20 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
 }
-
+.showAll {
+  color: red;
+  font-size: 14px;
+  font-weight: 900;
+  padding-left: 14px;
+  float: right;
+  font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.showAll:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #eb5353;
+}
 @media screen and (max-width: 739px) {
   .blog-item {
     width: 100% !important;

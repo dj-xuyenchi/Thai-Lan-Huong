@@ -10,5 +10,6 @@ namespace dj_webdesigncore.DTOs.Lobby
     {
         public ListActiveCourse ListActiveCourse { get; set; }
         public List<PostDTO> ListPost { get; set; }
+        public List<BlogDTO> Blog { get; set; }
     }
 }

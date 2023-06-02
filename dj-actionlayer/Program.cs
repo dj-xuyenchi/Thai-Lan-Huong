@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis;
 using System.Diagnostics;
 using System;
 using System.Text;
+using dj_actionlayer.Business.YoutubeAPIv3;
 
 namespace dj_actionlayer
 {
@@ -17,8 +18,8 @@ namespace dj_actionlayer
 
         static async Task Main(string[] args)
         {
-           
-
+           var a= YoutubeAPI.GetInfo("ukHK1GVyr0I");
+            Console.WriteLine(a.Result.view);
             //string chuoi1 = "anhdq1";
             //string chuoi2 = "anhdq2";
             //List<string> list = new List<string>();

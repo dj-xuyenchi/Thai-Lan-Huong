@@ -1,4 +1,5 @@
-﻿using dj_webdesigncore.Business.Lobby;
+﻿using dj_actionlayer.Business.YoutubeAPIv3;
+using dj_webdesigncore.Business.Lobby;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Study;
@@ -46,7 +47,7 @@ namespace dj_actionlayer.Business.Lobby
             try
             {
                 CourseDetailDTO courseDetail = new CourseDetailDTO();
-                Course course =await _context.course.FindAsync(courseId);
+                Course course = await _context.course.FindAsync(courseId);
                 if (course == null)
                 {
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
@@ -181,7 +182,7 @@ namespace dj_actionlayer.Business.Lobby
                     CourseListDTO courseListDTO = new CourseListDTO();
                     List<CourseDTO> courseDTOs = new List<CourseDTO>();
 
-                    var courseListOfType = _context.course.Where(x => x.CourseTypeId == courseType.Id &&( x.CourseStatusId==1||x.CourseStatusId==3)).ToList();
+                    var courseListOfType = _context.course.Where(x => x.CourseTypeId == courseType.Id && (x.CourseStatusId == 1 || x.CourseStatusId == 3)).ToList();
                     if (courseListOfType.Count == 0)
                     {
                         continue;
@@ -260,19 +261,37 @@ namespace dj_actionlayer.Business.Lobby
                 var getPost = _context.post.Where(x => x.PostStatusId == 1).OrderByDescending(x => x.LikeCount).Take(10).ToList();
                 foreach (var post in getPost)
                 {
-                    PostDTO postDTO  =new PostDTO();
+                    PostDTO postDTO = new PostDTO();
                     postDTO.Id = post.Id;
                     User user = await _context.user.FindAsync(post.UserCreateId);
                     postDTO.CreaterFullName = user.UserFisrtName + " " + user.UserLastName;
                     postDTO.CreaterAvatar = user.UserAvatarData40x40;
                     postDTO.PostTitle = post.PostTitle;
                     postDTO.CmtCount = post.CommentCount;
-                    postDTO.LikeCount= post.LikeCount;
+                    postDTO.LikeCount = post.LikeCount;
                     postDTO.PostImg = post.PostAvatar;
                     postDTO.IsCreaterKYC = (bool)user.IsKYC;
                     listPost.Add(postDTO);
                 }
-                lobbyDTO.ListPost= listPost;
+                lobbyDTO.ListPost = listPost;
+                if (DateTime.Now.Minute % 3 == 0)
+                {
+                    await updateFullBlog();
+                }
+                var listBlog = _context.blog.Where(x => x.StatusId == 1).OrderByDescending(x => x.CreateTime).Take(10).ToList();
+                List<BlogDTO> blogList = new List<BlogDTO>();
+                foreach (var blog in listBlog)
+                {
+                    BlogDTO blogDTO = new BlogDTO();
+                    blogDTO.StatusId = blog.StatusId;
+                    blogDTO.CmtCount = blog.CmtCount;
+                    blogDTO.ViewCount = blog.ViewCount;
+                    blogDTO.BlogImg = blog.BlogImg;
+                    blogDTO.Title = blog.BlogTitle;
+                    blogDTO.BlogLink = blog.BlogLink;
+                    blogList.Add(blogDTO);
+                }
+                lobbyDTO.Blog = blogList;
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
                 result.Data = lobbyDTO;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -284,6 +303,17 @@ namespace dj_actionlayer.Business.Lobby
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+        private async Task updateFullBlog()
+        {
+            var list = _context.blog.ToList();
+            foreach (var blog in list)
+            {
+                VideoInfo v = await YoutubeAPI.GetInfo(blog.BlogLink);
+                blog.ViewCount = v.view;
+                blog.CmtCount = v.cmt;
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

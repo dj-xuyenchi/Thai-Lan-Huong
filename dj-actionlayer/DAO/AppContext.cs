@@ -1,4 +1,5 @@
 ﻿using dj_webdesigncore.Entities;
+using dj_webdesigncore.Entities.BlogEntity;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.PostEntity;
@@ -20,6 +21,10 @@ namespace dj_actionlayer.DAO
         //}
         // Auth
         public DbSet<RefreshToken> refresh_token { get; set; }
+        // Blog Entities
+        public DbSet<Blog> blog { get; set; }
+        public DbSet<BlogStatus> blog_status { get; set; }
+        public DbSet<BlogType> blog_type { get; set; }
 
         // Course Entities
         public DbSet<Langue> langue { get; set; }
@@ -85,8 +90,8 @@ namespace dj_actionlayer.DAO
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
           optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
-         //optionsBuilder.UseSqlServer(Settings.DBConnect());
-     //  optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
+      //   optionsBuilder.UseSqlServer(Settings.DBConnect());
+      // optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
     }
 }

@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
-
 using AppContext = dj_actionlayer.DAO.AppContext;
+
 #nullable disable
 
 namespace dj_actionlayer.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20230525145239_create")]
+    [Migration("20230602073522_create")]
     partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,95 @@ namespace dj_actionlayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BlogEntity.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<byte[]>("BlogImg")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("BlogLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BlogTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BlogTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CmtCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogTypeId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("blog");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BlogEntity.BlogStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("StatusCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("blog_status");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BlogEntity.BlogType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("TypeCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("blog_type");
+                });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.AdviceContact", b =>
                 {
@@ -1234,7 +1323,6 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("PostTitle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatePost")
@@ -1821,6 +1909,25 @@ namespace dj_actionlayer.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("user_trophic");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BlogEntity.Blog", b =>
+                {
+                    b.HasOne("dj_webdesigncore.Entities.BlogEntity.BlogType", "BlogType")
+                        .WithMany()
+                        .HasForeignKey("BlogTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("dj_webdesigncore.Entities.BlogEntity.BlogStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BlogType");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.AdviceContact", b =>
