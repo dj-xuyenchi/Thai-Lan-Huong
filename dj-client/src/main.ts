@@ -52,6 +52,7 @@ import {
   faRotateRight,
   faPaperPlane,
   faUserDoctor,
+  faEye,
   faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -77,6 +78,7 @@ library.add(
   faBloggerB,
   faCalendarDays,
   faUsers,
+  faEye,
   faPaperPlane,
   faTrashCan,
   faEnvelope,

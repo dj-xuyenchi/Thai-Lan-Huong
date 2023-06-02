@@ -7,7 +7,7 @@
         v-bind="props"
         variant="none"
         width="380px"
-        height="220px"
+        height="240px"
       >
         <img :src="postImg" alt="" />
         <v-overlay
@@ -35,7 +35,7 @@
       </div>
       <div class="blog-info">
         <div>
-          <font-awesome-icon icon="fa-solid fa-heart" class="react-icon" />
+          <font-awesome-icon icon="fa-solid fa-eye" class="react-icon" />
           <span style="margin-right: 18px">{{ likeCount }}</span>
         </div>
         <div>
@@ -60,9 +60,6 @@ export default {
     likeCount: String,
     cmtCount: String,
   },
-  mounted() {
-    const g = this.$refs.gg;
-  },
 };
 </script>
 
@@ -70,16 +67,16 @@ export default {
 .blog-item {
   margin-top: 14px;
   width: 380px;
-  height: 220px;
+  height: 240px;
   margin-bottom: 36px;
   padding: 0 14px 0 14px;
   margin-left: 1%;
-  margin-bottom: 60px;
+  margin-bottom: 80px;
 }
 
 .blog-item img {
   width: 380px;
-  height: 220px;
+  height: 240px;
 }
 .blog-item .blog-detail {
   width: 100%;

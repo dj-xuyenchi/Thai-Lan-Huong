@@ -1,7 +1,55 @@
 <template>
   <h1 style="font-weight: 700; font-size: 30px">Bài viết công nghệ!</h1>
   <div style="min-height: 100vh; display: flex; justify-content: center">
-    <div class="post-main-container"></div>
+    <div class="post-main-container">
+      <router-link
+        :to="
+          `/home/post/` +
+          postMainData.hotPost?.id +
+          `/` +
+          postMainData.hotPost?.title
+        "
+        style="text-decoration: none; color: black"
+      >
+        <div style="width: 60%; float: left">
+          <img
+            :src="`data:image/png;base64,` + postMainData.hotPost?.img"
+            alt=""
+            style="width: 100%; height: 420px"
+          />
+          <h3 class="hot-title">
+            {{ postMainData.hotPost?.title }}
+          </h3>
+        </div>
+      </router-link>
+      <div
+        style="width: 40%; float: left"
+        v-for="(item, index) in postMainData.postCreateOrderBy"
+        :key="index"
+      >
+        <router-link
+          :to="`/home/post/` + item.id + `/` + item.title"
+          style="text-decoration: none; color: black"
+        >
+          <div class="post-item">
+            <div style="width: 50%; float: left">
+              <img
+                :src="`data:image/png;base64,` + item.img"
+                alt=""
+                style="width: 100%; height: 110px"
+              />
+            </div>
+            <div style="width: 50%; float: left">
+              <h4 style="width: 90%; margin-left: 5%">{{ item.title }}</h4>
+            </div>
+          </div>
+        </router-link>
+        <div
+          style="height: 155px; width: 100%"
+          v-if="index == 0 || index == 1"
+        ></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,6 +79,25 @@ export default {
   width: 1000px;
   height: 100px;
   margin-top: 18px;
-  border: 1px solid red;
+}
+.post-main-container .hot-title {
+  position: absolute;
+  top: 540px;
+  z-index: 1;
+  margin-left: 12px;
+  color: white;
+}
+
+.post-main-container .hot-title:hover {
+  cursor: pointer;
+  color: violet;
+}
+.post-main-container .post-item {
+  width: 90%;
+  margin-left: 5%;
+}
+.post-main-container .post-item:hover {
+  cursor: pointer;
+  color: violet;
 }
 </style>

@@ -16,46 +16,10 @@
             'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
         "
       >
-        Xuyên Chi Blog
+        Xuyên Chi Vlog
       </span>
     </div>
     <div class="blog-list">
-      <BlogItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        likeCount="112"
-        cmtCount="200"
-      />
-      <BlogItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        likeCount="112"
-        cmtCount="200"
-      />
-      <BlogItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        likeCount="112"
-        cmtCount="200"
-      />
-      <BlogItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        likeCount="112"
-        cmtCount="200"
-      />
-      <BlogItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        likeCount="112"
-        cmtCount="200"
-      />
-      <BlogItem
-        postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
-        postTitle="Cách tán đổ Crush bằng HTML CSS"
-        likeCount="112"
-        cmtCount="200"
-      />
       <BlogItem
         postImg="https://vdoc.edu.vn/wp-content/uploads/2022/03/crush-la-gi.png"
         postTitle="Cách tán đổ Crush bằng HTML CSS"
