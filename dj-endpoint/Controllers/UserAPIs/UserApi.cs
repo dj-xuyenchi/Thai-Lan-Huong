@@ -5,6 +5,7 @@ using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.Business.UserIBusiness;
 using dj_webdesigncore.Request.Account;
 using dj_webdesigncore.Request.Course;
+using dj_webdesigncore.Request.Post;
 using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -122,9 +123,10 @@ namespace dj_endpoint.Controllers.UserAPIs
             return Ok(await _user.deleteWaitPost(userId));
         }
         [HttpPost("confirmpost")]
-        public async Task<IActionResult> confirmPost([FromForm] IFormFile img, [FromForm] string title, [FromForm] int userId)
+        public async Task<IActionResult> confirmPost([FromForm] IFormFile img, [FromForm] string data, [FromForm] int userId)
         {
-            return Ok(await _user.confirmPost(img, title, userId));
+            UserConfirmPost userConfirmPost= JsonConvert.DeserializeObject<UserConfirmPost>(data);
+            return Ok(await _user.confirmPost(img, userConfirmPost, userId));
         }
         [HttpGet("userlikepost")]
         public async Task<IActionResult> userlikePost(int userId, int postId)

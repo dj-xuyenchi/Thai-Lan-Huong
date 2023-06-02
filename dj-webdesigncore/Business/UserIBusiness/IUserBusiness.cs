@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using dj_webdesigncore.Enums.PostEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.SomeThingElse;
+using dj_webdesigncore.Request.Post;
 
 namespace dj_webdesigncore.Business.UserIBusiness
 {
@@ -37,6 +38,6 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<string>> getWaitPost(int userId);
         Task<ResponData<IsHaveWaitPost>> isHaveWaitPost(int userId);
         Task<ResponData<ActionStatus>> deleteWaitPost(int userId);
-        Task<ResponData<ActionStatus>> confirmPost(IFormFile img, string title, int userId);
+        Task<ResponData<ActionStatus>> confirmPost(IFormFile img, UserConfirmPost data, int userId);
     }
 }

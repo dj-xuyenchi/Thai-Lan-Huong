@@ -55,6 +55,8 @@ namespace dj_actionlayer.Business.PostBusiness
                 }
             }
             data.Title = post.PostTitle;
+            data.Des = post.PostDescription;
+            data.ImgLink = post.PostImgLinkMeta;
             data.Content = post.PostData;
             User creater = await _context.user.FindAsync(post.UserCreateId);
             data.CreaterImg = creater.UserAvatarData40x40;

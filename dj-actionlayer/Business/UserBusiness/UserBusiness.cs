@@ -10,6 +10,7 @@ using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Enums.PostEnums;
 using dj_webdesigncore.Request.Account;
+using dj_webdesigncore.Request.Post;
 using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +65,7 @@ namespace dj_actionlayer.Business.UserBusiness
             return result;
         }
 
-        public async Task<ResponData<ActionStatus>> confirmPost(IFormFile img, string title,int userId)
+        public async Task<ResponData<ActionStatus>> confirmPost(IFormFile img, UserConfirmPost data,int userId)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
             User user = await _context.user.FindAsync(userId);
@@ -84,7 +85,9 @@ namespace dj_actionlayer.Business.UserBusiness
                 return result;
             }
             check.PostStatusId = 5;
-            check.PostTitle = title;
+            check.PostTitle = data.title;
+            check.PostImgLinkMeta = data.imgLink;
+            check.PostDescription = data.des;
             var stream = new MemoryStream();
             img.CopyTo(stream);
             byte[] avatarByte = stream.ToArray();
