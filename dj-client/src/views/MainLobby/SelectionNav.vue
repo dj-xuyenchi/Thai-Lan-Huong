@@ -31,7 +31,7 @@
     >
       <BtnNav
         icon="fa-brands fa-blogger-b"
-        title="Blog"
+        title="Vlog"
         :class="getActiveMenu == 4 ? `active` : ``"
         @click="setActiveMenu(4)"
       />

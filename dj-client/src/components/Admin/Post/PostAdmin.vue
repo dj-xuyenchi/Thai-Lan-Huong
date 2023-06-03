@@ -10,9 +10,9 @@
         @keydown.enter="findLessonByName()"
       ></v-text-field>
     </div>
-    <AddBlog style="margin-top: 12px" :getBlogPage="getBlogPage" />
+    <!-- <AddBlog style="margin-top: 12px" :getBlogPage="getBlogPage" /> -->
   </div>
-  <BlogTable :tableData="tableData" />
+  <PostTable :tableData="tableData" />
   <div class="text-center" @click="getLessonDetail()">
     <v-container>
       <v-row justify="center">
@@ -34,13 +34,11 @@
 <script>
 import { mapMutations } from "vuex";
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
-import BlogTable from "./BlogTable";
-import AddBlog from "./AddBlog";
+import PostTable from "./PostTable";
 export default {
-  name: "BlogAdmin",
+  name: "PostAdmin",
   components: {
-    BlogTable,
-    AddBlog,
+    PostTable,
     // AddTheory,
     // AddQuestion,
     // AddModel,

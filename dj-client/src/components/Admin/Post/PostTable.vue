@@ -5,7 +5,7 @@
         <tr>
           <th class="text-left">#</th>
           <th class="text-left">Ảnh đại diện</th>
-          <th class="text-left">Tiêu đề Vlog</th>
+          <th class="text-left">Tiêu đề bài viết</th>
           <th class="text-left">Ngày tạo</th>
           <th class="text-left">Cập nhật</th>
           <th class="text-left">View</th>
@@ -23,12 +23,12 @@
               style="height: 60px; width: 100px"
             />
           </td>
-          <td>{{ item.title }}</td>
+          <!-- <td>{{ item.title }}</td>
           <td>{{ item.createTime }}</td>
           <td>{{ item.updateTime }}</td>
           <td>{{ item.viewCount }}</td>
           <td>{{ item.cmtCount }}</td>
-          <td>{{ item.videoTime }}</td>
+          <td>{{ item.videoTime }}</td> -->
           <td></td>
         </tr>
       </tbody>
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  name: "BlogTable",
+  name: "PostTable",
   data() {
     return {
       itemsPerPage: 15,
@@ -47,7 +47,6 @@ export default {
   },
   props: {
     tableData: [],
-    getLessonDetail: Function,
   },
 };
 </script>

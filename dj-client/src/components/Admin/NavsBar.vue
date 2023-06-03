@@ -127,7 +127,7 @@ export default {
             {
               icon: "mdi mdi-note-multiple",
               title: "Danh sách bài viết",
-              to: "/admin/courses",
+              to: "/admin/post",
             },
             {
               icon: "mdi mdi-note",
