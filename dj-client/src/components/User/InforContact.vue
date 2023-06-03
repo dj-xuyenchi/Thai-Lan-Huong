@@ -14,7 +14,7 @@
     <div class="left-avatar">
       <img
         :src="'data:image/jpeg;base64,' + userInfor.userAvatarData40x40"
-        alt=""
+        alt="Hình ảnh"
       />
     </div>
     <div class="right-infor">

@@ -19,7 +19,7 @@
           <td>
             <img
               :src="`data:image/jpeg;base64,` + item.courseImageData"
-              alt=""
+              alt="Hình ảnh"
               style="height: 40px; width: 80px"
             />
           </td>

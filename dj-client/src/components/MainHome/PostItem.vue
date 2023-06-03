@@ -27,7 +27,7 @@
     </v-hover>
     <div class="post-detail">
       <div style="width: 100%">
-        <span
+        <h5
           style="
             color: #242424;
             font-size: 16px;
@@ -35,20 +35,21 @@
             font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
               'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
           "
-          >{{ titleFix }}</span
         >
+          {{ titleFix }}
+        </h5>
       </div>
       <div class="author-info">
         <img
           :src="`data:image/png;base64,` + authorAvatar"
-          alt=""
+          alt="Hình ảnh"
           v-if="authorAvatar != ` `"
         />
         <span>{{ postAuthor }}</span>
         <img
           v-if="isKYC"
           :src="require('../../assets/kyc.png')"
-          alt=""
+          alt="Hình ảnh"
           class="kyc"
         />
         <div class="react-info">

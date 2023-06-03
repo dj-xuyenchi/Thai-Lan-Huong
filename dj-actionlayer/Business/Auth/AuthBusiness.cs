@@ -69,7 +69,8 @@ namespace dj_actionlayer.Business.Auth
                     email = user.UserEmail,
                     name = user.UserFisrtName + " " + user.UserLastName,
                     Token = await GenToken(user),
-                    role = (int)user.UserRoleId
+                    role = (int)user.UserRoleId,
+                    kyc = (bool)user.IsKYC
                 }
             };
         }

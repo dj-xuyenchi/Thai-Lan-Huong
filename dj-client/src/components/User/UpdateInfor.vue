@@ -31,7 +31,7 @@
                   ><v-col cols="12" sm="12" md="12">
                     <img
                       :src="'data:image/jpeg;base64, ' + userAvatarData40x40"
-                      alt=""
+                      alt="Hình ảnh"
                       style="height: 100px; width: 100px; border-radius: 50%"
                     />
                     <v-label style="width: 100%; margin: 24px 0 8px 0"
@@ -324,6 +324,12 @@ export default {
     },
     async submit() {
       this.btnLoading = true;
+      if (this.firstName.length + this.lastName.length > 25) {
+        this.text = "Tên quá dài!";
+        this.snackbar = true;
+        this.btnLoading = false;
+        return;
+      }
       const token = localStorage.getItem("token");
       const formData = new FormData();
       formData.append("avatar", this.selectFile ? this.selectFile[0] : null);

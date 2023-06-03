@@ -49,7 +49,13 @@
           :subtitle="user.nickName"
           :append-icon="iconStatus.normal"
           v-bind="props"
-        ></v-list-item>
+          ><img
+            :src="require('../../assets/kyc.png')"
+            alt="Hình ảnh"
+            class="kyc"
+            :style="`right:` + kycLeft + `px`"
+            v-if="user.isKYC"
+        /></v-list-item>
       </template>
       <v-card class="mx-auto" max-width="600">
         <v-list density="compact">
@@ -98,10 +104,12 @@ export default {
       showSignIn: true,
       show: false,
       menu: false,
+      kycLeft: 0,
       user: {
         avatar: "",
         name: "",
         id: "",
+        isKYC: false,
         nickName: "",
       },
       iconStatus: {
@@ -182,17 +190,72 @@ export default {
     const name = localStorage.getItem("name");
     const nickName = localStorage.getItem("nickName");
     const role = localStorage.getItem("role");
+    const kyc = localStorage.getItem("smg");
     if (token || refreshToken) {
       this.showSignIn = false;
       this.user = {
         avatar: avatar,
         name: name,
         id: id,
+        isKYC: kyc,
         nickName: nickName,
       };
     }
     if (role == 1) {
       this.isAdmin = true;
+    }
+    switch (this.user.name.length) {
+      case 3:
+        this.kycLeft = 164;
+        break;
+      case 4:
+        this.kycLeft = 152;
+        break;
+      case 5:
+        this.kycLeft = 144;
+        break;
+      case 6:
+        this.kycLeft = 136;
+        break;
+      case 7:
+        this.kycLeft = 130;
+        break;
+      case 8:
+        this.kycLeft = 118;
+        break;
+      case 9:
+        this.kycLeft = 108;
+        break;
+      case 10:
+        this.kycLeft = 100;
+        break;
+      case 11:
+        this.kycLeft = 90;
+        break;
+      case 12:
+        this.kycLeft = 82;
+        break;
+      case 13:
+        this.kycLeft = 74;
+        break;
+      case 14:
+        this.kycLeft = 66;
+        break;
+      case 15:
+        this.kycLeft = 54;
+        break;
+      case 16:
+        this.kycLeft = 52;
+        break;
+      case 17:
+        this.kycLeft = 50;
+        break;
+      case 18:
+        this.kycLeft = 50;
+        break;
+      default:
+        this.kycLeft = 50;
+        break;
     }
   },
   methods: {
@@ -211,10 +274,6 @@ export default {
       this.notifications = result.data;
     },
     setShow() {
-      // this.show = !this.show;
-      // if (!this.show) {
-      //   return;
-      // }
       this.setShowNotification();
     },
     async seenAll() {
@@ -229,6 +288,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.kyc {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 4px;
+}
 .user-check {
   position: absolute;
   right: 2vw;

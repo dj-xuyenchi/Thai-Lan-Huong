@@ -2,7 +2,7 @@
   <div class="imageitem-container">
     <img
       src="https://icdn.dantri.com.vn/thumb_w/640/2021/03/14/hot-girl-9-x-dep-goi-camdocx-1615737535134.jpeg"
-      alt=""
+      alt="Hình ảnh"
     />
     <span>{{ imageTitle }}</span>
   </div>

@@ -4,7 +4,7 @@
       <img class="logo-header" :src="require('../../assets/logo-web.png')" />
     </div>
     <div class="cf-title-07">
-      <h4>DJ - CodeMaster</h4>
+      <h1 style="font-size: 24px">DJ - CodeMaster</h1>
     </div>
     <div style="display: none" id="menu-top-mobile">
       <v-menu>

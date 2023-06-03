@@ -11,6 +11,7 @@ namespace dj_webdesigncore.DTOs.UserDTO
         public int NotificationId { get; set; }
         public string Content { get; set; }
         public byte[] Avatar { get; set; }
+        public bool IsKYC { get; set; }
         public string Link { get; set; }
         public bool IsSeen { get; set; }
         public string SendTime { get; set; }

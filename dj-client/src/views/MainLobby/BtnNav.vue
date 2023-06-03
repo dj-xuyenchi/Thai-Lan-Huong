@@ -1,7 +1,7 @@
 <template>
   <div class="btn">
     <font-awesome-icon :icon="icon" color="black" />
-    <p>{{ title }}</p>
+    <h3 style="font-size: 12px; color: black; margin-top: 4px">{{ title }}</h3>
   </div>
 </template>
 

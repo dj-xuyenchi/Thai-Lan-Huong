@@ -15,5 +15,6 @@ namespace dj_webdesigncore.AuthModel
         public string name { get; set; }
         public string nickName { get; set; }
         public int role { get; set; }
+        public bool kyc { get; set; }
     }
 }

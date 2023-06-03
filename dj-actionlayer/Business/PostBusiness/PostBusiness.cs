@@ -1,4 +1,5 @@
-﻿using dj_webdesigncore.Business.Post;
+﻿using dj_actionlayer.DAO;
+using dj_webdesigncore.Business.Post;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Post;
 using dj_webdesigncore.DTOs.Study;
@@ -128,6 +129,7 @@ namespace dj_actionlayer.Business.PostBusiness
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
+            post.CommentCount++;
             CommentPost comment = new CommentPost();
             comment.PostId = postId;
             comment.UserId = userId;
@@ -180,7 +182,14 @@ namespace dj_actionlayer.Business.PostBusiness
             }
             Notification notification = new Notification();
             notification.SystemNotification = false;
-            notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã trả lời bình luận của bạn!";
+            if ((bool)user.IsKYC)
+            {
+            notification.Content = user.UserFisrtName + " " + user.UserLastName +Settings.kyc()+ " đã trả lời bình luận của bạn!";
+            }
+            else
+            {
+                notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã trả lời bình luận của bạn!";
+            }
             notification.UserId = (int)cmt.UserId;
             notification.Create = DateTime.Now;
             notification.IsSeen = false;

@@ -549,6 +549,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 {
                     User user1 = await _context.user.FindAsync(item.UserSendId);
                     notification.Avatar = user1.UserAvatarData40x40;
+                    notification.IsKYC = (bool)user1.IsKYC;
                 }
                 notificationDTOs.Add(notification);
             }

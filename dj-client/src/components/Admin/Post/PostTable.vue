@@ -19,7 +19,7 @@
           <td>
             <img
               :src="`data:image/jpeg;base64,` + item.blogImg"
-              alt=""
+              alt="Hình ảnh"
               style="height: 60px; width: 100px"
             />
           </td>

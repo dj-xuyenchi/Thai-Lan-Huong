@@ -5,11 +5,11 @@
         <li class="footer-item-detail">
           <img
             :src="require('../../assets/logo-web.png')"
-            alt=""
+            alt="Hình ảnh"
             style="float: left; width: 60px; height: 60px"
           />
           <div style="height: 60px; display: flex; align-items: center">
-            <span
+            <h2
               style="
                 font-size: 20px;
                 font-weight: 600;
@@ -20,8 +20,8 @@
                 margin-left: 8px;
               "
             >
-              Code Không Khó</span
-            >
+              Code Không Khó
+            </h2>
           </div>
           <ul id="footer-contact">
             <li>
@@ -50,7 +50,7 @@
               justify-content: center;
             "
           >
-            <span
+            <h3
               style="
                 font-size: 20px;
                 font-weight: 600;
@@ -62,8 +62,8 @@
                 display: block;
               "
             >
-              Tư vấn học 1 : 1</span
-            >
+              Tư vấn học 1 : 1
+            </h3>
           </div>
           <FormContact />
         </li>
@@ -76,7 +76,7 @@
               justify-content: center;
             "
           >
-            <span
+            <h6
               style="
                 font-size: 20px;
                 font-weight: 600;
@@ -87,8 +87,8 @@
                 margin-left: 8px;
               "
             >
-              Kết nối</span
-            >
+              Kết nối
+            </h6>
           </div>
           <a
             href="https://www.facebook.com/groups/731193178473217/?ref=web_social_plugin"
@@ -96,7 +96,7 @@
           >
             <img
               :src="require('../../assets/fb.png')"
-              alt=""
+              alt="Hình ảnh"
               class="footer-icon"
             />
           </a>
@@ -106,21 +106,21 @@
           >
             <img
               :src="require('../../assets/youtube.png')"
-              alt=""
+              alt="Hình ảnh"
               class="footer-icon"
             />
           </a>
           <a href="https://github.com/dj-xuyenchi" target="_blank">
             <img
               :src="require('../../assets/github.png')"
-              alt=""
+              alt="Hình ảnh"
               class="footer-icon"
             />
           </a>
           <a href="" target="_blank">
             <img
               :src="require('../../assets/tiktok.png')"
-              alt=""
+              alt="Hình ảnh"
               class="footer-icon"
             />
           </a>

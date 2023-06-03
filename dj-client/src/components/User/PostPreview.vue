@@ -2,7 +2,7 @@
   <div style="width: 60%; margin-left: 5%; min-height: 80vh">
     <img
       :src="'data:image/jpeg;base64, ' + dataImage"
-      alt=""
+      alt="Hình ảnh"
       style="height: 160px; width: 280px"
     />
     <v-label style="width: 100%; margin: 24px 0 8px 0"

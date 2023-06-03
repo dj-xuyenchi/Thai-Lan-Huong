@@ -23,7 +23,7 @@
     >
       <img
         :src="`data:image/png;base64,` + getAdminLogo"
-        alt=""
+        alt="Hình ảnh"
         style="height: 60px"
       />
     </div>

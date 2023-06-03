@@ -4,7 +4,7 @@
 
     <img
       :src="`data:image/png;base64,` + post.createrImg"
-      alt=""
+      alt="Hình ảnh"
       style="height: 40px; width: 40px; border-radius: 50%; float: left"
     />
     <span
@@ -20,7 +20,7 @@
     <img
       v-if="post.isCreaterKYC"
       :src="require('../../assets/kyc.png')"
-      alt=""
+      alt="Hình ảnh"
       class="kyc"
     />
     <div style="float: right">

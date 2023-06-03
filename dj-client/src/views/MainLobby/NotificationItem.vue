@@ -3,13 +3,13 @@
     <div class="right-img">
       <img
         :src="'data:image/jpeg;base64, ' + data.avatar"
-        alt=""
+        alt="Hình ảnh"
         style="border-radius: 50%; height: 60px; width: 60px"
       />
     </div>
     <div class="left-content">
       <div class="content">
-        <span>{{ data.content }} </span>
+        <span v-html="data.content"> </span>
         <!-- <span style="font-weight: 500">DJ - CodeMaster.</span> -->
         <span class="timeline">{{ data.sendTime }}</span>
         <span class="isread" v-if="!data.isSeen"></span>
@@ -36,6 +36,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.kyc {
+  height: 20px;
+  width: 20px;
+}
 .noti-item {
   width: 98%;
   margin-left: 1%;

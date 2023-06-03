@@ -11,7 +11,7 @@
         <img
           style="width: 120px; height: 72px"
           :src="`data:image/png;base64,` + item.postImg"
-          alt=""
+          alt="Hình ảnh"
         />
       </div>
       <div style="width: 160px; margin-left: 8px; float: left">

@@ -9,7 +9,7 @@
         width="380px"
         height="240px"
       >
-        <img :src="`data:image/jpeg;base64,` + postImg" alt="" />
+        <img :src="`data:image/jpeg;base64,` + postImg" alt="Hình ảnh" />
         <v-overlay
           :model-value="isHovering"
           contained
@@ -28,7 +28,7 @@
     </v-hover>
     <div class="blog-detail">
       <div style="width: 100%">
-        <span
+        <h5
           style="
             color: #242424;
             font-size: 16px;
@@ -36,8 +36,9 @@
             font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
               'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
           "
-          >{{ postTitle }}</span
         >
+          {{ postTitle }}
+        </h5>
       </div>
       <div class="blog-info">
         <div>

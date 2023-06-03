@@ -2,13 +2,13 @@
   <div class="body-profile">
     <img
       :src="require('../../assets/banner.png')"
-      alt=""
+      alt="Hình ảnh"
       style="border-bottom-right-radius: 15px; border-bottom-left-radius: 15px"
     />
     <div class="backgound-avatar">
       <img
         :src="`data:image/jpeg;base64,` + item.avatar"
-        alt=""
+        alt="Hình ảnh"
         class="avatar"
       />
     </div>
@@ -17,7 +17,7 @@
         >{{ item.fullName }}
         <img
           :src="require('../../assets/kyc.png')"
-          alt=""
+          alt="Hình ảnh"
           class="kyc"
           v-if="item.isKYC"
         />

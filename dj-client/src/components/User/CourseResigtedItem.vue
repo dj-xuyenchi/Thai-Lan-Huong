@@ -4,7 +4,7 @@
   >
     <img
       :src="'data:image/jpeg;base64, ' + item.courseAvatar"
-      alt=""
+      alt="Hình ảnh"
       style="width: 400px; height: 240px; border-radius: 10px"
     />
     <h4>{{ item.courseName }}</h4>

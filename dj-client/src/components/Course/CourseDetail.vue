@@ -78,12 +78,12 @@
         <div class="intro-img">
           <img
             :src="require('../../assets/intro.jpg')"
-            alt=""
+            alt="Hình ảnh"
             style="height: 240px; width: 400px; border-radius: 15px"
           />
           <img
             :src="require('../../assets/play.png')"
-            alt=""
+            alt="Hình ảnh"
             style="
               position: absolute;
               height: 60px;

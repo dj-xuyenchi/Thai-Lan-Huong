@@ -29,8 +29,8 @@
               class="font-weight-bold ms-1 mb-2"
               style="display: flex; justify-content: space-between"
             >
-              <span style="font-size: 18px; font-weight: 400">Thông báo</span
-              ><span
+              <h6 style="font-size: 18px; font-weight: 400">Thông báo</h6>
+              <span
                 style="font-size: 14px; font-weight: 400; color: #eb5353"
                 id="notification-seen"
                 @click="seenAll()"

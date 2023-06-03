@@ -28,7 +28,7 @@
       </v-card>
     </v-hover>
     <div class="course-detail">
-      <span
+      <h5
         style="
           color: #242424;
           font-size: 16px;
@@ -36,9 +36,10 @@
           font: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
             'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
         "
-        >{{ courseName }}</span
       >
-      <span
+        {{ courseName }}
+      </h5>
+      <h6
         v-if="isActive"
         style="
           color: #242424;
@@ -54,8 +55,8 @@
           icon="fa-solid fa-users"
           color="black"
           style="margin-right: 5px"
-        />{{ studentCount }}</span
-      >
+        />{{ studentCount }}
+      </h6>
     </div>
   </div>
 </template>

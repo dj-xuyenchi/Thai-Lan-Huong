@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Allow: /signin/
+Allow: /home/
+Allow: /profile/
+
+Sitemap: https://dj-xuyenchi.edu.vn/home_sitemap.xml

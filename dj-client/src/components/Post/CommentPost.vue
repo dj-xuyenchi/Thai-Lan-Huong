@@ -25,7 +25,7 @@
         }}<img
           v-if="data.isKYC"
           :src="require('../../assets/kyc.png')"
-          alt=""
+          alt="Hình ảnh"
           class="kyc"
       /></span>
 
@@ -139,7 +139,7 @@
               }}<img
                 v-if="item.isKYC"
                 :src="require('../../assets/kyc.png')"
-                alt=""
+                alt="Hình ảnh"
                 class="kyc"
             /></span>
             <span

@@ -3,7 +3,7 @@
     <div style="display: flex; align-items: center; padding-left: 14px">
       <img
         :src="require(`../../assets/user-avatar/5.jpg`)"
-        alt=""
+        alt="Hình ảnh"
         style="width: 40px; border-radius: 50%"
       />
       <span

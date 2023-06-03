@@ -14,7 +14,7 @@
         <div style="width: 60%; float: left">
           <img
             :src="`data:image/png;base64,` + postMainData.hotPost?.img"
-            alt=""
+            alt="Hình ảnh"
             style="width: 100%; height: 420px"
           />
           <h3 class="hot-title">
@@ -35,7 +35,7 @@
             <div style="width: 50%; float: left">
               <img
                 :src="`data:image/png;base64,` + item.img"
-                alt=""
+                alt="Hình ảnh"
                 style="width: 100%; height: 110px"
               />
             </div>

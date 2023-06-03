@@ -14,12 +14,12 @@
     >
       <img
         :src="require(`./assets/loadingkapoo.gif`)"
-        alt=""
+        alt="Hình ảnh"
         style="height: 150px"
       />
       <img
         :src="require(`./assets/loading.gif`)"
-        alt=""
+        alt="Hình ảnh"
         style="position: absolute; top: 45%"
       />
     </div>
