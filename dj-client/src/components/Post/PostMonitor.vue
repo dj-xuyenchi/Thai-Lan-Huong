@@ -119,8 +119,6 @@ export default {
   },
   created() {
     this.getPostDetail();
-  },
-  mounted() {
     SeoTool(
       this.post.title,
       this.post.des,
@@ -128,7 +126,7 @@ export default {
       "https://dj-xuyenchi.edu.vn/#/home/post/" +
         this.post.id +
         "/" +
-        this.post.title
+        this.$route.params.name
     );
   },
 };

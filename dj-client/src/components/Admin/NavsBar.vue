@@ -159,11 +159,22 @@ export default {
         },
         {
           icon: "mdi mdi-table-account",
-          title: "Blog của Xuyên Chi",
+          title: "Vlog của Xuyên Chi",
           subnav: [
             {
               icon: "mdi mdi-note-multiple-outline",
               title: "Danh sách blog",
+              to: "/admin/blog",
+            },
+          ],
+        },
+        {
+          icon: "mdi mdi-face-agent",
+          title: "Tư vấn học",
+          subnav: [
+            {
+              icon: "mdi mdi-note-multiple-outline",
+              title: "Danh sách yêu cầu",
               to: "/admin/blog",
             },
           ],

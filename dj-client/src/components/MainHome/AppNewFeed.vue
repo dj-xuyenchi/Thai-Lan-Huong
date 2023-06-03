@@ -37,6 +37,8 @@ export default {
   },
   created() {
     this.getLobbyData();
+    var sp = document.querySelector(".echbay-sms-messenger");
+    sp.style.display = "block";
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),

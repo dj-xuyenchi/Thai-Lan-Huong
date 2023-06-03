@@ -17,6 +17,8 @@ export default {
   components: { NavsBar, HeaderAdmin },
   created() {
     this.isAdmin();
+    var sp = document.querySelector(".echbay-sms-messenger");
+    sp.style.display = "none";
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
