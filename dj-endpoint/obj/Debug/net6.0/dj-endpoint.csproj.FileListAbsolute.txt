@@ -958,3 +958,8 @@ C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\refi
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\dj-endpoint.pdb
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\dj-endpoint.genruntimeconfig.cache
 C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\ref\dj-endpoint.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Debug\net6.0\Google.Apis.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Debug\net6.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Debug\net6.0\Google.Apis.Auth.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Debug\net6.0\Google.Apis.Core.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Debug\net6.0\Google.Apis.YouTube.v3.dll

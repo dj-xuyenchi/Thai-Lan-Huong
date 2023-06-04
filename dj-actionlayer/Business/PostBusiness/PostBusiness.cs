@@ -182,14 +182,7 @@ namespace dj_actionlayer.Business.PostBusiness
             }
             Notification notification = new Notification();
             notification.SystemNotification = false;
-            if ((bool)user.IsKYC)
-            {
-            notification.Content = user.UserFisrtName + " " + user.UserLastName +Settings.kyc()+ " đã trả lời bình luận của bạn!";
-            }
-            else
-            {
-                notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã trả lời bình luận của bạn!";
-            }
+            notification.Content = user.UserFisrtName + " " + user.UserLastName + " @KYC@ đã trả lời bình luận của bạn!";
             notification.UserId = (int)cmt.UserId;
             notification.Create = DateTime.Now;
             notification.IsSeen = false;

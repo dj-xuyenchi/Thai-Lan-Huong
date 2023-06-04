@@ -131,13 +131,12 @@ namespace dj_actionlayer.Business.Admin
                 chapterLesson.LessonId = updateSortNumberLessonRequest.LessonId;
                 chapterLesson.AddLessonToChapterDateTime = DateTime.Now;
                 await _context.AddAsync(chapterLesson);
-                await _context.SaveChangesAsync();
                 CourseChapter courseChapter = await _context.course_chapter.FindAsync(updateSortNumberLessonRequest.CourseChapterId);
                 var listUserResi = _context.user_course.Where(x => x.CourseId == courseChapter.CourseId).ToList();
                 Lesson lesson = await _context.lesson.FindAsync(updateSortNumberLessonRequest.LessonId);
                 foreach (var item in listUserResi)
                 {
-                    if (!_context.user_lesson_checkpoint.Any(x => x.LessonId == lesson.Id && x.UserId == item.UserId))
+                    if (!await _context.user_lesson_checkpoint.AnyAsync(x => x.LessonId == lesson.Id && x.UserId == item.UserId))
                     {
                         UserLessonCheckpoint userLessonCheckpoint = new UserLessonCheckpoint();
                         userLessonCheckpoint.UserId = (int)item.UserId;

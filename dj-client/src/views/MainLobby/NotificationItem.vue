@@ -9,7 +9,29 @@
     </div>
     <div class="left-content">
       <div class="content">
-        <span v-html="data.content"> </span>
+        <div style="margin-top: -10px" v-if="data.isKYC">
+          <span style="font-weight: 600">
+            {{ name }}
+          </span>
+          <div
+            style="
+              height: 24px;
+              width: 20px;
+              display: inline-block;
+              position: relative;
+            "
+          >
+            <img
+              :src="require('../../assets/kyc.png')"
+              alt="Hình ảnh"
+              class="kyc"
+            />
+          </div>
+          <span> {{ content }}</span>
+        </div>
+        <span v-if="!data.isKYC" style="margin-top: -10px">
+          {{ data.content }}</span
+        >
         <!-- <span style="font-weight: 500">DJ - CodeMaster.</span> -->
         <span class="timeline">{{ data.sendTime }}</span>
         <span class="isread" v-if="!data.isSeen"></span>
@@ -23,6 +45,12 @@ import UserAPI from "../../apis/APIUser/UserAPI.ts";
 export default {
   props: { data: Object, setShowNotification: Function },
   name: "NotificationItem",
+  data() {
+    return {
+      name: "",
+      content: "",
+    };
+  },
   methods: {
     async seenNoti() {
       await UserAPI.seenNoti(
@@ -32,13 +60,20 @@ export default {
       this.setShowNotification();
     },
   },
+  created() {
+    const newContent = this.data.content.split("@KYC@");
+    this.name = newContent[0];
+    this.content = newContent[1];
+  },
 };
 </script>
 
 <style lang="css" scoped>
 .kyc {
-  height: 20px;
-  width: 20px;
+  height: 16px;
+  position: absolute;
+  top: 10px;
+  width: 16px;
 }
 .noti-item {
   width: 98%;

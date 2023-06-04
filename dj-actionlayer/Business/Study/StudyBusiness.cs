@@ -19,6 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using dj_webdesigncore.Enums.StudyEnums;
 using dj_webdesigncore.DTOs.Admin;
+using dj_actionlayer.DAO;
 
 namespace dj_actionlayer.Business.Study
 {
@@ -151,7 +152,7 @@ namespace dj_actionlayer.Business.Study
                 {
                     dj_webdesigncore.DTOs.Lobby.LessonDetailDTO lessonDetailDTO = new dj_webdesigncore.DTOs.Lobby.LessonDetailDTO();
                     User user = await _context.user.FindAsync(userId);
-                    UserLessonCheckpoint checkPoint = _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).SingleOrDefault();
+                    UserLessonCheckpoint checkPoint =await _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).FirstOrDefaultAsync();
                     if (checkPoint != null)
                     {
                         lessonDetailDTO.IsDone = true;
@@ -214,21 +215,21 @@ namespace dj_actionlayer.Business.Study
             }
             try
             {
-                Lesson lesson = _context.lesson.Find(lessonId);
+                Lesson lesson =await _context.lesson.FindAsync(lessonId);
                 if (lesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                User user = _context.user.Find(userId);
+                User user =await _context.user.FindAsync(userId);
                 if (user == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = _context.practice_lesson.Where(x => x.LessonId == lessonId).FirstOrDefault();
+                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson =await _context.practice_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
                 if (practiceLesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại PracticeLesson!";
@@ -337,21 +338,21 @@ namespace dj_actionlayer.Business.Study
             try
             {
                 StudyDTO<QuestionLessonDTO> data = new StudyDTO<QuestionLessonDTO>();
-                Lesson lesson = _context.lesson.Find(lessonId);
+                Lesson lesson =await _context.lesson.FindAsync(lessonId);
                 if (lesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                User user = _context.user.Find(userId);
+                User user =await _context.user.FindAsync(userId);
                 if (user == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                QuestionLesson questionLesson = _context.question_lesson.Where(x => x.LessonId == lessonId).FirstOrDefault();
+                QuestionLesson questionLesson =await _context.question_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
                 if (questionLesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại PracticeLesson!";
@@ -518,41 +519,34 @@ namespace dj_actionlayer.Business.Study
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.PARAMNULL;
                 return result;
             }
-            try
+
+            Lesson lesson = await _context.lesson.FindAsync(lessonId);
+            if (lesson == null)
             {
-                Lesson lesson = _context.lesson.Find(lessonId);
-                if (lesson == null)
-                {
-                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
-                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
-                    return result;
-                }
-                User user = _context.user.Find(userId);
-                if (user == null)
-                {
-                    result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
-                    result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
-                    return result;
-                }
-                StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
-                studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
-                VideoLessonDTO videoLesson = new VideoLessonDTO();
-                videoLesson.VideoUrl = _context.video_lesson.Where(x => x.LessonId == lessonId).FirstOrDefault().LessonLinkUrl;
-                studyData.StudyDetail = videoLesson;
-                Course course = await _context.course.FindAsync(courseId);
-                studyData.CourseName = course.CourseName;
-                studyData.ChapterDetail = LessonListOfUser(userId, courseId).Result.ChapterLesson;
-                result.Data = studyData;
-                result.Messenger = "Lấy dữ liệu thành công!";
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                 return result;
             }
-            catch (Exception ex)
+            User user = await _context.user.FindAsync(userId);
+            if (user == null)
             {
-                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+                result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                 return result;
             }
+            StudyDTO<VideoLessonDTO> studyData = new StudyDTO<VideoLessonDTO>();
+            studyData.LessonType = dj_webdesigncore.Enums.CourseEnums.LessonType.THEORY;
+            VideoLessonDTO videoLesson = new VideoLessonDTO();
+            VideoLesson videoLessonData = await _context.video_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
+            videoLesson.VideoUrl = videoLessonData.LessonLinkUrl;
+            studyData.StudyDetail = videoLesson;
+            Course course = await _context.course.FindAsync(courseId);
+            studyData.CourseName = course.CourseName;
+            studyData.ChapterDetail = LessonListOfUser(userId, courseId).Result.ChapterLesson;
+            result.Data = studyData;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
         }
 
         public async Task<ResponData<RegisterCourseDTO>> RegisterCourse(RegisterCourse registerCourse)
@@ -581,7 +575,7 @@ namespace dj_actionlayer.Business.Study
                     result.Messenger = "Lấy dữ liệu thành công!";
                     return result;
                 }
-                UserCourse userCourse = _context.user_course.Where(x => x.CourseId == registerCourse.CourseId && x.UserId == registerCourse.UserId).SingleOrDefault();
+                UserCourse userCourse = await _context.user_course.Where(x => x.CourseId == registerCourse.CourseId && x.UserId == registerCourse.UserId).FirstOrDefaultAsync();
                 if (userCourse != null)
                 {
                     data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.REGISTERBEFORE;
@@ -615,8 +609,7 @@ namespace dj_actionlayer.Business.Study
                 //notification1.IsSeen = false;
                 //notification1.Link = null;
                 //await _context.AddAsync(notification1);
-                await _context.SaveChangesAsync();
-                CourseChapter courseChapter = _context.course_chapter.Where(x => x.CourseId == registerCourse.CourseId && x.SortNumber == 1).SingleOrDefault();
+                CourseChapter courseChapter = await _context.course_chapter.Where(x => x.CourseId == registerCourse.CourseId && x.SortNumber == 1).FirstOrDefaultAsync();
                 if (courseChapter == null)
                 {
                     data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.NOCHAPTER;
@@ -626,7 +619,7 @@ namespace dj_actionlayer.Business.Study
                     result.Messenger = "Lấy dữ liệu thành công!";
                     return result;
                 }
-                ChapterLesson chapterLesson = _context.chapter_lesson.Where(x => x.SortNumber == 1 && x.CourseChapterId == courseChapter.Id).SingleOrDefault();
+                ChapterLesson chapterLesson = await _context.chapter_lesson.Where(x => x.SortNumber == 1 && x.CourseChapterId == courseChapter.Id).FirstOrDefaultAsync();
                 if (chapterLesson == null)
                 {
                     data.Status = dj_webdesigncore.Enums.CourseEnums.RegisterEnum.NOLESSON;
@@ -761,7 +754,7 @@ namespace dj_actionlayer.Business.Study
                 User user2 = await _context.user.FindAsync(commentLesson2.UserId);
                 Notification notification = new Notification();
                 notification.SystemNotification = false;
-                notification.Content = user.UserFisrtName + " " + user.UserLastName + " đã trả lời bình luận của bạn!";
+                notification.Content = user.UserFisrtName + " " + user.UserLastName + " @KYC@đã trả lời bình luận của bạn!";
                 notification.UserId = user2.Id;
                 notification.Create = DateTime.Now;
                 notification.IsSeen = false;
