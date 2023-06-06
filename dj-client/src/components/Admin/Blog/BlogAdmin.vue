@@ -7,12 +7,12 @@
         hide-details="auto"
         density="compact"
         variant="outlined"
-        @keydown.enter="findLessonByName()"
+        @keydown.enter="findBlog()"
       ></v-text-field>
     </div>
     <AddBlog style="margin-top: 12px" :getBlogPage="getBlogPage" />
   </div>
-  <BlogTable :tableData="tableData" />
+  <BlogTable :tableData="tableData" :getBlogPage="getBlogPage" />
   <div class="text-center" @click="getLessonDetail()">
     <v-container>
       <v-row justify="center">
@@ -28,6 +28,14 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+      <template v-slot:actions>
+        <v-btn color="green" variant="text" @click="snackbar = false">
+          Đóng
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -49,10 +57,12 @@ export default {
   },
   data: () => ({
     tableData: [],
+    snackbar: false,
+    text: "",
     page: 1,
     context: "",
     maxPage: 1,
-    key: null,
+    key: "",
     show: false,
   }),
   created() {
@@ -60,14 +70,16 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    async findLessonByName() {
+    async findBlog() {
       this.setIsLoadedData(true);
-      if (!this.key) {
+      if (this.key.trim().length == 0) {
+        this.text = "Hãy nhập từ khóa";
+        this.snackbar = true;
         this.setIsLoadedData(false);
         return;
       }
       const token = localStorage.getItem("token");
-      const data = await AdminAPI.findLessonByName(this.key, token);
+      const data = await AdminAPI.findBlog(this.key, token);
       this.tableData = data.data;
       this.setIsLoadedData(false);
     },

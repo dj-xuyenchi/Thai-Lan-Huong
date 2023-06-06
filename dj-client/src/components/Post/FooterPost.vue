@@ -57,7 +57,10 @@ export default {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("id");
       const refreshToken = localStorage.getItem("refreshToken");
-      const data = await PostAPI.commentOfPost(this.$route.params.id, userId);
+      const data = await PostAPI.commentOfPost(
+        this.$route.params.id,
+        userId ? userId : -1
+      );
       this.commentList = data.data.listComment;
       this.commentCount = data.data.commentCount;
     },

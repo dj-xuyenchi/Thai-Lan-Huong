@@ -52,5 +52,7 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<GetLessonDTO>> findLesson(string key);
         Task<ResponData<ActionStatus>> addBlog(IFormFile img, AddBlogRequest addBlogRequest);
         Task<ResponData<List<BlogDTO>>> getBlog(int page);
+        Task<ResponData<List<BlogDTO>>> findBlog(string key);
+        Task<ResponData<ActionStatus>> updateBlog(IFormFile img, AddBlogRequest addBlogRequest);
     }
 }

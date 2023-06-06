@@ -14,7 +14,7 @@ namespace dj_webdesigncore.Entities.BlogEntity
         public string BlogLink { get; set; }
         public string BlogTitle { get; set; }
         public DateTime CreateTime { get; set; }
-        public DateTime UpdateTime { get; set; }
+        public DateTime? UpdateTime { get; set; }
         public int StatusId { get; set; }
         public BlogStatus Status { get; set; }
         public int BlogTypeId { get; set; }

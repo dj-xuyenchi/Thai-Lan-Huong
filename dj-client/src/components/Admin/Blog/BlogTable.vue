@@ -10,7 +10,7 @@
           <th class="text-left">Cập nhật</th>
           <th class="text-left">View</th>
           <th class="text-left">Comment</th>
-          <th class="text-center">Action</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +28,9 @@
           <td>{{ item.updateTime }}</td>
           <td>{{ item.viewCount }}</td>
           <td>{{ item.cmtCount }}</td>
-          <td>{{ item.videoTime }}</td>
-          <td></td>
+          <td>
+            <BtnUpdateBlog :item="item" :getBlogPage="getBlogPage" />
+          </td>
         </tr>
       </tbody>
     </v-table>
@@ -37,8 +38,10 @@
 </template>
 
 <script>
+import BtnUpdateBlog from "./BtnUpdateBlog.vue";
 export default {
   name: "BlogTable",
+  components: { BtnUpdateBlog },
   data() {
     return {
       itemsPerPage: 15,
@@ -47,7 +50,7 @@ export default {
   },
   props: {
     tableData: [],
-    getLessonDetail: Function,
+    getBlogPage: Function,
   },
 };
 </script>

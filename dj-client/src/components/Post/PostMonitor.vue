@@ -100,7 +100,7 @@ export default {
     ...mapMutations(["setIsLoadedData"]),
     async getPostDetail() {
       this.setIsLoadedData(true);
-      this.id = localStorage.getItem("id");
+      const id = localStorage.getItem("id");
       const data = await PostAPI.getPostDetail(
         this.$route.params.id,
         this.id ? this.id : -1
@@ -113,7 +113,6 @@ export default {
         "<img style=max-width:100% "
       );
       this.renderedHTML = htmlContent;
-
       this.setIsLoadedData(false);
     },
   },

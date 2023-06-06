@@ -289,10 +289,10 @@ export default {
 
 <style lang="css" scoped>
 .kyc {
-  height: 20px;
-  width: 20px;
+  height: 16px;
+  width: 16px;
   position: absolute;
-  top: 4px;
+  top: 7px;
 }
 .user-check {
   position: absolute;

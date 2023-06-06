@@ -12,6 +12,10 @@ namespace dj_actionlayer.DAO
         {
             return "npqhdyzryqtirqiqazozklrfxdogjbdy";
         }
+        public static string DBConnectVPS()
+        {
+            return "Data Source=VPS\\SQLEXPRESS;Integrated Security=false;Initial Catalog=djxuyen1_coding;MultipleActiveResultSets=True;User ID= sa;Password =12341234";
+        }
         public static string DBConnect()
         {
             return "Data Source=localhost;Initial Catalog=dj_coding;Integrated Security=True;encrypt=true;trustservercertificate=true;MultipleActiveResultSets=True;";

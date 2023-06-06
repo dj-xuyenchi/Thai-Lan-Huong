@@ -1,6 +1,19 @@
 <template>
-  <div style="display: flex; justify-content: space-between">
-    <AddChapter :getChapterDetail="getChapterDetail" />
+  <div style="display: flex; justify-content: flex-end">
+    <div style="width: 360px; margin-right: 12px">
+      <v-text-field
+        v-model="key"
+        label="Tìm kiếm"
+        hide-details="auto"
+        density="compact"
+        variant="outlined"
+        @keydown.enter="findLessonByName()"
+      ></v-text-field>
+    </div>
+    <AddChapter
+      :getChapterDetail="getChapterDetail"
+      style="margin-top: 12px; margin-left: 8px"
+    />
   </div>
   <ChapterTable
     :data="tableData"

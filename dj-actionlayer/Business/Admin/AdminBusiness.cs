@@ -34,7 +34,7 @@ namespace dj_actionlayer.Business.Admin
             blog.BlogTitle = addBlogRequest.Title;
             blog.CreateTime = DateTime.Now;
             blog.BlogTypeId = 1;
-            blog.StatusId = 1;
+            blog.StatusId = 2;
             blog.CmtCount = 0;
             blog.ViewCount = 0;
             var stream = new MemoryStream();
@@ -480,6 +480,41 @@ namespace dj_actionlayer.Business.Admin
 
         }
 
+        public async Task<ResponData<List<BlogDTO>>> findBlog(string key)
+        {
+            ResponData<List<BlogDTO>> result = new ResponData<List<BlogDTO>>();
+            int stt = 1;
+            List<BlogDTO> blogList = new List<BlogDTO>();
+            var listData = _context.blog.Where(x => x.BlogTitle.Contains(key)).OrderByDescending(x => x.CreateTime).ToList();
+            foreach (var item in listData)
+            {
+                BlogDTO blog = new BlogDTO();
+                blog.Stt = stt;
+                stt++;
+                blog.CreateTime = item.CreateTime.Day + " - " + item.CreateTime.Month + " - " + item.CreateTime.Year;
+                if (item.UpdateTime == null)
+                {
+                    blog.UpdateTime = "Chưa cập nhật";
+                }
+                else
+                {
+                    blog.UpdateTime = item.UpdateTime.Value.Day + " - " + item.UpdateTime.Value.Month + " - " + item.UpdateTime.Value.Year; ;
+                }
+                blog.Title = item.BlogTitle;
+                blog.CmtCount = item.CmtCount;
+                blog.ViewCount = item.ViewCount;
+                blog.IsActive = item.StatusId;
+                blog.Id = item.Id;
+                blog.BlogImg = item.BlogImg;
+                blog.BlogLink = item.BlogLink;
+                blogList.Add(blog);
+            }
+            result.Data = blogList;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         public async Task<ResponData<GetLessonDTO>> findLesson(string key)
         {
             ResponData<GetLessonDTO> result = new ResponData<GetLessonDTO>();
@@ -612,16 +647,29 @@ namespace dj_actionlayer.Business.Admin
         {
             ResponData<List<dj_webdesigncore.DTOs.Lobby.BlogDTO>> result = new ResponData<List<dj_webdesigncore.DTOs.Lobby.BlogDTO>>();
             List<dj_webdesigncore.DTOs.Lobby.BlogDTO> data = new List<BlogDTO>();
+            int stt = 1;
             var listLesson = _context.blog.OrderByDescending(x => x.CreateTime).Skip((page - 1) * 15).Take(15).ToList();
             foreach (var item in listLesson)
             {
                 BlogDTO blog = new BlogDTO();
-                blog.CreateTime = item.CreateTime;
-                blog.UpdateTime = item.UpdateTime;
+                blog.Stt = stt;
+                stt++;
+                blog.CreateTime = item.CreateTime.Day + " - " + item.CreateTime.Month + " - " + item.CreateTime.Year;
+                if (item.UpdateTime == null)
+                {
+                    blog.UpdateTime = "Chưa cập nhật";
+                }
+                else
+                {
+                    blog.UpdateTime = item.UpdateTime.Value.Day + " - " + item.UpdateTime.Value.Month + " - " + item.UpdateTime.Value.Year; ;
+                }
                 blog.Title = item.BlogTitle;
                 blog.CmtCount = item.CmtCount;
                 blog.ViewCount = item.ViewCount;
+                blog.IsActive = item.StatusId;
+                blog.Id = item.Id;
                 blog.BlogImg = item.BlogImg;
+                blog.BlogLink = item.BlogLink;
                 data.Add(blog);
             }
             result.Data = data;
@@ -968,6 +1016,35 @@ namespace dj_actionlayer.Business.Admin
                 });
             }
             result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> updateBlog(IFormFile? img, AddBlogRequest addBlogRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            Blog blog = await _context.blog.FindAsync(addBlogRequest.Id);
+            if (blog == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            blog.BlogLink = addBlogRequest.Link;
+            blog.BlogTitle = addBlogRequest.Title;
+            blog.UpdateTime = DateTime.Now;
+            blog.StatusId = addBlogRequest.StatusId;
+            if (img != null)
+            {
+                var stream = new MemoryStream();
+                img.CopyTo(stream);
+                byte[] avatarByte = stream.ToArray();
+                blog.BlogImg = avatarByte;
+            }
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;

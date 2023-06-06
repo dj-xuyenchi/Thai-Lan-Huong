@@ -38,6 +38,14 @@
       </v-row>
     </v-container>
   </div>
+  <v-snackbar v-model="snackbar">
+    {{ text }}
+    <template v-slot:actions>
+      <v-btn color="green" variant="text" @click="snackbar = false">
+        Đóng
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -64,6 +72,8 @@ export default {
   data: () => ({
     tableData: [],
     page: 1,
+    snackbar: false,
+    text: "",
     context: "",
     maxPage: 1,
     key: null,
@@ -76,7 +86,9 @@ export default {
     ...mapMutations(["setIsLoadedData"]),
     async findLessonByName() {
       this.setIsLoadedData(true);
-      if (!this.key) {
+      if (this.key.trim().length == 0) {
+        this.text = "Hãy nhập từ khóa";
+        this.snackbar = true;
         this.setIsLoadedData(false);
         return;
       }

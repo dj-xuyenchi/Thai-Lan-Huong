@@ -41,11 +41,14 @@ builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy("ADMINANDMEMBER", policy =>
         policy.RequireClaim(
-             ClaimTypes.Role, new string[] { "ADMIN", "MEMBER" }
+             ClaimTypes.Role, new string[] { "ADMIN", "MEMBER","MAINTAIN" }
             )
     );
     option.AddPolicy("MEMBER", policy => policy.RequireClaim(
         ClaimTypes.Role, "MEMBER"
+        ));
+    option.AddPolicy("ADMINMAINTAIN", policy => policy.RequireClaim(
+       ClaimTypes.Role, new string[] { "ADMIN", "MAINTAIN" }
         ));
     option.AddPolicy("ADMIN", policy => policy.RequireClaim(
      ClaimTypes.Role, "ADMIN"
@@ -56,8 +59,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:8080",
-                                              "http://www.contoso.com").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                          policy.WithOrigins("https://dj-xuyenchi.edu.vn", "https://api.dj-xuyenchi.edu.vn").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                       });
 });
 var app = builder.Build();

@@ -264,9 +264,16 @@ namespace dj_actionlayer.Business.PostBusiness
                     commentCout++;
                     CommentDetailDTO commentDetail = new CommentDetailDTO();
                     commentDetail.CommentId = comment.Id;
-                    if (_context.user_like_comment_post.Any(x => x.CommentPostId == comment.Id && x.UserId == userId))
+                    if (userId != -1)
+                    {
+                    if (await _context.user_like_comment_post.AnyAsync(x => x.CommentPostId == comment.Id && x.UserId == userId))
                     {
                         commentDetail.IsLike = true;
+                    }
+                    else
+                    {
+                        commentDetail.IsLike = false;
+                    }
                     }
                     else
                     {

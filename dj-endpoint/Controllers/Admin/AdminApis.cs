@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace dj_endpoint.Controllers.Admin
 {
-    [Authorize(Policy = "ADMIN")]
+    [Authorize(Policy = "ADMINMAINTAIN")]
     [Route("/admin")]
     public class AdminApis : BaseApi
     {
@@ -200,6 +200,17 @@ namespace dj_endpoint.Controllers.Admin
         public async Task<IActionResult> getBlogPage(int page)
         {
             return Ok(await _admin.getBlog(page));
+        }
+        [HttpGet("findblog")]
+        public async Task<IActionResult> findBlog(string key)
+        {
+            return Ok(await _admin.findBlog(key));
+        }
+        [HttpPost("updateblog")]
+        public async Task<IActionResult> updateBlog([FromForm] IFormFile? img, [FromForm] string data)
+        {
+            AddBlogRequest addBlog = JsonConvert.DeserializeObject<AddBlogRequest>(data);
+            return Ok(await _admin.updateBlog(img, addBlog));
         }
     }
 }
