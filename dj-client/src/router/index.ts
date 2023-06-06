@@ -27,6 +27,7 @@ import ChapterAdmin from "@/components/Admin/Chapter/ChapterAdmin.vue";
 import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
 import BlogAdmin from "@/components/Admin/Blog/BlogAdmin.vue";
 import PostAdmin from "@/components/Admin/Post/PostAdmin.vue";
+import UserAdmin from "@/components/Admin/User/UserAdmin.vue";
 import UserMain from "@/components/User/UserMain.vue";
 import InforContact from "@/components/User/InforContact.vue";
 import CourseResisted from "@/components/User/CourseResisted.vue";
@@ -187,6 +188,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "post",
         component: PostAdmin,
+      },
+      {
+        path: "user",
+        component: UserAdmin,
       },
     ],
   },

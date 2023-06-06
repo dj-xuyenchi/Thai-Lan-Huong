@@ -1,9 +1,9 @@
 import { HTTP } from "../HTTPs";
 import { Error } from "@/store/redirect";
 class AdminAPI {
-  getLessonPage(page: number, token: string): Promise<any> {
+  getUserPage(page: number, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get(`/root/getlessonpage?page=${page}`, {
+      HTTP.get(`/root/getuser?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

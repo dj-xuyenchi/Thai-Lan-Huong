@@ -106,17 +106,17 @@ export default {
             {
               icon: "mdi mdi-account-supervisor",
               title: "Danh sách tài khoản",
-              to: "/admin/courses",
+              to: "/admin/user",
             },
             {
               icon: "mdi mdi-account-remove",
               title: "Tài khoản vi phạm",
-              to: "/admin/courses",
+              to: "/admin/user-pro",
             },
             {
               icon: "mdi mdi-account-convert",
               title: "Phân quyền tài khoản",
-              to: "/admin/courses",
+              to: "/admin/user-role",
             },
           ],
         },

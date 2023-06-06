@@ -9,12 +9,22 @@ namespace dj_endpoint.Controllers.Admin
     [Route("/root")]
     public class RootApis : BaseApi
     {
-        private readonly IAdminBusiness _admin;
+        private readonly IRootBusiness _root;
 
         public RootApis()
         {
-            _admin = new AdminBusiness();
+            _root = new RootBusiness();
+        }
+        [HttpGet("getuser")]
+        public async Task<IActionResult> getUserPage(int page)
+        {
+            return Ok(await _root.GetUserPage(page));
+        }
+        [HttpGet("getuserdenounce")]
+        public async Task<IActionResult> getUserDenounce(int page)
+        {
+            return Ok(await _root.GetUserDenounce(page));
         }
     }
-   
+
 }
