@@ -229,8 +229,7 @@ namespace dj_actionlayer.Business.Lobby
         public async Task<ResponData<LobbyDTO>> LobbyContent()
         {
             ResponData<LobbyDTO> result = new ResponData<LobbyDTO>();
-            try
-            {
+           
                 LobbyDTO lobbyDTO = new LobbyDTO();
                 ListActiveCourse listActiveCourse = new ListActiveCourse();
                 listActiveCourse.StudyedStudent = _context.user_course.ToList().Count;
@@ -274,10 +273,10 @@ namespace dj_actionlayer.Business.Lobby
                     listPost.Add(postDTO);
                 }
                 lobbyDTO.ListPost = listPost;
-                if (DateTime.Now.Minute % 3 == 0)
-                {
-                    await updateFullBlog();
-                }
+                //if (DateTime.Now.Minute % 3 == 0)
+                //{
+                //    await updateFullBlog();
+                //}
                 var listBlog = _context.blog.Where(x => x.StatusId == 1).OrderByDescending(x => x.CreateTime).Take(10).ToList();
                 List<BlogDTO> blogList = new List<BlogDTO>();
                 foreach (var blog in listBlog)
@@ -296,13 +295,6 @@ namespace dj_actionlayer.Business.Lobby
                 result.Data = lobbyDTO;
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
-            }
-            catch (Exception ex)
-            {
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
-                result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
-                return result;
-            }
         }
         private async Task updateFullBlog()
         {
