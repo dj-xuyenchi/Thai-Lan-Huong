@@ -123,9 +123,19 @@
             <span class="field-title"
               >Facebook <span class="required-star"></span
             ></span>
-            <span class="field-content">{{
-              userInfor.userFacebook ? userInfor.userFacebook : "Chưa cập nhật!"
-            }}</span>
+            <a
+              :href="userInfor.userFacebook ? userInfor.userFacebook : ``"
+              class="field-content"
+              target="_blank"
+              style="color: blue"
+              >{{
+                userInfor.userFacebook
+                  ? userInfor.userFacebook.length > 40
+                    ? userInfor.userFacebook.substring(0, 37) + `...`
+                    : userInfor.userFacebook
+                  : "Chưa cập nhật!"
+              }}</a
+            >
           </div>
         </li>
         <li>
@@ -133,9 +143,19 @@
             <span class="field-title"
               >LinkedIn <span class="required-star"></span
             ></span>
-            <span class="field-content">{{
-              userInfor.userLinkedIn ? userInfor.userLinkedIn : "Chưa cập nhật!"
-            }}</span>
+            <a
+              :href="userInfor.userLinkedIn ? userInfor.userLinkedIn : ``"
+              class="field-content"
+              target="_blank"
+              style="color: blue"
+              >{{
+                userInfor.userLinkedIn
+                  ? userInfor.userLinkedIn.length > 40
+                    ? userInfor.userLinkedIn.substring(0, 37) + `...`
+                    : userInfor.userLinkedIn
+                  : "Chưa cập nhật!"
+              }}</a
+            >
           </div>
         </li>
         <li>
@@ -501,6 +521,7 @@ export default {
   font-weight: 400;
   width: 72%;
   display: block;
+  text-decoration: none;
   float: left;
 }
 .iconBtn:hover {

@@ -10,7 +10,7 @@
         @keydown.enter="findBlog()"
       ></v-text-field>
     </div>
-    <AddBlog style="margin-top: 12px" :getUserPage="getUserPage" />
+    <AddUser style="margin-top: 12px" :getUserPage="getUserPage" />
   </div>
   <UserTable :tableData="tableData" :getUserPage="getUserPage" />
   <div class="text-center" @click="getUserPage()">
@@ -43,12 +43,12 @@
 import { mapMutations } from "vuex";
 import RootAPI from "../../../apis/APIAdmin/RootAPI.ts";
 import UserTable from "./UserTable";
-import AddBlog from "./AddBlog";
+import AddUser from "./AddUser";
 export default {
   name: "UserAdmin",
   components: {
     UserTable,
-    AddBlog,
+    AddUser,
     // AddTheory,
     // AddQuestion,
     // AddModel,
