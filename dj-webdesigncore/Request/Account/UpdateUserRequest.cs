@@ -25,5 +25,6 @@ namespace dj_webdesigncore.Request.Account
         public string district { get; set; }
         public string addressNow { get; set; }
         public int? catalog { get; set; }
+        public int roleId { get; set; }
     }
 }

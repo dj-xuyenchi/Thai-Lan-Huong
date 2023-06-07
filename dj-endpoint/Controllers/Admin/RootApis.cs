@@ -25,6 +25,11 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _root.GetUserDenounce(page));
         }
+        [HttpGet("finduser")]
+        public async Task<IActionResult> findUser(string key,int page)
+        {
+            return Ok(await _root.FindUserByNameEmail(key,page));
+        }
     }
 
 }

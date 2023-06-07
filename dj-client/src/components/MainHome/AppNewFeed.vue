@@ -50,8 +50,10 @@ export default {
       this.blogList = data.data.blog;
       this.studentStudyed = data.data.listActiveCourse.studyedStudent;
       this.studentStudying = data.data.listActiveCourse.studyingStudent;
-      this.setIsLoadedData(false);
     },
+  },
+  mounted() {
+    this.setIsLoadedData(false);
   },
 };
 </script>

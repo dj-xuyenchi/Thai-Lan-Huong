@@ -7,7 +7,7 @@
         hide-details="auto"
         density="compact"
         variant="outlined"
-        @keydown.enter="findBlog()"
+        @keydown.enter="findUser(1)"
       ></v-text-field>
     </div>
     <AddUser style="margin-top: 12px" :getUserPage="getUserPage" />
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    async findBlog() {
+    async findUser(page) {
       this.setIsLoadedData(true);
       if (this.key.trim().length == 0) {
         this.text = "Hãy nhập từ khóa";
@@ -79,7 +79,7 @@ export default {
         return;
       }
       const token = localStorage.getItem("token");
-      const data = await RootAPI.findBlog(this.key, token);
+      const data = await RootAPI.findUser(this.key, page, token);
       this.tableData = data;
       this.setIsLoadedData(false);
     },
