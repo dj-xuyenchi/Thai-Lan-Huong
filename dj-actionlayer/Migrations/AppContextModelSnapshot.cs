@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
-using AppContext = dj_actionlayer.DAO.AppContext;
 
+using AppContext = dj_actionlayer.DAO.AppContext;
 #nullable disable
 
 namespace dj_actionlayer.Migrations
@@ -55,7 +55,7 @@ namespace dj_actionlayer.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ViewCount")
@@ -170,6 +170,9 @@ namespace dj_actionlayer.Migrations
                     b.Property<int?>("CommentLessonParentId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CommentStatusId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
@@ -192,6 +195,8 @@ namespace dj_actionlayer.Migrations
 
                     b.HasIndex("CommentLessonParentId");
 
+                    b.HasIndex("CommentStatusId");
+
                     b.HasIndex("LessonId");
 
                     b.HasIndex("UserId");
@@ -212,6 +217,9 @@ namespace dj_actionlayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CommentPostParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CommentStatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDateTime")
@@ -239,11 +247,34 @@ namespace dj_actionlayer.Migrations
 
                     b.HasIndex("CommentPostParentId");
 
+                    b.HasIndex("CommentStatusId");
+
                     b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("comment_post");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.CommentStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("StatusCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("comment_status");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.ConfirmEmail", b =>
@@ -288,6 +319,12 @@ namespace dj_actionlayer.Migrations
                     b.Property<DateTime>("CheckTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("CmtId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DenounceTypeId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsCheck")
                         .HasColumnType("bit");
 
@@ -312,9 +349,32 @@ namespace dj_actionlayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DenounceTypeId");
+
                     b.HasIndex("UserSendId");
 
                     b.ToTable("denounce");
+                });
+
+            modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.DenounceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("DenounceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DenounceName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("denounce_type");
                 });
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.HomeContent", b =>
@@ -1949,6 +2009,10 @@ namespace dj_actionlayer.Migrations
                         .WithMany()
                         .HasForeignKey("CommentLessonParentId");
 
+                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.CommentStatus", "CommentStatus")
+                        .WithMany()
+                        .HasForeignKey("CommentStatusId");
+
                     b.HasOne("dj_webdesigncore.Entities.CourseEntity.Lesson", "Lesson")
                         .WithMany()
                         .HasForeignKey("LessonId");
@@ -1958,6 +2022,8 @@ namespace dj_actionlayer.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("CommentLessonParent");
+
+                    b.Navigation("CommentStatus");
 
                     b.Navigation("Lesson");
 
@@ -1970,6 +2036,10 @@ namespace dj_actionlayer.Migrations
                         .WithMany()
                         .HasForeignKey("CommentPostParentId");
 
+                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.CommentStatus", "CommentStatus")
+                        .WithMany()
+                        .HasForeignKey("CommentStatusId");
+
                     b.HasOne("dj_webdesigncore.Entities.PostEntity.Post", "Post")
                         .WithMany()
                         .HasForeignKey("PostId");
@@ -1979,6 +2049,8 @@ namespace dj_actionlayer.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("CommentPostParent");
+
+                    b.Navigation("CommentStatus");
 
                     b.Navigation("Post");
 
@@ -1998,11 +2070,17 @@ namespace dj_actionlayer.Migrations
 
             modelBuilder.Entity("dj_webdesigncore.Entities.BusinessEntity.Denounce", b =>
                 {
+                    b.HasOne("dj_webdesigncore.Entities.BusinessEntity.DenounceType", "DenounceType")
+                        .WithMany()
+                        .HasForeignKey("DenounceTypeId");
+
                     b.HasOne("dj_webdesigncore.Entities.UserEntity.User", "UserSend")
                         .WithMany()
                         .HasForeignKey("UserSendId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("DenounceType");
 
                     b.Navigation("UserSend");
                 });

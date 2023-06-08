@@ -67,6 +67,8 @@ namespace dj_actionlayer.DAO
         public DbSet<UserRole> user_role { get; set; }
         public DbSet<UserStatus> user_status { get; set; }
         // Business Entities
+        public DbSet<DenounceType> denounce_type { get; set; }
+        public DbSet<CommentStatus> comment_status { get; set; }
         public DbSet<Denounce> denounce { get; set; }
         public DbSet<HomeNotification> home_notification { get; set; }
         public DbSet<Majors> majors { get; set; }
@@ -89,10 +91,10 @@ namespace dj_actionlayer.DAO
         public DbSet<HomeContent> home_content { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
+          // optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
             //  optionsBuilder.UseSqlServer(Settings.DBConnect());
           //   optionsBuilder.UseSqlServer(Settings.DBConnectVPS());
-         //  optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
+           optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
     }
 }

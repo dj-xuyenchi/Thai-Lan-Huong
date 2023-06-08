@@ -13,7 +13,7 @@
     <AddUser style="margin-top: 12px" :getUserPage="getUserPage" />
   </div>
   <UserTable :tableData="tableData" :getUserPage="getUserPage" />
-  <div class="text-center" @click="getUserPage()">
+  <div class="text-center" @click="pageOpt()">
     <v-container>
       <v-row justify="center">
         <v-col cols="4">
@@ -62,6 +62,7 @@ export default {
     page: 1,
     context: "",
     maxPage: 10,
+    opt: 1,
     key: "",
     show: false,
   }),
@@ -75,12 +76,14 @@ export default {
       if (this.key.trim().length == 0) {
         this.text = "Hãy nhập từ khóa";
         this.snackbar = true;
+        this.page = 1;
         this.setIsLoadedData(false);
         return;
       }
       const token = localStorage.getItem("token");
       const data = await RootAPI.findUser(this.key, page, token);
       this.tableData = data;
+      this.opt = 2;
       this.setIsLoadedData(false);
     },
     async getUserPage() {
@@ -88,7 +91,16 @@ export default {
       const token = localStorage.getItem("token");
       const data = await RootAPI.getUserPage(this.page, token);
       this.tableData = data;
+      this.opt = 1;
       this.setIsLoadedData(false);
+    },
+    async pageOpt() {
+      if (this.opt == 1) {
+        this.getUserPage();
+      }
+      if (this.opt == 2) {
+        this.findUser(this.page);
+      }
     },
     setContext(context) {
       this.context = context;
@@ -96,6 +108,14 @@ export default {
     },
     setShow(show) {
       this.show = show;
+    },
+  },
+  watch: {
+    tableData: {
+      immediate: true,
+      handler(newData) {
+        this.tableData = newData;
+      },
     },
   },
 };

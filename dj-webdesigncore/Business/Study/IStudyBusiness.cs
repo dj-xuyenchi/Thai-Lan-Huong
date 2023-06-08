@@ -2,10 +2,12 @@
 using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Study;
+using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.SomeThingElse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,5 +33,7 @@ namespace dj_webdesigncore.Business.Study
         Task<ResponData<ActionStatus>> SendVideoDoneRequest(SendVideoDoneRequest sendVideoDoneRequest);
         Task<ResponData<List<Langue>>> getAllLangue();
         Task<ResponData<List<TestCaseDTO>>> getTestCaseOfPractice(int practiceLessonId);
+        Task<IQueryable<DenounceType>> getDenounce();
+        Task<ResponData<ActionStatus>> CreateDenounce(DenounceRequest denounceRequest);
     }
 }

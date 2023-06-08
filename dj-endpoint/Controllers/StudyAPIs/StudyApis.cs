@@ -3,6 +3,7 @@ using dj_webdesigncore.Business.Study;
 using dj_webdesigncore.Enums.CourseEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@ namespace dj_endpoint.Controllers.StudyAPIs
             return Ok("MemberOrAdmin");
         }
         [HttpGet("getcommentoflesson")]
-        public async Task<IActionResult> getCommentOfLesson(int? lessonId,int? userId)
+        public async Task<IActionResult> getCommentOfLesson(int? lessonId, int? userId)
         {
             return Ok(await _study.CommentOfLesson(lessonId, userId));
         }
@@ -102,6 +103,16 @@ namespace dj_endpoint.Controllers.StudyAPIs
         public async Task<IActionResult> getTestCaseOfPractice(int practiceLessonId)
         {
             return Ok(await _study.getTestCaseOfPractice(practiceLessonId));
+        }
+        [HttpGet("getdenounce")]
+        public async Task<IActionResult> getDenounce()
+        {
+            return Ok(await _study.getDenounce());
+        }
+        [HttpPost("createdenounce")]
+        public async Task<IActionResult> createDenounce(DenounceRequest denounceRequest)
+        {
+            return Ok(await _study.CreateDenounce(denounceRequest));
         }
     }
 }

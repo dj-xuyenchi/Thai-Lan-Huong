@@ -111,12 +111,12 @@ export default {
             {
               icon: "mdi mdi-account-remove",
               title: "Tài khoản vi phạm",
-              to: "/admin/user-pro",
+              to: "/admin/user-denounce",
             },
             {
               icon: "mdi mdi-account-convert",
-              title: "Phân quyền tài khoản",
-              to: "/admin/user-role",
+              title: "Báo cáo vi phạm",
+              to: "/admin/user-denounce-report",
             },
           ],
         },

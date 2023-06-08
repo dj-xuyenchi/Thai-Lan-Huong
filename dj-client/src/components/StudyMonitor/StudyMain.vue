@@ -21,7 +21,7 @@
         position: relative;
       "
     >
-      <LessonComment style="float: left" />
+      <LessonComment :handleDialog="handleDialog" style="float: left" />
       <LessonList
         style="margin-left: 12px; float: left"
         :chapterList="lessonData.chapterDetail"
@@ -40,8 +40,54 @@
         </v-btn>
       </div> -->
     </div>
+    <div class="text-center">
+      <v-dialog v-model="dialog" activator="parent" width="800">
+        <v-card>
+          <v-card-text>
+            Bạn cảm thấy bình luận này không an toàn hoặc không phù hợp?
+            <v-col cols="4" sm="4" md="4">
+              <v-select
+                v-model="type"
+                label="Loại vi phạm"
+                :items="listDenounce"
+                item-title="denounceName"
+                persistent-hint
+                return-object
+                item-value="id"
+                variant="outlined"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-textarea
+                v-model="note"
+                density="compact"
+                label="Ghi chú của bạn"
+                hint="Ghi chú của bạn về bình luận"
+                variant="outlined"
+                max-rows="5"
+              ></v-textarea>
+            </v-col>
+          </v-card-text>
+          <v-spacer></v-spacer>
+          <v-btn color="blue-darken-1" variant="text" @click="createDenounce()">
+            Gửi báo cáo
+          </v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+            Hủy
+          </v-btn>
+        </v-card>
+      </v-dialog>
+    </div>
     <StudyFooter />
   </div>
+  <v-snackbar v-model="snackbar">
+    {{ text }}
+    <template v-slot:actions>
+      <v-btn color="green" variant="text" @click="snackbar = false">
+        Đóng
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -69,6 +115,13 @@ export default {
   data() {
     return {
       lessonData: Object,
+      type: "",
+      note: "",
+      text: "",
+      snackbar: false,
+      cmtId: 0,
+      listDenounce: [],
+      dialog: false,
     };
   },
   computed: {},
@@ -81,9 +134,44 @@ export default {
       this.$route.params.idCourse,
       token
     );
+    this.getDenounce(token);
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
+    handleDialog(id) {
+      this.dialog = true;
+      this.cmtId = id;
+      console.log(id);
+    },
+    async createDenounce() {
+      const token = localStorage.getItem("token");
+      const data = await StudyAPI.createDenounce(
+        {
+          UserSendId: localStorage.getItem("id"),
+          Note: this.note,
+          CmtId: this.cmtId,
+          TypeId: this.type.id,
+          URL: window.location.href,
+        },
+        token
+      );
+      if (data.data == 1) {
+        this.text =
+          "Gửi báo cáo thành công chúng tôi sẽ xem sét trường hợp bạn yêu cầu!";
+        this.note = "";
+        this.snackbar = true;
+      }
+      if (data.data == 6) {
+        this.text = "Bạn không thể báo cáo chính bạn!";
+        this.note = "";
+        this.snackbar = true;
+      } else {
+        this.text = "Gửi báo cáo không thành công!";
+        this.note = "";
+        this.snackbar = true;
+      }
+      this.dialog = false;
+    },
     async getLessonDetail(lessonId, userId, courseId, token) {
       this.setIsLoadedData(true);
       const data = await StudyAPI.getLessonDetail(
@@ -93,8 +181,12 @@ export default {
         token
       );
       this.lessonData = data.data;
-      console.log(this.lessonData);
       this.setIsLoadedData(false);
+    },
+    async getDenounce(token) {
+      const data = await StudyAPI.getDenounce(token);
+      this.listDenounce = data;
+      this.type = data[0];
     },
   },
 };

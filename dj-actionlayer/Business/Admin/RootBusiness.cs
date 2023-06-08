@@ -17,19 +17,19 @@ namespace dj_actionlayer.Business.Admin
     {
         public async Task<IQueryable<User>> FindUserByNameEmail(string key, int page)
         {
-           var listPage = _context.user.Where(x=>x.UserLastName.Contains(key)|| x.UserFisrtName.Contains(key)||x.UserEmail.Contains(key)).OrderBy(x=>x.CreateAccount).Skip((page - 1) * 15).Take(15);
+            var listPage = _context.user.Include(x => x.Role).Where(x => x.UserLastName.Contains(key) || x.UserFisrtName.Contains(key) || x.UserEmail.Contains(key)).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
             return listPage;
         }
 
         public async Task<IQueryable<User>> GetUserDenounce(int page)
         {
-            var listPage = _context.user.Include(x => x.Role).Where(x=>x.UserStatusId==4).OrderBy(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
+            var listPage = _context.user.Include(x => x.Role).Where(x => x.UserStatusId == 4).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
             return listPage;
         }
 
         public async Task<IQueryable<User>> GetUserPage(int page)
         {
-            var listPage = _context.user.Include(x => x.Role).OrderBy(x=>x.CreateAccount).Skip((page - 1) * 15).Take(15);
+            var listPage = _context.user.Include(x => x.Role).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
             return listPage;
         }
 

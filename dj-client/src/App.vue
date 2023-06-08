@@ -12,15 +12,15 @@
         width: 100vw;
       "
     >
-      <img
+      <!-- <img
         :src="require(`./assets/loadingkapoo.gif`)"
         alt="Hình ảnh"
         style="height: 150px"
-      />
+      /> -->
       <img
         :src="require(`./assets/loading.gif`)"
         alt="Hình ảnh"
-        style="position: absolute; top: 45%"
+        style="position: absolute; top: 40%"
       />
     </div>
     <!-- <v-list-item style="padding: unset"> -->

@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using dj_webdesigncore.Enums.StudyEnums;
 using dj_webdesigncore.DTOs.Admin;
 using dj_actionlayer.DAO;
+using dj_webdesigncore.Request.SomeThingElse;
 
 namespace dj_actionlayer.Business.Study
 {
@@ -152,7 +153,7 @@ namespace dj_actionlayer.Business.Study
                 {
                     dj_webdesigncore.DTOs.Lobby.LessonDetailDTO lessonDetailDTO = new dj_webdesigncore.DTOs.Lobby.LessonDetailDTO();
                     User user = await _context.user.FindAsync(userId);
-                    UserLessonCheckpoint checkPoint =await _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).FirstOrDefaultAsync();
+                    UserLessonCheckpoint checkPoint = await _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == item1.LessonId).FirstOrDefaultAsync();
                     if (checkPoint != null)
                     {
                         lessonDetailDTO.IsDone = true;
@@ -215,21 +216,21 @@ namespace dj_actionlayer.Business.Study
             }
             try
             {
-                Lesson lesson =await _context.lesson.FindAsync(lessonId);
+                Lesson lesson = await _context.lesson.FindAsync(lessonId);
                 if (lesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                User user =await _context.user.FindAsync(userId);
+                User user = await _context.user.FindAsync(userId);
                 if (user == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson =await _context.practice_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
+                dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = await _context.practice_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
                 if (practiceLesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại PracticeLesson!";
@@ -338,21 +339,21 @@ namespace dj_actionlayer.Business.Study
             try
             {
                 StudyDTO<QuestionLessonDTO> data = new StudyDTO<QuestionLessonDTO>();
-                Lesson lesson =await _context.lesson.FindAsync(lessonId);
+                Lesson lesson = await _context.lesson.FindAsync(lessonId);
                 if (lesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại khóa học!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                User user =await _context.user.FindAsync(userId);
+                User user = await _context.user.FindAsync(userId);
                 if (user == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại người dùng!";
                     result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.NOTFOUND;
                     return result;
                 }
-                QuestionLesson questionLesson =await _context.question_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
+                QuestionLesson questionLesson = await _context.question_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
                 if (questionLesson == null)
                 {
                     result.Messenger = "Lấy dữ liệu thất bại không tồn tại PracticeLesson!";
@@ -1187,6 +1188,57 @@ namespace dj_actionlayer.Business.Study
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<IQueryable<DenounceType>> getDenounce()
+        {
+            var listData = _context.denounce_type;
+            return listData;
+        }
+
+        public async Task<ResponData<ActionStatus>> CreateDenounce(DenounceRequest denounceRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User sender = await _context.user.FindAsync(denounceRequest.UserSendId);
+            if (sender == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            
+            CommentLesson cmt = await _context.comment_lesson.FindAsync(denounceRequest.CmtId);
+            if (cmt == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            if (sender.Id == cmt.UserId)
+            {
+                result.Data = ActionStatus.WRONG;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Denounce denounce = new Denounce();
+            denounce.CmtId = denounceRequest.CmtId;
+            denounce.IsCheck = false;
+            denounce.Note = denounceRequest.Note;
+            denounce.IsViolation = false;
+            denounce.DenounceTypeId = denounceRequest.TypeId;
+            denounce.SendTime = DateTime.Now;
+            denounce.UserSendId = denounceRequest.UserSendId;
+            denounce.UserViolationId = (int)cmt.UserId;
+            denounce.ProveLink = denounceRequest.URL;
+            await _context.AddAsync(denounce);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
         }
     }
 }

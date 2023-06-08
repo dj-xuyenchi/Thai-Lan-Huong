@@ -22,5 +22,7 @@ namespace dj_webdesigncore.Entities.BusinessEntity
 		public DateTime? DeleteDateTime { get; set; }
 		public bool IsDeleted { get; set; }
 		public int LikeCount { get; set; }
+		public int? CommentStatusId { get; set; }
+		public CommentStatus? CommentStatus { get; set; }
 	}
 }

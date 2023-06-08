@@ -17,8 +17,11 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         [DefaultValue(false)]
         public bool IsCheck { get; set; }
         public DateTime SendTime { get; set; }
-        public DateTime CheckTime { get; set; }
+        public DateTime? CheckTime { get; set; }
         public bool IsViolation { get; set; }
         public string? Note { get; set; }
+        public int CmtId { get; set; }
+        public int? DenounceTypeId { get; set; }
+        public DenounceType? DenounceType { get; set; }
     }
 }

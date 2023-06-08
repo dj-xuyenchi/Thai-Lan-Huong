@@ -67,6 +67,7 @@
           :commentId="item.commentId"
           :reLoadComment="handleGetComment"
           :resetClicked="resetClicked"
+          :handleDialog="handleDialog"
         />
       </v-card>
     </v-menu>
@@ -135,6 +136,9 @@ export default {
     resetClicked() {
       this.isClicked = false;
     },
+  },
+  props: {
+    handleDialog: Function,
   },
 };
 </script>
