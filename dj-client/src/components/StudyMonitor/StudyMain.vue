@@ -160,8 +160,7 @@ export default {
           "Gửi báo cáo thành công chúng tôi sẽ xem sét trường hợp bạn yêu cầu!";
         this.note = "";
         this.snackbar = true;
-      }
-      if (data.data == 6) {
+      } else if (data.data == 6) {
         this.text = "Bạn không thể báo cáo chính bạn!";
         this.note = "";
         this.snackbar = true;

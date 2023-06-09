@@ -1232,6 +1232,7 @@ namespace dj_actionlayer.Business.Study
             denounce.SendTime = DateTime.Now;
             denounce.UserSendId = denounceRequest.UserSendId;
             denounce.UserViolationId = (int)cmt.UserId;
+            denounce.TypeCmt = dj_webdesigncore.Enums.Else.TypeCmt.LESSON;
             denounce.ProveLink = denounceRequest.URL;
             await _context.AddAsync(denounce);
             await _context.SaveChangesAsync();

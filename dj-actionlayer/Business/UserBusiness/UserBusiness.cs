@@ -65,11 +65,11 @@ namespace dj_actionlayer.Business.UserBusiness
             return result;
         }
 
-        public async Task<ResponData<ActionStatus>> confirmPost(IFormFile img, UserConfirmPost data,int userId)
+        public async Task<ResponData<ActionStatus>> confirmPost(IFormFile img, UserConfirmPost data, int userId)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
             User user = await _context.user.FindAsync(userId);
-            if(user == null)
+            if (user == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -567,6 +567,9 @@ namespace dj_actionlayer.Business.UserBusiness
             data.provinces = _context.provinces.ToList();
             //data.wards = _context.wards.ToList();
             data.genders = _context.gender.ToList();
+            data.statuses = _context.user_status.ToList();
+            data.catalogs = _context.user_catalog.ToList();
+            data.roles = _context.user_role.Where(x => x.Id != 1).ToList();
             result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
@@ -681,6 +684,52 @@ namespace dj_actionlayer.Business.UserBusiness
             result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> CreateDenounce(DenounceRequest denounceRequest)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User sender = await _context.user.FindAsync(denounceRequest.UserSendId);
+            if (sender == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+
+            CommentPost cmt = await _context.comment_post.FindAsync(denounceRequest.CmtId);
+            if (cmt == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            if (sender.Id == cmt.UserId)
+            {
+                result.Data = ActionStatus.WRONG;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Denounce denounce = new Denounce();
+            denounce.CmtId = denounceRequest.CmtId;
+            denounce.IsCheck = false;
+            denounce.Note = denounceRequest.Note;
+            denounce.IsViolation = false;
+            denounce.DenounceTypeId = denounceRequest.TypeId;
+            denounce.SendTime = DateTime.Now;
+            denounce.UserSendId = denounceRequest.UserSendId;
+            denounce.UserViolationId = (int)cmt.UserId;
+            denounce.TypeCmt = dj_webdesigncore.Enums.Else.TypeCmt.POST;
+            denounce.ProveLink = denounceRequest.URL;
+            await _context.AddAsync(denounce);
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
             return result;
         }
     }

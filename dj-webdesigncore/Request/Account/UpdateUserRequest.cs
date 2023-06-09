@@ -12,6 +12,8 @@ namespace dj_webdesigncore.Request.Account
     public class UpdateUserRequest
     {
         public int? userId { get; set; }
+        public string userName { get; set; }
+        public string userPass { get; set; }
         public string facebook { get; set; }
         public string linkedIn { get; set; }
         public string firstName { get; set; }
@@ -26,5 +28,8 @@ namespace dj_webdesigncore.Request.Account
         public string addressNow { get; set; }
         public int? catalog { get; set; }
         public int roleId { get; set; }
+        public string email { get; set; }
+        public bool isKYC { get; set; }
+        public int statusId { get; set; }
     }
 }

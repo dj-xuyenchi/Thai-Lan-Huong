@@ -344,7 +344,6 @@ export default {
         this.dialog = false;
         this.snackbar = true;
         this.btnLoading = false;
-        this.getLessonDetail();
       }
       if (result.data.status == 4) {
         this.text = "Cập nhật thất bại!";

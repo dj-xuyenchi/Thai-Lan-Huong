@@ -15,6 +15,9 @@ namespace dj_webdesigncore.Enums.ApiEnums
         NOTFOUND = 4,
         EXIST = 5,
         WRONG = 6,
-        RIGHT = 7
+        RIGHT = 7,
+        USEREXIST = 8,
+        SDTEXIST = 9,
+        EMAILEXIST = 10
     }
 }

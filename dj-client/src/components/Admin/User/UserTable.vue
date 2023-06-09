@@ -37,7 +37,15 @@
           <td>{{ item.role.userRoleName }}</td>
           <td>{{ fixDate(item.createAccount) }}</td>
           <td>
-            <BtnUpdateUser :item="item" :getBlogPage="getBlogPage" />
+            <BtnUpdateUser
+              :item="item"
+              :listGender="listGender"
+              :listTinh="listTinh"
+              :listCatalog="listCatalog"
+              :getUserPage="getUserPage"
+              :listRole="listRole"
+              :listStatus="listStatus"
+            />
           </td>
         </tr>
       </tbody>
@@ -47,6 +55,7 @@
 
 <script>
 import BtnUpdateUser from "./BtnUpdateUser.vue";
+import UserAPI from "../../../apis/APIUser/UserAPI";
 export default {
   name: "UserTable",
   components: { BtnUpdateUser },
@@ -54,6 +63,11 @@ export default {
     return {
       itemsPerPage: 15,
       desserts: [],
+      listGender: [],
+      listTinh: [],
+      listRole: [],
+      listStatus: [],
+      listCatalog: [],
     };
   },
   methods: {
@@ -62,11 +76,22 @@ export default {
         vari.substring(8, 10) + vari.substring(4, 8) + vari.substring(0, 4)
       );
     },
+    async getOption() {
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.getOptionUpdate(token);
+      this.listGender = data.data.genders;
+      this.listTinh = data.data.provinces;
+      this.listCatalog = data.data.catalogs;
+      this.listRole = data.data.roles;
+      this.listStatus = data.data.statuses;
+    },
   },
-
+  created() {
+    this.getOption();
+  },
   props: {
     tableData: [],
-    getBlogPage: Function,
+    getUserPage: Function,
   },
 };
 </script>

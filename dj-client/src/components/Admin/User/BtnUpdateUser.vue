@@ -1,12 +1,16 @@
 <template>
   <v-dialog v-model="dialog" persistent width="1024">
     <template v-slot:activator="{ props }">
-      <v-btn color="green" v-bind="props" density="compact" icon="mdi-pencil">
-      </v-btn>
+      <v-btn
+        color="green"
+        v-bind="props"
+        density="compact"
+        icon="mdi-pencil"
+      ></v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">Cập nhật thông tin người dùng</span>
+        <span class="text-h5">Cập nhật người dùng</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -105,14 +109,35 @@
                     variant="outlined"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="12" md="12">
+                <v-col cols="4" sm="4" md="4">
+                  <v-text-field
+                    v-model="userName"
+                    density="compact"
+                    label="Tên tài khoản*"
+                    hint="Tên tài khoản"
+                    variant="outlined"
+                    :rules="[rules.validName, rules.validValue]"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="4" sm="4" md="4">
                   <v-text-field
                     v-model="userEmail"
                     density="compact"
                     label="Email*"
                     hint="Email người dùng"
                     variant="outlined"
-                    :rules="[rules.validName, rules.validValue]"
+                    :rules="[rules.email, rules.validValue]"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="4" sm="4" md="4">
+                  <v-text-field
+                    v-model="userPass"
+                    density="compact"
+                    label="Mật khẩu*"
+                    hint="Mật khẩu người dùng"
+                    variant="outlined"
+                    type="password"
+                    :rules="[rules.validValue]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
@@ -179,7 +204,7 @@
                   <v-select
                     v-model="userJob"
                     label="Công việc hiện tại"
-                    :items="listJob"
+                    :items="listCatalog"
                     item-title="catalogName"
                     persistent-hint
                     return-object
@@ -189,10 +214,10 @@
                 </v-col>
                 <v-col cols="4" sm="4" md="4">
                   <v-select
-                    v-model="userJob"
+                    v-model="userRole"
                     label="Quyền hạn*"
-                    :items="listJob"
-                    item-title="catalogName"
+                    :items="listRole"
+                    item-title="userRoleName"
                     persistent-hint
                     return-object
                     item-value="id"
@@ -207,6 +232,26 @@
                     hint="Mô tả bản thân"
                     variant="outlined"
                   ></v-textarea>
+                </v-col>
+                <v-col cols="4" sm="4" md="4">
+                  <v-select
+                    v-model="userStatus"
+                    label="Trạng thái*"
+                    :items="listStatus"
+                    item-title="userStatusName"
+                    persistent-hint
+                    return-object
+                    item-value="id"
+                    variant="outlined"
+                  ></v-select>
+                </v-col>
+                <v-col cols="12">
+                  <v-switch
+                    v-model="isKYC"
+                    label="Xác minh tài khoản tích xanh"
+                    color="secondary"
+                    hide-details
+                  ></v-switch>
                 </v-col>
               </v-row>
             </v-form>
@@ -242,39 +287,41 @@
 </template>
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
+import RootAPI from "../../../apis/APIAdmin/RootAPI";
 import UserAPI from "../../../apis/APIUser/UserAPI";
 export default {
-  name: "AddUser",
+  name: "BtnUpdateUser",
   data: () => ({
     text: "",
     snackbar: false,
     selectFile: null,
-    listTinh: [],
     listHuyen: [],
     listXa: [],
     listJob: [],
-    listGender: [],
     firstName: "",
     lastName: "",
     userAddressNow: "",
     userAvatarData40x40: "",
     userPhone: "",
     userBirth: "",
+    userName: "",
     userGender: "",
     userGenderId: "",
     userDetail: "",
     userJob: "",
+    userPass: "",
     userJobCode: "",
     userId: "",
     userFacebook: "",
     userLinkedIn: "",
-    userTinh: "",
-    userTinhCode: "",
-    userHuyen: "",
-    userRole: null,
+    userTinh: null,
+    userTinhCode: null,
+    userHuyen: null,
+    isKYC: false,
+    userRole: "",
     userEmail: "",
     userHuyenCode: "",
-    userXa: "",
+    userXa: null,
     userXaCode: "",
     dialog: false,
     btnLoading: false,
@@ -284,15 +331,34 @@ export default {
       sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
       validValue: (value) =>
         value.trim().length > 0 || "Không được để trống thông tin này!",
+      email: (value) => value.includes("@") || "Email chưa đúng",
     },
   }),
   created() {
-    this.getOption();
+    this.firstName = this.item.userFisrtName;
+    this.lastName = this.item.userLastName;
+    this.birthday = this.item.birthday
+      ? this.item.birthday.substring(0, 10)
+      : null;
+    this.userAddressNow = this.item.addressNow;
+    this.userPhone = this.item.numberPhone;
+    this.userEmail = this.item.userEmail;
+    this.userDetail = this.item.userDetail;
+    this.userLinkedIn = this.item.userLinkedIn;
+    this.userFacebook = this.item.userFacebook;
+    this.userName = this.item.userName;
+    this.userPass = this.item.userPass;
+    this.userAvatarData40x40 = this.item.userAvatarData40x40;
+    // this.userGender = this.listGender[0];
+    // this.province = this.listTinh[0];
+    this.userRole = this.item.role;
+    // this.userRole = this.listRole[0];
   },
+
   methods: {
     getData() {
       return {
-        userId: localStorage.getItem("id"),
+        userId: this.item.id,
         firstName: this.firstName,
         lastName: this.lastName,
         birthday: this.userBirth ? this.userBirth : "1000-01-01",
@@ -307,7 +373,10 @@ export default {
         catalog: this.userJob ? this.userJob.id : this.userJobCode,
         detail: this.userDetail,
         email: this.userEmail,
-        role: this.userRole.id,
+        roleId: this.userRole.id,
+        isKYC: this.isKYC,
+        userName: this.userName,
+        userPass: this.userPass,
       };
     },
     onFileSelect() {
@@ -340,6 +409,7 @@ export default {
         this.lastName.trim().length == 0 ||
         this.userPhone.trim().length == 0 ||
         this.userEmail.trim().length == 0 ||
+        this.userPass.trim().length == 0 ||
         this.userRole == null
       ) {
         this.text = "Không được để trông các trường bắt buộc!";
@@ -357,26 +427,50 @@ export default {
       const formData = new FormData();
       formData.append("avatar", this.selectFile ? this.selectFile[0] : null);
       formData.append("updateUserRequest", JSON.stringify(this.getData()));
-      const result = await UserAPI.updateUser(formData, token);
-      if (result.data.status == 1) {
+      const result = await RootAPI.updateUser(formData, token);
+      if (result.data == 1) {
+        this.getUserPage();
         this.text = "Cập nhật thành công!";
         this.dialog = false;
         this.snackbar = true;
         this.btnLoading = false;
-        this.getLessonDetail();
+        this.userDetail = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.userAddressNow = "";
+        this.userAvatarData40x40 = "";
+        this.userPhone = "";
+        this.userBirth = "";
+        this.userName = "";
+        this.userPass = "";
+        this.userFacebook = "";
+        this.userLinkedIn = "";
+        this.userHuyen = null;
+        this.userTinh = null;
+        this.userXa = null;
+        this.isKYC = false;
+        this.userEmail = "";
+        this.userGender = this.listGender[0];
+        this.province = this.listTinh[0];
+        this.userJob = this.listCatalog[0];
+        this.userRole = this.listRole[0];
       }
-      if (result.data.status == 4) {
-        this.text = "Cập nhật thất bại!";
+      if (result.data == 8) {
+        this.text = "Tồn tại tài khoản có userName là " + this.userName + "!";
+        this.snackbar = true;
+      }
+      if (result.data == 9) {
+        this.text =
+          "Tồn tại tài khoản có số điện thoại là " + this.userPhone + "!";
+        this.snackbar = true;
+      }
+      if (result.data == 10) {
+        this.text = "Tồn tại tài khoản có email là " + this.userEmail + "!";
         this.snackbar = true;
       }
       this.btnLoading = false;
     },
-    async getOption() {
-      const token = localStorage.getItem("token");
-      const data = await UserAPI.getOptionUpdate(token);
-      this.listGender = data.data.genders;
-      this.listTinh = data.data.provinces;
-    },
+
     async getHuyen() {
       const token = localStorage.getItem("token");
       const data = await UserAPI.getHuyen(this.userTinh.code, token);
@@ -392,8 +486,39 @@ export default {
     },
   },
   props: {
-    Item: Object,
-    getBlogPage: Function,
+    item: Object,
+    listGender: [],
+    listTinh: [],
+    listCatalog: [],
+    getUserPage: Function,
+    listRole: [],
+    listStatus: [],
+  },
+  watch: {
+    item: {
+      immediate: true,
+      handler(newItem) {
+        this.firstName = newItem.userFisrtName;
+        this.lastName = newItem.userLastName;
+        this.birthday = newItem.birthday
+          ? newItem.birthday.substring(0, 10)
+          : null;
+        this.userAddressNow = newItem.addressNow;
+        this.userPhone = newItem.numberPhone;
+        this.userEmail = newItem.userEmail;
+        this.userDetail = newItem.userDetail;
+        this.userLinkedIn = newItem.userLinkedIn;
+        this.userFacebook = newItem.userFacebook;
+        this.isKYC = newItem.isKYC;
+        this.userName = newItem.userName;
+        this.userPass = newItem.userPass;
+        this.userAvatarData40x40 = newItem.userAvatarData40x40;
+        // this.userGender = this.listGender[0];
+        // this.province = this.listTinh[0];
+        this.userRole = newItem.role;
+        // this.userRole = this.listRole[0];
+      },
+    },
   },
 };
 </script>

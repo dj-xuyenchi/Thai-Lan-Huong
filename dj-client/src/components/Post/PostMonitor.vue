@@ -115,6 +115,14 @@
       </v-card>
     </v-dialog>
   </div>
+  <v-snackbar v-model="snackbar">
+    {{ text }}
+    <template v-slot:actions>
+      <v-btn color="green" variant="text" @click="snackbar = false">
+        Đóng
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -125,6 +133,7 @@ import { mapMutations } from "vuex";
 import PostAPI from "../../apis/APIPost/PostAPI";
 import { SeoTool } from "../../plugins/seometa.ts";
 import MarkdownIt from "markdown-it";
+import UserAPI from "../../apis/APIUser/UserAPI.ts";
 import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 export default {
   name: "PostMonitor",
@@ -132,6 +141,10 @@ export default {
   data() {
     return {
       post: {},
+      type: "Phân biệt vùng miền",
+      note: "",
+      text: "",
+      snackbar: false,
       dialog: false,
       renderedHTML: "",
       cmtId: 0,
@@ -142,6 +155,39 @@ export default {
     handleDialog(id) {
       this.dialog = true;
       this.cmtId = id;
+    },
+    async createDenounce() {
+      if (!localStorage.getItem("id")) {
+        this.text = "Bạn phải đăng nhập để gửi báo cáo!";
+        this.snackbar = true;
+        return;
+      }
+      const token = localStorage.getItem("token");
+      const data = await UserAPI.createDenounce(
+        {
+          UserSendId: localStorage.getItem("id"),
+          Note: this.note,
+          CmtId: this.cmtId,
+          TypeId: this.type.id,
+          URL: window.location.href,
+        },
+        token
+      );
+      if (data.data == 1) {
+        this.text =
+          "Gửi báo cáo thành công chúng tôi sẽ xem sét trường hợp bạn yêu cầu!";
+        this.note = "";
+        this.snackbar = true;
+      } else if (data.data == 6) {
+        this.text = "Bạn không thể báo cáo chính bạn!";
+        this.note = "";
+        this.snackbar = true;
+      } else {
+        this.text = "Gửi báo cáo không thành công!";
+        this.note = "";
+        this.snackbar = true;
+      }
+      this.dialog = false;
     },
     async getPostDetail() {
       this.setIsLoadedData(true);

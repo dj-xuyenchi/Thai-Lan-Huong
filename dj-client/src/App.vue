@@ -20,7 +20,7 @@
       <img
         :src="require(`./assets/loading.gif`)"
         alt="Hình ảnh"
-        style="position: absolute; top: 35%; width: 200px; height: 150px"
+        style="position: absolute; top: 40%; width: 200px; height: 150px"
       />
     </div>
     <!-- <v-list-item style="padding: unset"> -->

@@ -153,5 +153,10 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _post.userLikeCmtPost(userId, cmtId));
         }
+        [HttpPost("createdenounce")]
+        public async Task<IActionResult> createDenounce(DenounceRequest denounceRequest)
+        {
+            return Ok(await _user.CreateDenounce(denounceRequest));
+        }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dj_actionlayer.DAO;
 
 using AppContext = dj_actionlayer.DAO.AppContext;
+
 #nullable disable
 
 namespace dj_actionlayer.Migrations
@@ -316,7 +317,7 @@ namespace dj_actionlayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CheckTime")
+                    b.Property<DateTime?>("CheckTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CmtId")
@@ -340,6 +341,9 @@ namespace dj_actionlayer.Migrations
 
                     b.Property<DateTime>("SendTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("TypeCmt")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserSendId")
                         .HasColumnType("int");

@@ -1,4 +1,5 @@
 ﻿using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Enums.Else;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,5 +24,6 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         public int CmtId { get; set; }
         public int? DenounceTypeId { get; set; }
         public DenounceType? DenounceType { get; set; }
+        public TypeCmt? TypeCmt { get; set; }
     }
 }

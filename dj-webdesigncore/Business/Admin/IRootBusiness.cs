@@ -17,6 +17,7 @@ namespace dj_webdesigncore.Business.Admin
         Task<IQueryable<User>> GetUserPage(int page);
         Task<IQueryable<User>> GetUserDenounce(int page);
         Task<IQueryable<User>> FindUserByNameEmail(string key, int page);
+        Task<ResponData<ActionStatus>> createUser(IFormFile avatar, UpdateUserRequest updateUserRequest);
         Task<ResponData<ActionStatus>> updateUser(IFormFile avatar, UpdateUserRequest updateUserRequest);
     }
 }
