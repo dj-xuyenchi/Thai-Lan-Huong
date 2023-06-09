@@ -312,6 +312,7 @@ export default {
     userPass: "",
     userJobCode: "",
     userId: "",
+    userStatus: "",
     userFacebook: "",
     userLinkedIn: "",
     userTinh: null,
@@ -337,9 +338,13 @@ export default {
   created() {
     this.firstName = this.item.userFisrtName;
     this.lastName = this.item.userLastName;
-    this.birthday = this.item.birthday
-      ? this.item.birthday.substring(0, 10)
-      : null;
+    if (this.item.birthday) {
+      const birthdaySplit = this.item.birthday.substring(0, 10).split("-");
+      this.userBirth =
+        birthdaySplit[0] + "-" + birthdaySplit[1] + "-" + birthdaySplit[2];
+    } else {
+      this.userBirth = null;
+    }
     this.userAddressNow = this.item.addressNow;
     this.userPhone = this.item.numberPhone;
     this.userEmail = this.item.userEmail;
@@ -349,12 +354,14 @@ export default {
     this.userName = this.item.userName;
     this.userPass = this.item.userPass;
     this.userAvatarData40x40 = this.item.userAvatarData40x40;
-    // this.userGender = this.listGender[0];
-    // this.province = this.listTinh[0];
     this.userRole = this.item.role;
-    // this.userRole = this.listRole[0];
+    this.userJob = this.item.catalog;
+    this.userGender = this.item.gender;
+    this.userStatus = this.item.userStatus;
+    this.userTinh = this.item.province;
+    this.userHuyen = this.item.district;
+    this.userXa = this.item.ward;
   },
-
   methods: {
     getData() {
       return {
@@ -377,6 +384,7 @@ export default {
         isKYC: this.isKYC,
         userName: this.userName,
         userPass: this.userPass,
+        statusId: this.userStatus.id,
       };
     },
     onFileSelect() {
@@ -500,9 +508,13 @@ export default {
       handler(newItem) {
         this.firstName = newItem.userFisrtName;
         this.lastName = newItem.userLastName;
-        this.birthday = newItem.birthday
-          ? newItem.birthday.substring(0, 10)
-          : null;
+        if (newItem.birthday) {
+          const birthdaySplit = newItem.birthday.substring(0, 10).split("-");
+          this.userBirth =
+            birthdaySplit[0] + "-" + birthdaySplit[1] + "-" + birthdaySplit[2];
+        } else {
+          this.userBirth = null;
+        }
         this.userAddressNow = newItem.addressNow;
         this.userPhone = newItem.numberPhone;
         this.userEmail = newItem.userEmail;
@@ -513,10 +525,14 @@ export default {
         this.userName = newItem.userName;
         this.userPass = newItem.userPass;
         this.userAvatarData40x40 = newItem.userAvatarData40x40;
-        // this.userGender = this.listGender[0];
-        // this.province = this.listTinh[0];
         this.userRole = newItem.role;
-        // this.userRole = this.listRole[0];
+        this.userRole = newItem.role;
+        this.userJob = newItem.catalog;
+        this.userGender = newItem.gender;
+        this.userStatus = newItem.userStatus;
+        this.userTinh = newItem.province;
+        this.userHuyen = newItem.district;
+        this.userXa = newItem.ward;
       },
     },
   },

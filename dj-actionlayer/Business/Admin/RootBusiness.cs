@@ -112,7 +112,7 @@ namespace dj_actionlayer.Business.Admin
 
         public async Task<IQueryable<User>> GetUserPage(int page)
         {
-            var listPage = _context.user.Include(x => x.Role).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
+            var listPage = _context.user.Include(x => x.Role).Include(x=>x.Gender).Include(x=>x.Catalog).Include(x=>x.UserStatus).Include(x=>x.Province).Include(x=>x.District).Include(x=>x.Ward).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
             return listPage;
         }
 
@@ -191,7 +191,6 @@ namespace dj_actionlayer.Business.Admin
             {
                 user.UserDetail = updateUserRequest.detail;
             }
-            await _context.AddAsync(user);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
