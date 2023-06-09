@@ -4,12 +4,12 @@
       <thead>
         <tr>
           <th class="text-left">#</th>
-          <th class="text-left">Ảnh đại diện</th>
-          <th class="text-left">Tên đầy đủ</th>
-          <th class="text-left">Email</th>
-          <th class="text-left">SĐT</th>
-          <th class="text-left">Quyền</th>
-          <th class="text-left">Ngày tạo</th>
+          <th class="text-left">Người báo cáo</th>
+          <th class="text-left">Người bị báo cáo</th>
+          <th class="text-left">Nội dung Comment</th>
+          <th class="text-left">Ghi chú người gửi</th>
+          <th class="text-left">Ngày gửi</th>
+          <th class="text-left">Link bình luận</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -37,7 +37,7 @@
           <td>{{ item.role.userRoleName }}</td>
           <td>{{ fixDate(item.createAccount) }}</td>
           <td>
-            <BtnUpdateUser :item="item" :getBlogPage="getBlogPage" />
+            <ConfirmDenounce :item="item" :getBlogPage="getBlogPage" />
           </td>
         </tr>
       </tbody>
@@ -46,10 +46,10 @@
 </template>
 
 <script>
-import BtnUpdateUser from "./BtnUpdateUser.vue";
+import ConfirmDenounce from "./ConfirmDenounce.vue";
 export default {
   name: "UserTable",
-  components: { BtnUpdateUser },
+  components: { ConfirmDenounce },
   data() {
     return {
       itemsPerPage: 15,

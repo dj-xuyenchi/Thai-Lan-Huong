@@ -54,7 +54,7 @@
       <div class="post-content">
         <ContentHeader :post="post" :getPostDetail="getPostDetail" />
         <div style="white-space: pre-line" v-html="renderedHTML"></div>
-        <FooterPost />
+        <FooterPost :handleDialog="handleDialog" />
       </div>
       <div class="post-shortlink">
         <h4
@@ -77,6 +77,44 @@
       </div>
     </div>
   </div>
+  <div class="text-center">
+    <v-dialog v-model="dialog" activator="parent" width="800">
+      <v-card>
+        <v-card-text>
+          Bạn cảm thấy bình luận này không an toàn hoặc không phù hợp?
+          <v-col cols="4" sm="4" md="4">
+            <v-select
+              v-model="type"
+              label="Loại vi phạm"
+              :items="listDenounce"
+              item-title="denounceName"
+              persistent-hint
+              return-object
+              item-value="id"
+              variant="outlined"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" sm="12" md="12">
+            <v-textarea
+              v-model="note"
+              density="compact"
+              label="Ghi chú của bạn"
+              hint="Ghi chú của bạn về bình luận"
+              variant="outlined"
+              max-rows="5"
+            ></v-textarea>
+          </v-col>
+        </v-card-text>
+        <v-spacer></v-spacer>
+        <v-btn color="blue-darken-1" variant="text" @click="createDenounce()">
+          Gửi báo cáo
+        </v-btn>
+        <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+          Hủy
+        </v-btn>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -87,17 +125,24 @@ import { mapMutations } from "vuex";
 import PostAPI from "../../apis/APIPost/PostAPI";
 import { SeoTool } from "../../plugins/seometa.ts";
 import MarkdownIt from "markdown-it";
+import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 export default {
   name: "PostMonitor",
   components: { ContentHeader, FooterPost, MostViewPost },
   data() {
     return {
       post: {},
+      dialog: false,
       renderedHTML: "",
+      cmtId: 0,
     };
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
+    handleDialog(id) {
+      this.dialog = true;
+      this.cmtId = id;
+    },
     async getPostDetail() {
       this.setIsLoadedData(true);
       const id = localStorage.getItem("id");
@@ -115,6 +160,11 @@ export default {
       this.renderedHTML = htmlContent;
       this.setIsLoadedData(false);
     },
+    async getDenounce(token) {
+      const data = await StudyAPI.getDenounce(token);
+      this.listDenounce = data;
+      this.type = data[0];
+    },
   },
   created() {
     this.getPostDetail();
@@ -127,6 +177,9 @@ export default {
         "/" +
         this.$route.params.name
     );
+    if (localStorage.getItem("id")) {
+      this.getDenounce(localStorage.getItem("token"));
+    }
   },
 };
 </script>

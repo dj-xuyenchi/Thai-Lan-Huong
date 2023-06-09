@@ -23,6 +23,7 @@
       :commentId="item.commentId"
       :reLoadComment="handleGetComment"
       :resetClicked="resetClicked"
+      :handleDialog="handleDialog"
     />
     <v-snackbar v-model="snackbar">
       {{ text }}
@@ -80,6 +81,9 @@ export default {
       this.content = "";
       this.handleGetComment();
     },
+  },
+  props: {
+    handleDialog: Function,
   },
 };
 </script>

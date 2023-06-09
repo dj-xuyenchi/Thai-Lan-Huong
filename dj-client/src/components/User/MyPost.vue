@@ -15,7 +15,7 @@
               v-for="(item, index) in waitPost"
               :key="index"
               cols="12"
-              md="3"
+              md="4"
             >
               <PostItem
                 :postImg="item.postImg"
@@ -39,7 +39,7 @@
               v-for="(item, index) in activePost"
               :key="index"
               cols="12"
-              md="3"
+              md="4"
             >
               <PostItem
                 :postImg="item.postImg"
@@ -63,7 +63,7 @@
               v-for="(item, index) in unActivePost"
               :key="index"
               cols="12"
-              md="3"
+              md="4"
             >
               <PostItem
                 :postImg="item.postImg"

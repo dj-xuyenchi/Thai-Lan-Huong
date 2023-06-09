@@ -81,6 +81,7 @@
                 v-for="(item, i) in items"
                 :key="i"
                 class="option-more-item"
+                @click="handleDialog(data.commentId)"
               >
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </v-list-item>
@@ -195,11 +196,12 @@
                   </template>
                   <v-list style="border-radius: 15px">
                     <v-list-item
-                      v-for="(item, i) in items"
+                      v-for="(item2, i) in items"
                       :key="i"
                       class="option-more-item"
+                      @click="handleDialog(data.commentId)"
                     >
-                      <v-list-item-title>{{ item.title }}</v-list-item-title>
+                      <v-list-item-title>{{ item2.title }}</v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -253,7 +255,10 @@ import StudyAPI from "../../apis/APIStudy/StudyAPI.ts";
 export default {
   name: "CommentPost",
   data: () => ({
-    items: [{ title: "Báo cáo bình luận" }, { title: "Ẩn bình luận." }],
+    items: [
+      { title: "Báo cáo bình luận" },
+      //  { title: "Ẩn bình luận." }
+    ],
     commentChild: [
       {
         id: 1,
@@ -309,6 +314,7 @@ export default {
     commentId: Number,
     reLoadComment: Function,
     resetClicked: Function,
+    handleDialog: Function,
   },
 };
 </script>

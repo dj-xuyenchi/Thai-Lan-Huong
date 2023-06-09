@@ -52,9 +52,8 @@ export default {
       items: [
         { title: "Home", link: "/home/lobby" },
         { title: "Khóa Học", link: "/home/courselist" },
-        { title: "Bài Viết", link: "/post" },
-        { title: "Blog", link: "/blog" },
-        { title: "Sự Kiện", link: "/event" },
+        { title: "Bài Viết", link: "/home/post" },
+        { title: "Sự Kiện", link: "/home/event-main" },
       ],
     };
   },

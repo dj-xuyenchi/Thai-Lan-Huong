@@ -1,6 +1,6 @@
 <template>
   <h1 style="font-weight: 700; font-size: 30px">Bài viết công nghệ!</h1>
-  <div style="min-height: 100vh; display: flex; justify-content: center">
+  <div style="min-height: 150vh; display: flex; justify-content: center">
     <div class="post-main-container">
       <router-link
         :to="

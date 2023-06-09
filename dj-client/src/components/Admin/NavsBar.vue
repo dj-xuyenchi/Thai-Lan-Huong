@@ -108,6 +108,12 @@ export default {
               title: "Danh sách tài khoản",
               to: "/admin/user",
             },
+          ],
+        },
+        {
+          icon: "mdi-alert",
+          title: "Vi phạm",
+          subnav: [
             {
               icon: "mdi mdi-account-remove",
               title: "Tài khoản vi phạm",
