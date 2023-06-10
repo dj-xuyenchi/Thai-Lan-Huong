@@ -9,7 +9,7 @@
         width="380px"
         height="240px"
       >
-        <img :src="`data:image/jpeg;base64,` + postImg" alt="Hình ảnh" />
+        <img :src="postImg" alt="Hình ảnh" />
         <v-overlay
           :model-value="isHovering"
           contained

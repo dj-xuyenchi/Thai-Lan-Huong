@@ -21,11 +21,7 @@
         align-items: center;
       "
     >
-      <img
-        :src="`data:image/png;base64,` + getAdminLogo"
-        alt="Hình ảnh"
-        style="height: 60px"
-      />
+      <img :src="getAdminLogo" alt="Hình ảnh" style="height: 60px" />
     </div>
     <div style="color: white; margin-top: 20px">
       <v-list v-for="item in navs" :key="item">

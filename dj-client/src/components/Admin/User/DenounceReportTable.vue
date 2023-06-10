@@ -18,7 +18,7 @@
           <td>{{ index + 1 }}</td>
           <td>
             <img
-              :src="`data:image/jpeg;base64,` + item.userAvatarData40x40"
+              :src="item.userAvatarData40x40"
               alt="Hình ảnh"
               style="height: 60px; width: 60px; border-radius: 50%"
             />

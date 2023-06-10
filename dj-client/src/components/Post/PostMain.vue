@@ -13,7 +13,7 @@
       >
         <div style="width: 60%; float: left">
           <img
-            :src="`data:image/png;base64,` + postMainData.hotPost?.img"
+            :src="postMainData.hotPost?.img"
             alt="Hình ảnh"
             style="width: 100%; height: 420px"
           />
@@ -34,7 +34,7 @@
           <div class="post-item">
             <div style="width: 50%; float: left">
               <img
-                :src="`data:image/png;base64,` + item.img"
+                :src="item.img"
                 alt="Hình ảnh"
                 style="width: 100%; height: 110px"
               />

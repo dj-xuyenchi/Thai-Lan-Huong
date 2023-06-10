@@ -2,7 +2,7 @@
   <div style="margin: 2% 5% 2% 5%">
     <img
       style="width: 6%; height: 40px; float: left; border-radius: 50%"
-      :src="`data:image/jpeg;base64,` + data.userAvatar"
+      :src="data.userAvatar"
     />
     <div
       style="
@@ -118,7 +118,7 @@
         <div style="margin-left: 6%; margin-top: 1%">
           <img
             style="width: 40px; height: 40px; float: left; border-radius: 50%"
-            :src="`data:image/jpeg;base64,` + item.userAvatar"
+            :src="item.userAvatar"
           />
           <div
             style="
@@ -224,7 +224,7 @@
         >
           <img
             style="width: 40px; height: 40px; float: left; border-radius: 50%"
-            :src="`data:image/jpeg;base64,` + avatar"
+            :src="avatar"
           />
           <v-text-field
             style="width: 90%; float: left; margin-left: 12px"

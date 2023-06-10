@@ -15,6 +15,8 @@ namespace DJ_UploadFile.Services
         static string cloudName = "dushydq6r";
         static string apiKey = "856473519683811";
         static string apiSecret = "zhh1gmffet0xFszsh34RGwweEGY";
+        static private readonly Random rnd = new Random();
+
         static public
             Account account = new Account(cloudName, apiKey, apiSecret);
         static public Cloudinary _cloudinary = new Cloudinary(account);
@@ -30,7 +32,7 @@ namespace DJ_UploadFile.Services
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(file.FileName, stream),
-                    PublicId = "upload-Thai-Lan-Huong_" + DateTime.Now.ToShortDateString() // ID công khai tùy ý cho file
+                    PublicId = "upload-Thai-Lan-Huong_" + rnd.Next() + DateTime.Now.ToShortDateString() // ID công khai tùy ý cho file
                 };
 
                 var uploadResult = await CloudinaryUpload._cloudinary.UploadAsync(uploadParams);

@@ -44,7 +44,7 @@
     <v-menu>
       <template v-slot:activator="{ props }">
         <v-list-item
-          :prepend-avatar="`data:image/jpeg;base64,` + user.avatar"
+          :prepend-avatar="user.avatar"
           :title="user.name"
           :subtitle="user.nickName"
           :append-icon="iconStatus.normal"

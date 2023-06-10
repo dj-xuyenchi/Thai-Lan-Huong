@@ -30,7 +30,7 @@
                 <v-row
                   ><v-col cols="12" sm="12" md="12">
                     <img
-                      :src="'data:image/jpeg;base64, ' + userAvatarData40x40"
+                      :src="userAvatarData40x40"
                       alt="Hình ảnh"
                       style="height: 100px; width: 100px; border-radius: 50%"
                     />

@@ -6,11 +6,7 @@
       style="border-bottom-right-radius: 15px; border-bottom-left-radius: 15px"
     />
     <div class="backgound-avatar">
-      <img
-        :src="`data:image/jpeg;base64,` + item.avatar"
-        alt="Hình ảnh"
-        class="avatar"
-      />
+      <img :src="item.avatar" alt="Hình ảnh" class="avatar" />
     </div>
     <div class="user-name">
       <span

@@ -36,7 +36,7 @@
           >
             <img
               style="width: 6%; height: 40px; float: left; border-radius: 50%"
-              :src="`data:image/jpeg;base64,` + avatar"
+              :src="avatar"
             />
             <v-text-field
               style="width: 90%; float: left; margin-left: 12px"

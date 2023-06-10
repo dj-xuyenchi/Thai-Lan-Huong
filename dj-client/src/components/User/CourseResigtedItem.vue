@@ -3,7 +3,7 @@
     style="margin-left: 20px; float: left; height: 280px; margin-bottom: 12px"
   >
     <img
-      :src="'data:image/jpeg;base64, ' + item.courseAvatar"
+      :src="item.courseAvatar"
       alt="Hình ảnh"
       style="width: 400px; height: 240px; border-radius: 10px"
     />

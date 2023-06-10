@@ -9,7 +9,7 @@
         width="380px"
         height="240px"
       >
-        <img :src="`data:image/png;base64,` + postImg" alt="" />
+        <img :src="postImg" alt="" />
         <v-overlay
           :model-value="isHovering"
           contained
@@ -40,11 +40,7 @@
         </h5>
       </div>
       <div class="author-info">
-        <img
-          :src="`data:image/png;base64,` + authorAvatar"
-          alt="Hình ảnh"
-          v-if="authorAvatar != ` `"
-        />
+        <img :src="authorAvatar" alt="Hình ảnh" v-if="authorAvatar != ` `" />
         <span>{{ postAuthor }}</span>
         <img
           v-if="isKYC"

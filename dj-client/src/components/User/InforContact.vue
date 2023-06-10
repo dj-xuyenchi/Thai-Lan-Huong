@@ -12,10 +12,7 @@
       Thông tin
     </h4>
     <div class="left-avatar">
-      <img
-        :src="'data:image/jpeg;base64,' + userInfor.userAvatarData40x40"
-        alt="Hình ảnh"
-      />
+      <img :src="userInfor.userAvatarData40x40" alt="Hình ảnh" />
     </div>
     <div class="right-infor">
       <ul>

@@ -3,7 +3,7 @@
     <h1>{{ post.title }}</h1>
 
     <img
-      :src="`data:image/png;base64,` + post.createrImg"
+      :src="post.createrImg"
       alt="Hình ảnh"
       style="height: 40px; width: 40px; border-radius: 50%; float: left"
     />

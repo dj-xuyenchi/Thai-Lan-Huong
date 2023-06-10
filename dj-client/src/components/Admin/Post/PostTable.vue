@@ -18,7 +18,7 @@
           <td>{{ item.stt }}</td>
           <td>
             <img
-              :src="`data:image/jpeg;base64,` + item.blogImg"
+              :src="item.blogImg"
               alt="Hình ảnh"
               style="height: 60px; width: 100px"
             />

@@ -2,7 +2,7 @@
   <div class="noti-item" @click="seenNoti()">
     <div class="right-img">
       <img
-        :src="'data:image/jpeg;base64, ' + data.avatar"
+        :src="data.avatar"
         alt="Hình ảnh"
         style="border-radius: 50%; height: 60px; width: 60px"
       />

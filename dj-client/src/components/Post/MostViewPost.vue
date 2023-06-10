@@ -10,7 +10,7 @@
       <div style="width: 120px; float: left">
         <img
           style="width: 120px; height: 72px"
-          :src="`data:image/png;base64,` + item.postImg"
+          :src="item.postImg"
           alt="Hình ảnh"
         />
       </div>
