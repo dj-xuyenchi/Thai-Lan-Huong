@@ -1,4 +1,5 @@
 ﻿using dj_actionlayer.DAO;
+using DJ_UploadFile.Services;
 using dj_webdesigncore.Business.UserIBusiness;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Study;
@@ -88,10 +89,7 @@ namespace dj_actionlayer.Business.UserBusiness
             check.PostTitle = data.title;
             check.PostImgLinkMeta = data.imgLink;
             check.PostDescription = data.des;
-            var stream = new MemoryStream();
-            img.CopyTo(stream);
-            byte[] avatarByte = stream.ToArray();
-            check.PostAvatar = avatarByte;
+            check.PostAvatar = await CloudinaryUpload.UploadFile(img);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -428,7 +426,7 @@ namespace dj_actionlayer.Business.UserBusiness
             data.IsKYC = (bool)user.IsKYC;
             data.Avatar = user.UserAvatarData40x40;
             data.JoinTime = user.CreateAccount.Value.Day + " - " + user.CreateAccount.Value.Month + " - " + user.CreateAccount.Value.Year;
-            data.WallImg = user.UserCoverImg == null ? null : user.UserCoverImg;
+            data.WallImg =null;
             List<ResigtedUserCourseDTO> registerCourseDTOs = new List<ResigtedUserCourseDTO>();
             var listCourse = _context.user_course.Where(x => x.UserId == userId).OrderBy(x => x.ResisterDateTime).ToList();
             foreach (var item in listCourse)
@@ -543,7 +541,7 @@ namespace dj_actionlayer.Business.UserBusiness
                 notification.SendTime = send;
                 if (item.SystemNotification)
                 {
-                    notification.Avatar = Convert.FromBase64String(Settings.adminQA());
+                    notification.Avatar = Settings.adminQA();
                 }
                 else
                 {
@@ -634,10 +632,7 @@ namespace dj_actionlayer.Business.UserBusiness
             }
             if (avatar != null)
             {
-                var stream = new MemoryStream();
-                avatar.CopyTo(stream);
-                byte[] avatarByte = stream.ToArray();
-                user.UserAvatarData40x40 = avatarByte;
+                user.UserAvatarData40x40 = await CloudinaryUpload.UploadFile(avatar);
             }
             if (updateUserRequest.catalog != null)
             {

@@ -14,7 +14,7 @@ namespace dj_webdesigncore.Entities.PostEntity
     {
         public int PostId { get; set; }
         public Post Post { get; set; }
-        public byte[]? ImageData { get; set; }
+        public string? ImageData { get; set; }
         public string? ImageTitle { get; set; }
         public string? Sentence { get; set; }
         public int SortNumber { get; set; }

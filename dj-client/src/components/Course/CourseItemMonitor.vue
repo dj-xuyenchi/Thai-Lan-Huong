@@ -9,7 +9,7 @@
         width="380px"
         height="220px"
       >
-        <img :src="`data:image/jpeg;base64,` + courseData" alt="Hình ảnh" />
+        <img :src="courseData" alt="Hình ảnh" />
         <v-overlay
           :model-value="isHovering"
           contained

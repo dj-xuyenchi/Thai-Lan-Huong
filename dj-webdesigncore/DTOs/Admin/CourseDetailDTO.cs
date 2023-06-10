@@ -13,7 +13,7 @@ namespace dj_webdesigncore.DTOs.Admin
         public string CourseCode { get; set; }
         public string CourseName { get; set; }
         public string CourseSubTitle { get; set; }
-        public byte[] CourseImageData { get; set; }
+        public string CourseImageData { get; set; }
         public int CourseLevelId { get; set; }
         public string CourseLevel { get; set; }
         public string LessonCount { get; set; }

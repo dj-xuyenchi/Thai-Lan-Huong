@@ -10,7 +10,7 @@ namespace dj_webdesigncore.DTOs.UserDTO
     public class UpdateDTO
     {
         public ActionStatus status { get; set; }
-        public byte[] avatar { get; set; }
+        public string avatar { get; set; }
         public string nickName { get; set; }
         public string name { get; set; }
     }

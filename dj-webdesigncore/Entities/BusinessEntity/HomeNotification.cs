@@ -14,6 +14,6 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         public string Content { get; set; }
         public int UserPublicId { get; set; }
         public User UserPublic { get; set; }
-        public byte[]? Img { get; set; }
+        public string? Img { get; set; }
     }
 }

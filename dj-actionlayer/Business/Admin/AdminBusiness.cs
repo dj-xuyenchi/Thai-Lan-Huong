@@ -1,4 +1,5 @@
-﻿using dj_webdesigncore.Business.Admin;
+﻿using DJ_UploadFile.Services;
+using dj_webdesigncore.Business.Admin;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.DTOs.Lobby;
@@ -37,10 +38,7 @@ namespace dj_actionlayer.Business.Admin
             blog.StatusId = 2;
             blog.CmtCount = 0;
             blog.ViewCount = 0;
-            var stream = new MemoryStream();
-            img.CopyTo(stream);
-            byte[] avatarByte = stream.ToArray();
-            blog.BlogImg = avatarByte;
+            blog.BlogImg = await CloudinaryUpload.UploadFile(img);
             await _context.AddAsync(blog);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -99,10 +97,7 @@ namespace dj_actionlayer.Business.Admin
             course.CourseTypeId = addCourseRequest.typeId;
             course.RegisterCount = 0;
             course.DoneCount = 0;
-            var stream = new MemoryStream();
-            img.CopyTo(stream);
-            byte[] avatarByte = stream.ToArray();
-            course.CourseImageData = avatarByte;
+            course.CourseImageData = await CloudinaryUpload.UploadFile(img);
             await _context.AddAsync(course);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -1038,10 +1033,7 @@ namespace dj_actionlayer.Business.Admin
             blog.StatusId = addBlogRequest.StatusId;
             if (img != null)
             {
-                var stream = new MemoryStream();
-                img.CopyTo(stream);
-                byte[] avatarByte = stream.ToArray();
-                blog.BlogImg = avatarByte;
+                blog.BlogImg = await CloudinaryUpload.UploadFile(img);
             }
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -1110,10 +1102,7 @@ namespace dj_actionlayer.Business.Admin
             course.DoneCount = addCourseRequest.doneCount;
             if (img != null)
             {
-                var stream = new MemoryStream();
-                img.CopyTo(stream);
-                byte[] avatarByte = stream.ToArray();
-                course.CourseImageData = avatarByte;
+                course.CourseImageData = await CloudinaryUpload.UploadFile(img);
             }
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;

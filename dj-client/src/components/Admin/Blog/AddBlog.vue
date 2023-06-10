@@ -12,7 +12,7 @@
           <v-row>
             <v-col cols="12" sm="12" md="12">
               <img
-                :src="'data:image/jpeg;base64, ' + dataImage"
+                :src="dataImage"
                 alt="Hình ảnh"
                 style="height: 160px; width: 280px"
               />

@@ -12,8 +12,8 @@ namespace dj_webdesigncore.Entities.PostEntity
 		public string? PostTitle { get; set; }
 		public string? PostDescription { get; set; }
 		public string? PostImgLinkMeta { get; set; }
-		public byte[]? PostAvatar { get; set; }
-		public byte[]? PostMiniAvatar { get; set; }
+		public string? PostAvatar { get; set; }
+	
 		public int? UserCreateId { get; set; }
 		public string PostData { get; set; }
 		public User? UserCreate { get; set; }

@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\dj-uploadfile\dj-uploadfile.csproj" />
     <ProjectReference Include="..\dj-webdesigncore\dj-webdesigncore.csproj" />
   </ItemGroup>
 

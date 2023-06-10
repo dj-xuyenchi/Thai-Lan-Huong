@@ -15,7 +15,7 @@ namespace dj_webdesigncore.DTOs.Post
         public string ImgLink { get; set; }
         public int LikeCount { get; set; }
         public bool IsLiked { get; set; }
-        public byte[] CreaterImg { get; set; }
+        public string CreaterImg { get; set; }
         public string CreaterFullName { get; set; }
         public bool IsCreaterKYC { get; set; }
         public string CreatePostTime { get; set; }

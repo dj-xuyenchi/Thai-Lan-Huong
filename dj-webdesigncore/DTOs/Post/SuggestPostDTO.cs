@@ -9,7 +9,7 @@ namespace dj_webdesigncore.DTOs.Post
     public class SuggestPostDTO
     {
         public int Id { get; set; }
-        public byte[] PostImg { get; set; }
+        public string PostImg { get; set; }
         public string Title { get; set; }
         public int CmtCount { get; set; }
         public int LikeCount { get; set; }

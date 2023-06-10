@@ -10,7 +10,7 @@ namespace dj_webdesigncore.Entities.BlogEntity
     {
         public int ViewCount { get; set; }
         public int CmtCount { get; set; }
-        public byte[] BlogImg { get; set; }
+        public string BlogImg { get; set; }
         public string BlogLink { get; set; }
         public string BlogTitle { get; set; }
         public DateTime CreateTime { get; set; }

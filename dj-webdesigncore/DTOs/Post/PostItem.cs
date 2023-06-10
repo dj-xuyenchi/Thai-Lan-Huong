@@ -10,8 +10,8 @@ namespace dj_webdesigncore.DTOs.Post
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public byte[] Img { get; set; }
-        public byte[] CreaterImg { get; set; }
+        public string Img { get; set; }
+        public string CreaterImg { get; set; }
         public string CreaterFullName { get; set; }
     }
 }

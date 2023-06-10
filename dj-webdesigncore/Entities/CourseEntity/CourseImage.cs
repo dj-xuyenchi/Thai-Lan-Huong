@@ -8,7 +8,7 @@ namespace dj_webdesigncore.Entities.CourseEntity
 {
 	public class CourseImage : BaseEntity
 	{
-		public byte[] CourseImageData { get; set; }
+		public string CourseImageData { get; set; }
 		public int SortNumber { get; set; }
 		public int? CourseId { get; set; }
 		public Course? Course { get; set; }

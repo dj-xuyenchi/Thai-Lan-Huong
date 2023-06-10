@@ -8,7 +8,7 @@ namespace dj_webdesigncore.DTOs.UserDTO
 {
     public class ResigtedUserCourseDTO
     {
-        public byte[] CourseAvatar { get; set; }
+        public string CourseAvatar { get; set; }
         public string CourseName { get; set; }
         public string CourseDescription { get; set; }
         public string CourseLink { get; set; }

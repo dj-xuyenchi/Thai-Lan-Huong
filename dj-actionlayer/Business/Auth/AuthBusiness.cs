@@ -297,7 +297,7 @@ namespace dj_actionlayer.Business.Auth
                 user.UserStatusId = 3;
                 user.CreateAccount = DateTime.Now;
                 user.IsKYC = false;
-                user.UserAvatarData40x40 = Convert.FromBase64String(Settings.defaultImage());
+                user.UserAvatarData40x40 = "https://res.cloudinary.com/dushydq6r/image/upload/v1686398105/xyz-abc_1286085158_6/10/vhwjtmzsygp0f2t1o8wc.jpg";
                 await _context.user.AddAsync(user);
                 await _context.SaveChangesAsync();
                 ConfirmEmail confirmEmail = new ConfirmEmail();

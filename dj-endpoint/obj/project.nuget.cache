@@ -1,15 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "/y05le143LCBvWJbO1yriBW5iEldzZPYGMEuFqIKGnV501MddYTXzv9AmCp5pOgaIA5JU1UHkOamuwdKma0tLQ==",
+  "dgSpecHash": "FouXZi+yW5g0PiF8xKRMHoUMy1JV4UOsSd9FmT0GVFGCX8zgEiHOcbSxJPMJM6HbZUxkA/wmF/QU+y8FqLaSQg==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\google.apis\\1.60.0\\google.apis.1.60.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\google.apis.auth\\1.60.0\\google.apis.auth.1.60.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\google.apis.core\\1.60.0\\google.apis.core.1.60.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\google.apis.youtube.v3\\1.60.0.3064\\google.apis.youtube.v3.1.60.0.3064.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.16\\microsoft.aspnetcore.authentication.google.6.0.16.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.0\\microsoft.aspnetcore.authentication.jwtbearer.6.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.codeanalysis.common\\4.5.0\\microsoft.codeanalysis.common.4.5.0.nupkg.sha512",
@@ -64,6 +67,7 @@
     "C:\\Users\\Admin\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
   "logs": []

@@ -17,7 +17,7 @@ namespace dj_webdesigncore.DTOs.Lobby
         public string BlogLink { get; set; }
         public string CreateTime { get; set; }
         public string UpdateTime { get; set; }
-        public byte[] BlogImg { get; set; }
+        public string BlogImg { get; set; }
         public int StatusId { get; set; }
     }
 }

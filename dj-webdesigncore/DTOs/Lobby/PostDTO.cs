@@ -9,8 +9,8 @@ namespace dj_webdesigncore.DTOs.Lobby
     public class PostDTO
     {
         public int Id { get; set; }
-        public byte[] PostImg { get; set; }
-        public byte[] CreaterAvatar { get; set; }
+        public string PostImg { get; set; }
+        public string CreaterAvatar { get; set; }
         public string CreaterFullName { get; set; }
         public string PostTitle { get; set; }
         public int LikeCount { get; set; }

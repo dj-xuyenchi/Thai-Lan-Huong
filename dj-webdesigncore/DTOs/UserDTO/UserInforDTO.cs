@@ -12,7 +12,7 @@ namespace dj_webdesigncore.DTOs.UserDTO
     public class UserInforDTO
     {
         public int UserId { get; set; }
-        public byte[] UserAvatarData40x40 { get; set; }
+        public string UserAvatarData40x40 { get; set; }
         public string UserEmail { get; set; }
         public string UserFacebook { get; set; }
         public string UserLinkedIn { get; set; }

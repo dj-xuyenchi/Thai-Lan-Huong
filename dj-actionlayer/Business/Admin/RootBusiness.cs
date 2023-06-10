@@ -1,4 +1,5 @@
 ﻿using dj_actionlayer.DAO;
+using DJ_UploadFile.Services;
 using dj_webdesigncore.Business.Admin;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.Entities.UserEntity;
@@ -54,14 +55,11 @@ namespace dj_actionlayer.Business.Admin
             user.CreateAccount = DateTime.Now;
             if (avatar != null)
             {
-                var stream = new MemoryStream();
-                avatar.CopyTo(stream);
-                byte[] avatarByte = stream.ToArray();
-                user.UserAvatarData40x40 = avatarByte;
+                user.UserAvatarData40x40 = await CloudinaryUpload.UploadFile(avatar);
             }
             else
             {
-                user.UserAvatarData40x40 = Convert.FromBase64String(Settings.defaultImage());
+                user.UserAvatarData40x40 = "https://res.cloudinary.com/dushydq6r/image/upload/v1686398105/xyz-abc_1286085158_6/10/vhwjtmzsygp0f2t1o8wc.jpg";
             }
             if (updateUserRequest.birthday.Year != 1000)
             {
@@ -112,7 +110,7 @@ namespace dj_actionlayer.Business.Admin
 
         public async Task<IQueryable<User>> GetUserPage(int page)
         {
-            var listPage = _context.user.Include(x => x.Role).Include(x=>x.Gender).Include(x=>x.Catalog).Include(x=>x.UserStatus).Include(x=>x.Province).Include(x=>x.District).Include(x=>x.Ward).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
+            var listPage = _context.user.Include(x => x.Role).Include(x => x.Gender).Include(x => x.Catalog).Include(x => x.UserStatus).Include(x => x.Province).Include(x => x.District).Include(x => x.Ward).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
             return listPage;
         }
 
@@ -155,14 +153,11 @@ namespace dj_actionlayer.Business.Admin
             user.CreateAccount = DateTime.Now;
             if (avatar != null)
             {
-                var stream = new MemoryStream();
-                avatar.CopyTo(stream);
-                byte[] avatarByte = stream.ToArray();
-                user.UserAvatarData40x40 = avatarByte;
+                user.UserAvatarData40x40 = await CloudinaryUpload.UploadFile(avatar);
             }
             else
             {
-                user.UserAvatarData40x40 = Convert.FromBase64String(Settings.defaultImage());
+                user.UserAvatarData40x40 = "https://res.cloudinary.com/dushydq6r/image/upload/v1686398105/xyz-abc_1286085158_6/10/vhwjtmzsygp0f2t1o8wc.jpg";
             }
             if (updateUserRequest.birthday.Year != 1000)
             {

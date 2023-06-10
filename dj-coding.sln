@@ -10,7 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dj-actionlayer", "dj-action
 		{C9C82457-4970-425C-981A-3CF7A844D739} = {C9C82457-4970-425C-981A-3CF7A844D739}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dj-endpoint", "dj-endpoint\dj-endpoint.csproj", "{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dj-endpoint", "dj-endpoint\dj-endpoint.csproj", "{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dj-uploadfile", "dj-uploadfile\dj-uploadfile.csproj", "{D5D98331-9CB0-4509-BF5B-8E05BC124432}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D98331-9CB0-4509-BF5B-8E05BC124432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D98331-9CB0-4509-BF5B-8E05BC124432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D98331-9CB0-4509-BF5B-8E05BC124432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D98331-9CB0-4509-BF5B-8E05BC124432}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
