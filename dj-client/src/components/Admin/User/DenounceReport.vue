@@ -11,7 +11,10 @@
       ></v-text-field>
     </div>
   </div>
-  <DenounceReportTable :tableData="tableData" :getUserPage="getUserPage" />
+  <DenounceReportTable
+    :tableData="tableData"
+    :getDenouncePage="getDenouncePage"
+  />
   <div class="text-center" @click="pageOpt()">
     <v-container>
       <v-row justify="center">

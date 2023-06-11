@@ -98,7 +98,7 @@ namespace dj_actionlayer.Business.Auth
                 return new LoginResponse<AuthDataRespon>
                 {
                     Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.LOCKED,
-                    Message = "Tài khoản của bạn bị khóa đến " + user.UnlockTime.Value.ToShortDateString(),
+                    Message = "Tài khoản của bạn bị khóa đến " + user.UnlockTime.Value.Day + "/" + user.UnlockTime.Value.Month + "/" + user.UnlockTime.Value.Year + " do vi phạm nguyên tắc cộng đồng! Mọi thắc mắc vui long liên hệ Quản trị viên.",
                     Data = new AuthDataRespon
                     {
                         email = user.UserEmail,
@@ -345,6 +345,7 @@ namespace dj_actionlayer.Business.Auth
                 user.UserStatusId = 3;
                 user.CreateAccount = DateTime.Now;
                 user.IsKYC = false;
+                user.VioCount = 0;
                 user.UserAvatarData40x40 = "https://res.cloudinary.com/dushydq6r/image/upload/v1686398105/xyz-abc_1286085158_6/10/vhwjtmzsygp0f2t1o8wc.jpg";
                 await _context.user.AddAsync(user);
                 await _context.SaveChangesAsync();

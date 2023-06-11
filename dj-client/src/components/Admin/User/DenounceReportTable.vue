@@ -20,24 +20,32 @@
             <img
               :src="item.senderImg"
               alt="Hình ảnh"
-              style="height: 60px; width: 60px; border-radius: 50%"
+              style="height: 30px; width: 30px; border-radius: 50%; float: left"
             />
-            <span>{{ item.senderName }}</span>
+            <span style="float: left; line-height: 30px; margin-left: 8px">{{
+              item.senderName
+            }}</span>
           </td>
           <td>
             <img
               :src="item.vioImg"
               alt="Hình ảnh"
-              style="height: 60px; width: 60px; border-radius: 50%"
+              style="height: 30px; width: 30px; border-radius: 50%; float: left"
             />
-            <span>{{ item.vioName }}</span>
+            <span style="float: left; line-height: 30px; margin-left: 8px">{{
+              item.vioName
+            }}</span>
           </td>
-          <td>{{ item.cmtDenounceContent }}</td>
-          <td>{{ item.note }}</td>
+          <td>{{ fixCmt(item.cmtDenounceContent) }}</td>
+          <td>{{ fixCmt(item.note) }}</td>
           <td>{{ item.sendTime }}</td>
-          <td>{{ item.linkCmt }}</td>
           <td>
-            <ConfirmDenounce :item="item" :getBlogPage="getBlogPage" />
+            <a :href="item.linkCmt" target="_blank">{{
+              fixLink(item.linkCmt)
+            }}</a>
+          </td>
+          <td>
+            <ConfirmDenounce :item="item" :getDenouncePage="getDenouncePage" />
           </td>
         </tr>
       </tbody>
@@ -57,16 +65,17 @@ export default {
     };
   },
   methods: {
-    fixDate(vari) {
-      return (
-        vari.substring(8, 10) + vari.substring(4, 8) + vari.substring(0, 4)
-      );
+    fixLink(vari) {
+      return vari.substring(0, 10) + "...";
+    },
+    fixCmt(vari) {
+      return vari.substring(0, 36);
     },
   },
 
   props: {
     tableData: [],
-    getBlogPage: Function,
+    getDenouncePage: Function,
   },
 };
 </script>

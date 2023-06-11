@@ -25,5 +25,6 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         public int? DenounceTypeId { get; set; }
         public DenounceType? DenounceType { get; set; }
         public TypeCmt? TypeCmt { get; set; }
+        public int? UserCheckId { get; set; }
     }
 }

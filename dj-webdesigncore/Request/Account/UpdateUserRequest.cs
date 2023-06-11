@@ -31,5 +31,6 @@ namespace dj_webdesigncore.Request.Account
         public string email { get; set; }
         public bool isKYC { get; set; }
         public int statusId { get; set; }
+        public int lockOpt { get; set; }
     }
 }

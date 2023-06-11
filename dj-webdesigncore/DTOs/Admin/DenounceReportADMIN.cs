@@ -17,5 +17,8 @@ namespace dj_webdesigncore.DTOs.Admin
         public string note { get; set; }
         public string sendTime { get; set; }
         public string linkCmt { get; set; }
+        public string typeDenounce { get; set; }
+        public int VioCount { get; set; }
+        public int vioId { get; set; }
     }
 }

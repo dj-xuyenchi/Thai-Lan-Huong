@@ -50,5 +50,6 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public DateTime? KYCTime { get; set; }
 		public bool? IsLock { get; set; }
 		public DateTime? UnlockTime { get; set; }
+		public int? VioCount { get; set; }
 	}
 }

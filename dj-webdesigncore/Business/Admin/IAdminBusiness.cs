@@ -7,6 +7,7 @@ using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -55,5 +56,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<List<BlogDTO>>> findBlog(string key);
         Task<ResponData<ActionStatus>> updateBlog(IFormFile img, AddBlogRequest addBlogRequest);
         Task<ResponData<List<DenounceReportADMIN>>> getDenouncePage(int page);
+        Task<ResponData<ActionStatus>> checkDenounce(ConfirmDenounceRequest confirmDenounce);
     }
 }

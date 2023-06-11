@@ -148,9 +148,32 @@ namespace dj_actionlayer.Business.Admin
             user.UserEmail = updateUserRequest.email;
             user.NumberPhone = updateUserRequest.sdt;
             user.UserStatusId = updateUserRequest.statusId;
+            if (updateUserRequest.statusId == 4)
+            {
+                user.IsLock = true;
+                user.VioCount++;
+                switch (updateUserRequest.lockOpt)
+                {
+                    case 1:
+                        user.UserStatusId = 4;
+                        user.UnlockTime = DateTime.Now.AddDays(3);
+                        break;
+                    case 2:
+                        user.UserStatusId = 4;
+                        user.UnlockTime = DateTime.Now.AddDays(5);
+                        break;
+                    case 3:
+                        user.UserStatusId = 4;
+                        user.UnlockTime = DateTime.Now.AddDays(7);
+                        break;
+                    case 4:
+                        user.UserStatusId = 2;
+                        break;
+                }
+            }
             user.GenderId = updateUserRequest.gender;
             user.IsKYC = updateUserRequest.isKYC;
-            user.CreateAccount = DateTime.Now;
+            user.Update = DateTime.Now;
             if (avatar != null)
             {
                 user.UserAvatarData40x40 = await CloudinaryUpload.UploadFile(avatar);

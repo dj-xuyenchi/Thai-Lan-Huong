@@ -248,6 +248,20 @@
                     variant="outlined"
                   ></v-select>
                 </v-col>
+                <div v-if="userStatus.id == 4">
+                  <v-col cols="12" sm="12" md="12">
+                    <v-select
+                      v-model="lockOpt"
+                      label="Khóa trong"
+                      :items="listOpt"
+                      item-title="name"
+                      persistent-hint
+                      return-object
+                      item-value="id"
+                      variant="outlined"
+                    ></v-select>
+                  </v-col>
+                </div>
                 <v-col cols="12">
                   <v-switch
                     v-model="isKYC"
@@ -298,6 +312,28 @@ export default {
     text: "",
     snackbar: false,
     selectFile: null,
+    lockOpt: {
+      name: "3 ngày",
+      id: 1,
+    },
+    listOpt: [
+      {
+        name: "3 ngày",
+        id: 1,
+      },
+      {
+        name: "5 ngày",
+        id: 2,
+      },
+      {
+        name: "7 ngày",
+        id: 3,
+      },
+      {
+        name: "Khóa vĩnh viễn",
+        id: 4,
+      },
+    ],
     listHuyen: [],
     listXa: [],
     listJob: [],
@@ -389,6 +425,7 @@ export default {
         userName: this.userName,
         userPass: this.userPass,
         statusId: this.userStatus.id,
+        lockOpt: this.lockOpt.id,
       };
     },
     onFileSelect() {

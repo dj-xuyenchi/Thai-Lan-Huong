@@ -6,6 +6,7 @@ using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -216,6 +217,11 @@ namespace dj_endpoint.Controllers.Admin
         public async Task<IActionResult> getDenounce(int page)
         {
             return Ok(await _admin.getDenouncePage(page));
+        }
+        [HttpPost("confirmdenounce")]
+        public async Task<IActionResult> confirmDenounce(ConfirmDenounceRequest confirmDenounce)
+        {
+            return Ok(await _admin.checkDenounce(confirmDenounce));
         }
     }
 }

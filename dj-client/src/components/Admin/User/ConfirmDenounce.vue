@@ -6,213 +6,50 @@
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">Cập nhật thông tin người dùng</span>
+        <span class="text-h5">Xác nhận báo cáo vi phạm</span>
       </v-card-title>
       <v-card-text>
         <v-container>
           <v-row>
-            <v-form
-              @submit.prevent="submit()"
-              ref="form"
-              enctype="multipart/form-data"
-            >
-              <v-row
-                ><v-col cols="12" sm="12" md="12">
-                  <img
-                    :src="userAvatarData40x40"
-                    alt="Hình ảnh"
-                    style="height: 100px; width: 100px; border-radius: 50%"
-                  />
-                  <v-label style="width: 100%; margin: 24px 0 8px 0"
-                    >Ảnh đại diện người dùng</v-label
-                  >
-                  <v-btn
-                    color="#4d96ff"
-                    style="
-                      height: 35px;
-                      width: 104px;
-                      font-size: 14px;
-                      font-weight: 400;
-                    "
-                    @click="$refs.fileInput.click()"
-                  >
-                    Chọn ảnh</v-btn
-                  >
-                  <v-file-input
-                    ref="fileInput"
-                    v-model="selectFile"
-                    accept="image/*"
-                    @change="onFileSelect"
-                    outlined
-                    dense
+            <v-form @submit.prevent="submit()" ref="form">
+              <span
+                >Người dùng {{ item.vioName }} đã vi phạm
+                <span style="color: red"> {{ item.vioCount }} lần</span> trước
+                đó báo cáo này được thông báo người dùng bình luận vi phạm
+                nguyên tắc
+                <span style="color: red">{{ item.typeDenounce }}</span></span
+              >
+              <p>Nội dung bình luận</p>
+              <span style="color: red">{{ item.cmtDenounceContent }}</span>
+              <p>Ghi chú từ người báo cáo</p>
+              <span style="color: red">{{ item.note }}</span>
+              <v-row>
+                <v-col cols="12" sm="12" md="12">
+                  <v-switch
+                    v-model="isVio"
+                    label="Vi phạm nguyên tắc"
+                    color="secondary"
                     hide-details
-                    class="my-file-input"
-                  ></v-file-input>
+                  ></v-switch>
                 </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-text-field
-                    v-model="firstName"
-                    density="compact"
-                    label="Họ*"
-                    hint="Họ người dùng"
-                    variant="outlined"
-                    :rules="[rules.validName, rules.validValue]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-text-field
-                    v-model="lastName"
-                    density="compact"
-                    label="Tên*"
-                    hint="Tên người dùng"
-                    variant="outlined"
-                    :rules="[rules.validName, rules.validValue]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-label>Ngày sinh</v-label>
-                  <input
-                    v-model="userBirth"
-                    type="date"
-                    style="margin-left: 12px; height: 40px; font-size: 16px"
-                /></v-col>
-
-                <v-col cols="4" sm="4" md="4">
-                  <v-text-field
-                    v-model="userPhone"
-                    density="compact"
-                    label="SĐT*"
-                    hint="Số điện thoại người dùng"
-                    variant="outlined"
-                    :rules="[rules.sdt]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-text-field
-                    v-model="userFacebook"
-                    density="compact"
-                    label="Facebook"
-                    hint="Facebook"
-                    variant="outlined"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-text-field
-                    v-model="userLinkedIn"
-                    density="compact"
-                    label="LinkedIn"
-                    hint="LinkedIn"
-                    variant="outlined"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                  <v-text-field
-                    v-model="userEmail"
-                    density="compact"
-                    label="Email*"
-                    hint="Email người dùng"
-                    variant="outlined"
-                    :rules="[rules.validName, rules.validValue]"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                  <v-textarea
-                    v-model="userAddressNow"
-                    density="compact"
-                    label="Địa chỉ hiện tại"
-                    hint="Địa chỉ hiện tại"
-                    variant="outlined"
-                    max-rows="5"
-                  ></v-textarea>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-select
-                    v-model="userTinh"
-                    label="Tỉnh/thành phố"
-                    :items="listTinh"
-                    item-title="full_name"
-                    persistent-hint
-                    return-object
-                    item-value="code"
-                    variant="outlined"
-                    @update:modelValue="getHuyen()"
-                  ></v-select>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-select
-                    v-model="userHuyen"
-                    label="Quận/huyện"
-                    :items="listHuyen"
-                    variant="outlined"
-                    item-title="full_name"
-                    persistent-hint
-                    return-object
-                    item-value="code"
-                    @update:modelValue="getXa()"
-                  ></v-select>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-select
-                    v-model="userXa"
-                    label="Xã/phường"
-                    :items="listXa"
-                    item-title="full_name"
-                    persistent-hint
-                    return-object
-                    item-value="code"
-                    variant="outlined"
-                  ></v-select>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-select
-                    v-model="userGender"
-                    label="Giới tính"
-                    :items="listGender"
-                    item-title="genderName"
-                    persistent-hint
-                    return-object
-                    item-value="id"
-                    variant="outlined"
-                  ></v-select>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-select
-                    v-model="userJob"
-                    label="Công việc hiện tại"
-                    :items="listJob"
-                    item-title="catalogName"
-                    persistent-hint
-                    return-object
-                    item-value="id"
-                    variant="outlined"
-                  ></v-select>
-                </v-col>
-                <v-col cols="4" sm="4" md="4">
-                  <v-select
-                    v-model="userJob"
-                    label="Quyền hạn*"
-                    :items="listJob"
-                    item-title="catalogName"
-                    persistent-hint
-                    return-object
-                    item-value="id"
-                    variant="outlined"
-                  ></v-select>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                  <v-textarea
-                    v-model="userDetail"
-                    density="compact"
-                    label="Mô tả bản thân"
-                    hint="Mô tả bản thân"
-                    variant="outlined"
-                  ></v-textarea>
-                </v-col>
+                <div v-if="isVio">
+                  <v-col cols="12" sm="12" md="12">
+                    <v-select
+                      v-model="lockOpt"
+                      label="Khóa trong"
+                      :items="listOpt"
+                      item-title="name"
+                      persistent-hint
+                      return-object
+                      item-value="id"
+                      variant="outlined"
+                    ></v-select>
+                  </v-col>
+                </div>
               </v-row>
             </v-form>
           </v-row>
         </v-container>
-        <small>* là trường là bắt buộc!</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -226,7 +63,7 @@
           type="submit"
           @click="submit()"
         >
-          Cập nhật
+          Xác nhận
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -242,158 +79,71 @@
 </template>
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
-import UserAPI from "../../../apis/APIUser/UserAPI";
 export default {
   name: "ConfirmDenounce",
   data: () => ({
     text: "",
     snackbar: false,
-    selectFile: null,
-    listTinh: [],
-    listHuyen: [],
-    listXa: [],
-    listJob: [],
-    listGender: [],
-    firstName: "",
-    lastName: "",
-    userAddressNow: "",
-    userAvatarData40x40: "",
-    userPhone: "",
-    userBirth: "",
-    userGender: "",
-    userGenderId: "",
-    userDetail: "",
-    userJob: "",
-    userJobCode: "",
-    userId: "",
-    userFacebook: "",
-    userLinkedIn: "",
-    userTinh: "",
-    userTinhCode: "",
-    userHuyen: "",
-    userRole: null,
-    userEmail: "",
-    userHuyenCode: "",
-    userXa: "",
-    userXaCode: "",
+    lockOpt: {
+      name: "3 ngày",
+      id: 1,
+    },
+    listOpt: [
+      {
+        name: "3 ngày",
+        id: 1,
+      },
+      {
+        name: "5 ngày",
+        id: 2,
+      },
+      {
+        name: "7 ngày",
+        id: 3,
+      },
+      {
+        name: "Khóa vĩnh viễn",
+        id: 4,
+      },
+    ],
+    isVio: false,
     dialog: false,
     btnLoading: false,
-    rules: {
-      validName: (value) =>
-        !/[@#$%^&+=!]/.test(value) || "Tên chứa ký tự không hợp lệ",
-      sdt: (value) => /^\+?\d{1,3}\s?\d{9,}$/.test(value) || "SDT chưa đúng",
-      validValue: (value) =>
-        value.trim().length > 0 || "Không được để trống thông tin này!",
-    },
   }),
-  created() {
-    this.getOption();
-  },
   methods: {
-    getData() {
-      return {
-        userId: localStorage.getItem("id"),
-        firstName: this.firstName,
-        lastName: this.lastName,
-        birthday: this.userBirth ? this.userBirth : "1000-01-01",
-        sdt: this.userPhone,
-        facebook: this.userFacebook,
-        linkedIn: this.userLinkedIn,
-        addressNow: this.userAddressNow,
-        province: this.userTinh ? this.userTinh.code : this.userTinhCode,
-        district: this.userHuyen ? this.userHuyen.code : this.userHuyenCode,
-        ward: this.userXa ? this.userXa.code : this.userXaCode,
-        gender: this.userGender.id ? this.userGender.id : this.userGenderId,
-        catalog: this.userJob ? this.userJob.id : this.userJobCode,
-        detail: this.userDetail,
-        email: this.userEmail,
-        role: this.userRole.id,
-      };
-    },
-    onFileSelect() {
-      if (
-        this.selectFile[0].type == "image/png" ||
-        this.selectFile[0].type == "image/jpeg" ||
-        this.selectFile[0].type == "image/jpg"
-      ) {
-        if (this.selectFile[0].size > 1048576) {
-          this.text = "File quá nặng chỉ hỗ trợ file dung lượng < 1MB";
-          this.snackbar = true;
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.userAvatarData40x40 = reader.result.split(",")[1];
-        };
-        reader.readAsDataURL(this.selectFile[0]);
-      } else {
-        this.text =
-          "Vui lòng chọn đúng file định dạng ảnh! Các định dạng được hỗ trợ: JPG, JPEG, PNG";
-        this.snackbar = true;
-        return;
-      }
-    },
     async submit() {
       this.btnLoading = true;
-      if (
-        this.firstName.trim().length == 0 ||
-        this.lastName.trim().length == 0 ||
-        this.userPhone.trim().length == 0 ||
-        this.userEmail.trim().length == 0 ||
-        this.userRole == null
-      ) {
-        this.text = "Không được để trông các trường bắt buộc!";
-        this.snackbar = true;
-        this.btnLoading = false;
-        return;
-      }
-      if (this.firstName.length + this.lastName.length > 25) {
-        this.text = "Tên quá dài!";
-        this.snackbar = true;
-        this.btnLoading = false;
-        return;
-      }
       const token = localStorage.getItem("token");
-      const formData = new FormData();
-      formData.append("avatar", this.selectFile ? this.selectFile[0] : null);
-      formData.append("updateUserRequest", JSON.stringify(this.getData()));
-      const result = await UserAPI.updateUser(formData, token);
-      if (result.data.status == 1) {
-        this.text = "Cập nhật thành công!";
+      const result = await AdminAPI.confirmDenounce(
+        {
+          DenounceId: this.item.denounceId,
+          VioId: this.item.vioId,
+          UserCheckId: localStorage.getItem("id"),
+          LockOpt: this.lockOpt.id,
+          IsVio: this.isVio,
+        },
+        token
+      );
+      if (result.data == 1) {
+        this.text = "Thành công!";
+        this.dialog = false;
+        this.snackbar = true;
+        this.isVio = false;
+        this.btnLoading = false;
+        this.getDenouncePage();
+      }
+      if (result.data == 4) {
+        this.text = "Thất bại không tìm thấy!";
         this.dialog = false;
         this.snackbar = true;
         this.btnLoading = false;
-        this.getLessonDetail();
-      }
-      if (result.data.status == 4) {
-        this.text = "Cập nhật thất bại!";
-        this.snackbar = true;
       }
       this.btnLoading = false;
     },
-    async getOption() {
-      const token = localStorage.getItem("token");
-      const data = await UserAPI.getOptionUpdate(token);
-      this.listGender = data.data.genders;
-      this.listTinh = data.data.provinces;
-    },
-    async getHuyen() {
-      const token = localStorage.getItem("token");
-      const data = await UserAPI.getHuyen(this.userTinh.code, token);
-      this.listHuyen = data.data;
-      this.userHuyen = data.data[0];
-      this.getXa();
-    },
-    async getXa() {
-      const token = localStorage.getItem("token");
-      const data = await UserAPI.getXa(this.userHuyen.code, token);
-      this.listXa = data.data;
-      this.userXa = data.data[0];
-    },
   },
   props: {
-    Item: Object,
-    getBlogPage: Function,
+    item: Object,
+    getDenouncePage: Function,
   },
 };
 </script>

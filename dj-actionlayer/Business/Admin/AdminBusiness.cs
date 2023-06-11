@@ -12,6 +12,7 @@ using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -382,6 +383,82 @@ namespace dj_actionlayer.Business.Admin
             {
                 result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
+                return result;
+            }
+        }
+
+        public async Task<ResponData<ActionStatus>> checkDenounce(ConfirmDenounceRequest confirmDenounce)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            User checker = await _context.user.FindAsync(confirmDenounce.UserCheckId);
+            if (checker == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            User vio = await _context.user.FindAsync(confirmDenounce.VioId);
+            if (vio == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Denounce denounce = await _context.denounce.FindAsync(confirmDenounce.DenounceId);
+            if (denounce == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            if (confirmDenounce.IsVio)
+            {
+                denounce.IsCheck = true;
+                denounce.IsViolation = true;
+                denounce.CheckTime = DateTime.Now;
+                denounce.UserCheckId = checker.Id;
+                switch (confirmDenounce.LockOpt)
+                {
+                    case 1:
+                        vio.IsLock = true;
+                        vio.UserStatusId = 4;
+                        vio.UnlockTime = DateTime.Now.AddDays(3);
+                        break;
+                    case 2:
+                        vio.IsLock = true;
+                        vio.UserStatusId = 4;
+                        vio.UnlockTime = DateTime.Now.AddDays(5);
+                        break;
+                    case 3:
+                        vio.IsLock = true;
+                        vio.UserStatusId = 4;
+                        vio.UnlockTime = DateTime.Now.AddDays(7);
+                        break;
+                    case 4:
+                        vio.IsLock = true;
+                        vio.UserStatusId = 2;
+                        break;
+                }
+                vio.VioCount++;
+                await _context.SaveChangesAsync();
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            else
+            {
+                denounce.IsCheck = true;
+                denounce.IsViolation = false;
+                denounce.CheckTime = DateTime.Now;
+                denounce.UserCheckId = checker.Id;
+                await _context.SaveChangesAsync();
+                result.Data = ActionStatus.SECCESSFULLY;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
         }
@@ -786,13 +863,16 @@ namespace dj_actionlayer.Business.Admin
         public async Task<ResponData<List<DenounceReportADMIN>>> getDenouncePage(int page)
         {
             ResponData<List<DenounceReportADMIN>> result = new ResponData<List<DenounceReportADMIN>>();
-            var listDenounce = _context.denounce.OrderByDescending(x => x.SendTime).Skip((page - 1) * 15).Take(15).ToList();
+            var listDenounce = _context.denounce.Where(x => x.IsCheck == false).OrderByDescending(x => x.SendTime).Skip((page - 1) * 15).Take(15).ToList();
             List<DenounceReportADMIN> data = new List<DenounceReportADMIN>();
             foreach (var item in listDenounce)
             {
                 DenounceReportADMIN denounceReportADMIN = new DenounceReportADMIN();
                 denounceReportADMIN.linkCmt = item.ProveLink;
-                denounceReportADMIN.denounceId= item.Id;
+                denounceReportADMIN.denounceId = item.Id;
+                denounceReportADMIN.vioId = item.UserViolationId;
+                DenounceType dt = await _context.denounce_type.FindAsync(item.DenounceTypeId);
+                denounceReportADMIN.typeDenounce = dt.DenounceName;
                 if (item.TypeCmt == dj_webdesigncore.Enums.Else.TypeCmt.LESSON)
                 {
                     CommentLesson cmtL = await _context.comment_lesson.FindAsync(item.CmtId);
@@ -809,8 +889,9 @@ namespace dj_actionlayer.Business.Admin
                 User vio = await _context.user.FindAsync(item.UserViolationId);
                 denounceReportADMIN.vioImg = vio.UserAvatarData40x40;
                 denounceReportADMIN.vioName = vio.UserFisrtName + " " + vio.UserLastName;
-                denounceReportADMIN.sendTime = item.SendTime.Day + "-" + item.SendTime.Month + "-" + item.SendTime.Year;
+                denounceReportADMIN.sendTime = item.SendTime.Day + " - " + item.SendTime.Month + " - " + item.SendTime.Year;
                 denounceReportADMIN.note = item.Note;
+                denounceReportADMIN.VioCount = (int)vio.VioCount;
                 data.Add(denounceReportADMIN);
             }
             result.Data = data;
@@ -1382,7 +1463,6 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
-
         }
 
         public async Task<ResponData<AddLessonDTO>> updateTheoryLesson(int lessonId, TheoryLessonRequest theoryLessonRequest)
