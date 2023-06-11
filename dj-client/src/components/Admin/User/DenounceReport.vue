@@ -40,7 +40,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import RootAPI from "../../../apis/APIAdmin/RootAPI.ts";
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import DenounceReportTable from "./DenounceReportTable";
 export default {
   name: "UserAdmin",
@@ -59,7 +59,7 @@ export default {
     show: false,
   }),
   created() {
-    this.getUserPage();
+    this.getDenouncePage();
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
@@ -73,22 +73,22 @@ export default {
         return;
       }
       const token = localStorage.getItem("token");
-      const data = await RootAPI.findUser(this.key, page, token);
-      this.tableData = data;
+      const data = await AdminAPI.findUser(this.key, page, token);
+      this.tableData = data.data;
       this.opt = 2;
       this.setIsLoadedData(false);
     },
-    async getUserPage() {
+    async getDenouncePage() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await RootAPI.getUserPage(this.page, token);
-      this.tableData = data;
+      const data = await AdminAPI.getDenouncePage(this.page, token);
+      this.tableData = data.data;
       this.opt = 1;
       this.setIsLoadedData(false);
     },
     async pageOpt() {
       if (this.opt == 1) {
-        this.getUserPage();
+        this.getDenouncePage();
       }
       if (this.opt == 2) {
         this.findUser(this.page);

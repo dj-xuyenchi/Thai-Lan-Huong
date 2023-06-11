@@ -146,6 +146,16 @@ export default {
         this.dialog = false;
         this.isUnValidUser = true;
       }
+      if (login.success == 4) {
+        this.loginStatus = "Tài khoản của bạn đã bị khóa vĩnh viễn.";
+        this.dialog = false;
+        this.isUnValidUser = true;
+      }
+      if (login.success == 5) {
+        this.loginStatus = login.message;
+        this.dialog = false;
+        this.isUnValidUser = true;
+      }
       if (login.success == 2) {
         this.loginStatus = "Tài khoản chưa được kích hoạt.";
         this.dialog = false;

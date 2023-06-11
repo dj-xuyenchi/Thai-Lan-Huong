@@ -87,9 +87,10 @@ namespace dj_actionlayer.Business.UserBusiness
             }
             check.PostStatusId = 5;
             check.PostTitle = data.title;
-            check.PostImgLinkMeta = data.imgLink;
+            string linkImg = await CloudinaryUpload.UploadFile(img);
+            check.PostImgLinkMeta = linkImg;
             check.PostDescription = data.des;
-            check.PostAvatar = await CloudinaryUpload.UploadFile(img);
+            check.PostAvatar = linkImg;
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";

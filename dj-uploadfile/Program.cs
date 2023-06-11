@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
            
-            Console.WriteLine(DateTime.Now);
+            Console.WriteLine(DateTime.Now<new DateTime(2023,6,10));
         }
     }
 }

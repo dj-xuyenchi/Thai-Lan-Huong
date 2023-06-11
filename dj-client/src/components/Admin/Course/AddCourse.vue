@@ -16,7 +16,7 @@
                 <v-row>
                   <v-col cols="12" sm="12" md="12">
                     <img
-                      :src="dataImage"
+                      :src="(opt ? `data:image/jpeg;base64, ` : ``) + dataImage"
                       alt="Hình ảnh"
                       style="height: 160px; width: 280px"
                     />
@@ -173,6 +173,7 @@ export default {
     btnLoading: false,
     text: "",
     snackbar: false,
+    opt: false,
     rules: {
       validValue: (value) =>
         value.trim().length > 0 || "Không được để trống thông tin này!",
@@ -252,8 +253,12 @@ export default {
           this.snackbar = true;
           return;
         }
-        console.log(this.selectFile[0]);
-        this.dataImage = this.selectFile[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.dataImage = reader.result.split(",")[1];
+        };
+        reader.readAsDataURL(this.selectFile[0]);
+        this.opt = true;
       } else {
         this.text =
           "Vui lòng chọn đúng file định dạng ảnh! Các định dạng được hỗ trợ: JPG, JPEG, PNG";

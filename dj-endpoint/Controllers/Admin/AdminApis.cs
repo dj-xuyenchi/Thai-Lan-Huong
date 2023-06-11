@@ -212,5 +212,10 @@ namespace dj_endpoint.Controllers.Admin
             AddBlogRequest addBlog = JsonConvert.DeserializeObject<AddBlogRequest>(data);
             return Ok(await _admin.updateBlog(img, addBlog));
         }
+        [HttpGet("getdenounce")]
+        public async Task<IActionResult> getDenounce(int page)
+        {
+            return Ok(await _admin.getDenouncePage(page));
+        }
     }
 }

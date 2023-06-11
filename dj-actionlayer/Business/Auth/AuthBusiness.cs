@@ -57,6 +57,54 @@ namespace dj_actionlayer.Business.Auth
                     }
                 };
             }
+            if (user.UserStatusId == 2)
+            {
+                return new LoginResponse<AuthDataRespon>
+                {
+                    Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.LOCKFOREVER,
+                    Message = "Authenticate success",
+                    Data = new AuthDataRespon
+                    {
+                        email = user.UserEmail,
+                    }
+                };
+            }
+            if (user.UserStatusId == 4)
+            {
+                DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                DateTime a = new DateTime(user.UnlockTime.Value.Year, user.UnlockTime.Value.Month, user.UnlockTime.Value.Day);
+                if (now > a)
+                {
+                    user.IsLock = false;
+                    user.UserStatusId = 1;
+                    await _context.SaveChangesAsync();
+                    return new LoginResponse<AuthDataRespon>
+                    {
+                        Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.SUCCESS,
+                        Message = "Authenticate success",
+                        Data = new AuthDataRespon
+                        {
+                            id = user.Id,
+                            avatar = user.UserAvatarData40x40,
+                            nickName = "Chiến thần Front End",
+                            email = user.UserEmail,
+                            name = user.UserFisrtName + " " + user.UserLastName,
+                            Token = await GenToken(user),
+                            role = (int)user.UserRoleId,
+                            kyc = (bool)user.IsKYC
+                        }
+                    };
+                }
+                return new LoginResponse<AuthDataRespon>
+                {
+                    Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.LOCKED,
+                    Message = "Tài khoản của bạn bị khóa đến " + user.UnlockTime.Value.ToShortDateString(),
+                    Data = new AuthDataRespon
+                    {
+                        email = user.UserEmail,
+                    }
+                };
+            }
             return new LoginResponse<AuthDataRespon>
             {
                 Success = dj_webdesigncore.Enums.AuthEnums.AuthStatusEnum.SUCCESS,

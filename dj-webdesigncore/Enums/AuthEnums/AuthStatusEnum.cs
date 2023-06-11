@@ -11,6 +11,8 @@ namespace dj_webdesigncore.Enums.AuthEnums
         SUCCESS = 0,
         FAILED = 1,
         UNACTIVEUSER = 2,
-        EXPIRED = 3
+        EXPIRED = 3,
+        LOCKFOREVER = 4,
+        LOCKED = 5
     }
 }

@@ -18,24 +18,24 @@
           <td>{{ index + 1 }}</td>
           <td>
             <img
-              :src="item.userAvatarData40x40"
+              :src="item.senderImg"
               alt="Hình ảnh"
               style="height: 60px; width: 60px; border-radius: 50%"
             />
+            <span>{{ item.senderName }}</span>
           </td>
           <td>
-            {{ item.userFisrtName + " " + item.userLastName
-            }}<img
-              v-if="item.isKYC"
-              :src="require('../../../assets/kyc.png')"
+            <img
+              :src="item.vioImg"
               alt="Hình ảnh"
-              class="kyc"
+              style="height: 60px; width: 60px; border-radius: 50%"
             />
+            <span>{{ item.vioName }}</span>
           </td>
-          <td>{{ item.userEmail }}</td>
-          <td>{{ item.numberPhone }}</td>
-          <td>{{ item.role.userRoleName }}</td>
-          <td>{{ fixDate(item.createAccount) }}</td>
+          <td>{{ item.cmtDenounceContent }}</td>
+          <td>{{ item.note }}</td>
+          <td>{{ item.sendTime }}</td>
+          <td>{{ item.linkCmt }}</td>
           <td>
             <ConfirmDenounce :item="item" :getBlogPage="getBlogPage" />
           </td>

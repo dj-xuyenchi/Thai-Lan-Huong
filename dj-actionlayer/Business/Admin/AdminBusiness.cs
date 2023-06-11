@@ -783,6 +783,42 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
+        public async Task<ResponData<List<DenounceReportADMIN>>> getDenouncePage(int page)
+        {
+            ResponData<List<DenounceReportADMIN>> result = new ResponData<List<DenounceReportADMIN>>();
+            var listDenounce = _context.denounce.OrderByDescending(x => x.SendTime).Skip((page - 1) * 15).Take(15).ToList();
+            List<DenounceReportADMIN> data = new List<DenounceReportADMIN>();
+            foreach (var item in listDenounce)
+            {
+                DenounceReportADMIN denounceReportADMIN = new DenounceReportADMIN();
+                denounceReportADMIN.linkCmt = item.ProveLink;
+                denounceReportADMIN.denounceId= item.Id;
+                if (item.TypeCmt == dj_webdesigncore.Enums.Else.TypeCmt.LESSON)
+                {
+                    CommentLesson cmtL = await _context.comment_lesson.FindAsync(item.CmtId);
+                    denounceReportADMIN.cmtDenounceContent = cmtL.Comment;
+                }
+                if (item.TypeCmt == dj_webdesigncore.Enums.Else.TypeCmt.POST)
+                {
+                    CommentPost cmtP = await _context.comment_post.FindAsync(item.CmtId);
+                    denounceReportADMIN.cmtDenounceContent = cmtP.Comment;
+                }
+                User sender = await _context.user.FindAsync(item.UserSendId);
+                denounceReportADMIN.senderImg = sender.UserAvatarData40x40;
+                denounceReportADMIN.senderName = sender.UserFisrtName + " " + sender.UserLastName;
+                User vio = await _context.user.FindAsync(item.UserViolationId);
+                denounceReportADMIN.vioImg = vio.UserAvatarData40x40;
+                denounceReportADMIN.vioName = vio.UserFisrtName + " " + vio.UserLastName;
+                denounceReportADMIN.sendTime = item.SendTime.Day + "-" + item.SendTime.Month + "-" + item.SendTime.Year;
+                denounceReportADMIN.note = item.Note;
+                data.Add(denounceReportADMIN);
+            }
+            result.Data = data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
         public async Task<ResponData<List<Langue>>> getLangueHaveNot(int practiceLessonId)
         {
             ResponData<List<Langue>> result = new ResponData<List<Langue>>();
@@ -1284,7 +1320,6 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
-
         }
 
         public async Task<ResponData<AddTestCaseDTO>> updateTestCase(int testCaseId, TestCaseRequest testCaseRequest)
@@ -1388,7 +1423,5 @@ namespace dj_actionlayer.Business.Admin
                 return result;
             }
         }
-
-
     }
 }

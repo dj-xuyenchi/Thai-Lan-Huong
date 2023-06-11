@@ -1,6 +1,10 @@
 <template>
   <div style="width: 60%; margin-left: 5%; min-height: 80vh">
-    <img :src="dataImage" alt="Hình ảnh" style="height: 160px; width: 280px" />
+    <img
+      :src="(opt ? `data:image/jpeg;base64, ` : ``) + dataImage"
+      alt="Hình ảnh"
+      style="height: 160px; width: 280px"
+    />
     <v-label style="width: 100%; margin: 24px 0 8px 0"
       >Ảnh đại diện bài viết</v-label
     >
@@ -39,16 +43,6 @@
       :rules="[rules.validValue]"
       style="margin-top: 40px"
     ></v-text-field>
-    <v-text-field
-      label="Link anh đại diện bài viết"
-      hint="SEO meta"
-      required
-      variant="outlined"
-      v-model="imgLink"
-      :rules="[rules.validValue]"
-      style="margin-top: 40px"
-    ></v-text-field>
-
     <div style="white-space: pre-line" v-html="renderedHTML"></div>
     <v-btn
       @click="createPost()"
@@ -99,6 +93,7 @@ export default {
       beforeRender: "",
       dataImage: "",
       text: "",
+      opt: false,
       title: "",
       des: "",
       imgLink: "",
@@ -117,7 +112,6 @@ export default {
       if (
         this.title.trim().length == 0 ||
         this.des.trim().length == 0 ||
-        this.imgLink.trim().length == 0 ||
         this.selectFile === null
       ) {
         this.text = "Không được để trông thông tin!";
@@ -206,6 +200,7 @@ export default {
           this.dataImage = reader.result.split(",")[1];
         };
         reader.readAsDataURL(this.selectFile[0]);
+        this.opt = true;
       } else {
         this.text =
           "Vui lòng chọn đúng file định dạng ảnh! Các định dạng được hỗ trợ: JPG, JPEG, PNG";
