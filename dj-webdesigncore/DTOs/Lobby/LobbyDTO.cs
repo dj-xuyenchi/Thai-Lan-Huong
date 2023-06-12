@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dj_webdesigncore.Entities.BusinessEntity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace dj_webdesigncore.DTOs.Lobby
         public ListActiveCourse ListActiveCourse { get; set; }
         public List<PostDTO> ListPost { get; set; }
         public List<BlogDTO> Blog { get; set; }
+        public List<string> Slide { get; set; }
     }
 }

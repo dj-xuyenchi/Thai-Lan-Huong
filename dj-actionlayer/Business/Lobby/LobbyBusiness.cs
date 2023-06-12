@@ -229,72 +229,80 @@ namespace dj_actionlayer.Business.Lobby
         public async Task<ResponData<LobbyDTO>> LobbyContent()
         {
             ResponData<LobbyDTO> result = new ResponData<LobbyDTO>();
-           
-                LobbyDTO lobbyDTO = new LobbyDTO();
-                ListActiveCourse listActiveCourse = new ListActiveCourse();
-                listActiveCourse.StudyedStudent = _context.user_course.ToList().Count;
-                listActiveCourse.StudyingStudent = _context.user_course.Where(x => x.isDone == false).ToList().Count;
-                List<CourseDTO> courseDTOs = new List<CourseDTO>();
-                var courseActiveList = _context.course.Where(x => x.CourseStatusId == 1 || x.CourseStatusId == 3).ToList();
-                foreach (var course in courseActiveList)
+
+            LobbyDTO lobbyDTO = new LobbyDTO();
+            ListActiveCourse listActiveCourse = new ListActiveCourse();
+            HomeContent home = _context.home_content.ToList()[0];
+            List<string> lstSlide = new List<string>();
+            lstSlide.Add(home.Slide1);
+            lstSlide.Add(home.Slide2);
+            lstSlide.Add(home.Slide3);
+            lstSlide.Add(home.Slide4);
+            lstSlide.Add(home.Slide5);
+            lobbyDTO.Slide = lstSlide;
+            listActiveCourse.StudyedStudent = _context.user_course.ToList().Count;
+            listActiveCourse.StudyingStudent = _context.user_course.Where(x => x.isDone == false).ToList().Count;
+            List<CourseDTO> courseDTOs = new List<CourseDTO>();
+            var courseActiveList = _context.course.Where(x => x.CourseStatusId == 1 || x.CourseStatusId == 3).ToList();
+            foreach (var course in courseActiveList)
+            {
+                CourseDTO courseDTO = new CourseDTO();
+                if (course.CourseStatusId == 1)
                 {
-                    CourseDTO courseDTO = new CourseDTO();
-                    if (course.CourseStatusId == 1)
-                    {
-                        courseDTO.IsActive = true;
-                    }
-                    else
-                    {
-                        courseDTO.IsActive = false;
-                    }
-                    courseDTO.CourseId = course.Id;
-                    courseDTO.CourseImageData = course.CourseImageData;
-                    courseDTO.CourseName = course.CourseName;
-                    courseDTO.StudentCount = _context.user_course.Where(x => x.CourseId == course.Id).ToList().Count;
-                    courseDTOs.Add(courseDTO);
+                    courseDTO.IsActive = true;
                 }
-                listActiveCourse.courseDTOs = courseDTOs;
-                lobbyDTO.ListActiveCourse = listActiveCourse;
-                // post
-                List<PostDTO> listPost = new List<PostDTO>();
-                var getPost = _context.post.Where(x => x.PostStatusId == 1).OrderByDescending(x => x.LikeCount).Take(10).ToList();
-                foreach (var post in getPost)
+                else
                 {
-                    PostDTO postDTO = new PostDTO();
-                    postDTO.Id = post.Id;
-                    User user = await _context.user.FindAsync(post.UserCreateId);
-                    postDTO.CreaterFullName = user.UserFisrtName + " " + user.UserLastName;
-                    postDTO.CreaterAvatar = user.UserAvatarData40x40;
-                    postDTO.PostTitle = post.PostTitle;
-                    postDTO.CmtCount = post.CommentCount;
-                    postDTO.LikeCount = post.LikeCount;
-                    postDTO.PostImg = post.PostAvatar;
-                    postDTO.IsCreaterKYC = (bool)user.IsKYC;
-                    listPost.Add(postDTO);
+                    courseDTO.IsActive = false;
                 }
-                lobbyDTO.ListPost = listPost;
-                //if (DateTime.Now.Minute % 3 == 0)
-                //{
-                //    await updateFullBlog();
-                //}
-                var listBlog = _context.blog.Where(x => x.StatusId == 1).OrderByDescending(x => x.CreateTime).Take(10).ToList();
-                List<BlogDTO> blogList = new List<BlogDTO>();
-                foreach (var blog in listBlog)
-                {
-                    BlogDTO blogDTO = new BlogDTO();
-                    blogDTO.StatusId = blog.StatusId;
-                    blogDTO.CmtCount = blog.CmtCount;
-                    blogDTO.ViewCount = blog.ViewCount;
-                    blogDTO.BlogImg = blog.BlogImg;
-                    blogDTO.Title = blog.BlogTitle;
-                    blogDTO.BlogLink = blog.BlogLink;
-                    blogList.Add(blogDTO);
-                }
-                lobbyDTO.Blog = blogList;
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
-                result.Data = lobbyDTO;
-                result.Messenger = "Lấy dữ liệu thành công!";
-                return result;
+                courseDTO.CourseId = course.Id;
+                courseDTO.CourseImageData = course.CourseImageData;
+                courseDTO.CourseName = course.CourseName;
+                courseDTO.StudentCount = _context.user_course.Where(x => x.CourseId == course.Id).ToList().Count;
+                courseDTOs.Add(courseDTO);
+            }
+            listActiveCourse.courseDTOs = courseDTOs;
+            lobbyDTO.ListActiveCourse = listActiveCourse;
+            // post
+            List<PostDTO> listPost = new List<PostDTO>();
+            var getPost = _context.post.Where(x => x.PostStatusId == 1).OrderByDescending(x => x.LikeCount).Take(10).ToList();
+            foreach (var post in getPost)
+            {
+                PostDTO postDTO = new PostDTO();
+                postDTO.Id = post.Id;
+                User user = await _context.user.FindAsync(post.UserCreateId);
+                postDTO.CreaterFullName = user.UserFisrtName + " " + user.UserLastName;
+                postDTO.CreaterAvatar = user.UserAvatarData40x40;
+                postDTO.PostTitle = post.PostTitle;
+                postDTO.CmtCount = post.CommentCount;
+                postDTO.LikeCount = post.LikeCount;
+                postDTO.PostImg = post.PostAvatar;
+                postDTO.IsCreaterKYC = (bool)user.IsKYC;
+                listPost.Add(postDTO);
+            }
+            lobbyDTO.ListPost = listPost;
+            //if (DateTime.Now.Minute % 3 == 0)
+            //{
+            //    await updateFullBlog();
+            //}
+            var listBlog = _context.blog.Where(x => x.StatusId == 1).OrderByDescending(x => x.CreateTime).Take(10).ToList();
+            List<BlogDTO> blogList = new List<BlogDTO>();
+            foreach (var blog in listBlog)
+            {
+                BlogDTO blogDTO = new BlogDTO();
+                blogDTO.StatusId = blog.StatusId;
+                blogDTO.CmtCount = blog.CmtCount;
+                blogDTO.ViewCount = blog.ViewCount;
+                blogDTO.BlogImg = blog.BlogImg;
+                blogDTO.Title = blog.BlogTitle;
+                blogDTO.BlogLink = blog.BlogLink;
+                blogList.Add(blogDTO);
+            }
+            lobbyDTO.Blog = blogList;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Data = lobbyDTO;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
         }
         private async Task updateFullBlog()
         {

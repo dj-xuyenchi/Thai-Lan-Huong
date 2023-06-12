@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderSlider />
+    <HeaderSlider :slide="slide" />
     <CourseList
       :courseList="courseList"
       :studentStudyed="studentStudyed"
@@ -33,6 +33,8 @@ export default {
       studentStudying: 0,
       postList: [],
       blogList: [],
+      slide: [],
+      footer: {},
     };
   },
   created() {
@@ -50,6 +52,7 @@ export default {
       this.blogList = data.data.blog;
       this.studentStudyed = data.data.listActiveCourse.studyedStudent;
       this.studentStudying = data.data.listActiveCourse.studyingStudent;
+      this.slide = data.data.slide;
       this.setIsLoadedData(false);
     },
   },

@@ -586,6 +586,7 @@ namespace dj_actionlayer.Business.Study
                     result.Messenger = "Lấy dữ liệu thành công!";
                     return result;
                 }
+                course.RegisterCount++;
                 UserCourse newUserCourse = new UserCourse();
                 newUserCourse.CourseId = registerCourse.CourseId;
                 newUserCourse.UserId = registerCourse.UserId;

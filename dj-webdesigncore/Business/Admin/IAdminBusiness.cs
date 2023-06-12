@@ -1,6 +1,7 @@
 ﻿using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.DTOs.Lobby;
+using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Blog;
@@ -57,5 +58,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<ActionStatus>> updateBlog(IFormFile img, AddBlogRequest addBlogRequest);
         Task<ResponData<List<DenounceReportADMIN>>> getDenouncePage(int page);
         Task<ResponData<ActionStatus>> checkDenounce(ConfirmDenounceRequest confirmDenounce);
+        Task<ResponData<HomeContent>> getHomeContent();
     }
 }

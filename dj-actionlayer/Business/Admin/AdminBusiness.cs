@@ -59,6 +59,8 @@ namespace dj_actionlayer.Business.Admin
                 courseChapter.ChapterTotalTime = addChapterRequest.ChapterTotalTime;
                 courseChapter.ChapterName = addChapterRequest.ChapterName;
                 courseChapter.CourseId = addChapterRequest.CourseId;
+                Course course = await _context.course.FindAsync(addChapterRequest.CourseId);
+                course.ChapterCount++;
                 var lastChapter = _context.course_chapter.Where(x => x.CourseId == addChapterRequest.CourseId).OrderByDescending(x => x.SortNumber).FirstOrDefault();
                 if (lastChapter == null)
                 {
@@ -128,6 +130,9 @@ namespace dj_actionlayer.Business.Admin
                 chapterLesson.AddLessonToChapterDateTime = DateTime.Now;
                 await _context.AddAsync(chapterLesson);
                 CourseChapter courseChapter = await _context.course_chapter.FindAsync(updateSortNumberLessonRequest.CourseChapterId);
+                courseChapter.ChapterLessonCount++;
+                Course course = await _context.course.FindAsync(courseChapter.CourseId);
+                course.LessonCount++;
                 var listUserResi = _context.user_course.Where(x => x.CourseId == courseChapter.CourseId).ToList();
                 Lesson lesson = await _context.lesson.FindAsync(updateSortNumberLessonRequest.LessonId);
                 foreach (var item in listUserResi)
@@ -474,6 +479,8 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
+            Course course = await _context.course.FindAsync(courseChapter.CourseId);
+            course.ChapterCount--;
             _context.Remove(courseChapter);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
@@ -498,6 +505,10 @@ namespace dj_actionlayer.Business.Admin
                     result.Messenger = "Lấy dữ liệu thành công!";
                     return result;
                 }
+                CourseChapter courseChapter = await _context.course_chapter.FindAsync(chapterLesson.CourseChapterId);
+                courseChapter.ChapterLessonCount--;
+                Course course = await _context.course.FindAsync(courseChapter.CourseId);
+                course.LessonCount--;
                 _context.Remove(chapterLesson);
                 await _context.SaveChangesAsync();
                 data.Status = dj_webdesigncore.Enums.CourseEnums.AddStatusEnum.SECCESSFULLY;
@@ -893,6 +904,27 @@ namespace dj_actionlayer.Business.Admin
                 denounceReportADMIN.note = item.Note;
                 denounceReportADMIN.VioCount = (int)vio.VioCount;
                 data.Add(denounceReportADMIN);
+            }
+            result.Data = data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            result.Status = ActionStatus.SECCESSFULLY;
+            return result;
+        }
+
+        public async Task<ResponData<HomeContent>> getHomeContent()
+        {
+            ResponData<HomeContent> result = new ResponData<HomeContent>();
+            HomeContent data = await _context.home_content.FindAsync(2);
+            if(data == null)
+            {
+                data = await _context.home_content.FindAsync(1);
+            }
+            if (data == null)
+            {
+                result.Data = null;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                result.Status = ActionStatus.SECCESSFULLY;
+                return result;
             }
             result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";

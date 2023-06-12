@@ -223,5 +223,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.checkDenounce(confirmDenounce));
         }
+        [HttpGet("gethomecontent")]
+        public async Task<IActionResult> getHomeContent()
+        {
+            return Ok(await _admin.getHomeContent());
+        }
     }
 }

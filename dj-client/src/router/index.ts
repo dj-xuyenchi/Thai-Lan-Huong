@@ -28,6 +28,7 @@ import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
 import BlogAdmin from "@/components/Admin/Blog/BlogAdmin.vue";
 import PostAdmin from "@/components/Admin/Post/PostAdmin.vue";
 import UserAdmin from "@/components/Admin/User/UserAdmin.vue";
+import HomeContent from "@/components/Admin/HomeContent/HomeContent.vue";
 import DenounceReport from "@/components/Admin/User/DenounceReport.vue";
 import UserDenounce from "@/components/Admin/User/UserDenounce.vue";
 import UserMain from "@/components/User/UserMain.vue";
@@ -202,6 +203,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "user-denounce-report",
         component: DenounceReport,
+      },
+      {
+        path: "home-content",
+        component: HomeContent,
       },
     ],
   },

@@ -154,7 +154,7 @@ export default {
             {
               icon: "mdi mdi-image-move",
               title: "Slide show",
-              to: "/admin/courses",
+              to: "/admin/home-content",
             },
             {
               icon: "mdi mdi-page-layout-footer",
