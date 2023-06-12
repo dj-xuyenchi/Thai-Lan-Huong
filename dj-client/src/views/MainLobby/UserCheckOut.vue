@@ -147,11 +147,19 @@ export default {
             }
           },
         },
+
         {
           text: "Bài đăng",
           icon: "mdi-bookshelf",
           event: () => {
             this.$router.push({ path: "/home/my-post" });
+          },
+        },
+        {
+          text: "Tạo CV",
+          icon: "mdi-book-outline",
+          event: async () => {
+            //
           },
         },
         {
@@ -201,7 +209,7 @@ export default {
         nickName: nickName,
       };
     }
-    if (role == 1) {
+    if (role == 1 || role == 2) {
       this.isAdmin = true;
     }
     switch (this.user.name.length) {

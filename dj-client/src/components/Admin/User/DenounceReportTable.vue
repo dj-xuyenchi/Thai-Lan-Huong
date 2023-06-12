@@ -66,10 +66,10 @@ export default {
   },
   methods: {
     fixLink(vari) {
-      return vari.substring(0, 10) + "...";
+      return vari.substring(0, 12) + "...";
     },
     fixCmt(vari) {
-      return vari.substring(0, 36);
+      return vari.substring(0, 12) + "...";
     },
   },
 

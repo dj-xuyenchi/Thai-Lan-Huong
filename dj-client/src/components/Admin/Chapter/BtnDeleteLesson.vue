@@ -11,8 +11,7 @@
             Xoá bài học khỏi học phần?
           </v-card-title>
           <v-card-text
-            >Sếp có chắc muốn xóa bài học này khỏi học phần sau khi xóa se không
-            thể khôi phục lại.</v-card-text
+            >Sếp có chắc muốn xóa bài học này khỏi học phần?</v-card-text
           >
           <v-card-actions>
             <v-spacer></v-spacer>
