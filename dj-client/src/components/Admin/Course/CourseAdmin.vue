@@ -5,6 +5,7 @@
         v-model="key"
         label="Tìm kiếm"
         hide-details="auto"
+        prepend-inner-icon="mdi-magnify"
         density="compact"
         variant="outlined"
         @keydown.enter="findLessonByName()"

@@ -23,7 +23,7 @@
               style="height: 60px; width: 100px"
             />
           </td>
-          <td>{{ item.title }}</td>
+          <td>{{ fixName(item.title) }}</td>
           <td>{{ item.createTime }}</td>
           <td>{{ item.updateTime }}</td>
           <td>{{ item.viewCount }}</td>
@@ -47,6 +47,11 @@ export default {
       itemsPerPage: 15,
       desserts: [],
     };
+  },
+  methods: {
+    fixName(vari) {
+      return vari.substring(0, 36) + "...";
+    },
   },
   props: {
     tableData: [],

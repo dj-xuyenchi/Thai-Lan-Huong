@@ -4,6 +4,7 @@
       <v-text-field
         v-model="key"
         label="Tìm kiếm"
+        prepend-inner-icon="mdi-magnify"
         hide-details="auto"
         density="compact"
         variant="outlined"

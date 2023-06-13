@@ -120,7 +120,7 @@ export default {
               to: "/admin/user-denounce",
             },
             {
-              icon: "mdi mdi-account-convert",
+              icon: "mdi-account-search",
               title: "Báo cáo vi phạm",
               to: "/admin/user-denounce-report",
             },

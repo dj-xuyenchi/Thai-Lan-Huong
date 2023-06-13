@@ -30,7 +30,10 @@
                 <v-row
                   ><v-col cols="12" sm="12" md="12">
                     <img
-                      :src="userAvatarData40x40"
+                      :src="
+                        (opt ? `data:image/jpeg;base64, ` : ``) +
+                        userAvatarData40x40
+                      "
                       alt="Hình ảnh"
                       style="height: 100px; width: 100px; border-radius: 50%"
                     />
@@ -244,6 +247,7 @@ export default {
       snackbar: false,
       selectFile: null,
       listTinh: [],
+      opt: false,
       listHuyen: [],
       listXa: [],
       listJob: [],
@@ -315,6 +319,7 @@ export default {
           this.userAvatarData40x40 = reader.result.split(",")[1];
         };
         reader.readAsDataURL(this.selectFile[0]);
+        this.opt = true;
       } else {
         this.text =
           "Vui lòng chọn đúng file định dạng ảnh! Các định dạng được hỗ trợ: JPG, JPEG, PNG";

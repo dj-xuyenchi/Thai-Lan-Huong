@@ -7,6 +7,7 @@
         hide-details="auto"
         density="compact"
         variant="outlined"
+        prepend-inner-icon="mdi-magnify"
         @keydown.enter="findBlog()"
       ></v-text-field>
     </div>

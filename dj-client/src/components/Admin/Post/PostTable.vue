@@ -5,10 +5,8 @@
         <tr>
           <th class="text-left">#</th>
           <th class="text-left">Ảnh đại diện</th>
-          <th class="text-left">Ảnh meta</th>
           <th class="text-left">Tiêu đề</th>
           <th class="text-left">Ngày tạo</th>
-          <th class="text-left">Cập nhật</th>
           <th class="text-left">Người viết</th>
           <th class="text-center">Action</th>
         </tr>
@@ -26,9 +24,7 @@
           <td>{{ item.title }}</td>
           <td>{{ item.createTime }}</td>
           <td>{{ item.updateTime }}</td>
-          <td>{{ item.viewCount }}</td>
-          <td>{{ item.cmtCount }}</td>
-          <td>{{ item.videoTime }}</td>
+          <td><BtnPreviewPost /></td>
         </tr>
       </tbody>
     </v-table>
@@ -36,8 +32,10 @@
 </template>
 
 <script>
+import BtnPreviewPost from "./BtnPreviewPost";
 export default {
   name: "PostTable",
+  components: { BtnPreviewPost },
   data() {
     return {
       itemsPerPage: 15,

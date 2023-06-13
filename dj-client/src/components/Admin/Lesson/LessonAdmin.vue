@@ -11,6 +11,7 @@
         label="Tìm kiếm"
         hide-details="auto"
         density="compact"
+        prepend-inner-icon="mdi-magnify"
         variant="outlined"
         @keydown.enter="findLessonByName()"
       ></v-text-field>

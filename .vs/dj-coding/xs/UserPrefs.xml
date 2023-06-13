@@ -1,16 +1,12 @@
 ﻿<Properties StartupConfiguration="{6E604071-34FB-4404-BC8B-63C8A1EDCC1B}|Default">
-  <MonoDevelop.Ide.ItemProperties.dj-actionlayer PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="dj-actionlayer/DAO/Settings.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="dj-endpoint/Program.cs">
     <Files>
-      <File FileName="dj-endpoint/Program.cs" />
+      <File FileName="dj-endpoint/Program.cs" Line="83" Column="1" />
       <File FileName="dj-endpoint/Controllers/AuthApis/AuthApis.cs" />
       <File FileName="dj-endpoint/Controllers/HomeAPIs/HomeAPIs.cs" />
       <File FileName="dj-webdesigncore/AuthModel/TokenModel.cs" />
       <File FileName="dj-webdesigncore/AuthModel/LoginResponse.cs" />
-      <File FileName="dj-actionlayer/DAO/AppContext.cs" Line="89" Column="41" />
+      <File FileName="dj-actionlayer/DAO/AppContext.cs" Line="1" Column="1" />
       <File FileName="dj-webdesigncore/Entities/UserEntity/RefreshToken.cs" />
       <File FileName="dj-actionlayer/Business/Study/StudyBusiness.cs" />
       <File FileName="dj-webdesigncore/Business/Study/IStudyBusiness.cs" />
@@ -65,7 +61,7 @@
       <File FileName="dj-webdesigncore/DTOs/UserDTO/UserInforDTO.cs" />
       <File FileName="dj-webdesigncore/Entities/UserEntity/Province.cs" />
       <File FileName="dj-webdesigncore/Entities/UserEntity/District.cs" />
-      <File FileName="dj-webdesigncore/Entities/UserEntity/User.cs" Line="1" Column="1" />
+      <File FileName="dj-webdesigncore/Entities/UserEntity/User.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -81,10 +77,7 @@
                 <Node name="Study" expanded="True" />
                 <Node name="UserBusiness" expanded="True" />
               </Node>
-              <Node name="DAO" expanded="True">
-                <Node name="Settings.cs" selected="True" />
-              </Node>
-              <Node name="Migrations" expanded="True" />
+              <Node name="DAO" expanded="True" />
             </Node>
             <Node name="dj-endpoint" expanded="True">
               <Node name="Controllers" expanded="True">
@@ -97,6 +90,7 @@
               <Node name="Properties" expanded="True">
                 <Node name="PublishProfiles" expanded="True" />
               </Node>
+              <Node name="Program.cs" selected="True" />
             </Node>
             <Node name="dj-webdesigncore" expanded="True">
               <Node name="Entities" expanded="True">
@@ -108,7 +102,11 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.dj-endpoint PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.dj-actionlayer PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

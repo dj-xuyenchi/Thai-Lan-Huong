@@ -6,6 +6,7 @@
         label="Tìm kiếm"
         hide-details="auto"
         density="compact"
+        prepend-inner-icon="mdi-magnify"
         variant="outlined"
         @keydown.enter="findUser(1)"
       ></v-text-field>
