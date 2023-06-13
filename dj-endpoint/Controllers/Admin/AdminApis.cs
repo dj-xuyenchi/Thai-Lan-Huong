@@ -228,5 +228,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.getHomeContent());
         }
+        [HttpPost("changeslide")]
+        public async Task<IActionResult> changeSlide([FromForm] IFormFile img, int slideNumber)
+        {
+            return Ok(await _admin.changeSlide(img, slideNumber));
+        }
     }
 }

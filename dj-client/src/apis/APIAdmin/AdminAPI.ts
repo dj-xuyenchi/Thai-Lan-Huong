@@ -729,5 +729,26 @@ class AdminAPI {
         });
     });
   }
+  changeSlide(
+    request: FormData,
+    slideNumber: number,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/admin/changeslide?slideNumber=${slideNumber}`, request, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new AdminAPI();

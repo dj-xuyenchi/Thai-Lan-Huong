@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using ChapterDetailDTO = dj_webdesigncore.DTOs.Admin.ChapterDetailDTO;
@@ -390,6 +391,42 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+
+        public async Task<ResponData<ActionStatus>> changeSlide(IFormFile img, int slideNumber)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            if (img == null || slideNumber < 1 || slideNumber > 5)
+            {
+                result.Data = ActionStatus.PARAMNULL;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            HomeContent homeContent = await _context.home_content.FindAsync(2);
+            switch (slideNumber)
+            {
+                case 1:
+                    homeContent.Slide1 = await CloudinaryUpload.UploadFile(img);
+                    break;
+                case 2:
+                    homeContent.Slide2 = await CloudinaryUpload.UploadFile(img);
+                    break;
+                case 3:
+                    homeContent.Slide3 = await CloudinaryUpload.UploadFile(img);
+                    break;
+                case 4:
+                    homeContent.Slide4 = await CloudinaryUpload.UploadFile(img);
+                    break;
+                case 5:
+                    homeContent.Slide5 = await CloudinaryUpload.UploadFile(img);
+                    break;
+            }
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.PARAMNULL;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
         }
 
         public async Task<ResponData<ActionStatus>> checkDenounce(ConfirmDenounceRequest confirmDenounce)
@@ -915,7 +952,7 @@ namespace dj_actionlayer.Business.Admin
         {
             ResponData<HomeContent> result = new ResponData<HomeContent>();
             HomeContent data = await _context.home_content.FindAsync(2);
-            if(data == null)
+            if (data == null)
             {
                 data = await _context.home_content.FindAsync(1);
             }

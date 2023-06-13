@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Dk8AFJT9YcO4oGcIq4FXCBN7C1av2ZwpcVyAqfmaWk3CwubiIZx13rZo6IRa67GXkHRFjfnxa992W2/wm9cI5g==",
+  "dgSpecHash": "nFuFBC8y36b22Q6RqHQW9CADSwf89uN1YLlT4XdTvgpU6k//noW/HP38Q9Ouu1tcJ2r+0Soj8ibA6rCXdekNZA==",
   "success": true,
-  "projectFilePath": "/Users/quanganhdo/Documents/GitHub/Thai-Lan-Huong/dj-webdesigncore/dj-webdesigncore.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
   "expectedPackageFiles": [
-    "/Users/quanganhdo/.nuget/packages/microsoft.aspnetcore.http.features/5.0.17/microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
-    "/Users/quanganhdo/.nuget/packages/microsoft.extensions.primitives/5.0.1/microsoft.extensions.primitives.5.0.1.nupkg.sha512",
-    "/Users/quanganhdo/.nuget/packages/system.io.pipelines/5.0.2/system.io.pipelines.5.0.2.nupkg.sha512"
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
   ],
   "logs": []
 }

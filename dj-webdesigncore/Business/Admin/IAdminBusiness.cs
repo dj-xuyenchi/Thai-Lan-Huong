@@ -59,5 +59,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<List<DenounceReportADMIN>>> getDenouncePage(int page);
         Task<ResponData<ActionStatus>> checkDenounce(ConfirmDenounceRequest confirmDenounce);
         Task<ResponData<HomeContent>> getHomeContent();
+        Task<ResponData<ActionStatus>> changeSlide(IFormFile img, int slideNumber);
     }
 }
