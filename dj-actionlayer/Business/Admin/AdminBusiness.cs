@@ -393,35 +393,30 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
-        public async Task<ResponData<ActionStatus>> changeSlide(IFormFile img, int slideNumber)
+        public async Task<ResponData<ActionStatus>> changeSlide(IFormFile? slide1)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            if (img == null || slideNumber < 1 || slideNumber > 5)
-            {
-                result.Data = ActionStatus.PARAMNULL;
-                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
-                result.Messenger = "Lấy dữ liệu thành công!";
-                return result;
-            }
             HomeContent homeContent = await _context.home_content.FindAsync(2);
-            switch (slideNumber)
+            if (slide1 != null)
             {
-                case 1:
-                    homeContent.Slide1 = await CloudinaryUpload.UploadFile(img);
-                    break;
-                case 2:
-                    homeContent.Slide2 = await CloudinaryUpload.UploadFile(img);
-                    break;
-                case 3:
-                    homeContent.Slide3 = await CloudinaryUpload.UploadFile(img);
-                    break;
-                case 4:
-                    homeContent.Slide4 = await CloudinaryUpload.UploadFile(img);
-                    break;
-                case 5:
-                    homeContent.Slide5 = await CloudinaryUpload.UploadFile(img);
-                    break;
+                homeContent.Slide1 = await CloudinaryUpload.UploadFile(slide1);
             }
+            //if (slide2 != null)
+            //{
+            //    homeContent.Slide2 = await CloudinaryUpload.UploadFile(slide2);
+            //}
+            //if (slide3 != null)
+            //{
+            //    homeContent.Slide3 = await CloudinaryUpload.UploadFile(slide3);
+            //}
+            //if (slide4 != null)
+            //{
+            //    homeContent.Slide4 = await CloudinaryUpload.UploadFile(slide4);
+            //}
+            //if (slide5 != null)
+            //{
+            //    homeContent.Slide5 = await CloudinaryUpload.UploadFile(slide5);
+            //}
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.PARAMNULL;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;

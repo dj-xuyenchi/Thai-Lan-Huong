@@ -17,7 +17,7 @@ namespace dj_endpoint.Controllers.Admin
     [Route("/admin")]
     public class AdminApis : BaseApi
     {
-        private readonly IAdminBusiness _admin; 
+        private readonly IAdminBusiness _admin;
 
         public AdminApis()
         {
@@ -60,9 +60,9 @@ namespace dj_endpoint.Controllers.Admin
             return Ok(await _admin.addQuestionLesson(questionLessonRequest));
         }
         [HttpPost("updatepracticelesson")]
-        public async Task<IActionResult> updatePracticeLesson(int lessonId,PracticeLesson practiceLesson)
+        public async Task<IActionResult> updatePracticeLesson(int lessonId, PracticeLesson practiceLesson)
         {
-            return Ok(await _admin.updatePracticeLesson(lessonId,practiceLesson));
+            return Ok(await _admin.updatePracticeLesson(lessonId, practiceLesson));
         }
         [HttpPost("updatequestionlesson")]
         public async Task<IActionResult> updateQuestionLesson(int lessonId, QuestionLessonRequest questionLessonRequest)
@@ -100,9 +100,9 @@ namespace dj_endpoint.Controllers.Admin
             return Ok(await _admin.addTestCase(testCaseRequest));
         }
         [HttpPost("updatetestcase")]
-        public async Task<IActionResult> updateTestCase(int testCaseId,TestCaseRequest testCaseRequest)
+        public async Task<IActionResult> updateTestCase(int testCaseId, TestCaseRequest testCaseRequest)
         {
-            return Ok(await _admin.updateTestCase(testCaseId,testCaseRequest));
+            return Ok(await _admin.updateTestCase(testCaseId, testCaseRequest));
         }
         [HttpGet("deletetestcase")]
         public async Task<IActionResult> deleteTestCase(int testCaseId)
@@ -142,7 +142,7 @@ namespace dj_endpoint.Controllers.Admin
         [HttpPost("addcourse")]
         public async Task<IActionResult> addCourse([FromForm] IFormFile img, [FromForm] string data)
         {
-           AddCourseRequest addCourseRequest = JsonConvert.DeserializeObject<AddCourseRequest>(data);
+            AddCourseRequest addCourseRequest = JsonConvert.DeserializeObject<AddCourseRequest>(data);
             return Ok(await _admin.addCourse(img, addCourseRequest));
         }
         [HttpPost("updatecourse")]
@@ -228,10 +228,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.getHomeContent());
         }
-        [HttpPost("changeslide")]
-        public async Task<IActionResult> changeSlide([FromForm] IFormFile img, int slideNumber)
+        [HttpPost("changehomeslide")]
+        public async Task<IActionResult> changeSlide([FromForm] IFormFile? img)
         {
-            return Ok(await _admin.changeSlide(img, slideNumber));
+            return Ok(await _admin.changeSlide(img));
         }
     }
 }

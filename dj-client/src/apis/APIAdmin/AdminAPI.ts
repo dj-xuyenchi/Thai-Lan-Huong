@@ -729,13 +729,9 @@ class AdminAPI {
         });
     });
   }
-  changeSlide(
-    request: FormData,
-    slideNumber: number,
-    token: string
-  ): Promise<any> {
+  changeSlide(request: FormData, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.post(`/admin/changeslide?slideNumber=${slideNumber}`, request, {
+      HTTP.post(`/admin/changehomeslide`, request, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
