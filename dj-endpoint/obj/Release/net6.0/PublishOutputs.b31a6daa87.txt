@@ -1,7 +1,10 @@
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-uploadfile.exe
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-webdesigncore.exe
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-actionlayer.exe
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-endpoint.exe
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-actionlayer.runtimeconfig.json
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-uploadfile.deps.json
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-uploadfile.runtimeconfig.json
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-webdesigncore.deps.json
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-webdesigncore.runtimeconfig.json
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
@@ -10,6 +13,7 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubT
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-endpoint.deps.json
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-endpoint.runtimeconfig.json
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-endpoint.pdb
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\CloudinaryDotNet.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.Auth.PlatformServices.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\Google.Apis.Auth.dll
@@ -111,6 +115,8 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubT
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-actionlayer.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-uploadfile.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-webdesigncore.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-actionlayer.pdb
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-webdesigncore.pdb
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Release\net6.0\PubTmp\Out\dj-uploadfile.pdb

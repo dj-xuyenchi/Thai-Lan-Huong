@@ -3,15 +3,18 @@ using dj_webdesigncore.Business.Admin;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.DTOs.Lobby;
+using dj_webdesigncore.DTOs.Post;
 using dj_webdesigncore.Entities.BlogEntity;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
+using dj_webdesigncore.Entities.PostEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.Post;
 using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -282,11 +285,6 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
-        public Task<ResponData<AddLessonDTO>> addPracticeLesson(dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<ResponData<AddLessonDTO>> addQuestionLesson(QuestionLessonRequest questionLessonRequest)
         {
             ResponData<AddLessonDTO> result = new ResponData<AddLessonDTO>();
@@ -393,7 +391,7 @@ namespace dj_actionlayer.Business.Admin
             }
         }
 
-        public async Task<ResponData<ActionStatus>> changeSlide(IFormFile? slide1)
+        public async Task<ResponData<ActionStatus>> changeSlide(IFormFile? slide1, IFormFile? slide2, IFormFile? slide3, IFormFile? slide4, IFormFile? slide5)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
             HomeContent homeContent = await _context.home_content.FindAsync(2);
@@ -401,24 +399,24 @@ namespace dj_actionlayer.Business.Admin
             {
                 homeContent.Slide1 = await CloudinaryUpload.UploadFile(slide1);
             }
-            //if (slide2 != null)
-            //{
-            //    homeContent.Slide2 = await CloudinaryUpload.UploadFile(slide2);
-            //}
-            //if (slide3 != null)
-            //{
-            //    homeContent.Slide3 = await CloudinaryUpload.UploadFile(slide3);
-            //}
-            //if (slide4 != null)
-            //{
-            //    homeContent.Slide4 = await CloudinaryUpload.UploadFile(slide4);
-            //}
-            //if (slide5 != null)
-            //{
-            //    homeContent.Slide5 = await CloudinaryUpload.UploadFile(slide5);
-            //}
+            if (slide2 != null)
+            {
+                homeContent.Slide2 = await CloudinaryUpload.UploadFile(slide2);
+            }
+            if (slide3 != null)
+            {
+                homeContent.Slide3 = await CloudinaryUpload.UploadFile(slide3);
+            }
+            if (slide4 != null)
+            {
+                homeContent.Slide4 = await CloudinaryUpload.UploadFile(slide4);
+            }
+            if (slide5 != null)
+            {
+                homeContent.Slide5 = await CloudinaryUpload.UploadFile(slide5);
+            }
             await _context.SaveChangesAsync();
-            result.Data = ActionStatus.PARAMNULL;
+            result.Data = ActionStatus.SECCESSFULLY;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
@@ -1178,6 +1176,25 @@ namespace dj_actionlayer.Business.Admin
             return result;
         }
 
+        public async Task<ResponData<ListPostAdmin>> getPostAdmin(int? statusOptId, int page)
+        {
+            ResponData<ListPostAdmin> result = new ResponData<ListPostAdmin>();
+            ListPostAdmin data = new ListPostAdmin();
+            var listPost = _context.post.Include(x => x.UserCreate).Include(x => x.PostStatus).Where(x => x.PostStatusId != 4).OrderByDescending(x => x.CreatePost).AsNoTracking();
+            if (statusOptId.HasValue)
+            {
+                listPost = listPost.Where(x => x.PostStatusId == statusOptId);
+            }
+            data.ListPost = listPost.Skip((page - 1) * 15).Take(15);
+            data.ListOption = _context.post_status;
+            result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+
+
         public async Task<ResponData<List<SelectCourseForChapter>>> selectCourseForChapter()
         {
             ResponData<List<SelectCourseForChapter>> result = new ResponData<List<SelectCourseForChapter>>();
@@ -1325,6 +1342,32 @@ namespace dj_actionlayer.Business.Admin
             }
             multiLangueCode.BeginCodeMethod = addMultiLangue.beginCode;
             multiLangueCode.CallTestCode = addMultiLangue.callTestCode;
+            await _context.SaveChangesAsync();
+            result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<ActionStatus>> updatePost(IFormFile? img, UpdatePostAdminRequest updatePostAdmin)
+        {
+            ResponData<ActionStatus> result = new ResponData<ActionStatus>();
+            Post post = await _context.post.FindAsync(updatePostAdmin.PostId);
+            if (post == null)
+            {
+                result.Data = ActionStatus.NOTFOUND;
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            if (img != null)
+            {
+                post.PostAvatar = await CloudinaryUpload.UploadFile(img);
+            }
+            post.UpdatePost = DateTime.Now;
+            post.PostTitle = updatePostAdmin.PostTitle;
+            post.PostData = updatePostAdmin.PostData;
+            post.PostStatusId = updatePostAdmin.PostStatusId;
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;

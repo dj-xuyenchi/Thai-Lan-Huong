@@ -1,6 +1,7 @@
 ﻿using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
 using dj_webdesigncore.DTOs.Lobby;
+using dj_webdesigncore.DTOs.Post;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Enums.ApiEnums;
@@ -8,6 +9,7 @@ using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.Post;
 using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -59,6 +61,9 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<List<DenounceReportADMIN>>> getDenouncePage(int page);
         Task<ResponData<ActionStatus>> checkDenounce(ConfirmDenounceRequest confirmDenounce);
         Task<ResponData<HomeContent>> getHomeContent();
-        Task<ResponData<ActionStatus>> changeSlide(IFormFile? slide1);
+        Task<ResponData<ActionStatus>> changeSlide(IFormFile? slide1, IFormFile? slide2, IFormFile? slide3, IFormFile? slide4, IFormFile? slide5);
+        Task<ResponData<ListPostAdmin>> getPostAdmin(int? statusOptId,int page);
+        Task<ResponData<ActionStatus>> updatePost(IFormFile? img,UpdatePostAdminRequest updatePostAdmin);
+      
     }
 }

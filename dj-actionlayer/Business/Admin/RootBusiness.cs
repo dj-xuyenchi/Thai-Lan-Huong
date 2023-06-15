@@ -98,7 +98,7 @@ namespace dj_actionlayer.Business.Admin
 
         public async Task<IQueryable<User>> FindUserByNameEmail(string key, int page)
         {
-            var listPage = _context.user.Include(x => x.Role).Where(x => x.UserLastName.Contains(key) || x.UserFisrtName.Contains(key) || x.UserEmail.Contains(key)).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
+            var listPage = _context.user.Include(x => x.Role).Include(x => x.Gender).Include(x => x.Catalog).Include(x => x.UserStatus).Include(x => x.Province).Include(x => x.District).Include(x => x.Ward).Where(x => x.UserLastName.Contains(key) || x.UserFisrtName.Contains(key) || x.UserEmail.Contains(key)).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
             return listPage;
         }
 

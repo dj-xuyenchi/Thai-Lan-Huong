@@ -135,16 +135,6 @@ export default {
               title: "Danh sách bài viết",
               to: "/admin/post",
             },
-            {
-              icon: "mdi mdi-note",
-              title: "Bài viết chờ duyệt",
-              to: "/admin/courses",
-            },
-            {
-              icon: "mdi mdi-note-remove",
-              title: "Bài viết vi phạm",
-              to: "/admin/courses",
-            },
           ],
         },
         {

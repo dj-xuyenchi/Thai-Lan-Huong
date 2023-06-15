@@ -6,6 +6,7 @@ using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
+using dj_webdesigncore.Request.Post;
 using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -229,9 +230,20 @@ namespace dj_endpoint.Controllers.Admin
             return Ok(await _admin.getHomeContent());
         }
         [HttpPost("changehomeslide")]
-        public async Task<IActionResult> changeSlide([FromForm] IFormFile? img)
+        public async Task<IActionResult> changeSlide([FromForm] IFormFile? slide1, IFormFile? slide2, IFormFile? slide3, IFormFile? slide4, IFormFile? slide5)
         {
-            return Ok(await _admin.changeSlide(img));
+            return Ok(await _admin.changeSlide(slide1, slide2, slide3, slide4, slide5));
+        }
+        [HttpGet("getadminpost")]
+        public async Task<IActionResult> getAdminPost(int? statusOptId, int page)
+        {
+            return Ok(await _admin.getPostAdmin(statusOptId, page));
+        }
+        [HttpPost("updatepostadmin")]
+        public async Task<IActionResult> changeSlide([FromForm] IFormFile? img, [FromForm] string data)
+        {
+            UpdatePostAdminRequest updatePostAdmin = JsonConvert.DeserializeObject<UpdatePostAdminRequest>(data);
+            return Ok(await _admin.updatePost(img, updatePostAdmin));
         }
     }
 }

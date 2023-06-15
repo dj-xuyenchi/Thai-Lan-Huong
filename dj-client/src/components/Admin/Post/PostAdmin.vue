@@ -13,7 +13,11 @@
     </div>
     <!-- <AddBlog style="margin-top: 12px" :getBlogPage="getBlogPage" /> -->
   </div>
-  <PostTable :tableData="tableData" />
+  <PostTable
+    :tableData="tableData"
+    :option="option"
+    :getPostAdmin="getPostAdmin"
+  />
   <div class="text-center" @click="getLessonDetail()">
     <v-container>
       <v-row justify="center">
@@ -48,6 +52,7 @@ export default {
   },
   data: () => ({
     tableData: [],
+    option: [],
     page: 1,
     context: "",
     maxPage: 1,
@@ -55,7 +60,7 @@ export default {
     show: false,
   }),
   created() {
-    this.getBlogPage();
+    this.getPostAdmin();
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
@@ -70,11 +75,12 @@ export default {
       this.tableData = data.data;
       this.setIsLoadedData(false);
     },
-    async getBlogPage() {
+    async getPostAdmin() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await AdminAPI.getBlogPage(this.page, token);
-      this.tableData = data.data;
+      const data = await AdminAPI.getPostAdmin(null, this.page, token);
+      this.tableData = data.data.listPost;
+      this.option = data.data.listOption;
       this.maxPage = data.data.maxPage;
       this.setIsLoadedData(false);
     },

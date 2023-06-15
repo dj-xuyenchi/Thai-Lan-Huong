@@ -248,6 +248,7 @@ export default {
       text: "",
       change: false,
       snackbar: false,
+      btnLoading: false,
     };
   },
   created() {
@@ -301,7 +302,26 @@ export default {
       }
       const token = localStorage.getItem("token");
       const formData = new FormData();
-      formData.append("img", this.selectFile[0] ? this.selectFile[0] : null);
+      formData.append(
+        "slide1",
+        this.selectFile[0] ? this.selectFile[0][0] : null
+      );
+      formData.append(
+        "slide2",
+        this.selectFile[1] ? this.selectFile[1][0] : null
+      );
+      formData.append(
+        "slide3",
+        this.selectFile[2] ? this.selectFile[2][0] : null
+      );
+      formData.append(
+        "slide4",
+        this.selectFile[3] ? this.selectFile[3][0] : null
+      );
+      formData.append(
+        "slide5",
+        this.selectFile[4] ? this.selectFile[4][0] : null
+      );
       const result = await AdminAPI.changeSlide(formData, token);
       if (result.data == 1) {
         this.text = "Thành công!";
