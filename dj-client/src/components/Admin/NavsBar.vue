@@ -75,8 +75,18 @@ export default {
         {
           icon: "mdi-view-dashboard",
           title: "Dashboard",
-          subnav: [],
-          to: "/admin/dashboard",
+          subnav: [
+            {
+              icon: "mdi mdi-web-clock",
+              title: "SEO Web",
+              to: "/admin/dashboard-seo",
+            },
+            {
+              icon: "mdi mdi-google-analytics",
+              title: "Thống kê chung",
+              to: "/admin/dashboard-content",
+            },
+          ],
         },
         {
           icon: "mdi mdi-bookshelf",

@@ -21,7 +21,7 @@ import CourseMonitor from "@/components/Course/CourseMonitor.vue";
 import PostMonitor from "@/components/Post/PostMonitor.vue";
 import ForwardToHome from "../views/ForwardToHome.vue";
 import AdminLayout from "@/components/Admin/AdminLayout.vue";
-import DashboardAdmin from "@/components/Admin/DashboardAdmin.vue";
+import AnalyticsMain from "@/components/Admin/Analytics/AnalyticsMain.vue";
 import LessonAdmin from "@/components/Admin/Lesson/LessonAdmin.vue";
 import ChapterAdmin from "@/components/Admin/Chapter/ChapterAdmin.vue";
 import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
@@ -169,8 +169,12 @@ const routes: Array<RouteRecordRaw> = [
     component: AdminLayout,
     children: [
       {
-        path: "dashboard",
-        component: DashboardAdmin,
+        path: "dashboard-seo",
+        component: AnalyticsMain,
+      },
+      {
+        path: "dashboard-content",
+        component: AnalyticsMain,
       },
       {
         path: "lesson",
