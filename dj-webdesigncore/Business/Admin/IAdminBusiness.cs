@@ -4,6 +4,7 @@ using dj_webdesigncore.DTOs.Lobby;
 using dj_webdesigncore.DTOs.Post;
 using dj_webdesigncore.Entities.BusinessEntity;
 using dj_webdesigncore.Entities.CourseEntity;
+using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Blog;
 using dj_webdesigncore.Request.Chapter;
@@ -64,6 +65,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<ActionStatus>> changeSlide(IFormFile? slide1, IFormFile? slide2, IFormFile? slide3, IFormFile? slide4, IFormFile? slide5);
         Task<ResponData<ListPostAdmin>> getPostAdmin(int? statusOptId,int page);
         Task<ResponData<ActionStatus>> updatePost(IFormFile? img,UpdatePostAdminRequest updatePostAdmin);
-      
+        Task<IQueryable<User>> GetUserLockPage(int page);
     }
 }

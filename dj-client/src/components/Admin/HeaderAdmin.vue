@@ -14,7 +14,7 @@
     "
   >
     <v-toolbar prominent extended>
-      <label style="margin: 0 20px 0 20px; font-size: 20px"> Dashboard </label>
+      <label style="margin: 0 20px 0 20px; font-size: 20px"> Quản trị </label>
       <v-menu>
         <template v-slot:activator="{ props: menu }">
           <v-tooltip location="top">

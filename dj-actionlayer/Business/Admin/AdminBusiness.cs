@@ -1180,8 +1180,8 @@ namespace dj_actionlayer.Business.Admin
         {
             ResponData<ListPostAdmin> result = new ResponData<ListPostAdmin>();
             ListPostAdmin data = new ListPostAdmin();
-            var listPost = _context.post.Include(x => x.UserCreate).Include(x => x.PostStatus).Where(x => x.PostStatusId != 4).OrderByDescending(x => x.CreatePost).AsNoTracking();
-            if (statusOptId.HasValue)
+            var listPost = _context.post.Include(x => x.UserCreate).Include(x => x.PostStatus).OrderByDescending(x => x.LikeCount).AsNoTracking();
+            if (statusOptId != -1)
             {
                 listPost = listPost.Where(x => x.PostStatusId == statusOptId);
             }
@@ -1609,6 +1609,11 @@ namespace dj_actionlayer.Business.Admin
                 result.Messenger = "Lấy dữ liệu thất bại! Exception: " + ex.Message;
                 return result;
             }
+        }
+        public async Task<IQueryable<User>> GetUserLockPage(int page)
+        {
+            var listPage = _context.user.Include(x => x.Role).Include(x => x.Gender).Include(x => x.Catalog).Include(x => x.UserStatus).Include(x => x.Province).Include(x => x.District).Include(x => x.Ward).Where(x => x.IsLock == true).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
+            return listPage;
         }
     }
 }

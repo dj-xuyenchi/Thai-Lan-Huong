@@ -115,8 +115,8 @@ export default {
           title: "Vi phạm",
           subnav: [
             {
-              icon: "mdi mdi-account-remove",
-              title: "Tài khoản vi phạm",
+              icon: "mdi mdi-account-lock",
+              title: "Tài khoản đang khóa",
               to: "/admin/user-denounce",
             },
             {

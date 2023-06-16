@@ -1,6 +1,18 @@
 <template>
   <div style="display: flex; justify-content: flex-end">
     <div style="width: 360px; margin-right: 12px">
+      <v-select
+        v-model="optSearch"
+        label="Trạng thái bài viết"
+        :items="option"
+        variant="outlined"
+        item-title="postStatusName"
+        persistent-hint
+        return-object
+        item-value="id"
+        @update:modelValue="getPostAdmin()"
+        density="compact"
+      ></v-select>
       <v-text-field
         v-model="key"
         label="Tìm kiếm"
@@ -18,7 +30,7 @@
     :option="option"
     :getPostAdmin="getPostAdmin"
   />
-  <div class="text-center" @click="getLessonDetail()">
+  <div class="text-center" @click="getPostAdmin()">
     <v-container>
       <v-row justify="center">
         <v-col cols="4">
@@ -55,8 +67,12 @@ export default {
     option: [],
     page: 1,
     context: "",
-    maxPage: 1,
+    maxPage: 5,
     key: null,
+    optSearch: {
+      id: -1,
+      postStatusName: "",
+    },
     show: false,
   }),
   created() {
@@ -78,10 +94,13 @@ export default {
     async getPostAdmin() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await AdminAPI.getPostAdmin(null, this.page, token);
+      const data = await AdminAPI.getPostAdmin(
+        this.optSearch.id,
+        this.page,
+        token
+      );
       this.tableData = data.data.listPost;
       this.option = data.data.listOption;
-      this.maxPage = data.data.maxPage;
       this.setIsLoadedData(false);
     },
     setContext(context) {

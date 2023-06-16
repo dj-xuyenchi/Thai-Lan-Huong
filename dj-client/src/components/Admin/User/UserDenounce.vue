@@ -12,7 +12,7 @@
       ></v-text-field>
     </div>
   </div>
-  <UserTable :tableData="tableData" :getUserPage="getUserPage" />
+  <UserLockTable :tableData="tableData" :getUserPage="getUserPage" />
   <div class="text-center" @click="pageOpt()">
     <v-container>
       <v-row justify="center">
@@ -41,12 +41,12 @@
 
 <script>
 import { mapMutations } from "vuex";
-import RootAPI from "../../../apis/APIAdmin/RootAPI.ts";
-import UserTable from "./UserTable";
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import UserLockTable from "./UserLockTable";
 export default {
   name: "UserDenounce",
   components: {
-    UserTable,
+    UserLockTable,
   },
   data: () => ({
     tableData: [],
@@ -60,7 +60,7 @@ export default {
     show: false,
   }),
   created() {
-    this.getUserDenouncePage();
+    this.getLockUser();
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
@@ -74,15 +74,15 @@ export default {
         return;
       }
       const token = localStorage.getItem("token");
-      const data = await RootAPI.findUser(this.key, page, token);
+      const data = await AdminAPI.getLockUser(page, token);
       this.tableData = data;
       this.opt = 2;
       this.setIsLoadedData(false);
     },
-    async getUserDenouncePage() {
+    async getLockUser() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-      const data = await RootAPI.getUserDenouncePage(this.page, token);
+      const data = await AdminAPI.getLockUser(this.page, token);
       this.tableData = data;
       this.opt = 1;
       this.setIsLoadedData(false);

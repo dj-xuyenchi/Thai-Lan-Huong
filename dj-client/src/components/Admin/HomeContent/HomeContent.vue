@@ -7,7 +7,7 @@
           cycle
           hide-delimiter-background
           show-arrows="hover"
-          height="400"
+          height="86vh"
         >
           <v-carousel-item v-for="(slide1, i) in slides" :key="i">
             <v-sheet height="100%" width="100%">
@@ -18,202 +18,175 @@
           </v-carousel-item>
         </v-carousel>
         <h4 style="margin: 18px 0 12px 0">Danh sách slide</h4>
-        <div
-          style="
-            width: 30%;
-            float: left;
-            margin-right: 3.333%;
-            margin-bottom: 14px;
-          "
-        >
-          <h5>Slide 1</h5>
-          <img
-            :src="opt[0] ? `data:image/jpeg;base64, ` + dataImage[0] : slide[0]"
-            alt="Hình ảnh"
-            style="width: 100%; height: 200px; border-radius: 15px"
-          />
-          <v-btn
-            color="#4d96ff"
-            style="
-              height: 35px;
-              width: 104px;
-              font-size: 14px;
-              font-weight: 400;
-            "
-            @click="$refs.fileInput0.click()"
-          >
-            Chọn ảnh</v-btn
-          >
-          <v-file-input
-            ref="fileInput0"
-            v-model="selectFile[0]"
-            accept="image/*"
-            @change="onFileSelect(0)"
-            outlined
-            dense
-            hide-details
-            style="display: none"
-          ></v-file-input>
-        </div>
-        <div
-          style="
-            width: 30%;
-            float: left;
-            margin-right: 3.333%;
-            margin-bottom: 14px;
-          "
-        >
-          <h5>Slide 2</h5>
-          <img
-            :src="opt[1] ? `data:image/jpeg;base64, ` + dataImage[1] : slide[1]"
-            alt="Hình ảnh"
-            style="width: 100%; height: 200px; border-radius: 15px"
-          />
-          <v-btn
-            color="#4d96ff"
-            style="
-              height: 35px;
-              width: 104px;
-              font-size: 14px;
-              font-weight: 400;
-            "
-            @click="$refs.fileInput1.click()"
-          >
-            Chọn ảnh</v-btn
-          >
-          <v-file-input
-            ref="fileInput1"
-            v-model="selectFile[1]"
-            accept="image/*"
-            @change="onFileSelect(1)"
-            outlined
-            dense
-            hide-details
-            style="display: none"
-          ></v-file-input>
-        </div>
-        <div
-          style="
-            width: 30%;
-            float: left;
-            margin-right: 3.333%;
-            margin-bottom: 14px;
-          "
-        >
-          <h5>Slide 3</h5>
-          <img
-            :src="opt[2] ? `data:image/jpeg;base64, ` + dataImage[2] : slide[2]"
-            alt="Hình ảnh"
-            style="width: 100%; height: 200px; border-radius: 15px"
-          />
-          <v-btn
-            color="#4d96ff"
-            style="
-              height: 35px;
-              width: 104px;
-              font-size: 14px;
-              font-weight: 400;
-            "
-            @click="$refs.fileInput2.click()"
-          >
-            Chọn ảnh</v-btn
-          >
-          <v-file-input
-            ref="fileInput2"
-            v-model="selectFile[2]"
-            accept="image/*"
-            @change="onFileSelect(2)"
-            outlined
-            dense
-            hide-details
-            style="display: none"
-          ></v-file-input>
-        </div>
-        <div
-          style="
-            width: 30%;
-            float: left;
-            margin-right: 3.333%;
-            margin-bottom: 14px;
-          "
-        >
-          <h5>Slide 4</h5>
-          <img
-            :src="opt[3] ? `data:image/jpeg;base64, ` + dataImage[3] : slide[3]"
-            alt="Hình ảnh"
-            style="width: 100%; height: 200px; border-radius: 15px"
-          />
-          <v-btn
-            color="#4d96ff"
-            style="
-              height: 35px;
-              width: 104px;
-              font-size: 14px;
-              font-weight: 400;
-            "
-            @click="$refs.fileInput3.click()"
-          >
-            Chọn ảnh</v-btn
-          >
-          <v-file-input
-            ref="fileInput3"
-            v-model="selectFile[3]"
-            accept="image/*"
-            @change="onFileSelect(3)"
-            outlined
-            dense
-            hide-details
-            style="display: none"
-          ></v-file-input>
-        </div>
-        <div
-          style="
-            width: 30%;
-            float: left;
-            margin-right: 3.333%;
-            margin-bottom: 14px;
-          "
-        >
-          <h5>Slide 5</h5>
-          <img
-            :src="opt[4] ? `data:image/jpeg;base64, ` + dataImage[4] : slide[4]"
-            alt="Hình ảnh"
-            style="width: 100%; height: 200px; border-radius: 15px"
-          />
-          <v-btn
-            color="#4d96ff"
-            style="
-              height: 35px;
-              width: 104px;
-              font-size: 14px;
-              font-weight: 400;
-            "
-            @click="$refs.fileInput4.click()"
-          >
-            Chọn ảnh</v-btn
-          >
-          <v-file-input
-            ref="fileInput4"
-            v-model="selectFile[4]"
-            accept="image/*"
-            @change="onFileSelect(4)"
-            outlined
-            dense
-            hide-details
-            style="display: none"
-          ></v-file-input>
-        </div>
-        <div
-          style="
-            width: 30%;
-            float: left;
-            margin-right: 3.333%;
-            margin-bottom: 14px;
-            height: 260px;
-          "
-        ></div>
+        <v-row>
+          <v-col cols="4" sm="4" md="4">
+            <h5>Slide 1</h5>
+            <img
+              :src="
+                opt[0] ? `data:image/jpeg;base64, ` + dataImage[0] : slide[0]
+              "
+              alt="Hình ảnh"
+              style="width: 100%; height: 200px; border-radius: 15px"
+            />
+            <v-btn
+              color="#4d96ff"
+              style="
+                height: 35px;
+                width: 104px;
+                font-size: 14px;
+                font-weight: 400;
+              "
+              @click="$refs.fileInput0.click()"
+            >
+              Chọn ảnh</v-btn
+            >
+            <v-file-input
+              ref="fileInput0"
+              v-model="selectFile[0]"
+              accept="image/*"
+              @change="onFileSelect(0)"
+              outlined
+              dense
+              hide-details
+              style="display: none"
+            ></v-file-input>
+          </v-col>
+
+          <v-col cols="4" sm="4" md="4">
+            <h5>Slide 2</h5>
+            <img
+              :src="
+                opt[1] ? `data:image/jpeg;base64, ` + dataImage[1] : slide[1]
+              "
+              alt="Hình ảnh"
+              style="width: 100%; height: 200px; border-radius: 15px"
+            />
+            <v-btn
+              color="#4d96ff"
+              style="
+                height: 35px;
+                width: 104px;
+                font-size: 14px;
+                font-weight: 400;
+              "
+              @click="$refs.fileInput1.click()"
+            >
+              Chọn ảnh</v-btn
+            >
+            <v-file-input
+              ref="fileInput1"
+              v-model="selectFile[1]"
+              accept="image/*"
+              @change="onFileSelect(1)"
+              outlined
+              dense
+              hide-details
+              style="display: none"
+            ></v-file-input>
+          </v-col>
+
+          <v-col cols="4" sm="4" md="4">
+            <h5>Slide 3</h5>
+            <img
+              :src="
+                opt[2] ? `data:image/jpeg;base64, ` + dataImage[2] : slide[2]
+              "
+              alt="Hình ảnh"
+              style="width: 100%; height: 200px; border-radius: 15px"
+            />
+            <v-btn
+              color="#4d96ff"
+              style="
+                height: 35px;
+                width: 104px;
+                font-size: 14px;
+                font-weight: 400;
+              "
+              @click="$refs.fileInput2.click()"
+            >
+              Chọn ảnh</v-btn
+            >
+            <v-file-input
+              ref="fileInput2"
+              v-model="selectFile[2]"
+              accept="image/*"
+              @change="onFileSelect(2)"
+              outlined
+              dense
+              hide-details
+              style="display: none"
+            ></v-file-input>
+          </v-col>
+
+          <v-col cols="4" sm="4" md="4">
+            <h5>Slide 4</h5>
+            <img
+              :src="
+                opt[3] ? `data:image/jpeg;base64, ` + dataImage[3] : slide[3]
+              "
+              alt="Hình ảnh"
+              style="width: 100%; height: 200px; border-radius: 15px"
+            />
+            <v-btn
+              color="#4d96ff"
+              style="
+                height: 35px;
+                width: 104px;
+                font-size: 14px;
+                font-weight: 400;
+              "
+              @click="$refs.fileInput3.click()"
+            >
+              Chọn ảnh</v-btn
+            >
+            <v-file-input
+              ref="fileInput3"
+              v-model="selectFile[3]"
+              accept="image/*"
+              @change="onFileSelect(3)"
+              outlined
+              dense
+              hide-details
+              style="display: none"
+            ></v-file-input>
+          </v-col>
+
+          <v-col cols="4" sm="4" md="4">
+            <h5>Slide 5</h5>
+            <img
+              :src="
+                opt[4] ? `data:image/jpeg;base64, ` + dataImage[4] : slide[4]
+              "
+              alt="Hình ảnh"
+              style="width: 100%; height: 200px; border-radius: 15px"
+            />
+            <v-btn
+              color="#4d96ff"
+              style="
+                height: 35px;
+                width: 104px;
+                font-size: 14px;
+                font-weight: 400;
+              "
+              @click="$refs.fileInput4.click()"
+            >
+              Chọn ảnh</v-btn
+            >
+            <v-file-input
+              ref="fileInput4"
+              v-model="selectFile[4]"
+              accept="image/*"
+              @change="onFileSelect(4)"
+              outlined
+              dense
+              hide-details
+              style="display: none"
+            ></v-file-input>
+          </v-col>
+        </v-row>
       </div>
       <v-btn
+        style="margin-top: 24px"
         color="blue-darken-1"
         :loading="btnLoading"
         variant="text"
@@ -273,7 +246,7 @@ export default {
         this.selectFile[index][0].type == "image/jpeg" ||
         this.selectFile[index][0].type == "image/jpg"
       ) {
-        if (this.selectFile[index][0].size > 1048576) {
+        if (this.selectFile[index][0].size > 2048576) {
           this.text = "File quá nặng chỉ hỗ trợ file dung lượng < 1MB";
           this.snackbar = true;
           return;

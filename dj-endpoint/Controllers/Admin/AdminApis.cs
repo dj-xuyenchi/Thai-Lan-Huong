@@ -245,5 +245,10 @@ namespace dj_endpoint.Controllers.Admin
             UpdatePostAdminRequest updatePostAdmin = JsonConvert.DeserializeObject<UpdatePostAdminRequest>(data);
             return Ok(await _admin.updatePost(img, updatePostAdmin));
         }
+        [HttpGet("getlockuser")]
+        public async Task<IActionResult> getLockUser(int page)
+        {
+            return Ok(await _admin.GetUserLockPage(page));
+        }
     }
 }

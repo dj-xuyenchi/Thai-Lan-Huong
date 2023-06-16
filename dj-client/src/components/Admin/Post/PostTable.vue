@@ -19,7 +19,7 @@
             <img
               :src="item.postAvatar"
               alt="Hình ảnh"
-              style="height: 60px; width: 100px"
+              style="height: 60px; width: 100px; margin-top: 6px"
             />
           </td>
           <td>{{ fixString(item.postTitle) }}</td>
@@ -77,11 +77,17 @@ export default {
   },
   methods: {
     fixDate(vari) {
+      if (!vari) {
+        return "Chưa có";
+      }
       return (
         vari.substring(8, 10) + vari.substring(4, 8) + vari.substring(0, 4)
       );
     },
     fixString(vari) {
+      if (!vari) {
+        return "Chưa có";
+      }
       return vari.substring(0, 40) + "...";
     },
   },

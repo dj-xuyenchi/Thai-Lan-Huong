@@ -1,11 +1,11 @@
 <template>
   <div style="margin-bottom: 40px">
     <v-carousel
-      class="container rounded-xl"
+      class="rounded-xl"
       cycle
       hide-delimiter-background
       show-arrows="hover"
-      height="540"
+      height="90vh"
     >
       <v-carousel-item v-for="(slide1, i) in slides" :key="i">
         <v-sheet height="100%" width="100%">

@@ -20,7 +20,7 @@
             <img
               :src="item.courseImageData"
               alt="Hình ảnh"
-              style="height: 40px; width: 80px"
+              style="height: 60px; width: 100px; margin-top: 6px"
             />
           </td>
           <td>{{ item.courseName }}</td>
@@ -33,6 +33,7 @@
               display: flex;
               justify-content: space-evenly;
               align-items: center;
+              height: 74px;
             "
           >
             <BtnUpdateCourse :item="item" :getCoursePage="getCoursePage" />
