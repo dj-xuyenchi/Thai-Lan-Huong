@@ -1,13 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "+dwZxfbuo3BDW6lmy55kRZlzomi2nkszUWxNeYpm6BW36DciSUnUYdTMyEgHLPSErbItJsn0qJQZpIHLHvJJgg==",
+  "dgSpecHash": "pOFDkkYSIoixvjsngorQiLhK5JE5+bP6U1sXbPMjJrfUwzPZF9VkZh8ZZ5LG0EF+qDWunOBeoGiETf+YAn8knw==",
   "success": true,
   "projectFilePath": "C:\\Users\\LTS\\Documents\\GitHub\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LTS\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\google.apis\\1.60.0\\google.apis.1.60.0.nupkg.sha512",
+    "C:\\Users\\LTS\\.nuget\\packages\\google.apis.analyticsreporting.v4\\1.60.0.2484\\google.apis.analyticsreporting.v4.1.60.0.2484.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\google.apis.auth\\1.60.0\\google.apis.auth.1.60.0.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\google.apis.core\\1.60.0\\google.apis.core.1.60.0.nupkg.sha512",
+    "C:\\Users\\LTS\\.nuget\\packages\\google.apis.searchconsole.v1\\1.60.0.2792\\google.apis.searchconsole.v1.1.60.0.2792.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\google.apis.youtube.v3\\1.60.0.3064\\google.apis.youtube.v3.1.60.0.3064.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

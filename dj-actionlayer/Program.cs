@@ -1,111 +1,58 @@
-﻿using dj_actionlayer.Business.Compilerrrrrr;
-using System.Net.Mail;
-using System.Net;
-using dj_webdesigncore.DTOs.Study;
-using System.Linq;
-using Microsoft.CodeAnalysis.Scripting;
-using Microsoft.CodeAnalysis;
-using System.Diagnostics;
+﻿using Google.Apis.AnalyticsReporting.v4;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
 using System;
-using System.Text;
-using dj_actionlayer.Business.YoutubeAPIv3;
+using System.IO;
 
-namespace dj_actionlayer
+class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-       
+        // Đường dẫn tới tệp JSON chứa thông tin xác thực
+        string credentialFilePath = @"";
 
-        static async Task Main(string[] args)
+        // Đường dẫn tới tệp JSON chứa thông tin xác thực cung cấp bởi Google Developers Console
+        string tokenFilePath = "path/to/your/token.json";
+
+        // ID xem trong Google Analytics
+        string viewId = "your-view-id";
+
+        // Khởi tạo phạm vi xác thực (Scope)
+        string[] scopes = { AnalyticsReportingService.Scope.AnalyticsReadonly };
+
+        try
         {
-           var a= YoutubeAPI.GetInfo("ukHK1GVyr0I");
-            Console.WriteLine(a.Result.view);
-            //string chuoi1 = "anhdq1";
-            //string chuoi2 = "anhdq2";
-            //List<string> list = new List<string>();
-            //list.Add(chuoi1);
-            //list.Add(chuoi2);
-            //string chuoi3 = "anhdq";
-            //string chuoiTrung = "";
-            //int index = 1;
-            //for(int i = 0; i< list.Count; i++)
-            //{
-            //    if (list[i].Contains(chuoi3))
-            //    {
-            //        chuoiTrung=list[i];
-            //        index++;
-            //    }
-            //}
+            // Xác thực và lấy token truy cập
+            UserCredential credential;
 
-            //chuoiTrung = chuoiTrung.Replace("1", "");
-            //chuoiTrung = chuoiTrung.Replace("2", "");
-            //chuoiTrung = chuoiTrung.Replace("3", "");
-            //Console.WriteLine(chuoiTrung);
-            //Console.WriteLine(index);
-            //    string code = @"
-            //    #include <stdio.h>
+            using (var stream = new FileStream(credentialFilePath, FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    scopes,
+                    "user",
+                    System.Threading.CancellationToken.None,
+                    new FileDataStore(tokenFilePath, true)).Result;
+            }
 
-            //    int main()
-            //    {
-            //        printf(""Hello World"");
-            //        return 0;
-            //    }
-            //";
+            // Khởi tạo dịch vụ Google Analytics Reporting
+            var service = new AnalyticsReportingService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "Your Application Name"
+            });
 
-            //    LLVMInitializeCore(LLVMBool.False);
-            //    LLVMInitializeTarget(LLVMBool.True);
-            //    LLVMInitializeAllAsmParsers();
-            //    LLVMInitializeAllAsmPrinters();
-            //    LLVMInitializeAllTargetInfos();
-            //    LLVMInitializeAllTargets();
+            // Tạo yêu cầu lấy dữ liệu
+            // ...
+            // Thực hiện các thao tác lấy dữ liệu từ Google Analytics tại đây
+            // ...
 
-            //    var context = LLVMContextRef.Create();
-            //    var module = context.ModuleCreateWithName("my_module");
-            //    var builder = context.CreateBuilder();
-            //    var error = new LLVMBool();
-
-            //    var moduleRef = module.ParseIRString(code, out error);
-
-            //    if (error.Value == 1)
-            //    {
-            //        Console.WriteLine("Error parsing the module:");
-            //        Console.WriteLine(LLVM.GetErrorMessage());
-            //        return;
-            //    }
-
-            //    LLVM.VerifyModule(moduleRef, LLVMVerifierFailureAction.LLVMPrintMessageAction, out var verifyError);
-
-            //    if (verifyError.Value == 1)
-            //    {
-            //        Console.WriteLine("Error verifying the module:");
-            //        Console.WriteLine(LLVM.GetErrorMessage());
-            //        return;
-            //    }
-
-            //    var executionEngineRef = moduleRef.CreateExecutionEngine();
-
-            //    var mainFunction = moduleRef.GetNamedFunction("main");
-            //    var result = executionEngineRef.RunFunctionAsInt32(mainFunction, null);
-
-            //    Console.WriteLine("Result: " + result);
-
-            //    context.Dispose();
-
+            Console.WriteLine("Data retrieved successfully.");
         }
-        static string  remixName(string input)
+        catch (Exception ex)
         {
-            input = input.Trim();
-            while (input.Contains("  "))
-            {
-                input = input.Replace("  ", " ");
-            }
-            string[] resu = input.Split(' ');
-            input = "";
-            for (int i = 0; i < resu.Length; i++)
-            {
-                input += resu[i][0].ToString().ToUpper() + resu[i].Substring(1).ToString().ToLower() + " ";
-            }
-            return input.Trim();
+            Console.WriteLine($"An error occurred: {ex.Message}");
         }
     }
 }

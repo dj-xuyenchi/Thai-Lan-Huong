@@ -914,3 +914,5 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\ref
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\dj-actionlayer.pdb
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\dj-actionlayer.genruntimeconfig.cache
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\obj\Debug\net6.0\ref\dj-actionlayer.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Debug\net6.0\Google.Apis.AnalyticsReporting.v4.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Debug\net6.0\Google.Apis.SearchConsole.v1.dll

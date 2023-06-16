@@ -36,6 +36,23 @@
           }
         }
       },
+      "Google.Apis.AnalyticsReporting.v4/1.60.0.2484": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.60.0",
+          "Google.Apis.Auth": "1.60.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.AnalyticsReporting.v4.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.AnalyticsReporting.v4.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Google.Apis.Auth/1.60.0": {
         "type": "package",
         "dependencies": {
@@ -67,6 +84,23 @@
         },
         "runtime": {
           "lib/netstandard2.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.SearchConsole.v1/1.60.0.2792": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.60.0",
+          "Google.Apis.Auth": "1.60.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Apis.SearchConsole.v1.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Apis.SearchConsole.v1.dll": {
             "related": ".pdb;.xml"
           }
         }
@@ -1299,6 +1333,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Google.Apis.AnalyticsReporting.v4": "1.60.0.2484",
+          "Google.Apis.Auth": "1.60.0",
+          "Google.Apis.SearchConsole.v1": "1.60.0.2792",
           "Google.Apis.YouTube.v3": "1.60.0.3064",
           "Microsoft.CodeAnalysis.CSharp": "4.5.0",
           "Microsoft.CodeAnalysis.CSharp.Scripting": "4.5.0",
@@ -1384,6 +1421,28 @@
         "lib/netstandard2.0/Google.Apis.xml"
       ]
     },
+    "Google.Apis.AnalyticsReporting.v4/1.60.0.2484": {
+      "sha512": "yE2aBq/+M8jf8jt+LWnUxb1hbhhxW885AMdbIdORu5GKxZvTUstL7aDOj9kLuC/rhe+GMQTPIxKlnohN1wxMig==",
+      "type": "package",
+      "path": "google.apis.analyticsreporting.v4/1.60.0.2484",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.analyticsreporting.v4.1.60.0.2484.nupkg.sha512",
+        "google.apis.analyticsreporting.v4.nuspec",
+        "lib/net45/Google.Apis.AnalyticsReporting.v4.dll",
+        "lib/net45/Google.Apis.AnalyticsReporting.v4.pdb",
+        "lib/net45/Google.Apis.AnalyticsReporting.v4.xml",
+        "lib/netstandard1.3/Google.Apis.AnalyticsReporting.v4.dll",
+        "lib/netstandard1.3/Google.Apis.AnalyticsReporting.v4.pdb",
+        "lib/netstandard1.3/Google.Apis.AnalyticsReporting.v4.xml",
+        "lib/netstandard2.0/Google.Apis.AnalyticsReporting.v4.dll",
+        "lib/netstandard2.0/Google.Apis.AnalyticsReporting.v4.pdb",
+        "lib/netstandard2.0/Google.Apis.AnalyticsReporting.v4.xml"
+      ]
+    },
     "Google.Apis.Auth/1.60.0": {
       "sha512": "AUuWniIf2muns/9hesiF7yCKeQN+PbdTU864Rb2wDzW4xmepO6tEnoqREPeow95qIAgkOlL/byKeU65d3ox5Ng==",
       "type": "package",
@@ -1433,6 +1492,28 @@
         "lib/netstandard2.0/Google.Apis.Core.dll",
         "lib/netstandard2.0/Google.Apis.Core.pdb",
         "lib/netstandard2.0/Google.Apis.Core.xml"
+      ]
+    },
+    "Google.Apis.SearchConsole.v1/1.60.0.2792": {
+      "sha512": "KIQ01NGMs17cWA6jxpuW4N2uI0+RwMjJFzSGxU4jqx6ui5vOlNK0g2ofvVzjmHCaa86e9A+/5SWgRBxKMZKL0A==",
+      "type": "package",
+      "path": "google.apis.searchconsole.v1/1.60.0.2792",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.searchconsole.v1.1.60.0.2792.nupkg.sha512",
+        "google.apis.searchconsole.v1.nuspec",
+        "lib/net45/Google.Apis.SearchConsole.v1.dll",
+        "lib/net45/Google.Apis.SearchConsole.v1.pdb",
+        "lib/net45/Google.Apis.SearchConsole.v1.xml",
+        "lib/netstandard1.3/Google.Apis.SearchConsole.v1.dll",
+        "lib/netstandard1.3/Google.Apis.SearchConsole.v1.pdb",
+        "lib/netstandard1.3/Google.Apis.SearchConsole.v1.xml",
+        "lib/netstandard2.0/Google.Apis.SearchConsole.v1.dll",
+        "lib/netstandard2.0/Google.Apis.SearchConsole.v1.pdb",
+        "lib/netstandard2.0/Google.Apis.SearchConsole.v1.xml"
       ]
     },
     "Google.Apis.YouTube.v3/1.60.0.3064": {
