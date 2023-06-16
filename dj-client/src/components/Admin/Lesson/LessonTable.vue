@@ -26,7 +26,7 @@
           <th class="text-left">Cập nhật</th>
           <th class="text-left">Loại bài học</th>
           <th class="text-left">Thời lượng</th>
-          <th class="text-center">Action</th>
+          <th class="text-center" style="min-width: 90px">Action</th>
         </tr>
       </thead>
       <tbody>

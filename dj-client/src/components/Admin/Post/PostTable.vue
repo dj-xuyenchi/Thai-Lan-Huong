@@ -6,9 +6,9 @@
           <th class="text-left">#</th>
           <th class="text-left">Ảnh đại diện</th>
           <th class="text-left">Tiêu đề</th>
-          <th class="text-left">Người viết</th>
-          <th class="text-left">Ngày tạo</th>
-          <th class="text-left">Trạng thái</th>
+          <th class="text-left" style="min-width: 320px">Người viết</th>
+          <th class="text-left" style="min-width: 140px">Ngày tạo</th>
+          <th class="text-left" style="min-width: 150px">Trạng thái</th>
           <th class="text-left">Action</th>
         </tr>
       </thead>

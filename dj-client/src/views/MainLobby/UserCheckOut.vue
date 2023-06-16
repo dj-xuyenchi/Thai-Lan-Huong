@@ -120,7 +120,7 @@ export default {
         text: "Quản trị hệ thống",
         icon: "mdi-desktop-mac",
         event: () => {
-          this.$router.push({ path: "/admin/dashboard" });
+          this.$router.push({ path: "/admin/dashboard-seo" });
         },
       },
       items: [
