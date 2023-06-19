@@ -1002,3 +1002,5 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\refint
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\dj-endpoint.pdb
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\dj-endpoint.genruntimeconfig.cache
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\obj\Debug\net6.0\ref\dj-endpoint.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Debug\net6.0\Google.Apis.AnalyticsReporting.v4.dll
+C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-endpoint\bin\Debug\net6.0\Google.Apis.SearchConsole.v1.dll

@@ -151,6 +151,7 @@ namespace dj_actionlayer.Business.Admin
             if (updateUserRequest.statusId == 4)
             {
                 user.IsLock = true;
+                user.OpenLockTime = DateTime.Now;
                 user.VioCount++;
                 switch (updateUserRequest.lockOpt)
                 {
@@ -177,10 +178,6 @@ namespace dj_actionlayer.Business.Admin
             if (avatar != null)
             {
                 user.UserAvatarData40x40 = await CloudinaryUpload.UploadFile(avatar);
-            }
-            else
-            {
-                user.UserAvatarData40x40 = "https://res.cloudinary.com/dushydq6r/image/upload/v1686398105/xyz-abc_1286085158_6/10/vhwjtmzsygp0f2t1o8wc.jpg";
             }
             if (updateUserRequest.birthday.Year != 1000)
             {

@@ -16,6 +16,7 @@ using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.Lesson;
 using dj_webdesigncore.Request.Post;
 using dj_webdesigncore.Request.SomeThingElse;
+using Google.Apis.AnalyticsReporting.v4.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,6 +28,7 @@ using System.Threading.Tasks;
 using ChapterDetailDTO = dj_webdesigncore.DTOs.Admin.ChapterDetailDTO;
 using CourseDetailDTO = dj_webdesigncore.DTOs.Admin.CourseDetailDTO;
 using LessonDetailDTO = dj_webdesigncore.DTOs.Admin.LessonDetailDTO;
+using User = dj_webdesigncore.Entities.UserEntity.User;
 
 namespace dj_actionlayer.Business.Admin
 {
@@ -455,6 +457,7 @@ namespace dj_actionlayer.Business.Admin
                 denounce.IsViolation = true;
                 denounce.CheckTime = DateTime.Now;
                 denounce.UserCheckId = checker.Id;
+                vio.OpenLockTime = DateTime.Now;
                 switch (confirmDenounce.LockOpt)
                 {
                     case 1:

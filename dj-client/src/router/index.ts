@@ -22,6 +22,7 @@ import PostMonitor from "@/components/Post/PostMonitor.vue";
 import ForwardToHome from "../views/ForwardToHome.vue";
 import AdminLayout from "@/components/Admin/AdminLayout.vue";
 import AnalyticsMain from "@/components/Admin/Analytics/AnalyticsMain.vue";
+import AnalyticsApp from "@/components/Admin/Analytics/AnalyticsApp.vue";
 import LessonAdmin from "@/components/Admin/Lesson/LessonAdmin.vue";
 import ChapterAdmin from "@/components/Admin/Chapter/ChapterAdmin.vue";
 import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
@@ -174,7 +175,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "dashboard-content",
-        component: AnalyticsMain,
+        component: AnalyticsApp,
       },
       {
         path: "lesson",

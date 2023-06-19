@@ -14,9 +14,7 @@ namespace dj_webdesigncore.Entities.UserEntity
 	{
 		public string? UserName { get; set; }
 		public string UserPass { get; set; }
-	
 		public string? UserAvatarData40x40 { get; set; }
-     
         public string? UserEmail { get; set; }
 		public string? UserFacebook { get; set; }
 		public string? UserLinkedIn { get; set; }
@@ -51,5 +49,6 @@ namespace dj_webdesigncore.Entities.UserEntity
 		public bool? IsLock { get; set; }
 		public DateTime? UnlockTime { get; set; }
 		public int? VioCount { get; set; }
+		public DateTime? OpenLockTime { get; set; }
 	}
 }
