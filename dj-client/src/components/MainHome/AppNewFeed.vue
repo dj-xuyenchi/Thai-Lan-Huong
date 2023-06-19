@@ -18,6 +18,7 @@ import PostList from "./PostList.vue";
 import BlogList from "./BlogList.vue";
 import HomeAPI from "../../apis/APIHome/HomeAPI";
 import { mapMutations } from "vuex";
+
 export default {
   name: "AppNewFeed",
   components: {

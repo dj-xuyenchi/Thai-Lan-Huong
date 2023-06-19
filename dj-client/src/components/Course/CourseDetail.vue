@@ -8,6 +8,26 @@
         <h5 style="font-weight: 400">
           {{ courseSubTitle }}
         </h5>
+        <v-btn
+          width="15%"
+          rounded="pill"
+          color="#4FC3F7"
+          v-if="!isRegistered"
+          @click="registerCourse()"
+          class="btn-register"
+        >
+          Đăng ký học
+        </v-btn>
+        <v-btn
+          width="15%"
+          rounded="pill"
+          color="#4FC3F7"
+          v-if="isRegistered"
+          @click="getInClass()"
+          class="btn-register"
+        >
+          Vào học
+        </v-btn>
         <div class="require-profit">
           <div class="require-profit-detail">
             <h2 style="font-weight: 700; font-size: 20px">
@@ -350,6 +370,10 @@ export default {
   -webkit-transform: skewX(-25deg);
   transform: skewX(-25deg);
 }
+.btn-register {
+  display: none;
+  margin-top: 8px;
+}
 @media screen and (max-width: 739px) {
   .require-profit .require-profit-detail {
     width: 100% !important;
@@ -359,6 +383,9 @@ export default {
   }
   .course-detail-container .course-detail-left {
     width: 100% !important;
+  }
+  .btn-register {
+    display: block !important;
   }
 }
 @media screen and (max-width: 1360px) and (min-width: 740px) {
@@ -370,6 +397,9 @@ export default {
   }
   .course-detail-container .course-detail-right {
     display: none !important;
+  }
+  .btn-register {
+    display: block !important;
   }
 }
 </style>
