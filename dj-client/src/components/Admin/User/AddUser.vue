@@ -275,6 +275,8 @@
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
 import RootAPI from "../../../apis/APIAdmin/RootAPI";
 import UserAPI from "../../../apis/APIUser/UserAPI";
+
+import { SHA512 } from "crypto-js";
 export default {
   name: "AddUser",
   data: () => ({
@@ -348,7 +350,7 @@ export default {
         roleId: this.userRole.id,
         isKYC: this.isKYC,
         userName: this.userName,
-        userPass: this.userPass,
+        userPass: SHA512(this.userPass).toString(),
       };
     },
     onFileSelect() {

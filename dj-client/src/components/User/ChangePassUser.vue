@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { SHA512 } from "crypto-js";
 import UserAPI from "../../apis/APIUser/UserAPI.ts";
 import { mapMutations } from "vuex";
 export default {
@@ -117,8 +118,8 @@ export default {
       const data = await UserAPI.changePass(
         {
           Id: localStorage.getItem("id"),
-          OldPass: this.password,
-          NewPass: this.newPassword,
+          OldPass: SHA512(this.password).toString(),
+          NewPass: SHA512(this.newPassword).toString(),
         },
         token
       );

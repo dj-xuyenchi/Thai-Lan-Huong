@@ -239,6 +239,8 @@
 <script>
 import UserAPI from "../../apis/APIUser/UserAPI.ts";
 import { mapMutations } from "vuex";
+import { SHA512 } from "crypto-js";
+
 export default {
   name: "UpdateInfor",
   data() {

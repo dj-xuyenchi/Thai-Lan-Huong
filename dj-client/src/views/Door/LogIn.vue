@@ -111,6 +111,8 @@ import AuthApis from "../../apis/AuthApis/AuthApis.ts";
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
+import { SHA512 } from "crypto-js";
+
 export default {
   data: () => ({
     visible: false,
@@ -138,7 +140,7 @@ export default {
       this.isUnValidUser = false;
       const requestLogin = {
         UserName: this.userName,
-        Password: this.password,
+        Password: SHA512(this.password).toString(),
       };
       const login = await AuthApis.getLogin(requestLogin);
       if (login.success == 1) {

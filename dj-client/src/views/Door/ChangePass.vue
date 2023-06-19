@@ -64,6 +64,8 @@ import AuthApis from "../../apis/AuthApis/AuthApis.ts";
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
+
+import { SHA512 } from "crypto-js";
 export default {
   name: "ChangePass",
   data: () => ({
@@ -81,7 +83,7 @@ export default {
       this.dialog = true;
       const request = {
         Code: localStorage.getItem("codePass"),
-        NewPass: this.password,
+        NewPass: SHA512(this.password).toString(),
       };
       const result = await AuthApis.confirmPass(request);
       if (result.success === 0) {

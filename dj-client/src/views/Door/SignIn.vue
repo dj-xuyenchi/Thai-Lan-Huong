@@ -144,6 +144,8 @@ import AuthApis from "../../apis/AuthApis/AuthApis.ts";
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
 import { mapActions } from "vuex";
+
+import { SHA512 } from "crypto-js";
 export default {
   name: "SignIn",
   data: () => ({
@@ -234,7 +236,7 @@ export default {
         userName: this.userName,
         email: this.email,
         sdt: this.sdt,
-        password: this.password,
+        password: SHA512(this.password).toString(),
       };
       const result = await AuthApis.signIn(newAccount);
       if (result.data.status == 1) {
