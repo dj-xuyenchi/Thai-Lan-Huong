@@ -1618,5 +1618,77 @@ namespace dj_actionlayer.Business.Admin
             var listPage = _context.user.Include(x => x.Role).Include(x => x.Gender).Include(x => x.Catalog).Include(x => x.UserStatus).Include(x => x.Province).Include(x => x.District).Include(x => x.Ward).Where(x => x.IsLock == true).OrderByDescending(x => x.CreateAccount).Skip((page - 1) * 15).Take(15);
             return listPage;
         }
+
+        public async Task<ResponData<AnalyticAppDTO>> GetAnalytics()
+        {
+            ResponData<AnalyticAppDTO> result = new ResponData<AnalyticAppDTO>();
+            AnalyticAppDTO data = new AnalyticAppDTO();
+            List<AnalyticUserItemDTO> ListCategory = new List<AnalyticUserItemDTO>();
+            AnalyticUserItemDTO cateNewUser = new AnalyticUserItemDTO();
+            cateNewUser.Category = "Người dùng mới";
+            int[] dataWeek = new int[7];
+            int index = 0;
+            var listNewUser = _context.user.Where(x => x.CreateAccount.Value.Year == DateTime.Now.Year && x.CreateAccount.Value.Month == DateTime.Now.Month).ToList();
+            for (int i = DateTime.Now.Day; i > DateTime.Now.Day - 7; i--)
+            {
+                dataWeek[index] = listNewUser.Where(x => x.CreateAccount.Value.Day == i).Count();
+                index++;
+            }
+            cateNewUser.DataWeek = dataWeek;
+            int[] dataMonth = new int[12];
+            var listNewUserMonth = _context.user.Where(x => x.CreateAccount.Value.Year == DateTime.Now.Year).ToList();
+            for (int i = 0; i < 12; i++)
+            {
+                dataMonth[i] = listNewUserMonth.Where(x => x.CreateAccount.Value.Month == i + 1).Count();
+            }
+            cateNewUser.DataMonth = dataMonth;
+            ListCategory.Add(cateNewUser);
+
+            AnalyticUserItemDTO cateLockUser = new AnalyticUserItemDTO();
+            cateLockUser.Category = "Người dùng bị khóa";
+            dataWeek = new int[7];
+            index = 0;
+            var listLockUser = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 4).Where(x=>x.OpenLockTime.Value.Year==DateTime.Now.Year&&x.OpenLockTime.Value.Month==DateTime.Now.Month).ToList();
+            for (int i = DateTime.Now.Day; i > DateTime.Now.Day - 7; i--)
+            {
+                dataWeek[index] = listLockUser.Where(x => x.OpenLockTime.Value.Day == i).Count();
+                index++;
+            }
+            cateLockUser.DataWeek = dataWeek;
+            dataMonth = new int[12];
+            var listLockUserMonth = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 4).Where(x => x.OpenLockTime.Value.Year == DateTime.Now.Year).ToList();
+            for (int i = 0; i < 12; i++)
+            {
+                dataMonth[i] = listLockUserMonth.Where(x => x.OpenLockTime.Value.Month == i + 1).Count();
+            }
+            cateLockUser.DataMonth = dataMonth;
+            ListCategory.Add(cateLockUser);
+
+            AnalyticUserItemDTO cateLockForeverUser = new AnalyticUserItemDTO();
+            cateLockForeverUser.Category = "Người dùng bị khóa vĩnh viễn";
+            dataWeek = new int[7];
+            index = 0;
+            var listLockForeverUser = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 2).Where(x => x.OpenLockTime.Value.Year == DateTime.Now.Year && x.OpenLockTime.Value.Month == DateTime.Now.Month).ToList();
+            for (int i = DateTime.Now.Day; i > DateTime.Now.Day - 7; i--)
+            {
+                dataWeek[index] = listLockForeverUser.Where(x => x.OpenLockTime.Value.Day == i).Count();
+                index++;
+            }
+            cateLockForeverUser.DataWeek = dataWeek;
+            dataMonth = new int[12];
+            var listLockForeverUserMonth = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 2).Where(x => x.OpenLockTime.Value.Year == DateTime.Now.Year).ToList();
+            for (int i = 0; i < 12; i++)
+            {
+                dataMonth[i] = listLockForeverUserMonth.Where(x => x.OpenLockTime.Value.Month == i + 1).Count();
+            }
+            cateLockForeverUser.DataMonth = dataMonth;
+            ListCategory.Add(cateLockForeverUser);
+
+            data.ListOption = ListCategory;
+            result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
     }
 }

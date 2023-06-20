@@ -26,7 +26,7 @@
           item-value="id"
           density="compact"
           style="margin: 20px 0 0 8px; width: 20%; float: left"
-          @update:modelValue="changeOptUser()"
+          @update:modelValue="changeBoLoc()"
         ></v-select>
         <v-select
           v-model="optTypeChart"
@@ -40,11 +40,11 @@
           density="compact"
           style="margin: 20px 0 0 8px; width: 20%; float: left"
         ></v-select>
-        Từ<input type="date" name="" value="" /> Đến<input
-          type="date"
-          name=""
-          value=""
-        />
+        <div v-if="optNewUser.id != 3" style="display: inline">
+          <span style="color: blue">Từ </span><v-date-picker></v-date-picker>
+          <span style="color: blue">Đến </span>
+          <input type="date" name="" value="" />
+        </div>
       </div>
       <LineChart
         v-if="optTypeChart.id == 1"
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
 import LineChart from "./ChartConfig/LineChart";
 import StackedHorizontalBar from "./ChartConfig/StackedHorizontalBar";
 import { reactive } from "vue";
@@ -90,9 +91,10 @@ export default {
         },
       ],
       optBoLoc: {
-        id: 1,
-        name: "Người dùng mới",
+        id: 4,
+        name: "Tất cả",
       },
+      dataUser: [],
       listOptBoLoc: [
         {
           id: 1,
@@ -105,6 +107,10 @@ export default {
         {
           id: 3,
           name: "Người dùng bị khóa vĩnh viễn",
+        },
+        {
+          id: 4,
+          name: "Tất cả",
         },
       ],
       optTypeChart: {
@@ -137,31 +143,76 @@ export default {
           "Thứ bảy",
           "Chủ nhật",
         ]),
-        data: reactive([
-          {
-            name: "Người dùng mới",
-            type: "line",
-            stack: "Total",
-            data: reactive([120, 132, 101, 134, 90, 230, 210]),
-          },
-          {
-            name: "Người dùng bị khóa",
-            type: "line",
-            stack: "Total",
-            data: reactive([220, 182, 191, 234, 290, 330, 310]),
-          },
-          {
-            name: "Người dùng bị khóa vĩnh viễn",
-            type: "line",
-            stack: "Total",
-            data: reactive([220, 182, 191, 234, 290, 330, 310]),
-          },
-        ]),
+        data: reactive([]),
       }),
     };
   },
+  created() {
+    this.getAnalytic();
+  },
   methods: {
+    async getAnalytic() {
+      const data = await AdminAPI.getAnalytic(localStorage.getItem("token"));
+      this.dataUser = data.data.listOption;
+      this.dataChartNewUser.data[0] =
+        this.optNewUser.id == 1
+          ? this.dataUser[0].dataWeek
+          : this.dataUser[0].dataMonth;
+      this.dataChartNewUser.data[1] =
+        this.optNewUser.id == 1
+          ? this.dataUser[1].dataWeek
+          : this.dataUser[1].dataMonth;
+      this.dataChartNewUser.data[2] =
+        this.optNewUser.id == 1
+          ? this.dataUser[2].dataWeek
+          : this.dataUser[2].dataMonth;
+    },
+    changeBoLoc() {
+      if (this.optBoLoc.id == 1) {
+        this.dataChartNewUser.data = [
+          this.optNewUser.id == 1
+            ? this.dataUser[0].dataWeek
+            : this.dataUser[0].dataMonth,
+          [],
+          [],
+        ];
+      }
+      if (this.optBoLoc.id == 2) {
+        this.dataChartNewUser.data = [
+          [],
+          this.optNewUser.id == 1
+            ? this.dataUser[1].dataWeek
+            : this.dataUser[1].dataMonth,
+          [],
+        ];
+      }
+      if (this.optBoLoc.id == 3) {
+        this.dataChartNewUser.data = [
+          [],
+          [],
+          this.optNewUser.id == 1
+            ? this.dataUser[2].dataWeek
+            : this.dataUser[2].dataMonth,
+        ];
+      }
+      if (this.optBoLoc.id == 4) {
+        this.dataChartNewUser.data = [
+          this.optNewUser.id == 1
+            ? this.dataUser[0].dataWeek
+            : this.dataUser[0].dataMonth,
+          this.optNewUser.id == 1
+            ? this.dataUser[1].dataWeek
+            : this.dataUser[1].dataMonth,
+          this.optNewUser.id == 1
+            ? this.dataUser[2].dataWeek
+            : this.dataUser[2].dataMonth,
+        ];
+      }
+    },
     changeOptUser() {
+      if (this.optNewUser.id == 3) {
+        return;
+      }
       this.dataChartNewUser.timeLine =
         this.optNewUser.id == 1
           ? [
@@ -187,6 +238,19 @@ export default {
               "Tháng 11",
               "Tháng 12",
             ];
+      this.dataChartNewUser.data[0] =
+        this.optNewUser.id == 1
+          ? this.dataUser[0].dataWeek
+          : this.dataUser[0].dataMonth;
+      this.dataChartNewUser.data[1] =
+        this.optNewUser.id == 1
+          ? this.dataUser[1].dataWeek
+          : this.dataUser[1].dataMonth;
+      this.dataChartNewUser.data[2] =
+        this.optNewUser.id == 1
+          ? this.dataUser[2].dataWeek
+          : this.dataUser[2].dataMonth;
+      this.changeBoLoc();
     },
   },
   watch: {

@@ -17,9 +17,6 @@ export default {
   props: {
     analysticData: Object,
   },
-  created() {
-    this.ana = this.analysticData;
-  },
   methods: {
     renderChart() {
       const chart = echarts.init(this.$refs.chart);
@@ -53,7 +50,26 @@ export default {
         yAxis: {
           type: "value",
         },
-        series: this.analysticData.data,
+        series: [
+          {
+            name: "Người dùng mới",
+            type: "line",
+            stack: "Total",
+            data: this.analysticData.data[0],
+          },
+          {
+            name: "Người dùng bị khóa",
+            type: "line",
+            stack: "Total",
+            data: this.analysticData.data[1],
+          },
+          {
+            name: "Người dùng bị khóa vĩnh viễn",
+            type: "line",
+            stack: "Total",
+            data: this.analysticData.data[2],
+          },
+        ],
       });
     },
   },

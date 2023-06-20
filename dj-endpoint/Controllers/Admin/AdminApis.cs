@@ -250,5 +250,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.GetUserLockPage(page));
         }
+        [HttpGet("getanalytic")]
+        public async Task<IActionResult> GetAnalytic()
+        {
+            return Ok(await _admin.GetAnalytics());
+        }
     }
 }

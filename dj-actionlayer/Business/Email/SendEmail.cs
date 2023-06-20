@@ -26,10 +26,8 @@ namespace dj_actionlayer.Business.Email
         {
             MailMessage message = new MailMessage(FromEmail, toEmail);
             message.Subject = "Xác nhận đăng ký tài khoản DJ - Coding";
-            message.Body = "🌱 Xin chào mình nhận được yêu cầu đăng ký tài khoản DJ - Coding để hoàn thành đăng ký vui lòng nhập mã xác nhận dưới đây. " +
-                confirmLink +
-                ". Nếu bạn không có yêu cầu này vui lòng bỏ qua.";
-
+            message.Body = TemplateEmail.CreateEmail(confirmLink);
+            message.IsBodyHtml= true;
             // Tạo đối tượng SmtpClient
             SmtpClient smtpClient = new SmtpClient(SmtpHost, SmtpPort);
             smtpClient.UseDefaultCredentials = false;
@@ -50,10 +48,8 @@ namespace dj_actionlayer.Business.Email
         {
             MailMessage message = new MailMessage(FromEmail, toEmail);
             message.Subject = "Xác nhận yêu cầu đổi mật khẩu tài khoản DJ - Coding";
-            message.Body = "🌱 Xin chào mình nhận được yêu cầu đổi mật khẩu tài khoản DJ - Coding để hoàn thành xác nhận vui lòng nhập mã xác nhận dưới đây. " +
-                Settings.enviroment()+ "/#/forwardrequestforgetpass/" + confirmLink +
-                ". Nếu bạn không có yêu cầu này vui lòng bỏ qua.";
-
+            message.Body = TemplateEmail.CreateEmail(confirmLink);
+            message.IsBodyHtml = true;
             // Tạo đối tượng SmtpClient
             SmtpClient smtpClient = new SmtpClient(SmtpHost, SmtpPort);
             smtpClient.UseDefaultCredentials = false;

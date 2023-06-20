@@ -9,6 +9,7 @@ namespace dj_webdesigncore.DTOs.Admin
     public class AnalyticUserItemDTO
     {
         public string Category { get; set; }
-        public int[] Data { get; set; }
+        public int[] DataWeek { get; set; }
+        public int[] DataMonth { get; set; }
     }
 }
