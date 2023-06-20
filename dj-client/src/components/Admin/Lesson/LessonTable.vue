@@ -25,18 +25,16 @@
           <th class="text-left">Ngày tạo</th>
           <th class="text-left">Cập nhật</th>
           <th class="text-left">Loại bài học</th>
-          <th class="text-left">Thời lượng</th>
           <th class="text-center" style="min-width: 90px">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(item, index) in data" :key="index">
           <td>{{ item.stt }}</td>
-          <td>{{ item.lessonName }}</td>
+          <td>{{ fixString(item.lessonName) }}</td>
           <td>{{ item.createDateTime }}</td>
           <td>{{ item.updateDateTime }}</td>
           <td>{{ item.lessonType }}</td>
-          <td>{{ item.videoTime }}</td>
           <td
             style="
               display: flex;
@@ -137,6 +135,11 @@ export default {
   },
   created() {
     this.desserts = this.data;
+  },
+  methods: {
+    fixString(val) {
+      return val.length > 55 ? val.substring(0, 55) + "..." : val;
+    },
   },
 };
 </script>

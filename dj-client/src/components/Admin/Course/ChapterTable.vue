@@ -6,7 +6,7 @@
         <th class="text-left">Tên học phần</th>
         <th class="text-left">Số bài học</th>
         <th class="text-left">Thời lượng</th>
-        <th class="text-center">Action</th>
+        <th class="text-center" style="min-width: 20%">Action</th>
       </tr>
     </thead>
     <tbody>

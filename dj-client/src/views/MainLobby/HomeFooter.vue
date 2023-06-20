@@ -117,7 +117,7 @@
               class="footer-icon"
             />
           </a>
-          <a href="" target="_blank">
+          <a href="https://www.tiktok.com/@dj_xuyenchi" target="_blank">
             <img
               :src="require('../../assets/tiktok.png')"
               alt="Hình ảnh"
