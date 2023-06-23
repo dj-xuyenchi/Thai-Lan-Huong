@@ -67,5 +67,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<ActionStatus>> updatePost(IFormFile? img,UpdatePostAdminRequest updatePostAdmin);
         Task<IQueryable<User>> GetUserLockPage(int page);
         Task<ResponData<AnalyticAppDTO>> GetAnalytics();
+        Task<ResponData<UserAnalyticCustomDTO>> GetAnalytics(DateTime start,DateTime end);
     }
 }

@@ -40,9 +40,13 @@
           density="compact"
           style="margin: 20px 0 0 8px; width: 20%; float: left"
         ></v-select>
-        <div v-if="optNewUser.id != 3" style="display: inline">
-          <span style="color: blue">Từ </span><v-date-picker></v-date-picker>
-          <span style="color: blue">Đến </span>
+      </div>
+      <div v-if="optNewUser.id != 3" style="height: 40px; position: relative">
+        <div style="position: absolute; left: 10px">
+          <span style="color: blue">Từ : </span
+          ><input type="date" name="" value="" />
+          <span style="margin: 0 20px 0 20px">--</span>
+          <span style="color: blue">Đến : </span>
           <input type="date" name="" value="" />
         </div>
       </div>
@@ -58,6 +62,7 @@
         :analysticData="dataChartNewUser"
         :key="dataChartNewUser"
       />
+      <LargeAreaChart />
     </v-card>
   </div>
 </template>
@@ -66,24 +71,25 @@
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
 import LineChart from "./ChartConfig/LineChart";
 import StackedHorizontalBar from "./ChartConfig/StackedHorizontalBar";
+import LargeAreaChart from "./ChartConfig/LargeAreaChart";
 import { reactive } from "vue";
 export default {
   name: "AnalyticsApp",
-  components: { LineChart, StackedHorizontalBar },
+  components: { LineChart, StackedHorizontalBar, LargeAreaChart },
   data() {
     return {
       optNewUser: {
         id: 1,
-        name: "Tuần",
+        name: "7 ngày trước",
       },
       listOptNewUser: [
         {
           id: 1,
-          name: "Tuần",
+          name: "7 ngày trước",
         },
         {
           id: 2,
-          name: "Tháng",
+          name: "12 Tháng",
         },
         {
           id: 3,
@@ -134,15 +140,7 @@ export default {
           "Người dùng bị khóa",
           "Người dùng bị khóa vĩnh viễn",
         ]),
-        timeLine: reactive([
-          "Thứ hai",
-          "Thứ ba",
-          "Thứ tư",
-          "Thứ năm",
-          "Thứ sáu",
-          "Thứ bảy",
-          "Chủ nhật",
-        ]),
+        timeLine: reactive(this.weekArr()),
         data: reactive([]),
       }),
     };
@@ -215,15 +213,7 @@ export default {
       }
       this.dataChartNewUser.timeLine =
         this.optNewUser.id == 1
-          ? [
-              "Thứ hai",
-              "Thứ ba",
-              "Thứ tư",
-              "Thứ năm",
-              "Thứ sáu",
-              "Thứ bảy",
-              "Chủ nhật",
-            ]
+          ? this.weekArr()
           : [
               "Tháng 1",
               "Tháng 2",
@@ -251,6 +241,16 @@ export default {
           ? this.dataUser[2].dataWeek
           : this.dataUser[2].dataMonth;
       this.changeBoLoc();
+    },
+    weekArr() {
+      var d = new Date();
+      const arr = [];
+      for (var i = 6; i >= 0; i--) {
+        d.setDate(d.getDate() - i);
+        arr.push(d.getDate() + "/" + Number(d.getMonth() + 1));
+        d.setDate(d.getDate() + i);
+      }
+      return arr;
     },
   },
   watch: {

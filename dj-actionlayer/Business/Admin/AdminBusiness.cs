@@ -1648,7 +1648,7 @@ namespace dj_actionlayer.Business.Admin
             cateLockUser.Category = "Người dùng bị khóa";
             dataWeek = new int[7];
             index = 0;
-            var listLockUser = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 4).Where(x=>x.OpenLockTime.Value.Year==DateTime.Now.Year&&x.OpenLockTime.Value.Month==DateTime.Now.Month).ToList();
+            var listLockUser = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 4).Where(x => x.OpenLockTime.Value.Year == DateTime.Now.Year && x.OpenLockTime.Value.Month == DateTime.Now.Month).ToList();
             for (int i = DateTime.Now.Day; i > DateTime.Now.Day - 7; i--)
             {
                 dataWeek[index] = listLockUser.Where(x => x.OpenLockTime.Value.Day == i).Count();
@@ -1685,6 +1685,22 @@ namespace dj_actionlayer.Business.Admin
             ListCategory.Add(cateLockForeverUser);
 
             data.ListOption = ListCategory;
+            result.Data = data;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<UserAnalyticCustomDTO>> GetAnalytics(DateTime start, DateTime end)
+        {
+            ResponData<UserAnalyticCustomDTO> result = new ResponData<UserAnalyticCustomDTO>();
+            UserAnalyticCustomDTO data = new UserAnalyticCustomDTO();
+            string[] date = new string[12];
+            while (start == end)
+            {
+
+                start = start.AddDays(1);
+            }
             result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
             result.Messenger = "Lấy dữ liệu thành công!";
