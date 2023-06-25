@@ -581,3 +581,5 @@ C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Release\net6.0\d
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Release\net6.0\dj-uploadfile.pdb
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Release\net6.0\Google.Apis.AnalyticsReporting.v4.dll
 C:\Users\LTS\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Release\net6.0\Google.Apis.SearchConsole.v1.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Release\net6.0\Google.Apis.AnalyticsReporting.v4.dll
+C:\Users\Admin\Documents\GitHub\Thai-Lan-Huong\dj-actionlayer\bin\Release\net6.0\Google.Apis.SearchConsole.v1.dll
