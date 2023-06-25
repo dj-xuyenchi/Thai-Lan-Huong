@@ -4,10 +4,9 @@
       <thead>
         <tr>
           <th class="text-left">#</th>
-          <th class="text-left">Người báo cáo</th>
-          <th class="text-left">Người bị báo cáo</th>
+          <th class="text-left" style="min-width: 300px">Người báo cáo</th>
+          <th class="text-left" style="min-width: 300px">Người bị báo cáo</th>
           <th class="text-left">Nội dung Comment</th>
-          <th class="text-left">Ghi chú người gửi</th>
           <th class="text-left">Ngày gửi</th>
           <th class="text-left">Link bình luận</th>
           <th>Action</th>
@@ -25,6 +24,12 @@
             <span style="float: left; line-height: 30px; margin-left: 8px">{{
               item.senderName
             }}</span>
+            <img
+              v-if="1"
+              :src="require('../../../assets/kyc.png')"
+              alt="Hình ảnh"
+              class="kyc"
+            />
           </td>
           <td>
             <img
@@ -35,9 +40,14 @@
             <span style="float: left; line-height: 30px; margin-left: 8px">{{
               item.vioName
             }}</span>
+            <img
+              v-if="1"
+              :src="require('../../../assets/kyc.png')"
+              alt="Hình ảnh"
+              class="kyc"
+            />
           </td>
           <td>{{ fixCmt(item.cmtDenounceContent) }}</td>
-          <td>{{ fixCmt(item.note) }}</td>
           <td>{{ item.sendTime }}</td>
           <td>
             <a :href="item.linkCmt" target="_blank">{{

@@ -37,7 +37,7 @@
                       style="height: 160px; width: 280px"
                     />
                     <v-label style="width: 100%; margin: 24px 0 8px 0"
-                      >Ảnh đại diện của bạn</v-label
+                      >Ảnh đại diện bài viết</v-label
                     >
                     <v-btn
                       color="#4d96ff"

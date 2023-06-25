@@ -29,6 +29,7 @@ import CourseAdmin from "@/components/Admin/Course/CourseAdmin.vue";
 import BlogAdmin from "@/components/Admin/Blog/BlogAdmin.vue";
 import PostAdmin from "@/components/Admin/Post/PostAdmin.vue";
 import UserAdmin from "@/components/Admin/User/UserAdmin.vue";
+import AdviceMain from "@/components/Admin/Advice/AdviceMain.vue";
 import HomeContent from "@/components/Admin/HomeContent/HomeContent.vue";
 import DenounceReport from "@/components/Admin/User/DenounceReport.vue";
 import UserDenounce from "@/components/Admin/User/UserDenounce.vue";
@@ -212,6 +213,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "home-content",
         component: HomeContent,
+      },
+      {
+        path: "advice",
+        component: AdviceMain,
       },
     ],
   },

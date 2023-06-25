@@ -62,7 +62,7 @@
                 display: block;
               "
             >
-              Tư vấn học 1 : 1
+              Tư vấn & Định hướng
             </h3>
           </div>
           <FormContact />

@@ -181,7 +181,7 @@ export default {
             {
               icon: "mdi mdi-note-multiple-outline",
               title: "Danh sách yêu cầu",
-              to: "/admin/blog",
+              to: "/admin/advice",
             },
           ],
         },
