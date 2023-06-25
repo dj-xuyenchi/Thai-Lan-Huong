@@ -1,4 +1,5 @@
 ﻿using dj_webdesigncore.Entities.UserEntity;
+using dj_webdesigncore.Enums.Else;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         public DateTime? ContactTime { get; set; }
         public int? Rate { get; set; }
         public string? Evaluate { get; set; }
+        public string? Note { get; set; }
+        public TypeAdviceEnum? TypeAdvice { get; set; }
     }
 }

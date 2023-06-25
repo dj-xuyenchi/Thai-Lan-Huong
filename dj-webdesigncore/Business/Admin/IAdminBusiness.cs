@@ -68,5 +68,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<IQueryable<User>> GetUserLockPage(int page);
         Task<ResponData<AnalyticAppDTO>> GetAnalytics();
         Task<ResponData<UserAnalyticCustomDTO>> GetAnalytics(DateTime start,DateTime end);
+        Task<List<AdviceContactDTO>> GetAdviceContact(int page);
     }
 }

@@ -25,7 +25,7 @@
               item.senderName
             }}</span>
             <img
-              v-if="1"
+              v-if="item.senderKYC"
               :src="require('../../../assets/kyc.png')"
               alt="Hình ảnh"
               class="kyc"
@@ -41,7 +41,7 @@
               item.vioName
             }}</span>
             <img
-              v-if="1"
+              v-if="item.vioKYC"
               :src="require('../../../assets/kyc.png')"
               alt="Hình ảnh"
               class="kyc"

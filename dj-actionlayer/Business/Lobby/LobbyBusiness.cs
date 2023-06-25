@@ -26,6 +26,8 @@ namespace dj_actionlayer.Business.Lobby
             adviceMentor.Name = adviceMentorRequest.Name;
             adviceMentor.Sdt = adviceMentorRequest.Sdt;
             adviceMentor.IsContact = false;
+            adviceMentor.Note = adviceMentorRequest.Note;
+            adviceMentor.TypeAdvice = (dj_webdesigncore.Enums.Else.TypeAdviceEnum?)adviceMentorRequest.Opt;
             adviceMentor.SendRequest = DateTime.Now;
             await _context.AddAsync(adviceMentor);
             await _context.SaveChangesAsync();

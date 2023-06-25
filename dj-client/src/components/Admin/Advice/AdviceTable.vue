@@ -13,7 +13,21 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in tableData" :key="index">
-          <td>{{ item.stt }}</td>
+          <td>{{ (index + 1) * page }}</td>
+          <td>{{ item.name }}</td>
+          <td>
+            {{
+              item.typeAdvice == 1
+                ? "Học 1:1"
+                : item.typeAdvice == 2
+                ? "Định hướng nghề"
+                : item.typeAdvice == 3
+                ? "Cơ hội việc làm"
+                : "Khác"
+            }}
+          </td>
+          <td>{{ item.note }}</td>
+          <td>{{ fixDate(item.sendRequest) }}</td>
         </tr>
       </tbody>
     </v-table>
@@ -30,13 +44,15 @@ export default {
     };
   },
   methods: {
-    fixName(vari) {
-      return vari.substring(0, 36) + "...";
+    fixDate(vari) {
+      return (
+        vari.substring(8, 10) + vari.substring(4, 8) + vari.substring(0, 4)
+      );
     },
   },
   props: {
     tableData: [],
-    getBlogPage: Function,
+    page: Number,
   },
 };
 </script>

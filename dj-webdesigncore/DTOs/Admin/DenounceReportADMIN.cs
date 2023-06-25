@@ -11,7 +11,9 @@ namespace dj_webdesigncore.DTOs.Admin
         public int denounceId { get; set; }
         public string senderImg { get; set; }
         public string senderName { get; set; }
+        public bool senderKYC { get; set; }
         public string vioImg { get; set; }
+        public bool vioKYC { get; set; }
         public string vioName { get; set; }
         public string cmtDenounceContent { get; set; }
         public string note { get; set; }

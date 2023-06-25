@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using ChapterDetailDTO = dj_webdesigncore.DTOs.Admin.ChapterDetailDTO;
@@ -930,8 +931,10 @@ namespace dj_actionlayer.Business.Admin
                 User sender = await _context.user.FindAsync(item.UserSendId);
                 denounceReportADMIN.senderImg = sender.UserAvatarData40x40;
                 denounceReportADMIN.senderName = sender.UserFisrtName + " " + sender.UserLastName;
+                denounceReportADMIN.senderKYC = (bool)sender.IsKYC;
                 User vio = await _context.user.FindAsync(item.UserViolationId);
                 denounceReportADMIN.vioImg = vio.UserAvatarData40x40;
+                denounceReportADMIN.vioKYC = (bool)vio.IsKYC;
                 denounceReportADMIN.vioName = vio.UserFisrtName + " " + vio.UserLastName;
                 denounceReportADMIN.sendTime = item.SendTime.Day + " - " + item.SendTime.Month + " - " + item.SendTime.Year;
                 denounceReportADMIN.note = item.Note;
@@ -1704,6 +1707,22 @@ namespace dj_actionlayer.Business.Admin
             result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
             result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<List<AdviceContactDTO>> GetAdviceContact(int page)
+        {
+            List<AdviceContactDTO> result = new List<AdviceContactDTO>();
+            var list = _context.advice_contact.Where(x => x.IsContact == false).OrderByDescending(x => x.SendRequest).Skip((page - 1) * 15).Take(15).ToList();
+            foreach (var item in list)
+            {
+                AdviceContactDTO ad = new AdviceContactDTO();
+                ad.Note = item.Note;
+                ad.Name = item.Name;
+                ad.SendRequest = item.SendRequest; 
+                ad.TypeAdvice = (dj_webdesigncore.Enums.Else.TypeAdviceEnum)item.TypeAdvice;
+                result.Add(ad);
+            }
             return result;
         }
     }

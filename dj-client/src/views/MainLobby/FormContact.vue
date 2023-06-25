@@ -14,6 +14,7 @@
         <option value="1">Học 1:1</option>
         <option value="2">Định hướng nghành</option>
         <option value="3">Cơ hội việc làm</option>
+        <option value="4">Khác</option>
       </select>
       <textarea
         require
@@ -51,7 +52,7 @@ export default {
       color: 0,
       sdt: "",
       snackbar: false,
-      opt: "0",
+      opt: 0,
       note: "",
       text: "",
     };

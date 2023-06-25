@@ -12,7 +12,7 @@
       ></v-text-field>
     </div>
   </div>
-  <AdviceTable :tableData="tableData" :getBlogPage="getBlogPage" />
+  <AdviceTable :tableData="tableData" :page="page" :getBlogPage="getBlogPage" />
   <div class="text-center" @click="getLessonDetail()">
     <v-container>
       <v-row justify="center">
@@ -79,7 +79,8 @@ export default {
     async getBlogPage() {
       this.setIsLoadedData(true);
       const token = localStorage.getItem("token");
-
+      const data = await AdminAPI.getAdviceContact(this.page, token);
+      this.tableData = data;
       this.setIsLoadedData(false);
     },
     setContext(context) {
