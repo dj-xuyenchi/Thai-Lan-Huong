@@ -53,6 +53,7 @@ import {
   faPaperPlane,
   faUserDoctor,
   faEye,
+  faCertificate,
   faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -80,6 +81,7 @@ library.add(
   faUsers,
   faEye,
   faPaperPlane,
+  faCertificate,
   faTrashCan,
   faEnvelope,
   faPhone,

@@ -155,13 +155,13 @@ export default {
             this.$router.push({ path: "/home/my-post" });
           },
         },
-        {
-          text: "Tạo CV",
-          icon: "mdi-book-outline",
-          event: async () => {
-            //
-          },
-        },
+        // {
+        //   text: "Tạo CV",
+        //   icon: "mdi-book-outline",
+        //   event: async () => {
+        //     //
+        //   },
+        // },
         {
           text: "Cài đặt tài khoản",
           icon: "mdi-cog",

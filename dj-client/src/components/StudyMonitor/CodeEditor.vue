@@ -15,7 +15,7 @@
           @update:modelValue="changeLangue()"
         ></v-select>
       </v-col>
-      <v-col cols="2" sm="2" md="2">
+      <v-col cols="4" sm="4" md="4">
         <v-btn
           color="#36ae7c"
           v-bind="props"

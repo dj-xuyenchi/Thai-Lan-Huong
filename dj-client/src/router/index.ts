@@ -16,6 +16,7 @@ import CheckConfirm from "../views/Door/CheckConfirm.vue";
 import AppNewFeedVue from "@/components/MainHome/AppNewFeed.vue";
 import CourseDetail from "@/components/Course/CourseDetail.vue";
 import StudyMain from "@/components/StudyMonitor/StudyMain.vue";
+import TakeCertificate from "@/components/StudyMonitor/TakeCertificate.vue";
 import ForwardLesson from "../components/StudyMonitor/ForwardLesson.vue";
 import CourseMonitor from "@/components/Course/CourseMonitor.vue";
 import PostMonitor from "@/components/Post/PostMonitor.vue";
@@ -137,6 +138,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "event-main",
         component: EventMain,
+      },
+      {
+        path: "certificate/:id",
+        component: TakeCertificate,
       },
     ],
   },

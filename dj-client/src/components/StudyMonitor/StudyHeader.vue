@@ -28,8 +28,17 @@
     </div>
     <div class="study-header-item">
       <div style="color: white; text-align: right">
-        <span>Hoàn thành: </span>
-        <span style="margin-right: 2.5%">{{ courseProcess }}</span>
+        <!-- <div>
+          <span>Hoàn thành: </span>
+          <span style="margin-right: 2.5%">{{ courseProcess }}</span>
+        </div> -->
+        <div class="take-certificate" @click="takeCertificate()">
+          <font-awesome-icon
+            icon="fa-solid fa-certificate"
+            style="margin-right: 8px"
+          />
+          <span style="margin-right: 2.5%">Nhận chứng chỉ</span>
+        </div>
       </div>
     </div>
   </div>
@@ -46,6 +55,11 @@ export default {
     backToCourse() {
       this.$router.push({
         path: "/home/course/" + this.$route.params.idCourse,
+      });
+    },
+    takeCertificate() {
+      this.$router.push({
+        path: "/home/certificate/1",
       });
     },
   },
@@ -69,5 +83,9 @@ export default {
 }
 .study-header-container .study-header-item {
   width: 100%;
+}
+.take-certificate:hover {
+  cursor: pointer;
+  color: #c3c6d1;
 }
 </style>
