@@ -543,6 +543,7 @@ namespace dj_actionlayer.Business.Study
             studyData.StudyDetail = videoLesson;
             Course course = await _context.course.FindAsync(courseId);
             studyData.CourseName = course.CourseName;
+            studyData.CourseProcess = await ProcessCourse((int)courseId, (int)userId);
             studyData.ChapterDetail = LessonListOfUser(userId, courseId).Result.ChapterLesson;
             result.Data = studyData;
             result.Messenger = "Lấy dữ liệu thành công!";
@@ -882,6 +883,13 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
+                        UserCourse us = await _context.user_course.Where(x => x.CourseId == courseChapter.CourseId && x.UserId == sendPracticeRequest.UserId).FirstOrDefaultAsync();
+                        us.isDone = true;
+                        if (us.DoneTime == null)
+                        {
+                            us.DoneTime = DateTime.Now;
+                        }
+                        await _context.SaveChangesAsync();
                         result.Data = ActionStatus.PASSCOURSE;
                         result.Messenger = "Lấy dữ liệu thành công!";
                         result.Status = ActionStatus.SECCESSFULLY;
@@ -931,6 +939,12 @@ namespace dj_actionlayer.Business.Study
                 }
                 else
                 {
+                    UserCourse us = await _context.user_course.Where(x => x.CourseId == courseChapter.CourseId && x.UserId == sendPracticeRequest.UserId).FirstOrDefaultAsync();
+                    us.isDone = true; if (us.DoneTime == null)
+                    {
+                        us.DoneTime = DateTime.Now;
+                    }
+                    await _context.SaveChangesAsync();
                     result.Data = ActionStatus.PASSCOURSE;
                     result.Messenger = "Lấy dữ liệu thành công!";
                     result.Status = ActionStatus.SECCESSFULLY;
@@ -998,6 +1012,12 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
+                        UserCourse us = await _context.user_course.Where(x => x.CourseId == courseChapter.CourseId && x.UserId == sendQuestionRequest.UserId).FirstOrDefaultAsync();
+                        us.isDone = true; if (us.DoneTime == null)
+                        {
+                            us.DoneTime = DateTime.Now;
+                        }
+                        await _context.SaveChangesAsync();
                         result.Data = ActionStatus.PASSCOURSE;
                         result.Messenger = "Lấy dữ liệu thành công!";
                         result.Status = ActionStatus.SECCESSFULLY;
@@ -1048,6 +1068,12 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
+                        UserCourse us = await _context.user_course.Where(x => x.CourseId == courseChapter.CourseId && x.UserId == sendQuestionRequest.UserId).FirstOrDefaultAsync();
+                        us.isDone = true; if (us.DoneTime == null)
+                        {
+                            us.DoneTime = DateTime.Now;
+                        }
+                        await _context.SaveChangesAsync();
                         result.Data = ActionStatus.PASSCOURSE;
                         result.Messenger = "Lấy dữ liệu thành công!";
                         result.Status = ActionStatus.SECCESSFULLY;
@@ -1108,6 +1134,12 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
+                        UserCourse us = await _context.user_course.Where(x => x.CourseId == courseChapter.CourseId && x.UserId == sendVideoDoneRequest.UserId).FirstOrDefaultAsync();
+                        us.isDone = true; if (us.DoneTime == null)
+                        {
+                            us.DoneTime = DateTime.Now;
+                        }
+                        await _context.SaveChangesAsync();
                         result.Data = ActionStatus.PASSCOURSE;
                         result.Messenger = "Lấy dữ liệu thành công!";
                         result.Status = ActionStatus.SECCESSFULLY;
@@ -1157,6 +1189,12 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
+                        UserCourse us = await _context.user_course.Where(x => x.CourseId == courseChapter.CourseId && x.UserId == sendVideoDoneRequest.UserId).FirstOrDefaultAsync();
+                        us.isDone = true; if (us.DoneTime == null)
+                        {
+                            us.DoneTime = DateTime.Now;
+                        }
+                        await _context.SaveChangesAsync();
                         result.Data = ActionStatus.PASSCOURSE;
                         result.Messenger = "Lấy dữ liệu thành công!";
                         result.Status = ActionStatus.SECCESSFULLY;
@@ -1232,7 +1270,7 @@ namespace dj_actionlayer.Business.Study
                 result.Messenger = "Lấy dữ liệu thành công!";
                 return result;
             }
-            
+
             CommentLesson cmt = await _context.comment_lesson.FindAsync(denounceRequest.CmtId);
             if (cmt == null)
             {
@@ -1269,7 +1307,26 @@ namespace dj_actionlayer.Business.Study
 
         public async Task<string> ProcessCourse(int courseId, int userId)
         {
-            var courseChapter = _context.course_chapter.Where(x => x.CourseId == courseId).ToList();
+            var courseChapter = _context.course_chapter.Where(x => x.CourseId == courseId).AsNoTracking().ToList();
+            Course course = await _context.course.FindAsync(courseId);
+            List<int> lessonListId = new List<int>();
+            foreach (var item in courseChapter)
+            {
+                var chapterLesson = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).AsNoTracking().ToList();
+                foreach (var item1 in chapterLesson)
+                {
+                    lessonListId.Add(item1.LessonId);
+                }
+            }
+            int count = 0;
+            foreach (var item in lessonListId)
+            {
+                if (await _context.user_lesson_checkpoint.AnyAsync(x => x.LessonId == item && x.IsDone == true && x.UserId == userId))
+                {
+                    count++;
+                }
+            }
+            return "Đã hoàn thành: " + count + "/" + course.LessonCount;
         }
     }
 }

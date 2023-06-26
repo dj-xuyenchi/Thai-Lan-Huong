@@ -9,6 +9,7 @@ using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.SomeThingElse;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -306,6 +307,32 @@ namespace dj_actionlayer.Business.Lobby
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
         }
+
+        public async Task<ResponData<TakeCertificateDTO>> TakeCertificate(int courseId, int userId)
+        {
+            ResponData<TakeCertificateDTO> result = new ResponData<TakeCertificateDTO>();
+            UserCourse uc = await _context.user_course.Where(x => x.UserId == userId && x.CourseId == courseId).FirstOrDefaultAsync();
+            if (uc.isDone == false)
+            {
+                result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+                result.Data = null;
+                result.Messenger = "Lấy dữ liệu thành công!";
+                return result;
+            }
+            Course course = await _context.course.FindAsync(uc.CourseId);
+            User user = await _context.user.FindAsync(uc.UserId);
+            TakeCertificateDTO data = new TakeCertificateDTO();
+            data.Day = uc.DoneTime.Value.Day.ToString();
+            data.Month = uc.DoneTime.Value.Month.ToString();
+            data.Year = uc.DoneTime.Value.Year.ToString();
+            data.CourseName = course.CourseName;
+            data.Name = user.UserFisrtName + " " + user.UserLastName;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Data = data;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
         private async Task updateFullBlog()
         {
             var list = _context.blog.ToList();

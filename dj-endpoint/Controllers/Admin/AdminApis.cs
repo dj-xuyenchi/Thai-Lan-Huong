@@ -260,5 +260,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.GetAdviceContact(page));
         }
+        [HttpGet("getadvicedetail")]
+        public async Task<IActionResult> GetAdviceDetail(int adviceId)
+        {
+            return Ok(await _admin.getAdviceDetail(adviceId));
+        }
     }
 }

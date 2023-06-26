@@ -28,6 +28,7 @@
           </td>
           <td>{{ item.note }}</td>
           <td>{{ fixDate(item.sendRequest) }}</td>
+          <td><AdviceDetail :idAdvice="item.id" /></td>
         </tr>
       </tbody>
     </v-table>
@@ -35,8 +36,10 @@
 </template>
 
 <script>
+import AdviceDetail from "./AdviceDetail.vue";
 export default {
   name: "AdviceTable",
+  components: { AdviceDetail },
   data() {
     return {
       itemsPerPage: 15,

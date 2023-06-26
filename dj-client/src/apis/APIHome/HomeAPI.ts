@@ -44,5 +44,16 @@ class HomeAPI {
         });
     });
   }
+  takeCertificate(courseId: number, userId: number): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(`/lobby/certificate?courseId=${courseId}&userId=${userId}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 export default new HomeAPI();

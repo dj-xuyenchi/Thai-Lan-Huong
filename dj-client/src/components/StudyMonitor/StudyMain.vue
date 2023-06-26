@@ -3,6 +3,7 @@
     <StudyHeader
       :isPass="isPass"
       :courseName="lessonData.courseName"
+      :process="lessonData.courseProcess"
       courseProcess="1%/100%"
     />
     <VideoLesson

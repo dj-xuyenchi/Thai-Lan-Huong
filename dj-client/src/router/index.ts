@@ -140,7 +140,7 @@ const routes: Array<RouteRecordRaw> = [
         component: EventMain,
       },
       {
-        path: "certificate/:id",
+        path: "certificate/:courseId/:userId",
         component: TakeCertificate,
       },
     ],

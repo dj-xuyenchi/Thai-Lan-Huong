@@ -29,8 +29,7 @@
     <div class="study-header-item">
       <div style="color: white; text-align: right">
         <div v-if="!isPass">
-          <span>Hoàn thành: </span>
-          <span style="margin-right: 2.5%">{{ courseProcess }}</span>
+          <span style="margin-right: 2.5%">{{ process }}</span>
         </div>
         <div v-if="isPass" class="take-certificate" @click="takeCertificate()">
           <font-awesome-icon
@@ -51,6 +50,7 @@ export default {
     courseName: String,
     courseProcess: String,
     isPass: Boolean,
+    process: String,
   },
   methods: {
     backToCourse() {
@@ -60,7 +60,9 @@ export default {
     },
     takeCertificate() {
       this.$router.push({
-        path: "/home/certificate/1",
+        path: `/home/certificate/${
+          this.$route.params.idCourse
+        }/${localStorage.getItem("id")}`,
       });
     },
   },

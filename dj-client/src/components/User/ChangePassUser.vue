@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-height: 80vh">
     <h4
       style="
         color: #4d96ff;

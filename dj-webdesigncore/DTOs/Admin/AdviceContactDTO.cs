@@ -9,6 +9,7 @@ namespace dj_webdesigncore.DTOs.Admin
 {
     public class AdviceContactDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Note { get; set; }
         public DateTime SendRequest { get; set; }

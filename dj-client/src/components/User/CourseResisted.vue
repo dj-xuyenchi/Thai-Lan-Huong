@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="min-height: 80vh">
     <h4
       style="
         color: #4d96ff;
@@ -9,11 +9,19 @@
         letter-spacing: 1px;
       "
     >
-      Khóa học đã đăng ký
+      Chứng chỉ của tôi
     </h4>
-
-    <div class="form-changepass">Coming Soon!</div>
-    <div style="height: 40px"></div>
+    <div class="form-changepass">Danh sách chứng chỉ</div>
+    <div v-for="(item, index) in list" :key="index">
+      <div @click="goCertificate(`${item.id}`)" class="certi">
+        <img
+          :src="item.courseImageData"
+          alt="hình ảnh"
+          style="height: 320px; width: 600px; border-radius: 15px"
+        />
+        <p>{{ item.courseName }}</p>
+      </div>
+    </div>
     <v-snackbar v-model="snackbarOk" multi-line>
       {{ snackBarContent }}
       <template v-slot:actions>
@@ -33,11 +41,7 @@ export default {
   components: {},
   data() {
     return {
-      password: "",
-      newPassword: "",
-      confirmPass: "",
-      dialogTitle: false,
-      context: "",
+      list: [],
       dialog: false,
       snackbarOk: false,
       snackBarContent: "",
@@ -45,65 +49,22 @@ export default {
   },
   methods: {
     ...mapMutations(["setIsLoadedData"]),
-    async changPass() {
+    async getMyCertificate() {
       this.setIsLoadedData(true);
-      if (this.password.trim().length == 0) {
-        this.dialogTitle = true;
-        this.context = "Nhập mật khẩu cũ!";
-        this.setIsLoadedData(false);
-        return;
-      }
-      if (this.newPassword != this.confirmPass) {
-        this.dialogTitle = true;
-        this.context = "Mật khẩu xác nhận không đúng!";
-        this.setIsLoadedData(false);
-        return;
-      }
-      if (this.newPassword.trim().length < 8) {
-        this.dialogTitle = true;
-        this.context = "Mật khẩu quá ngắn!";
-        this.setIsLoadedData(false);
-        return;
-      }
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("id");
-      const data = await UserAPI.changePass(
-        {
-          Id: localStorage.getItem("id"),
-          OldPass: this.password,
-          NewPass: this.newPassword,
-        },
-        token
-      );
-      if (data.data == 4) {
-        this.dialogTitle = true;
-        this.context = "Lỗi không tìm thấy tài khoản!";
-        this.setIsLoadedData(false);
-        return;
-      }
-      if (data.data == 6) {
-        this.dialogTitle = true;
-        this.context = "Mật khẩu cũ không chính xác!";
-        this.setIsLoadedData(false);
-        return;
-      }
-      if (data.data == 2) {
-        this.dialogTitle = true;
-        this.context = "Thay đổi mật khẩu thất bại!";
-        this.setIsLoadedData(false);
-        return;
-      }
-      if (data.data == 1) {
-        this.dialogTitle = true;
-        this.context = "Thay đổi mật khẩu thành công!";
-        this.password = "";
-        this.newPassword = "";
-        this.confirmPass = "";
-        this.setIsLoadedData(false);
-        return;
-      }
+      const data = await UserAPI.getMyCertificate(userId, token);
+      this.list = data.data.listCerti;
       this.setIsLoadedData(false);
     },
+    goCertificate(courseId) {
+      this.$router.push({
+        path: `/home/certificate/${courseId}/${localStorage.getItem("id")}`,
+      });
+    },
+  },
+  created() {
+    this.getMyCertificate();
   },
 };
 </script>
@@ -111,5 +72,9 @@ export default {
 <style lang="css" scoped>
 .form-changepass {
   width: 40%;
+  margin: 0 0 12px 0;
+}
+.certi:hover {
+  cursor: pointer;
 }
 </style>

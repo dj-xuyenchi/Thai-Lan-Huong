@@ -40,5 +40,6 @@ namespace dj_webdesigncore.Business.UserIBusiness
         Task<ResponData<ActionStatus>> deleteWaitPost(int userId);
         Task<ResponData<ActionStatus>> confirmPost(IFormFile img, UserConfirmPost data, int userId);
         Task<ResponData<ActionStatus>> CreateDenounce(DenounceRequest denounceRequest);
+        Task<ResponData<MyCertificateDTO>> GetAllCerti(int userId);
     }
 }

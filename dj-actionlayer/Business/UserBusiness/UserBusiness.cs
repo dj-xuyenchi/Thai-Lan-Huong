@@ -427,7 +427,7 @@ namespace dj_actionlayer.Business.UserBusiness
             data.IsKYC = (bool)user.IsKYC;
             data.Avatar = user.UserAvatarData40x40;
             data.JoinTime = user.CreateAccount.Value.Day + " - " + user.CreateAccount.Value.Month + " - " + user.CreateAccount.Value.Year;
-            data.WallImg =null;
+            data.WallImg = null;
             List<ResigtedUserCourseDTO> registerCourseDTOs = new List<ResigtedUserCourseDTO>();
             var listCourse = _context.user_course.Where(x => x.UserId == userId).OrderBy(x => x.ResisterDateTime).ToList();
             foreach (var item in listCourse)
@@ -724,6 +724,23 @@ namespace dj_actionlayer.Business.UserBusiness
             await _context.AddAsync(denounce);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;
+            result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
+            result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<ResponData<MyCertificateDTO>> GetAllCerti(int userId)
+        {
+            ResponData<MyCertificateDTO> result = new ResponData<MyCertificateDTO>();
+            MyCertificateDTO data = new MyCertificateDTO();
+            List<Course> map = new List<Course>();
+            var list = _context.user_course.Where(x => x.UserId == userId && x.isDone == true).ToList();
+            foreach (var item in list)
+            {
+                map.Add(await _context.course.FindAsync(item.CourseId));
+            }
+            data.ListCerti = map;
+            result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;

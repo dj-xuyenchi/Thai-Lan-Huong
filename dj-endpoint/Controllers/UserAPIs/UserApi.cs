@@ -158,5 +158,10 @@ namespace dj_endpoint.Controllers.UserAPIs
         {
             return Ok(await _user.CreateDenounce(denounceRequest));
         }
+        [HttpGet("getmycertificate")]
+        public async Task<IActionResult> getMyCertificate(int userId)
+        {
+            return Ok(await _user.GetAllCerti(userId));
+        }
     }
 }

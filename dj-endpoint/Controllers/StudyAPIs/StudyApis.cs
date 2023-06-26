@@ -114,5 +114,6 @@ namespace dj_endpoint.Controllers.StudyAPIs
         {
             return Ok(await _study.CreateDenounce(denounceRequest));
         }
+       
     }
 }

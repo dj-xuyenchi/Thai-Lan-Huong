@@ -29,11 +29,11 @@
           <li
             :class="getActiveUserNav == 2 ? `active` : `unactive`"
             @click="
-              changBread(`Hồ sơ khóa học đăng ký`);
+              changBread(`Chứng chỉ`);
               setActiveUserNav(2);
             "
           >
-            Hồ sơ khóa học đăng ký
+            Chứng chỉ
           </li>
         </router-link>
         <router-link to="/home/user/changpass" style="text-decoration: none">

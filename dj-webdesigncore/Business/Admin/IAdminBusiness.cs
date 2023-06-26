@@ -69,5 +69,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<AnalyticAppDTO>> GetAnalytics();
         Task<ResponData<UserAnalyticCustomDTO>> GetAnalytics(DateTime start,DateTime end);
         Task<List<AdviceContactDTO>> GetAdviceContact(int page);
+        Task<AdviceContact> getAdviceDetail(int adviceId);
     }
 }

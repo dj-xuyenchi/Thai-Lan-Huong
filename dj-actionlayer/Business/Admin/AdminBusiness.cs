@@ -1717,11 +1717,17 @@ namespace dj_actionlayer.Business.Admin
                 AdviceContactDTO ad = new AdviceContactDTO();
                 ad.Note = item.Note;
                 ad.Name = item.Name;
-                ad.SendRequest = item.SendRequest; 
+                ad.Id = item.Id;
+                ad.SendRequest = item.SendRequest;
                 ad.TypeAdvice = (dj_webdesigncore.Enums.Else.TypeAdviceEnum)item.TypeAdvice;
                 result.Add(ad);
             }
             return result;
+        }
+
+        public async Task<AdviceContact> getAdviceDetail(int adviceId)
+        {
+            return await _context.advice_contact.FindAsync(adviceId);
         }
     }
 }

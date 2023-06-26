@@ -55,5 +55,10 @@ namespace dj_endpoint.Controllers.HomeAPIs
         {
             return Ok(await _post.getPostMain());
         }
+        [HttpGet("certificate")]
+        public async Task<IActionResult> takeCertificate(int courseId,int userId)
+        {
+            return Ok(await _lobby.TakeCertificate(courseId,userId));
+        }
     }
 }

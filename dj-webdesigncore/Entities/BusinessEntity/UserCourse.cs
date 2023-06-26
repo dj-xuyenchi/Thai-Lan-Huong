@@ -18,6 +18,7 @@ namespace dj_webdesigncore.Entities.BusinessEntity
 		public DateTime ResisterDateTime { get; set; }
 		public DateTime LastTimeStudyDateTime { get; set; }
 		public int DonePercent { get; set; }
+		public DateTime? DoneTime { get; set; }
 
 
 	}
