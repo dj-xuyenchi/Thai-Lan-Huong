@@ -1266,5 +1266,10 @@ namespace dj_actionlayer.Business.Study
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
         }
+
+        public async Task<string> ProcessCourse(int courseId, int userId)
+        {
+            var courseChapter = _context.course_chapter.Where(x => x.CourseId == courseId).ToList();
+        }
     }
 }
