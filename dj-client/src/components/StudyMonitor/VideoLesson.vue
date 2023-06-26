@@ -32,6 +32,7 @@ export default {
   },
   props: {
     videoPath: String,
+    passCourse: Function,
   },
   methods: {
     async sendQuestion() {
@@ -49,6 +50,13 @@ export default {
       if (result.data == 7) {
         this.snackBarContent = "Đã mở bài học mới!";
         this.snackbarOk = true;
+        return;
+      }
+      if (result.data == 11) {
+        this.snackBarContent =
+          "Chúc mừng bạn đã hoàn thành khóa học bạn có thể nhận chứng chỉ tại Chứng chỉ của tôi!";
+        this.snackbarOk = true;
+        this.passCourse();
         return;
       }
     },

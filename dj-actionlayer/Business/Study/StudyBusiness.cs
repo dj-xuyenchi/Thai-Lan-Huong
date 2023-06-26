@@ -882,7 +882,11 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
-                        // Không còn học phần tốt nghiệp khóa
+                        result.Data = ActionStatus.PASSCOURSE;
+                        result.Messenger = "Lấy dữ liệu thành công!";
+                        result.Status = ActionStatus.SECCESSFULLY;
+                        await _context.SaveChangesAsync();
+                        return result;
                     }
                 }
                 //
@@ -927,7 +931,11 @@ namespace dj_actionlayer.Business.Study
                 }
                 else
                 {
-                    // Không còn học phần tốt nghiệp khóa
+                    result.Data = ActionStatus.PASSCOURSE;
+                    result.Messenger = "Lấy dữ liệu thành công!";
+                    result.Status = ActionStatus.SECCESSFULLY;
+                    await _context.SaveChangesAsync();
+                    return result;
                 }
             }
             await _context.AddAsync(practiceDoneData);
@@ -990,7 +998,11 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
-                        // Không còn học phần tốt nghiệp khóa
+                        result.Data = ActionStatus.PASSCOURSE;
+                        result.Messenger = "Lấy dữ liệu thành công!";
+                        result.Status = ActionStatus.SECCESSFULLY;
+                        await _context.SaveChangesAsync();
+                        return result;
                     }
                 }
                 //
@@ -1036,7 +1048,11 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
-                        // Không còn học phần tốt nghiệp khóa
+                        result.Data = ActionStatus.PASSCOURSE;
+                        result.Messenger = "Lấy dữ liệu thành công!";
+                        result.Status = ActionStatus.SECCESSFULLY;
+                        await _context.SaveChangesAsync();
+                        return result;
                     }
                 }
                 UserLessonCheckpoint userLessonCheckpoint = await _context.user_lesson_checkpoint.Where(x => x.LessonId == sendQuestionRequest.LessonId && x.UserId == sendQuestionRequest.UserId).FirstOrDefaultAsync();
@@ -1092,7 +1108,11 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
-                        // Không còn học phần tốt nghiệp khóa
+                        result.Data = ActionStatus.PASSCOURSE;
+                        result.Messenger = "Lấy dữ liệu thành công!";
+                        result.Status = ActionStatus.SECCESSFULLY;
+                        await _context.SaveChangesAsync();
+                        return result;
                     }
                 }
                 //
@@ -1137,7 +1157,11 @@ namespace dj_actionlayer.Business.Study
                     }
                     else
                     {
-                        // Không còn học phần tốt nghiệp khóa
+                        result.Data = ActionStatus.PASSCOURSE;
+                        result.Messenger = "Lấy dữ liệu thành công!";
+                        result.Status = ActionStatus.SECCESSFULLY;
+                        await _context.SaveChangesAsync();
+                        return result;
                     }
                 }
                 UserLessonCheckpoint userLessonCheckpoint = await _context.user_lesson_checkpoint.Where(x => x.LessonId == sendVideoDoneRequest.LessonId && x.UserId == sendVideoDoneRequest.UserId).FirstOrDefaultAsync();

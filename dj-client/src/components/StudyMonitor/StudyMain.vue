@@ -1,7 +1,12 @@
 <template>
   <div class="study-main-container">
-    <StudyHeader :courseName="lessonData.courseName" courseProcess="1%/100%" />
+    <StudyHeader
+      :isPass="isPass"
+      :courseName="lessonData.courseName"
+      courseProcess="1%/100%"
+    />
     <VideoLesson
+      :passCourse="passCourse"
       :videoPath="lessonData.studyDetail.videoUrl"
       v-if="lessonData.lessonType == 1"
     />
@@ -78,6 +83,12 @@
         </v-card>
       </v-dialog>
     </div>
+    <img
+      v-if="phaoHoa"
+      :src="require(`../../assets/phaohoa.gif`)"
+      alt="Hình ảnh"
+      style="height: 400px; position: absolute; bottom: 10%; left: 30%"
+    />
     <StudyFooter />
   </div>
   <v-snackbar v-model="snackbar">
@@ -120,11 +131,12 @@ export default {
       text: "",
       snackbar: false,
       cmtId: 0,
+      isPass: false,
+      phaoHoa: false,
       listDenounce: [],
       dialog: false,
     };
   },
-  computed: {},
   created() {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("id");
@@ -186,6 +198,13 @@ export default {
       const data = await StudyAPI.getDenounce(token);
       this.listDenounce = data;
       this.type = data[0];
+    },
+    passCourse() {
+      this.isPass = true;
+      this.phaoHoa = true;
+      setTimeout(() => {
+        this.phaoHoa = false;
+      }, 5000);
     },
   },
 };

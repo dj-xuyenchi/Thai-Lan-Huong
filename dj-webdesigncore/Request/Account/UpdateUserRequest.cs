@@ -12,6 +12,7 @@ namespace dj_webdesigncore.Request.Account
     public class UpdateUserRequest
     {
         public int? userId { get; set; }
+        public bool isChangePass { get; set; }
         public string userName { get; set; }
         public string userPass { get; set; }
         public string facebook { get; set; }

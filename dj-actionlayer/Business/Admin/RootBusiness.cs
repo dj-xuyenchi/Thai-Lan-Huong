@@ -141,7 +141,10 @@ namespace dj_actionlayer.Business.Admin
             User user = await _context.user.FindAsync(updateUserRequest.userId);
             user.UserName = updateUserRequest.userName;
             user.UserStatusId = 1;
+            if (updateUserRequest.isChangePass)
+            {
             user.UserPass = updateUserRequest.userPass;
+            }
             user.UserRoleId = updateUserRequest.roleId;
             user.UserLastName = updateUserRequest.lastName;
             user.UserFisrtName = updateUserRequest.firstName;

@@ -1313,9 +1313,7 @@ namespace dj_actionlayer.Business.Admin
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";
             return result;
-
         }
-
         public async Task<ResponData<ActionStatus>> updateCourseChapterSortNumber(int courseChapterId, int newSortNumber)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();

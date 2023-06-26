@@ -425,6 +425,7 @@ export default {
         roleId: this.userRole.id,
         isKYC: this.isKYC,
         userName: this.userName,
+        isChangePass: this.userPass.length > 40 ? false : true,
         userPass: SHA512(this.userPass).toString(),
         statusId: this.userStatus.id,
         lockOpt: this.lockOpt.id,

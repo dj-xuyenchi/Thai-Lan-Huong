@@ -28,11 +28,11 @@
     </div>
     <div class="study-header-item">
       <div style="color: white; text-align: right">
-        <!-- <div>
+        <div v-if="!isPass">
           <span>Hoàn thành: </span>
           <span style="margin-right: 2.5%">{{ courseProcess }}</span>
-        </div> -->
-        <div class="take-certificate" @click="takeCertificate()">
+        </div>
+        <div v-if="isPass" class="take-certificate" @click="takeCertificate()">
           <font-awesome-icon
             icon="fa-solid fa-certificate"
             style="margin-right: 8px"
@@ -50,6 +50,7 @@ export default {
   props: {
     courseName: String,
     courseProcess: String,
+    isPass: Boolean,
   },
   methods: {
     backToCourse() {

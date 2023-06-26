@@ -18,6 +18,7 @@ namespace dj_webdesigncore.Enums.ApiEnums
         RIGHT = 7,
         USEREXIST = 8,
         SDTEXIST = 9,
-        EMAILEXIST = 10
+        EMAILEXIST = 10,
+        PASSCOURSE = 11,
     }
 }
