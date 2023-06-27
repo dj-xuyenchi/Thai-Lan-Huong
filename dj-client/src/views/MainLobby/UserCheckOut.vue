@@ -42,7 +42,7 @@
       </v-card>
     </v-menu>
     <v-menu>
-      <template v-slot:activator="{ props }">
+      <template v-slot:activator="{ props }" v-if="kyc">
         <v-list-item
           :prepend-avatar="user.avatar"
           :title="user.name"
@@ -54,8 +54,8 @@
             alt="Hình ảnh"
             class="kyc"
             :style="`right:` + kycLeft + `px`"
-            v-if="user.isKYC"
         /></v-list-item>
+        <button type="" @click="test()">gg</button>
       </template>
       <v-card class="mx-auto" max-width="600">
         <v-list density="compact">
@@ -94,9 +94,26 @@ import TokenModel from "@/entities/AuthEntities/TokenModel";
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
 import NotificationItem from "./NotificationItem";
+import { onUnmounted } from "vue";
+import { ref } from "vue";
 export default {
   name: "UserCheckOut",
   components: { NotificationItem },
+  setup() {
+    const kyc = ref(false);
+
+    onUnmounted(() => {
+      // Code để thực hiện khi component bị unmount
+      console.log("Component unmounted");
+      console.log("KYC value:", kyc.value);
+
+      // Xóa các lắng nghe sự kiện, hủy kết nối, hoặc làm các tác động cần thiết khác
+    });
+
+    return {
+      kyc,
+    };
+  },
   data() {
     return {
       isAdmin: false,
@@ -183,6 +200,7 @@ export default {
             localStorage.removeItem("id");
             localStorage.removeItem("nickName");
             localStorage.removeItem("role");
+            localStorage.removeItem("smg");
             this.setShowLogin();
             this.$router.push({ path: "/home/lobby" });
           },
@@ -198,14 +216,14 @@ export default {
     const name = localStorage.getItem("name");
     const nickName = localStorage.getItem("nickName");
     const role = localStorage.getItem("role");
-    const kyc = localStorage.getItem("smg");
+    this.kyc = localStorage.getItem("smg");
     if (token || refreshToken) {
       this.showSignIn = false;
       this.user = {
         avatar: avatar,
         name: name,
         id: id,
-        isKYC: kyc,
+        isKYC: this.kyc,
         nickName: nickName,
       };
     }
@@ -267,12 +285,17 @@ export default {
     }
   },
   methods: {
+    ...mapGetters(["getIsKYC"]),
     ...mapMutations(["setIsLogIn"]),
+    test() {
+      alert(this.kyc);
+    },
     async isLogin(tokenModel) {
       const loginStatus = await AuthApis.refreshToken(tokenModel);
       console.log(loginStatus);
     },
     setShowLogin() {
+      this.kyc = false;
       this.showSignIn = true;
     },
     async setShowNotification() {

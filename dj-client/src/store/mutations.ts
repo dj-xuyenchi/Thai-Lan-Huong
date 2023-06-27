@@ -8,4 +8,7 @@ export default {
   setActiveUserNav(state: any, activeUserNav: boolean) {
     state.activeUserNav = activeUserNav;
   },
+  setIsKYC(state: any, isKYC: boolean) {
+    state.isKYC = isKYC;
+  },
 };

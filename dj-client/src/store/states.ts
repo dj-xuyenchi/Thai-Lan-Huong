@@ -2,6 +2,7 @@ export default {
   activeMenu: 1,
   activeUserNav: 1,
   isLoadedData: false,
+  isKYC: false,
   AI: {
     name: "Thái Lan Hương",
     avatar:

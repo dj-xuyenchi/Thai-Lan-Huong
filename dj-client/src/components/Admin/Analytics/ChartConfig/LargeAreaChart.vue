@@ -111,7 +111,7 @@ export default {
         },
         title: {
           left: "center",
-          text: "Large Area Chart",
+          text: "Thống kê người dùng.",
         },
         toolbox: {
           feature: {
