@@ -41,30 +41,43 @@
           style="margin: 20px 0 0 8px; width: 20%; float: left"
         ></v-select>
       </div>
-      <div v-if="optNewUser.id != 3" style="height: 40px; position: relative">
+      <div v-if="optNewUser.id == 3" style="height: 40px; position: relative">
         <div style="position: absolute; left: 10px">
           <span style="color: blue">Từ : </span
-          ><input type="date" name="" value="" />
+          ><input type="date" name="" v-model="openTime" @input="filterTime" />
           <span style="margin: 0 20px 0 20px">--</span>
           <span style="color: blue">Đến : </span>
-          <input type="date" name="" value="" />
+          <input type="date" name="" v-model="closeTime" @input="filterTime" />
         </div>
       </div>
       <LineChart
-        v-if="optTypeChart.id == 1"
+        v-if="optTypeChart.id == 1 && optNewUser.id != 3"
         ref="lineChart"
         :analysticData="dataChartNewUser"
         :key="dataChartNewUser"
       />
       <StackedHorizontalBar
-        v-if="optTypeChart.id == 2"
+        v-if="optTypeChart.id == 2 && optNewUser.id != 3"
         ref="lineChart"
         :analysticData="dataChartNewUser"
         :key="dataChartNewUser"
       />
-      <LargeAreaChart />
+      <LargeAreaChart
+        v-if="optNewUser.id == 3"
+        ref="lineChart2"
+        :optBoLoc="optBoLoc.id"
+        :dataLargeArea="dataLargeArea"
+      />
     </v-card>
   </div>
+  <v-snackbar v-model="snackbar">
+    {{ text }}
+    <template v-slot:actions>
+      <v-btn color="green" variant="text" @click="snackbar = false">
+        Đóng
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -73,11 +86,19 @@ import LineChart from "./ChartConfig/LineChart";
 import StackedHorizontalBar from "./ChartConfig/StackedHorizontalBar";
 import LargeAreaChart from "./ChartConfig/LargeAreaChart";
 import { reactive } from "vue";
+
+import { mapMutations } from "vuex";
 export default {
   name: "AnalyticsApp",
   components: { LineChart, StackedHorizontalBar, LargeAreaChart },
   data() {
     return {
+      isFilter: false,
+      snackbar: false,
+      text: "",
+      openTime: null,
+      closeTime: null,
+      dataLargeArea: null,
       optNewUser: {
         id: 1,
         name: "7 ngày trước",
@@ -100,7 +121,7 @@ export default {
         id: 4,
         name: "Tất cả",
       },
-      dataUser: [],
+      dataUser: null,
       listOptBoLoc: [
         {
           id: 1,
@@ -149,7 +170,30 @@ export default {
     this.getAnalytic();
   },
   methods: {
+    ...mapMutations(["setIsLoadedData"]),
+    async filterTime() {
+      if (!this.openTime || !this.closeTime) {
+        return;
+      }
+      if (this.openTime >= this.closeTime) {
+        this.text =
+          "Thời gian kết thúc không được bằng hoặc trước thời gian bắt đầu!";
+        this.snackbar = true;
+        return;
+        //     getAnalyticFilter;
+      }
+      this.setIsLoadedData(true);
+      this.isFilter = true;
+      const data = await AdminAPI.getAnalyticFilter(
+        this.openTime,
+        this.closeTime,
+        localStorage.getItem("token")
+      );
+      this.dataLargeArea = data.data;
+      this.setIsLoadedData(false);
+    },
     async getAnalytic() {
+      this.setIsLoadedData(true);
       const data = await AdminAPI.getAnalytic(localStorage.getItem("token"));
       this.dataUser = data.data.listOption;
       this.dataChartNewUser.data[0] =
@@ -164,6 +208,7 @@ export default {
         this.optNewUser.id == 1
           ? this.dataUser[2].dataWeek
           : this.dataUser[2].dataMonth;
+      this.setIsLoadedData(false);
     },
     changeBoLoc() {
       if (this.optBoLoc.id == 1) {
@@ -207,9 +252,9 @@ export default {
         ];
       }
     },
-    changeOptUser() {
-      if (this.optNewUser.id == 3) {
-        return;
+    async changeOptUser() {
+      if (this.isFilter && this.optNewUser.id != 3) {
+        await this.getAnalytic();
       }
       this.dataChartNewUser.timeLine =
         this.optNewUser.id == 1
@@ -260,7 +305,37 @@ export default {
       handler() {
         // Gọi phương thức renderChart() của LineChart
         this.$nextTick(() => {
+          if (!this.$refs.lineChart) {
+            return;
+          }
           this.$refs.lineChart.renderChart();
+        });
+      },
+    },
+    dataLargeArea: {
+      immediate: true,
+      deep: true,
+      handler() {
+        // Gọi phương thức renderChart() của LineChart
+        this.$nextTick(() => {
+          if (!this.$refs.lineChart2) {
+            return;
+          }
+          this.$refs.lineChart2.renderChart();
+        });
+      },
+    },
+    optBoLoc: {
+      immediate: true,
+      deep: true,
+      handler() {
+        // Gọi phương thức renderChart() của LineChart
+        this.$nextTick(() => {
+          if (!this.$refs.lineChart2) {
+            return;
+          }
+
+          this.$refs.lineChart2.renderChart();
         });
       },
     },

@@ -1635,7 +1635,7 @@ namespace dj_actionlayer.Business.Admin
                 dataWeek[index] = listNewUser.Where(x => x.CreateAccount.Value.Day == i).Count();
                 index++;
             }
-            cateNewUser.DataWeek = dataWeek;
+            cateNewUser.DataWeek = dataWeek.Reverse().ToArray();
             int[] dataMonth = new int[12];
             var listNewUserMonth = _context.user.Where(x => x.CreateAccount.Value.Year == DateTime.Now.Year).ToList();
             for (int i = 0; i < 12; i++)
@@ -1655,7 +1655,7 @@ namespace dj_actionlayer.Business.Admin
                 dataWeek[index] = listLockUser.Where(x => x.OpenLockTime.Value.Day == i).Count();
                 index++;
             }
-            cateLockUser.DataWeek = dataWeek;
+            cateLockUser.DataWeek = dataWeek.Reverse().ToArray(); ;
             dataMonth = new int[12];
             var listLockUserMonth = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 4).Where(x => x.OpenLockTime.Value.Year == DateTime.Now.Year).ToList();
             for (int i = 0; i < 12; i++)
@@ -1675,7 +1675,7 @@ namespace dj_actionlayer.Business.Admin
                 dataWeek[index] = listLockForeverUser.Where(x => x.OpenLockTime.Value.Day == i).Count();
                 index++;
             }
-            cateLockForeverUser.DataWeek = dataWeek;
+            cateLockForeverUser.DataWeek = dataWeek.Reverse().ToArray(); ;
             dataMonth = new int[12];
             var listLockForeverUserMonth = _context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 2).Where(x => x.OpenLockTime.Value.Year == DateTime.Now.Year).ToList();
             for (int i = 0; i < 12; i++)
@@ -1692,16 +1692,26 @@ namespace dj_actionlayer.Business.Admin
             return result;
         }
 
-        public async Task<ResponData<UserAnalyticCustomDTO>> GetAnalytics(DateTime start, DateTime end)
+        public async Task<ResponData<UserAnalyticCustomDTO>> GetAnalyticsFilter(DateTime start, DateTime end)
         {
             ResponData<UserAnalyticCustomDTO> result = new ResponData<UserAnalyticCustomDTO>();
             UserAnalyticCustomDTO data = new UserAnalyticCustomDTO();
-            string[] date = new string[12];
-            while (start == end)
+            List<string> date = new List<string>();
+            List<int> newUser = new List<int>();
+            List<int> lockUsernew = new List<int>();
+            List<int> lockForeverUser = new List<int>();
+            while (start <= end)
             {
-
+                date.Add(start.Day + "/" + start.Month + "/" + start.Year);
+                newUser.Add(_context.user.Where(x => x.CreateAccount.Value.Day == start.Day && x.CreateAccount.Value.Month == start.Month && x.CreateAccount.Value.Year == start.Year).ToList().Count);
+                lockUsernew.Add(_context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 4).Where(x => x.OpenLockTime.Value.Year == start.Year && x.OpenLockTime.Value.Month == start.Month && x.OpenLockTime.Value.Day == start.Day).ToList().Count);
+                lockForeverUser.Add(_context.user.Where(x => x.OpenLockTime != null && x.UserStatusId == 2).Where(x => x.OpenLockTime.Value.Year == start.Year && x.OpenLockTime.Value.Month == start.Month && x.OpenLockTime.Value.Day == start.Day).ToList().Count);
                 start = start.AddDays(1);
             }
+            data.date = date;
+            data.newUser = newUser;
+            data.lockUser = lockUsernew;
+            data.lockForeverUser = lockForeverUser;
             result.Data = data;
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.FAILED;
             result.Messenger = "Lấy dữ liệu thành công!";

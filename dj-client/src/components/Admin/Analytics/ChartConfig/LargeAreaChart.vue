@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div ref="chart" style="width: 100%; height: 400px"></div>
+    <div
+      ref="chart"
+      style="width: 120%; height: 400px; margin-left: -10%"
+    ></div>
   </div>
 </template>
 
@@ -15,16 +18,89 @@ export default {
     return {};
   },
   props: {
-    analysticData: Object,
+    dataLargeArea: Object,
+    optBoLoc: Number,
   },
   methods: {
     renderChart() {
-      let base = +new Date(1968, 9, 3);
-      let oneDay = 24 * 3600 * 1000;
-      let date = ["1999/2/2", "1999/2/3", "1999/2/4"];
-      let data1 = [1, 2, 3];
-      let data2 = [3, 54, 3];
-      let data3 = [2, 2, 33];
+      if (!this.dataLargeArea) {
+        return;
+      }
+      let date = this.dataLargeArea.date;
+      let data1 = this.dataLargeArea.newUser;
+      let data2 = this.dataLargeArea.lockUser;
+      let data3 = this.dataLargeArea.lockForeverUser;
+      let data = [];
+      if (this.optBoLoc == 4) {
+        data = [
+          {
+            name: "Người dùng mới",
+            type: "line",
+            stack: "Total",
+            data: data1,
+            itemStyle: {
+              color: "blue",
+            },
+          },
+          {
+            name: "Người dùng bị khóa",
+            type: "line",
+            stack: "Total",
+            data: data2,
+            itemStyle: {
+              color: "green",
+            },
+          },
+          {
+            name: "Người dùng bị khóa vĩnh viễn",
+            type: "line",
+            stack: "Total",
+            data: data3,
+            itemStyle: {
+              color: "yellow",
+            },
+          },
+        ];
+      }
+      if (this.optBoLoc == 1) {
+        data = [
+          {
+            name: "Người dùng mới",
+            type: "line",
+            stack: "Total",
+            data: data1,
+            itemStyle: {
+              color: "blue",
+            },
+          },
+        ];
+      }
+      if (this.optBoLoc == 2) {
+        data = [
+          {
+            name: "Người dùng bị khóa",
+            type: "line",
+            stack: "Total",
+            data: data2,
+            itemStyle: {
+              color: "green",
+            },
+          },
+        ];
+      }
+      if (this.optBoLoc == 3) {
+        data = [
+          {
+            name: "Người dùng bị khóa vĩnh viễn",
+            type: "line",
+            stack: "Total",
+            data: data3,
+            itemStyle: {
+              color: "yellow",
+            },
+          },
+        ];
+      }
       const chart = echarts.init(this.$refs.chart);
       chart.setOption({
         tooltip: {
@@ -66,35 +142,7 @@ export default {
             end: 10,
           },
         ],
-        series: [
-          {
-            name: "Người dùng mới",
-            type: "line",
-            stack: "Total",
-            data: data1,
-            itemStyle: {
-              color: "blue",
-            },
-          },
-          {
-            name: "Người dùng bị khóa",
-            type: "line",
-            stack: "Total",
-            data: data2,
-            itemStyle: {
-              color: "green",
-            },
-          },
-          {
-            name: "Người dùng bị khóa vĩnh viễn",
-            type: "line",
-            stack: "Total",
-            data: data3,
-            itemStyle: {
-              color: "yellow",
-            },
-          },
-        ],
+        series: data,
       });
     },
   },

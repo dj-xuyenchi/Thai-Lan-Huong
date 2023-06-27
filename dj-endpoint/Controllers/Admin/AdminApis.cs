@@ -255,6 +255,11 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.GetAnalytics());
         }
+        [HttpGet("getanalyticfilter")]
+        public async Task<IActionResult> GetAnalyticFilter(DateTime openTime, DateTime closeTime)
+        {
+            return Ok(await _admin.GetAnalyticsFilter(openTime, closeTime));
+        }
         [HttpGet("getadvicecontact")]
         public async Task<IActionResult> GetAdviceContact(int page)
         {

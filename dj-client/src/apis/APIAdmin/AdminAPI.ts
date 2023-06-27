@@ -811,6 +811,29 @@ class AdminAPI {
         });
     });
   }
+  getAnalyticFilter(
+    openTime: Date,
+    closeTime: Date,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/admin/getanalyticfilter?openTime=${openTime}&closeTime=${closeTime}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
   getAdviceContact(page: number, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
       HTTP.get(`/admin/getadvicecontact?page=${page}`, {
