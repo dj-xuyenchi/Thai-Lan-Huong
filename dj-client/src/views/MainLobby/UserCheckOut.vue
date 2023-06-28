@@ -56,7 +56,6 @@
             class="kyc"
             :style="`right:` + kycLeft + `px`"
         /></v-list-item>
-        <button type="" @click="test()">gg</button>
       </template>
       <v-card class="mx-auto" max-width="600">
         <v-list density="compact">
@@ -204,12 +203,7 @@ export default {
     const name = localStorage.getItem("name");
     const nickName = localStorage.getItem("nickName");
     const role = localStorage.getItem("role");
-    console.log(
-      'localStorage.getItem("smg") :>> ',
-      typeof localStorage.getItem("smg")
-    );
     this.kyc = localStorage.getItem("smg") !== "false";
-    console.log("this.kyc :>> ", this.kyc);
     if (token || refreshToken) {
       this.showSignIn = false;
       this.user = {
@@ -285,11 +279,9 @@ export default {
     },
     async isLogin(tokenModel) {
       const loginStatus = await AuthApis.refreshToken(tokenModel);
-      console.log(loginStatus);
     },
     setShowLogin() {
       this.kyc = false;
-      console.log("this.kyc :>> ", this.kyc);
       this.showSignIn = true;
     },
     async setShowNotification() {

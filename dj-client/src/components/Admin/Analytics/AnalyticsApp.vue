@@ -69,6 +69,8 @@
         :dataLargeArea="dataLargeArea"
       />
     </v-card>
+    <CourseAna />
+    <AdviceAna />
   </div>
   <v-snackbar v-model="snackbar">
     {{ text }}
@@ -83,14 +85,21 @@
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
 import LineChart from "./ChartConfig/LineChart";
+import CourseAna from "./ContentComponent/CourseAna.vue";
+import AdviceAna from "./ContentComponent/AdviceAna.vue";
 import StackedHorizontalBar from "./ChartConfig/StackedHorizontalBar";
 import LargeAreaChart from "./ChartConfig/LargeAreaChart";
 import { reactive } from "vue";
-
 import { mapMutations } from "vuex";
 export default {
   name: "AnalyticsApp",
-  components: { LineChart, StackedHorizontalBar, LargeAreaChart },
+  components: {
+    AdviceAna,
+    CourseAna,
+    LineChart,
+    StackedHorizontalBar,
+    LargeAreaChart,
+  },
   data() {
     return {
       isFilter: false,

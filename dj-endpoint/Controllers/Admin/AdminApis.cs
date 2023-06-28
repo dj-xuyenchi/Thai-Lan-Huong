@@ -270,5 +270,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.getAdviceDetail(adviceId));
         }
+        [HttpGet("getcourseana")]
+        public async Task<IActionResult> GetCourseAna()
+        {
+            return Ok(await _admin.getCourseAna());
+        }
     }
 }

@@ -154,7 +154,6 @@ export default {
     handleDialog(id) {
       this.dialog = true;
       this.cmtId = id;
-      console.log(id);
     },
     async createDenounce() {
       const token = localStorage.getItem("token");

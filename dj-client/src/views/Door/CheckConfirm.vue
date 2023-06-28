@@ -31,13 +31,11 @@ export default {
     };
   },
   created() {
-    console.log(this.$route.params.code);
     this.confirm();
   },
   methods: {
     async confirm() {
       const data = await AuthApis.confirmAccount(this.$route.params.code);
-      console.log(data);
       if (data.success == 0) {
         localStorage.setItem("token", data.data.token.accessToken);
         localStorage.setItem("refreshToken", data.data.token.refreshToken);

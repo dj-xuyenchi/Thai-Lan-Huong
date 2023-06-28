@@ -14,7 +14,7 @@
     <AddBlog style="margin-top: 12px" :getBlogPage="getBlogPage" />
   </div>
   <BlogTable :tableData="tableData" :getBlogPage="getBlogPage" />
-  <div class="text-center" @click="getLessonDetail()">
+  <div class="text-center" @click="getBlogPage()">
     <v-container>
       <v-row justify="center">
         <v-col cols="4">

@@ -1739,5 +1739,27 @@ namespace dj_actionlayer.Business.Admin
         {
             return await _context.advice_contact.FindAsync(adviceId);
         }
+
+        public async Task<CourseAnaDTO> getCourseAna()
+        {
+            CourseAnaDTO result = new CourseAnaDTO();
+            List<string> ListCourse = new List<string>();
+            List<int> Total = new List<int>();
+            List<int> Learning = new List<int>();
+            List<int> Done = new List<int>();
+            var list = _context.course.Where(x => x.Id != 13).ToList();
+            foreach (var item in list)
+            {
+                ListCourse.Add(item.CourseCode);
+                Total.Add(_context.user_course.Where(x => x.CourseId == item.Id).Count());
+                Learning.Add(_context.user_course.Where(x => x.CourseId == item.Id && x.isDone == false).Count());
+                Done.Add(_context.user_course.Where(x => x.CourseId == item.Id && x.isDone == true).Count());
+            }
+            result.ListCourse = ListCourse;
+            result.Total = Total;
+            result.Learning = Learning;
+            result.Done = Done;
+            return result;
+        }
     }
 }

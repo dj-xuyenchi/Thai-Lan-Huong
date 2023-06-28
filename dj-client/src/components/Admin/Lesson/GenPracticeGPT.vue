@@ -273,7 +273,7 @@ export default {
       }
       str = str.substring(str.indexOf(`"testCases`));
       str = str.substring(0, str.length - 2);
-      console.log("{" + str + "}");
+      // console.log("{" + str + "}");
       // return JSON.parse("{" + str + "}");
     },
   },
@@ -286,7 +286,6 @@ export default {
         .replaceAll("`", `"`);
       result = result.replaceAll("};", "}") + "}";
       const inforLesson = this.fixString(result);
-      console.log(result);
       const obj = JSON.parse(inforLesson);
       const testCases = this.fixTestCase(result);
       this.lessonName = obj.tenBai;
@@ -301,7 +300,6 @@ export default {
       this.explainCode = obj.practiceLesson.explain;
       this.suggest = obj.practiceLesson.suggest;
     } catch (error) {
-      console.log(error);
       this.lessonName = "Lỗi!";
       this.lessonDescription = "Lỗi!";
       this.lessonTime = "Lỗi!";

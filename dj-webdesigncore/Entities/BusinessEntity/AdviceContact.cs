@@ -21,5 +21,6 @@ namespace dj_webdesigncore.Entities.BusinessEntity
         public string? Evaluate { get; set; }
         public string? Note { get; set; }
         public TypeAdviceEnum? TypeAdvice { get; set; }
+        public AdviceStatusEnum? Status { get; set; }
     }
 }
