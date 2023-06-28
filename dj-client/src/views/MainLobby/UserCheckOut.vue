@@ -42,7 +42,7 @@
       </v-card>
     </v-menu>
     <v-menu>
-      <template v-slot:activator="{ props }" v-if="kyc">
+      <template v-slot:activator="{ props }">
         <v-list-item
           :prepend-avatar="user.avatar"
           :title="user.name"
@@ -50,6 +50,7 @@
           :append-icon="iconStatus.normal"
           v-bind="props"
           ><img
+            v-if="kyc"
             :src="require('../../assets/kyc.png')"
             alt="Hình ảnh"
             class="kyc"
@@ -99,21 +100,7 @@ import { ref } from "vue";
 export default {
   name: "UserCheckOut",
   components: { NotificationItem },
-  setup() {
-    const kyc = ref(false);
 
-    onUnmounted(() => {
-      // Code để thực hiện khi component bị unmount
-      console.log("Component unmounted");
-      console.log("KYC value:", kyc.value);
-
-      // Xóa các lắng nghe sự kiện, hủy kết nối, hoặc làm các tác động cần thiết khác
-    });
-
-    return {
-      kyc,
-    };
-  },
   data() {
     return {
       isAdmin: false,
@@ -122,6 +109,7 @@ export default {
       show: false,
       menu: false,
       kycLeft: 0,
+      kyc: false,
       user: {
         avatar: "",
         name: "",
@@ -216,7 +204,12 @@ export default {
     const name = localStorage.getItem("name");
     const nickName = localStorage.getItem("nickName");
     const role = localStorage.getItem("role");
-    this.kyc = localStorage.getItem("smg");
+    console.log(
+      'localStorage.getItem("smg") :>> ',
+      typeof localStorage.getItem("smg")
+    );
+    this.kyc = localStorage.getItem("smg") !== "false";
+    console.log("this.kyc :>> ", this.kyc);
     if (token || refreshToken) {
       this.showSignIn = false;
       this.user = {
@@ -296,6 +289,7 @@ export default {
     },
     setShowLogin() {
       this.kyc = false;
+      console.log("this.kyc :>> ", this.kyc);
       this.showSignIn = true;
     },
     async setShowNotification() {

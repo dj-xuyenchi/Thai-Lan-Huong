@@ -10,5 +10,6 @@ export default {
   },
   setIsKYC(state: any, isKYC: boolean) {
     state.isKYC = isKYC;
+    // localStorage.setItem("isKYC", isKYC);
   },
 };
