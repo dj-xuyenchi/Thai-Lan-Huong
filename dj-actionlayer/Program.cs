@@ -8,10 +8,23 @@ using System.IO;
 class Program
 {
    
-
+    public int a { get; set; }
 
     static void Main(string[] args)
     {
+        Program var1 = new Program() { a = 1};
+
+        Program var2 = new Program();
+        var2.a = 1;
+        Console.WriteLine();
+
+
+
+
+
+
+
+
        DateTime e = new DateTime(2000,2,1);
         DateTime e1 = new DateTime(2000, 2, 12);
         Console.WriteLine(e-e1);

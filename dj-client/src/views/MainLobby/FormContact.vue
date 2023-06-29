@@ -14,7 +14,8 @@
         <option value="1">Học 1:1</option>
         <option value="2">Định hướng nghành</option>
         <option value="3">Cơ hội việc làm</option>
-        <option value="4">Khác</option>
+        <option value="4">Phỏng vấn & CV</option>
+        <option value="5">Khác</option>
       </select>
       <textarea
         require
@@ -48,13 +49,13 @@ export default {
   name: "FormContact",
   data: () => {
     return {
-      fullName: "",
       color: 0,
+      fullName: "",
       sdt: "",
-      snackbar: false,
       opt: 0,
       note: "",
       text: "",
+      snackbar: false,
     };
   },
   methods: {

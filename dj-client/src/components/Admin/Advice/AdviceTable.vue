@@ -23,6 +23,8 @@
                 ? "Định hướng nghề"
                 : item.typeAdvice == 3
                 ? "Cơ hội việc làm"
+                : item.typeAdvice == 4
+                ? "Phỏng vấn & CV"
                 : "Khác"
             }}
           </td>

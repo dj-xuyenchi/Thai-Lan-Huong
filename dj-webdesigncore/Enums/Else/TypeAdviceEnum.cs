@@ -11,6 +11,7 @@ namespace dj_webdesigncore.Enums.Else
         STUDY11 = 1,
         ROADMAPSP = 2,
         JOB = 3,
-        ELSE =4
+        INTERVIEWCV = 4,
+        ELSE = 5
     }
 }

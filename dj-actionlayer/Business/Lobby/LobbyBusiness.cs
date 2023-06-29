@@ -30,6 +30,7 @@ namespace dj_actionlayer.Business.Lobby
             adviceMentor.Note = adviceMentorRequest.Note;
             adviceMentor.TypeAdvice = (dj_webdesigncore.Enums.Else.TypeAdviceEnum?)adviceMentorRequest.Opt;
             adviceMentor.SendRequest = DateTime.Now;
+            adviceMentor.Status = dj_webdesigncore.Enums.Else.AdviceStatusEnum.CHUABIET;
             await _context.AddAsync(adviceMentor);
             await _context.SaveChangesAsync();
             result.Data = ActionStatus.SECCESSFULLY;

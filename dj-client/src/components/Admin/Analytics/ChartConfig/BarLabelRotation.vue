@@ -1,19 +1,40 @@
 <template>
-  <div style="height: 600px">
+  <div>
+    <br />
     <span
       style="
         font-weight: 600;
         font-size: 20px;
         color: black;
-        margin: 12px 0 0 12px;
+        margin: 12px 0 0 0px;
       "
       >{{ title[3] }}</span
     >
     <div
       ref="chart"
-      id="main"
-      style="width: 100%; height: 600px; margin-top: 12px"
+      id="main1"
+      style="width: 100%; height: 600px; margin: 12px 0 0px 0"
     ></div>
+    <v-dialog v-model="dialog" persistent width="auto">
+      <v-card>
+        <v-card-title class="text-h5">
+          Use Google's location service?
+        </v-card-title>
+        <v-card-text
+          >Let Google help apps determine location. This means sending anonymous
+          location data to Google, even when no apps are running.</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green-darken-1" variant="text" @click="dialog = false">
+            Disagree
+          </v-btn>
+          <v-btn color="green-darken-1" variant="text" @click="dialog = false">
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -25,7 +46,9 @@ export default {
     this.renderChart();
   },
   data() {
-    return {};
+    return {
+      dialog: false,
+    };
   },
   props: {
     courseAna: Object,
@@ -34,7 +57,7 @@ export default {
   methods: {
     renderChart() {
       var app = {};
-      var chartDom = document.getElementById("main");
+      var chartDom = document.getElementById("main1");
       var myChart = echarts.init(chartDom);
       var option;
       const posList = [

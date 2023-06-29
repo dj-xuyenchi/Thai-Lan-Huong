@@ -70,7 +70,8 @@
       />
     </v-card>
     <CourseAna />
-    <AdviceAna />
+    <br />
+    <AdviceAna style="margin-bottom: 24px" />
   </div>
   <v-snackbar v-model="snackbar">
     {{ text }}
