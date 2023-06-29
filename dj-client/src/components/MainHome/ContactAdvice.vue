@@ -13,21 +13,23 @@
     </span>
     <div style="display: flex; justify-content: center">
       <div class="course-list">
-        <div style="width: 840px; float: left">
+        <div style="width: 50%; float: left">
           <img
             src="https://res.cloudinary.com/dushydq6r/image/upload/v1688031377/how-to-contact-binance-support_boxn5s.jpg"
             alt="Hình ảnh"
-            style="height: 480px; width: 840px"
+            style="height: 400px; width: 100%"
           />
         </div>
-        <div style="width: 400px; float: left">
+        <div style="width: 50%; float: left" id="input-group">
           <v-text-field
             v-model="fullName"
             label="Họ và tên"
             variant="solo"
+            density="compact"
           ></v-text-field>
           <v-text-field
             v-model="sdt"
+            density="compact"
             label="Số điện thoại"
             variant="solo"
           ></v-text-field>
@@ -39,6 +41,7 @@
             :items="listOpt"
             persistent-hint
             return-object
+            density="compact"
             item-value="id"
             item-title="name"
           >
@@ -47,7 +50,7 @@
             v-model="note"
             label="Ghi chú"
             variant="solo"
-            rows="4"
+            rows="3"
           ></v-textarea>
           <v-btn
             color="blue"
@@ -165,8 +168,8 @@ export default {
   margin-bottom: 40px;
 }
 .course-list-container .course-list {
-  width: 1240px;
-  height: 420px;
+  width: 1200px;
+  height: 400px;
 }
 .showAll {
   color: red;
@@ -181,29 +184,5 @@ export default {
   cursor: pointer;
   text-decoration: underline;
   color: #eb5353;
-}
-@media screen and (max-width: 739px) {
-  .post-item {
-    width: 100% !important;
-  }
-
-  .post-item .item-hover {
-    height: 200px !important;
-  }
-
-  .post-item img {
-    height: 200px !important;
-  }
-}
-@media screen and (max-width: 1023px) and (min-width: 740px) {
-  .post-item {
-    width: 50% !important;
-  }
-}
-
-@media screen and (max-width: 1370px) and (min-width: 1023px) {
-  .post-item {
-    /* width: 33.33% !important; */
-  }
 }
 </style>
