@@ -12,9 +12,9 @@
       rounded="lg"
     >
       <span
-        >Chúng tôi đã gửi mã xác nhận đến email
+        >Chúng tôi đã gửi link xác nhận đến email
         <span style="color: blue">{{ confirmEmail }}</span> vui lòng kiểm tra
-        hòm thư và nhập mã xác nhận được nhận vào bên dưới!</span
+        hòm thư và truy cập vào đường link đổi mật khẩu!</span
       >
       <a
         href="https://mail.google.com/mail/u/0/#inbox"

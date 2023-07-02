@@ -48,7 +48,7 @@ namespace dj_actionlayer.Business.Email
         {
             MailMessage message = new MailMessage(FromEmail, toEmail);
             message.Subject = "Xác nhận yêu cầu đổi mật khẩu tài khoản DJ - Coding";
-            message.Body = TemplateEmail.CreateEmail(confirmLink);
+            message.Body = TemplateEmail.ForgetPass(confirmLink);
             message.IsBodyHtml = true;
             // Tạo đối tượng SmtpClient
             SmtpClient smtpClient = new SmtpClient(SmtpHost, SmtpPort);
