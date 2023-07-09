@@ -32,21 +32,41 @@
     <div style="margin-left: 14px; margin-top: 20px">
       <div class="post-action">
         <div style="margin-top: 180px">
-          <font-awesome-icon icon="fa-brands fa-facebook" class="react-icon" />
+          <a
+            href="https://www.facebook.com/groups/djxuyenchi.edu.vn/"
+            target="_blank"
+          >
+            <font-awesome-icon
+              icon="fa-brands fa-facebook"
+              class="react-icon"
+            />
+          </a>
         </div>
         <div>
-          <font-awesome-icon icon="fa-brands fa-tiktok" class="react-icon" />
+          <a
+            href="https://www.tiktok.com/@dj_xuyenchi?is_from_webapp=1&sender_device=pc"
+            target="_blank"
+          >
+            <font-awesome-icon icon="fa-brands fa-tiktok" class="react-icon" />
+          </a>
         </div>
         <div>
-          <font-awesome-icon icon="fa-brands fa-youtube" class="react-icon" />
+          <a
+            href="https://www.youtube.com/channel/UCeJJbBp9ZSYwFK-U0YBY1pw"
+            target="_blank"
+          >
+            <font-awesome-icon icon="fa-brands fa-youtube" class="react-icon"
+          /></a>
         </div>
         <v-tooltip text="Trở lại danh sách bài viết.">
           <template v-slot:activator="{ props }">
             <div style="margin-top: 12px" v-bind="props">
-              <font-awesome-icon
-                icon="fa-solid fa-chevron-left"
-                class="react-icon"
-              />
+              <a href="https://dj-xuyenchi.edu.vn/#/home/post">
+                <font-awesome-icon
+                  icon="fa-solid fa-chevron-left"
+                  class="react-icon"
+                />
+              </a>
             </div>
           </template>
         </v-tooltip>

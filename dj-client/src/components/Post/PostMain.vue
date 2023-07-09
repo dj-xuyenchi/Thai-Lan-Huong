@@ -28,7 +28,7 @@
         :key="index"
       >
         <router-link
-          :to="`/home/post/` + item.id + `/` + item.title"
+          :to="`/home/post/` + item.id + `/` + fixUrl(item.title)"
           style="text-decoration: none; color: black"
         >
           <div class="post-item">
@@ -66,6 +66,13 @@ export default {
     async getPostMain() {
       const data = await PostAPI.getPostMain();
       this.postMainData = data.data;
+    },
+    fixUrl(input) {
+      input = input.replaceAll(" ", "-").toLowerCase();
+      while (input.includes("--")) {
+        input = input.replace("--", "-");
+      }
+      return input;
     },
   },
   created() {

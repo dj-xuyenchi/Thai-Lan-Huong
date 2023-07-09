@@ -17,7 +17,7 @@
           class="align-center justify-center"
         >
           <router-link
-            :to="`/home/post/` + id + `/` + postTitle"
+            :to="`/home/post/` + id + `/` + fixUrl(postTitle)"
             style="text-decoration: none"
           >
             <v-btn variant="flat rounded-xl">Xem bài viết</v-btn>
@@ -81,6 +81,15 @@ export default {
     } else {
       this.titleFix = this.postTitle;
     }
+  },
+  methods: {
+    fixUrl(input) {
+      input = input.replaceAll(" ", "-").toLowerCase();
+      while (input.includes("--")) {
+        input = input.replace("--", "-");
+      }
+      return input;
+    },
   },
 };
 </script>
