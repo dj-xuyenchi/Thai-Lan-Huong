@@ -2,7 +2,10 @@
   <div class="mostviewpost-container">
     <a
       :href="
-        `https://dj-xuyenchi.edu.vn/#/home/post/` + item.id + `/` + titleFix
+        `https://dj-xuyenchi.edu.vn/#/home/post/` +
+        item.id +
+        `/` +
+        fixUrl(item.title)
       "
       style="text-decoration: none; color: black"
       target="_blank"
@@ -54,6 +57,16 @@ export default {
     } else {
       this.titleFix = this.item.title;
     }
+  },
+  methods: {
+    fixUrl(input) {
+      input = input.replaceAll(" ", "-").toLowerCase();
+      while (input.includes("--")) {
+        input = input.replace("--", "-");
+      }
+      input = input.replaceAll("đ", "d");
+      return input.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    },
   },
 };
 </script>

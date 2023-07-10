@@ -72,7 +72,8 @@ export default {
       while (input.includes("--")) {
         input = input.replace("--", "-");
       }
-      return input;
+      input = input.replaceAll("đ", "d");
+      return input.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     },
   },
   created() {
