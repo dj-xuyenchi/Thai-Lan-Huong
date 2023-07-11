@@ -1775,16 +1775,41 @@ namespace dj_actionlayer.Business.Admin
                 data.StudentName = user.UserFisrtName + " " + user.UserLastName;
                 data.StudentAvatar = user.UserAvatarData40x40;
                 data.IsKYC = (bool)user.IsKYC;
+                Course course = await _context.course.FindAsync(courseId);
                 if (item.isDone)
                 {
-                    Course course = await _context.course.FindAsync(courseId);
                     data.ThisProcess = "Đã hoàn thành";
-                    data.Evalute = course.LessonCount + "/" + course.LessonCount;
+                    data.Evalute = course.LessonCount + "/" + course.LessonCount + " bài học hoàn thành!";
                 }
                 else
                 {
-                    data.ThisProcess = "Cập nhật";
-                    data.Evalute = "Cập nhật";
+                    Lesson l = await _context.lesson.FindAsync(item.LessonProcessId);
+                    if (l != null)
+                    {
+                        data.ThisProcess = l.LessonName;
+                        ChapterLesson cl = await _context.chapter_lesson.Where(x => x.LessonId == item.LessonProcessId).FirstOrDefaultAsync();
+                        CourseChapter cc = await _context.course_chapter.FindAsync(cl.CourseChapterId);
+                        if (cc.SortNumber == 1)
+                        {
+                            data.Evalute = cl.SortNumber + "/" + course.LessonCount + " bài học hoàn thành!";
+                        }
+                        else
+                        {
+                            var lstCourseChapter = _context.course_chapter.Where(x => x.CourseId == courseId && x.SortNumber < cc.SortNumber);
+                            int total = 0;
+                            foreach (var item1 in lstCourseChapter)
+                            {
+                                total += item1.ChapterLessonCount;
+                            }
+                            total += cl.SortNumber;
+                            data.Evalute = total + "/" + course.LessonCount + " bài học hoàn thành!";
+                        }
+                    }
+                    else
+                    {
+                        data.ThisProcess = "Dữ liệu chưa cập nhật!";
+                        data.Evalute = "Dữ liệu chưa cập nhật!";
+                    }
                 }
                 result.Add(data);
             }

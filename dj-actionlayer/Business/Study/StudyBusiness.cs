@@ -855,11 +855,16 @@ namespace dj_actionlayer.Business.Study
             PracticeDoneData isExist = await _context.practice_done_data.Where(x => x.PracticeLessonId == practiceLesson.Id && x.UserId == sendPracticeRequest.UserId).FirstOrDefaultAsync();
             if (isExist != null)
             {
+
                 //
                 ChapterLesson chapterLesson1 = await _context.chapter_lesson.Where(x => x.LessonId == sendPracticeRequest.LessonId && x.CourseChapterId == sendPracticeRequest.ChapterId).FirstOrDefaultAsync();
                 ChapterLesson chapterLessonNext1 = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendPracticeRequest.ChapterId && x.SortNumber == chapterLesson1.SortNumber + 1).FirstOrDefaultAsync();
                 if (chapterLessonNext1 != null)
                 {
+                    CourseChapter cc = await _context.course_chapter.FindAsync(sendPracticeRequest.ChapterId);
+                    Course c = await _context.course.FindAsync(cc.CourseId);
+                    UserCourse uc = await _context.user_course.Where(x => x.UserId == sendPracticeRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                    uc.LessonProcessId = sendPracticeRequest.LessonId;
                     UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                     newUserLessonCheckPoint.LessonId = chapterLessonNext1.LessonId;
                     newUserLessonCheckPoint.UserId = sendPracticeRequest.UserId;
@@ -873,6 +878,10 @@ namespace dj_actionlayer.Business.Study
                     CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
                     if (courseChapterNext != null)
                     {
+                        CourseChapter cc = await _context.course_chapter.FindAsync(sendPracticeRequest.ChapterId);
+                        Course c = await _context.course.FindAsync(cc.CourseId);
+                        UserCourse uc = await _context.user_course.Where(x => x.UserId == sendPracticeRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                        uc.LessonProcessId = sendPracticeRequest.LessonId;
                         ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
                         UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                         newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
@@ -898,7 +907,7 @@ namespace dj_actionlayer.Business.Study
                     }
                 }
                 //
-
+           
                 isExist.DoneData = sendPracticeRequest.Code;
                 await _context.SaveChangesAsync();
                 result.Data = ActionStatus.EXIST;
@@ -916,6 +925,10 @@ namespace dj_actionlayer.Business.Study
             ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendPracticeRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
             if (chapterLessonNext != null)
             {
+                CourseChapter cc = await _context.course_chapter.FindAsync(sendPracticeRequest.ChapterId);
+                Course c = await _context.course.FindAsync(cc.CourseId);
+                UserCourse uc = await _context.user_course.Where(x => x.UserId == sendPracticeRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                uc.LessonProcessId = sendPracticeRequest.LessonId;
                 UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                 newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
                 newUserLessonCheckPoint.UserId = sendPracticeRequest.UserId;
@@ -929,6 +942,10 @@ namespace dj_actionlayer.Business.Study
                 CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
                 if (courseChapterNext != null)
                 {
+                    CourseChapter cc = await _context.course_chapter.FindAsync(sendPracticeRequest.ChapterId);
+                    Course c = await _context.course.FindAsync(cc.CourseId);
+                    UserCourse uc = await _context.user_course.Where(x => x.UserId == sendPracticeRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                    uc.LessonProcessId = sendPracticeRequest.LessonId;
                     ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
                     UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                     newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
@@ -940,7 +957,8 @@ namespace dj_actionlayer.Business.Study
                 else
                 {
                     UserCourse us = await _context.user_course.Where(x => x.CourseId == courseChapter.CourseId && x.UserId == sendPracticeRequest.UserId).FirstOrDefaultAsync();
-                    us.isDone = true; if (us.DoneTime == null)
+                    us.isDone = true;
+                    if (us.DoneTime == null)
                     {
                         us.DoneTime = DateTime.Now;
                     }
@@ -989,6 +1007,10 @@ namespace dj_actionlayer.Business.Study
                 ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendQuestionRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
                 if (chapterLessonNext != null)
                 {
+                    CourseChapter cc = await _context.course_chapter.FindAsync(sendQuestionRequest.ChapterId);
+                    Course c = await _context.course.FindAsync(cc.CourseId);
+                    UserCourse uc = await _context.user_course.Where(x => x.UserId == sendQuestionRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                    uc.LessonProcessId = sendQuestionRequest.LessonId;
                     UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                     newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
                     newUserLessonCheckPoint.UserId = sendQuestionRequest.UserId;
@@ -1002,6 +1024,10 @@ namespace dj_actionlayer.Business.Study
                     CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
                     if (courseChapterNext != null)
                     {
+                        CourseChapter cc = await _context.course_chapter.FindAsync(sendQuestionRequest.ChapterId);
+                        Course c = await _context.course.FindAsync(cc.CourseId);
+                        UserCourse uc = await _context.user_course.Where(x => x.UserId == sendQuestionRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                        uc.LessonProcessId = sendQuestionRequest.LessonId;
                         ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
                         UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                         newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
@@ -1026,7 +1052,7 @@ namespace dj_actionlayer.Business.Study
                     }
                 }
                 //
-
+               
                 await _context.SaveChangesAsync();
                 result.Data = ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";
@@ -1045,6 +1071,10 @@ namespace dj_actionlayer.Business.Study
                 ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendQuestionRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
                 if (chapterLessonNext != null)
                 {
+                    CourseChapter cc = await _context.course_chapter.FindAsync(sendQuestionRequest.ChapterId);
+                    Course c = await _context.course.FindAsync(cc.CourseId);
+                    UserCourse uc = await _context.user_course.Where(x => x.UserId == sendQuestionRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                    uc.LessonProcessId = sendQuestionRequest.LessonId;
                     UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                     newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
                     newUserLessonCheckPoint.UserId = sendQuestionRequest.UserId;
@@ -1058,6 +1088,10 @@ namespace dj_actionlayer.Business.Study
                     CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
                     if (courseChapterNext != null)
                     {
+                        CourseChapter cc = await _context.course_chapter.FindAsync(sendQuestionRequest.ChapterId);
+                        Course c = await _context.course.FindAsync(cc.CourseId);
+                        UserCourse uc = await _context.user_course.Where(x => x.UserId == sendQuestionRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                        uc.LessonProcessId = sendQuestionRequest.LessonId;
                         ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
                         UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                         newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
@@ -1111,6 +1145,10 @@ namespace dj_actionlayer.Business.Study
                 ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendVideoDoneRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
                 if (chapterLessonNext != null)
                 {
+                    CourseChapter cc = await _context.course_chapter.FindAsync(sendVideoDoneRequest.ChapterId);
+                    Course c = await _context.course.FindAsync(cc.CourseId);
+                    UserCourse uc = await _context.user_course.Where(x => x.UserId == sendVideoDoneRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                    uc.LessonProcessId = sendVideoDoneRequest.LessonId;
                     UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                     newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
                     newUserLessonCheckPoint.UserId = sendVideoDoneRequest.UserId;
@@ -1124,6 +1162,10 @@ namespace dj_actionlayer.Business.Study
                     CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
                     if (courseChapterNext != null)
                     {
+                        CourseChapter cc = await _context.course_chapter.FindAsync(sendVideoDoneRequest.ChapterId);
+                        Course c = await _context.course.FindAsync(cc.CourseId);
+                        UserCourse uc = await _context.user_course.Where(x => x.UserId == sendVideoDoneRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                        uc.LessonProcessId = sendVideoDoneRequest.LessonId;
                         ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
                         UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                         newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;
@@ -1166,6 +1208,10 @@ namespace dj_actionlayer.Business.Study
                 ChapterLesson chapterLessonNext = await _context.chapter_lesson.Where(x => x.CourseChapterId == sendVideoDoneRequest.ChapterId && x.SortNumber == chapterLesson.SortNumber + 1).FirstOrDefaultAsync();
                 if (chapterLessonNext != null)
                 {
+                    CourseChapter cc = await _context.course_chapter.FindAsync(sendVideoDoneRequest.ChapterId);
+                    Course c = await _context.course.FindAsync(cc.CourseId);
+                    UserCourse uc = await _context.user_course.Where(x => x.UserId == sendVideoDoneRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                    uc.LessonProcessId = sendVideoDoneRequest.LessonId;
                     UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                     newUserLessonCheckPoint.LessonId = chapterLessonNext.LessonId;
                     newUserLessonCheckPoint.UserId = sendVideoDoneRequest.UserId;
@@ -1179,6 +1225,10 @@ namespace dj_actionlayer.Business.Study
                     CourseChapter courseChapterNext = await _context.course_chapter.Where(x => x.CourseId == courseChapter.CourseId && x.SortNumber == courseChapter.SortNumber + 1).FirstOrDefaultAsync();
                     if (courseChapterNext != null)
                     {
+                        CourseChapter cc = await _context.course_chapter.FindAsync(sendVideoDoneRequest.ChapterId);
+                        Course c = await _context.course.FindAsync(cc.CourseId);
+                        UserCourse uc = await _context.user_course.Where(x => x.UserId == sendVideoDoneRequest.UserId && x.CourseId == c.Id).FirstOrDefaultAsync();
+                        uc.LessonProcessId = sendVideoDoneRequest.LessonId;
                         ChapterLesson newChapterLesson = await _context.chapter_lesson.Where(x => x.CourseChapterId == courseChapterNext.Id && x.SortNumber == 1).FirstOrDefaultAsync();
                         UserLessonCheckpoint newUserLessonCheckPoint = new UserLessonCheckpoint();
                         newUserLessonCheckPoint.LessonId = newChapterLesson.LessonId;

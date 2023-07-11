@@ -12,13 +12,13 @@
           >
           </v-btn>
         </template>
-        <v-card style="overflow: scroll; height: 80vh">
+        <v-card style="overflow: scroll">
           <v-card-title>
             <span class="text-h5"
               >Danh sách học viên {{ item.courseName }}</span
             >
           </v-card-title>
-          <v-table>
+          <v-table style="height: 70vh">
             <thead>
               <tr>
                 <th class="text-left">STT</th>
@@ -32,13 +32,13 @@
               <tr v-for="(item, index) in list" :key="index">
                 <td>{{ index + 1 }}</td>
 
-                <td>
+                <td style="display: flex; align-items: center">
                   <img
                     :src="item.studentAvatar"
                     alt="Hình ảnh"
                     style="height: 40px; width: 40px; border-radius: 50%"
                   />
-                  <span style="line-height: 40px">
+                  <span style="margin-left: 8px">
                     {{ item.studentName
                     }}<img
                       v-if="item.isKYC"
@@ -48,7 +48,7 @@
                   /></span>
                 </td>
                 <td>{{ item.thisProcess }}</td>
-                <td>{{ item.evalute + " bài học" }}</td>
+                <td>{{ item.evalute }}</td>
                 <td>{{}}</td>
               </tr>
             </tbody>

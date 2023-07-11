@@ -384,6 +384,7 @@ export default {
         this.lastName.trim().length == 0 ||
         this.userPhone.trim().length == 0 ||
         this.userEmail.trim().length == 0 ||
+        this.userName.trim().length == 0 ||
         this.userPass.trim().length == 0 ||
         this.userRole == null
       ) {
