@@ -71,5 +71,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<List<AdviceContactDTO>> GetAdviceContact(int page);
         Task<AdviceContact> getAdviceDetail(int adviceId);
         Task<CourseAnaDTO> getCourseAna();
+        Task<List<ListStudentOfCourse>> ListStudentOfCourse(int courseId, int page);
     }
 }

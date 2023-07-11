@@ -275,5 +275,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.getCourseAna());
         }
+        [HttpGet("getliststudentofcourse")]
+        public async Task<IActionResult> GetStudentOfCourse(int courseId, int page)
+        {
+            return Ok(await _admin.ListStudentOfCourse(courseId, page));
+        }
     }
 }

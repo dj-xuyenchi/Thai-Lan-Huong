@@ -29,14 +29,28 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr v-for="(item, index) in data" :key="index">
+              <tr v-for="(item, index) in list" :key="index">
                 <td>{{ index + 1 }}</td>
 
-                <td>{{ fixString(item.courseName) }}</td>
-                <td>{{ item.chapterCount + " học phần" }}</td>
-                <td>{{ item.lessonCount + " bài học" }}</td>
-                <td>{{ item.courseStatus }}</td>
-              </tr> -->
+                <td>
+                  <img
+                    :src="item.studentAvatar"
+                    alt="Hình ảnh"
+                    style="height: 40px; width: 40px; border-radius: 50%"
+                  />
+                  <span style="line-height: 40px">
+                    {{ item.studentName
+                    }}<img
+                      v-if="item.isKYC"
+                      :src="require('../../../assets/kyc.png')"
+                      alt="Hình ảnh"
+                      class="kyc"
+                  /></span>
+                </td>
+                <td>{{ item.thisProcess }}</td>
+                <td>{{ item.evalute + " bài học" }}</td>
+                <td>{{}}</td>
+              </tr>
             </tbody>
           </v-table>
           <v-card-actions>
@@ -70,10 +84,32 @@ export default {
     dialog: false,
     btnLoading: false,
     text: "",
+    list: [],
     snackbar: false,
     opt: false,
   }),
+  methods: {
+    async getData(page) {
+      const data = await AdminAPI.getStudentOfCourse(
+        this.item.courseId,
+        page,
+        localStorage.getItem("token")
+      );
+      this.list = data;
+    },
+  },
+  created() {
+    this.getData(1);
+  },
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.kyc {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  top: 4px;
+  left: 4px;
+}
+</style>

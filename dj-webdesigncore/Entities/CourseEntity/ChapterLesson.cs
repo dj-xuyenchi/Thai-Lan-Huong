@@ -14,6 +14,6 @@ namespace dj_webdesigncore.Entities.CourseEntity
         public Lesson Lesson { get; set; } 
         public int SortNumber { get; set; }
         public DateTime AddLessonToChapterDateTime { get; set; }
-
+        
     }
 }

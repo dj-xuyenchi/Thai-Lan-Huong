@@ -1,4 +1,5 @@
-﻿using DJ_UploadFile.Services;
+﻿using CloudinaryDotNet;
+using DJ_UploadFile.Services;
 using dj_webdesigncore.Business.Admin;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Admin;
@@ -1759,6 +1760,34 @@ namespace dj_actionlayer.Business.Admin
             result.Total = Total;
             result.Learning = Learning;
             result.Done = Done;
+            return result;
+        }
+
+        public async Task<List<ListStudentOfCourse>> ListStudentOfCourse(int courseId, int page)
+        {
+            List<ListStudentOfCourse> result = new List<ListStudentOfCourse>();
+            var userCourse = _context.user_course.Where(x => x.CourseId == courseId).OrderByDescending(x => x.ResisterDateTime).Skip((page - 1) * 15).Take(15).ToList();
+            foreach (var item in userCourse)
+            {
+                ListStudentOfCourse data = new ListStudentOfCourse();
+                data.StudentId = (int)item.UserId;
+                User user = await _context.user.FindAsync(item.UserId);
+                data.StudentName = user.UserFisrtName + " " + user.UserLastName;
+                data.StudentAvatar = user.UserAvatarData40x40;
+                data.IsKYC = (bool)user.IsKYC;
+                if (item.isDone)
+                {
+                    Course course = await _context.course.FindAsync(courseId);
+                    data.ThisProcess = "Đã hoàn thành";
+                    data.Evalute = course.LessonCount + "/" + course.LessonCount;
+                }
+                else
+                {
+                    data.ThisProcess = "Cập nhật";
+                    data.Evalute = "Cập nhật";
+                }
+                result.Add(data);
+            }
             return result;
         }
     }
