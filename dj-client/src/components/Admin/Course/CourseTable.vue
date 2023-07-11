@@ -39,6 +39,7 @@
               :courseName="item.courseName"
               :courseId="item.courseId"
             />
+            <BtnListStudentOfCourse :item="item" />
           </td>
         </tr>
       </tbody>
@@ -49,9 +50,11 @@
 <script>
 import BtnUpdateCourse from "./BtnUpdateCourse";
 import AddChapterToCourse from "./AddChapterToCourse";
+import BtnListStudentOfCourse from "./BtnListStudentOfCourse";
+
 export default {
   name: "CourseTable",
-  components: { BtnUpdateCourse, AddChapterToCourse },
+  components: { BtnUpdateCourse, AddChapterToCourse, BtnListStudentOfCourse },
   props: {
     data: [],
     getCoursePage: Function,
