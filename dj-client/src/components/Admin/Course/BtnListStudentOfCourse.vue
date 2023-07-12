@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-dialog v-model="dialog" persistent width="1024">
+      <v-dialog v-model="dialog" persistent width="1024" height=" 70vh">
         <template v-slot:activator="{ props }">
           <v-btn
             color="green"
@@ -18,21 +18,20 @@
               >Danh sách học viên {{ item.courseName }}</span
             >
           </v-card-title>
-          <v-table style="height: 70vh">
+          <v-table>
             <thead>
               <tr>
                 <th class="text-left">STT</th>
                 <th class="text-left">Học viên</th>
                 <th class="text-left">Tiến độ hiện tại</th>
                 <th class="text-left">Tiến độ tổng</th>
-                <th class="text-left">Action</th>
+                <th class="text-center">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in list" :key="index">
                 <td>{{ index + 1 }}</td>
-
-                <td style="display: flex; align-items: center">
+                <td style="display: flex; align-items: center; height: 74px">
                   <img
                     :src="item.studentAvatar"
                     alt="Hình ảnh"
@@ -49,7 +48,15 @@
                 </td>
                 <td>{{ item.thisProcess }}</td>
                 <td>{{ item.evalute }}</td>
-                <td>{{}}</td>
+                <td
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <ProgressBtn :item="item" :courseId="courseId" />
+                </td>
               </tr>
             </tbody>
           </v-table>
@@ -75,8 +82,10 @@
 
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
+import ProgressBtn from "./ProgressBtn.vue";
 export default {
   name: "BtnListStudentOfCourse",
+  components: { ProgressBtn },
   props: {
     item: Object,
   },
@@ -85,6 +94,7 @@ export default {
     btnLoading: false,
     text: "",
     list: [],
+    courseId: 0,
     snackbar: false,
     opt: false,
   }),
@@ -99,6 +109,7 @@ export default {
     },
   },
   created() {
+    this.courseId = this.item.courseId;
     this.getData(1);
   },
 };

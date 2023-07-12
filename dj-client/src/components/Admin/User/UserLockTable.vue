@@ -34,7 +34,7 @@
           </td>
           <td>{{ item.userEmail }}</td>
           <td>{{ item.role.userRoleName }}</td>
-          <td>{{ item.vioCount }}</td>
+          <td>{{ item.vioCount ? item.vioCount : 0 }}</td>
           <td>
             {{
               item.userStatus.id == 4
@@ -78,6 +78,9 @@ export default {
   },
   methods: {
     fixDate(vari) {
+      if (!vari) {
+        return "Không nhận dạng";
+      }
       return (
         vari.substring(8, 10) + vari.substring(4, 8) + vari.substring(0, 4)
       );

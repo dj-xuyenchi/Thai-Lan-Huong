@@ -280,5 +280,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.ListStudentOfCourse(courseId, page));
         }
+        [HttpGet("userlessonprogress")]
+        public async Task<IActionResult> GetCourseProgress(int courseId, int userId)
+        {
+            return Ok(await _admin.GetCourseProgressUser(courseId, userId));
+        }
     }
 }

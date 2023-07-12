@@ -335,9 +335,9 @@ namespace dj_actionlayer.Business.Auth
                 acc.Status = dj_webdesigncore.Enums.AuthEnums.SignInEnum.SECCESSFULLY;
                 User user = new User();
                 user.NumberPhone = newAccount.sdt;
-                user.UserName = newAccount.userName;
+                user.UserName = newAccount.userName.ToLower();
                 user.UserPass = newAccount.password;
-                user.UserEmail = newAccount.email;
+                user.UserEmail = newAccount.email.ToLower();
                 user.UserFisrtName = "Nhân Tố ";
                 user.UserLastName = "Bí Ẩn";
                 user.UserRoleId = 3;
@@ -426,7 +426,7 @@ namespace dj_actionlayer.Business.Auth
         public async Task<ResponData<ActionStatus>> ForgetPass(ForgetPassRequest forgetPassRequest)
         {
             ResponData<ActionStatus> result = new ResponData<ActionStatus>();
-            User user = await _context.user.Where(x => x.UserEmail.Equals(forgetPassRequest.Email)).FirstOrDefaultAsync();
+            User user = await _context.user.Where(x => x.UserEmail.ToLower().Equals(forgetPassRequest.Email.ToLower())).FirstOrDefaultAsync();
             if (user == null)
             {
                 result.Data = ActionStatus.NOTFOUND;
@@ -451,7 +451,7 @@ namespace dj_actionlayer.Business.Auth
             confirmEmail.Code = code;
             await _context.confirm_email.AddAsync(confirmEmail);
             await _context.SaveChangesAsync();
-            _sendEmail.SendForgetPass(forgetPassRequest.Email, confirmEmail.Code);
+            _sendEmail.SendForgetPass(forgetPassRequest.Email.ToLower(), confirmEmail.Code);
             result.Data = ActionStatus.SECCESSFULLY;
             result.Status = ActionStatus.SECCESSFULLY;
             result.Messenger = "Lấy dữ liệu thành công!";

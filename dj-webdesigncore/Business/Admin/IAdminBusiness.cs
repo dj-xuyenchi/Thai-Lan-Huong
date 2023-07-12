@@ -63,14 +63,15 @@ namespace dj_webdesigncore.Business.Admin
         Task<ResponData<ActionStatus>> checkDenounce(ConfirmDenounceRequest confirmDenounce);
         Task<ResponData<HomeContent>> getHomeContent();
         Task<ResponData<ActionStatus>> changeSlide(IFormFile? slide1, IFormFile? slide2, IFormFile? slide3, IFormFile? slide4, IFormFile? slide5);
-        Task<ResponData<ListPostAdmin>> getPostAdmin(int? statusOptId,int page);
-        Task<ResponData<ActionStatus>> updatePost(IFormFile? img,UpdatePostAdminRequest updatePostAdmin);
+        Task<ResponData<ListPostAdmin>> getPostAdmin(int? statusOptId, int page);
+        Task<ResponData<ActionStatus>> updatePost(IFormFile? img, UpdatePostAdminRequest updatePostAdmin);
         Task<IQueryable<User>> GetUserLockPage(int page);
         Task<ResponData<AnalyticAppDTO>> GetAnalytics();
-        Task<ResponData<UserAnalyticCustomDTO>> GetAnalyticsFilter(DateTime start,DateTime end);
+        Task<ResponData<UserAnalyticCustomDTO>> GetAnalyticsFilter(DateTime start, DateTime end);
         Task<List<AdviceContactDTO>> GetAdviceContact(int page);
         Task<AdviceContact> getAdviceDetail(int adviceId);
         Task<CourseAnaDTO> getCourseAna();
         Task<List<ListStudentOfCourse>> ListStudentOfCourse(int courseId, int page);
+        Task<UserCourseProgress> GetCourseProgressUser(int courseId, int userId);
     }
 }

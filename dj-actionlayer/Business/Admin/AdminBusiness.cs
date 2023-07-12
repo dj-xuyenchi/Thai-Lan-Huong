@@ -1815,5 +1815,53 @@ namespace dj_actionlayer.Business.Admin
             }
             return result;
         }
+
+        public async Task<UserCourseProgress> GetCourseProgressUser(int courseId, int userId)
+        {
+            UserCourseProgress result = new UserCourseProgress();
+            Course c = await _context.course.FindAsync(courseId);
+            User u = await _context.user.FindAsync(userId);
+            result.UserId = userId;
+            result.UserName = u.UserFisrtName + " " + u.UserLastName;
+            result.CourseName = c.CourseName;
+            Dictionary<string, List<LessonProgressDTO>> progress = new Dictionary<string, List<LessonProgressDTO>>();
+            var cc = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x => x.SortNumber);
+            foreach (var item in cc)
+            {
+                List<LessonProgressDTO> lessonProgressDTOs = new List<LessonProgressDTO>();
+                var cl = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).OrderBy(x => x.SortNumber);
+                foreach (var item1 in cl)
+                {
+                    Lesson lesson = await _context.lesson.FindAsync(item1.LessonId);
+                    LessonProgressDTO lessonProgressDTO = new LessonProgressDTO();
+                    lessonProgressDTO.LessonName = lesson.LessonName;
+                    LessonType lt = await _context.lesson_type.FindAsync(lesson.LessonTypeId);
+                    lessonProgressDTO.LessonTypeId = (int)lesson.LessonTypeId;
+                    lessonProgressDTO.LessonType = lt.LessonTypeName;
+                    UserLessonCheckpoint ulc = await _context.user_lesson_checkpoint.Where(x => x.LessonId == lesson.Id && x.UserId == userId).FirstOrDefaultAsync();
+                    if (ulc == null)
+                    {
+                        lessonProgressDTO.OpenTime = "Chưa mở";
+                        lessonProgressDTO.IsDone = false;
+                    }
+                    else
+                    {
+                        lessonProgressDTO.OpenTime = ulc.OpenLessonDateTime.Day + "-" + ulc.OpenLessonDateTime.Month + "-" + ulc.OpenLessonDateTime.Year;
+                        if (ulc.IsDone)
+                        {
+                            lessonProgressDTO.IsDone = true;
+                        }
+                        else
+                        {
+                            lessonProgressDTO.IsDone = false;
+                        }
+                    }
+                    lessonProgressDTOs.Add(lessonProgressDTO);
+                }
+                progress.Add(item.ChapterName, lessonProgressDTOs);
+            }
+            result.Progress = progress;
+            return result;
+        }
     }
 }

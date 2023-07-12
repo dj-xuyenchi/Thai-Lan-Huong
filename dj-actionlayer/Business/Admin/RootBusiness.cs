@@ -151,6 +151,10 @@ namespace dj_actionlayer.Business.Admin
             user.UserEmail = updateUserRequest.email;
             user.NumberPhone = updateUserRequest.sdt;
             user.UserStatusId = updateUserRequest.statusId;
+            if (updateUserRequest.statusId == 1)
+            {
+                user.IsLock = false;
+            }
             if (updateUserRequest.statusId == 4)
             {
                 user.IsLock = true;
