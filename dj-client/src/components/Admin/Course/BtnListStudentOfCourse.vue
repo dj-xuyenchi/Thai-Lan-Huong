@@ -25,36 +25,21 @@
                 <th class="text-left">Học viên</th>
                 <th class="text-left">Tiến độ hiện tại</th>
                 <th class="text-left">Tiến độ tổng</th>
-                <th class="text-center">Action</th>
+                <th class="text-left">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in list" :key="index">
                 <td>{{ index + 1 }}</td>
-                <td style="display: flex; align-items: center; height: 74px">
-                  <img
-                    :src="item.studentAvatar"
-                    alt="Hình ảnh"
-                    style="height: 40px; width: 40px; border-radius: 50%"
-                  />
-                  <span style="margin-left: 8px">
-                    {{ item.studentName
-                    }}<img
-                      v-if="item.isKYC"
-                      :src="require('../../../assets/kyc.png')"
-                      alt="Hình ảnh"
-                      class="kyc"
-                  /></span>
+                <td
+                  style="display: flex; align-items: center; height: 74px"
+                  class="user-detail"
+                >
+                  <UserDetail :item="item" />
                 </td>
                 <td>{{ item.thisProcess }}</td>
                 <td>{{ item.evalute }}</td>
-                <td
-                  style="
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  "
-                >
+                <td>
                   <ProgressBtn :item="item" :courseId="courseId" />
                 </td>
               </tr>
@@ -83,9 +68,10 @@
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
 import ProgressBtn from "./ProgressBtn.vue";
+import UserDetail from "../CommonComponent/UserDetail.vue";
 export default {
   name: "BtnListStudentOfCourse",
-  components: { ProgressBtn },
+  components: { ProgressBtn, UserDetail },
   props: {
     item: Object,
   },
@@ -94,11 +80,15 @@ export default {
     btnLoading: false,
     text: "",
     list: [],
+    dialogDetail: false,
     courseId: 0,
     snackbar: false,
     opt: false,
   }),
   methods: {
+    changeDialogDetail() {
+      this.dialogDetail = false;
+    },
     async getData(page) {
       const data = await AdminAPI.getStudentOfCourse(
         this.item.courseId,
@@ -122,5 +112,8 @@ export default {
   position: relative;
   top: 4px;
   left: 4px;
+}
+.user-detail:hover {
+  cursor: pointer;
 }
 </style>
