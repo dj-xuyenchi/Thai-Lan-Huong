@@ -25,7 +25,12 @@
             :key="index"
             style="margin-bottom: 20px"
           >
-            <h4 style="margin-left: 8px">Tên học phần:</h4>
+            <span style="margin-left: 8px">
+              Tên học phần:
+              <span style="font-size: 16px; font-weight: 700">
+                {{ item.name }}
+              </span>
+            </span>
             <v-table>
               <thead>
                 <tr>
@@ -35,23 +40,76 @@
                   <th class="text-left">Loại bài học</th>
                   <th class="text-left">Ngày mở</th>
                   <th class="text-left">Trạng thái</th>
+                  <th class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in item" :key="index">
-                  <td>{{ index + 1 }}</td>
-                  <td style="max-width: 220px">{{ item.lessonName }}</td>
-                  <td>{{ index + 1 }}</td>
-                  <td>{{ item.lessonType }}</td>
-                  <td>{{ item.openTime }}</td>
-                  <td style="max-width: 120px; color: green" v-if="item.isDone">
-                    Đã hoàn thành
+                <tr
+                  v-for="(item1, index) in item.lessonProgressDTOs"
+                  :key="index"
+                >
+                  <td style="max-width: 40px" class="text-left">
+                    {{ index + 1 }}
+                  </td>
+                  <td style="max-width: 220px" class="text-left">
+                    {{ item1.lessonName }}
+                  </td>
+                  <td style="max-width: 120px" class="text-left">
+                    {{ item1.time }}
+                  </td>
+                  <td style="max-width: 120px" class="text-left">
+                    {{ item1.lessonType }}
+                  </td>
+                  <td
+                    style="max-width: 120px"
+                    class="text-left"
+                    v-if="item1.openTime != null"
+                  >
+                    {{ item1.openTime }}
+                  </td>
+                  <td
+                    class="text-left"
+                    style="max-width: 120px"
+                    v-if="item1.openTime == null"
+                  >
+                    <v-chip class="ma-2" color="red" text-color="white">
+                      Chưa mở
+                    </v-chip>
+                  </td>
+                  <td
+                    style="max-width: 120px; color: green"
+                    v-if="item1.isDone"
+                    class="text-left"
+                  >
+                    <v-chip class="ma-2" color="green" text-color="white">
+                      Đã hoàn thành
+                    </v-chip>
                   </td>
                   <td
                     style="max-width: 120px; color: red"
-                    v-if="item.isDone == false"
+                    v-if="item1.isDone == false"
                   >
-                    Chưa hoàn thành
+                    <v-chip class="ma-2" color="red" text-color="white">
+                      Chưa hoàn thành
+                    </v-chip>
+                  </td>
+                  <td
+                    style="
+                      display: flex;
+                      justify-content: space-evenly;
+                      align-items: center;
+                    "
+                    class="text-left"
+                  >
+                    <BtnShowDoneData
+                      :userId="userId"
+                      :lessonId="item1.lessonId"
+                    />
+                    <BtnLockOrUnlockLesson
+                      :userId="userId"
+                      :lessonId="item1.lessonId"
+                      :getCourseProgress="getCourseProgress"
+                    />
                   </td>
                 </tr>
               </tbody>
@@ -79,17 +137,22 @@
 
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
+import BtnLockOrUnlockLesson from "./BtnLockOrUnlockLesson.vue";
+import BtnShowDoneData from "./BtnShowDoneData.vue";
 export default {
   name: "ProgressBtn",
   props: {
     item: Object,
     courseId: Number,
   },
+  components: { BtnLockOrUnlockLesson, BtnShowDoneData },
   data: () => ({
     dialog: false,
     btnLoading: false,
     text: "",
     list: [],
+    userId: 0,
+    chapterName: [],
     snackbar: false,
     userName: "",
     courseName: "",
@@ -103,7 +166,9 @@ export default {
         localStorage.getItem("token")
       );
       this.list = data.progress;
+      this.userId = data.userId;
       this.courseName = data.courseName;
+      this.chapterName = data.chapterName;
       this.userName = data.userName;
     },
   },

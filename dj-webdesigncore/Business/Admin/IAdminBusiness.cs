@@ -73,5 +73,10 @@ namespace dj_webdesigncore.Business.Admin
         Task<CourseAnaDTO> getCourseAna();
         Task<List<ListStudentOfCourse>> ListStudentOfCourse(int courseId, int page);
         Task<UserCourseProgress> GetCourseProgressUser(int courseId, int userId);
+        Task<ActionStatus> lockOrUnlockLesson(int userId,int lessonId);
+        Task<VideoDoneData> GetVideoDoneDataOfUser(int userId,int videoLessonId);
+        Task<PracticeDoneData> GetPracDoneDataOfUser(int userId,int pracId);
+        Task<QuestionDoneData> GetQuesDoneDataOfUser(int userId,int quesId);
+        Task<UserShowDTO> GetUserShow(int userId);
     }
 }

@@ -8,7 +8,9 @@ namespace dj_webdesigncore.DTOs.Admin
 {
     public class LessonProgressDTO
     {
+        public int LessonId { get; set; }
         public string LessonName { get; set; }
+        public string Time { get; set; }
         public bool IsDone { get; set; }
         public string OpenTime { get; set; }
         public string LessonType { get; set; }

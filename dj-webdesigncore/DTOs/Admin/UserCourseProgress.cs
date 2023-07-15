@@ -11,6 +11,6 @@ namespace dj_webdesigncore.DTOs.Admin
         public string UserName { get; set; }
         public int UserId { get; set; }
         public string CourseName { get; set; }
-        public Dictionary<string, List<LessonProgressDTO>> Progress { get; set; }
+        public List<ChapterProgressDTO> Progress { get; set; }
     }
 }

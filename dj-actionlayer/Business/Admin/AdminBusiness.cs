@@ -1824,10 +1824,11 @@ namespace dj_actionlayer.Business.Admin
             result.UserId = userId;
             result.UserName = u.UserFisrtName + " " + u.UserLastName;
             result.CourseName = c.CourseName;
-            Dictionary<string, List<LessonProgressDTO>> progress = new Dictionary<string, List<LessonProgressDTO>>();
+            List<ChapterProgressDTO> progressDTO = new List<ChapterProgressDTO>();
             var cc = _context.course_chapter.Where(x => x.CourseId == courseId).OrderBy(x => x.SortNumber);
             foreach (var item in cc)
             {
+                ChapterProgressDTO cpd = new ChapterProgressDTO();
                 List<LessonProgressDTO> lessonProgressDTOs = new List<LessonProgressDTO>();
                 var cl = _context.chapter_lesson.Where(x => x.CourseChapterId == item.Id).OrderBy(x => x.SortNumber);
                 foreach (var item1 in cl)
@@ -1835,13 +1836,15 @@ namespace dj_actionlayer.Business.Admin
                     Lesson lesson = await _context.lesson.FindAsync(item1.LessonId);
                     LessonProgressDTO lessonProgressDTO = new LessonProgressDTO();
                     lessonProgressDTO.LessonName = lesson.LessonName;
+                    lessonProgressDTO.LessonId = lesson.Id;
                     LessonType lt = await _context.lesson_type.FindAsync(lesson.LessonTypeId);
                     lessonProgressDTO.LessonTypeId = (int)lesson.LessonTypeId;
                     lessonProgressDTO.LessonType = lt.LessonTypeName;
+                    lessonProgressDTO.Time = lesson.VideoTime;
                     UserLessonCheckpoint ulc = await _context.user_lesson_checkpoint.Where(x => x.LessonId == lesson.Id && x.UserId == userId).FirstOrDefaultAsync();
                     if (ulc == null)
                     {
-                        lessonProgressDTO.OpenTime = "Chưa mở";
+                        lessonProgressDTO.OpenTime = null;
                         lessonProgressDTO.IsDone = false;
                     }
                     else
@@ -1858,9 +1861,142 @@ namespace dj_actionlayer.Business.Admin
                     }
                     lessonProgressDTOs.Add(lessonProgressDTO);
                 }
-                progress.Add(item.ChapterName, lessonProgressDTOs);
+                cpd.Name = item.ChapterName;
+                cpd.LessonProgressDTOs = lessonProgressDTOs;
+                progressDTO.Add(cpd);
             }
-            result.Progress = progress;
+            result.Progress = progressDTO;
+            return result;
+        }
+
+        public async Task<ActionStatus> lockOrUnlockLesson(int userId, int lessonId)
+        {
+            Lesson l = await _context.lesson.FindAsync(lessonId);
+            if (l == null)
+            {
+                return ActionStatus.NOTFOUND;
+            }
+            else
+            {
+                ChapterLesson cl = await _context.chapter_lesson.Where(x => x.LessonId == lessonId).FirstOrDefaultAsync();
+                CourseChapter cc = await _context.course_chapter.Where(x => x.Id == cl.CourseChapterId).FirstOrDefaultAsync();
+                if (cc.SortNumber == 1)
+                {
+                    return ActionStatus.WRONG;
+                }
+            }
+            var lst = _context.user_lesson_checkpoint.Where(x => x.UserId == userId && x.LessonId == lessonId);
+            if (lst.Count() > 0)
+            {
+
+                _context.RemoveRange(lst);
+            }
+            else
+            {
+                UserLessonCheckpoint ulc = new UserLessonCheckpoint();
+                ulc.UserId = userId;
+                ulc.LessonId = lessonId;
+                ulc.OpenLessonDateTime = DateTime.Now;
+                ulc.IsDone = true;
+                await _context.AddAsync(ulc);
+            }
+            switch (l.LessonTypeId)
+            {
+                case 1:
+                    VideoLesson vl = await _context.video_lesson.Where(x => x.LessonId == l.Id).FirstOrDefaultAsync();
+                    VideoDoneData vdd = await _context.video_done_data.Where(x => x.UserId == userId && x.VideoLessonId == vl.Id).FirstOrDefaultAsync();
+                    if (vdd == null)
+                    {
+                        vdd = new VideoDoneData();
+                        vdd.VideoLessonId = vl.Id;
+                        vdd.UserId = userId;
+                        vdd.DoneTime = DateTime.Now;
+                        await _context.AddAsync(vdd);
+                        await _context.SaveChangesAsync();
+                        return ActionStatus.SECCESSFULLY;
+                    }
+                    else
+                    {
+                        _context.Remove(vdd);
+                        await _context.SaveChangesAsync();
+                        return ActionStatus.SECCESSFULLY;
+                    }
+                case 2:
+                    dj_webdesigncore.Entities.CourseEntity.PracticeLesson pl = await _context.practice_lesson.Where(x => x.LessonId == l.Id).FirstOrDefaultAsync();
+                    PracticeDoneData pdd = await _context.practice_done_data.Where(x => x.UserId == userId && x.PracticeLessonId == pl.Id).FirstOrDefaultAsync();
+                    if (pdd == null)
+                    {
+                        pdd = new PracticeDoneData();
+                        pdd.PracticeLessonId = pl.Id;
+                        pdd.UserId = userId;
+                        pdd.LangueId = pl.LangueDefaultId;
+                        pdd.DoneData = "Xác nhận mở khóa bởi Admin!";
+                        pdd.DoneTime = DateTime.Now;
+                        await _context.AddAsync(pdd);
+                        await _context.SaveChangesAsync();
+                        return ActionStatus.SECCESSFULLY;
+                    }
+                    else
+                    {
+                        _context.Remove(pdd);
+                        await _context.SaveChangesAsync();
+                        return ActionStatus.SECCESSFULLY;
+                    }
+                case 3:
+                    QuestionLesson ql = await _context.question_lesson.Where(x => x.LessonId == l.Id).FirstOrDefaultAsync();
+                    QuestionDoneData qdd = await _context.question_done_data.Where(x => x.UserId == userId && x.QuestionLessonId == ql.Id).FirstOrDefaultAsync();
+                    if (qdd == null)
+                    {
+                        qdd = new QuestionDoneData();
+                        qdd.QuestionLessonId = ql.Id;
+                        qdd.UserId = userId;
+                        qdd.Answer = 1;
+                        qdd.DoneTime = DateTime.Now;
+                        await _context.AddAsync(qdd);
+                        await _context.SaveChangesAsync();
+                        return ActionStatus.SECCESSFULLY;
+                    }
+                    else
+                    {
+                        _context.Remove(qdd);
+                        await _context.SaveChangesAsync();
+                        return ActionStatus.SECCESSFULLY;
+                    }
+            }
+            return ActionStatus.SECCESSFULLY;
+        }
+
+        public async Task<VideoDoneData> GetVideoDoneDataOfUser(int userId, int videoLessonId)
+        {
+            return await _context.video_done_data.Include(x => x.VideoLesson).Where(x => x.UserId == userId && x.VideoLessonId == videoLessonId).FirstOrDefaultAsync();
+        }
+
+        public async Task<PracticeDoneData> GetPracDoneDataOfUser(int userId, int pracId)
+        {
+            return await _context.practice_done_data.Include(x => x.PracticeLesson).Where(x => x.UserId == userId && x.PracticeLessonId == pracId).FirstOrDefaultAsync();
+        }
+
+        public async Task<QuestionDoneData> GetQuesDoneDataOfUser(int userId, int quesId)
+        {
+            return await _context.question_done_data.Include(x => x.QuestionLesson).Where(x => x.UserId == userId && x.QuestionLessonId == quesId).FirstOrDefaultAsync();
+        }
+
+        public async Task<UserShowDTO> GetUserShow(int userId)
+        {
+            User u = await _context.user.FindAsync(userId);
+            UserShowDTO result = new UserShowDTO();
+            result.BirthDay = u.Birthday.Value.Day + "-" + u.Birthday.Value.Month + "-" + u.Birthday.Value.Year;
+            result.Address = u.AddressNow;
+            Gender g = await _context.gender.FindAsync(u.GenderId);
+            result.Gender = g.GenderName;
+            result.Detail = u.UserDetail;
+            result.Email = u.UserEmail;
+            result.ImagePath = u.UserAvatarData40x40;
+            result.Id = u.Id;
+            result.Name = u.UserFisrtName + " " + u.UserLastName;
+            result.IsKYC = (bool)u.IsKYC;
+            UserRole ur = await _context.user_role.FindAsync(u.UserRoleId);
+            result.Role = ur.UserRoleName;
             return result;
         }
     }

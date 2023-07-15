@@ -1,5 +1,6 @@
 ﻿using dj_actionlayer.Business.Admin;
 using dj_webdesigncore.Business.Admin;
+using dj_webdesigncore.Entities.CourseEntity;
 using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Request.Account;
 using dj_webdesigncore.Request.Blog;
@@ -10,6 +11,7 @@ using dj_webdesigncore.Request.Post;
 using dj_webdesigncore.Request.SomeThingElse;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace dj_endpoint.Controllers.Admin
@@ -46,7 +48,7 @@ namespace dj_endpoint.Controllers.Admin
             return Ok("Admin");
         }
         [HttpPost("addpracticelesson")]
-        public async Task<IActionResult> addPracticeLesson(PracticeLesson practiceLesson)
+        public async Task<IActionResult> addPracticeLesson(dj_webdesigncore.Request.Lesson.PracticeLesson practiceLesson)
         {
             return Ok(await _admin.addPracticeLesson(practiceLesson));
         }
@@ -61,7 +63,7 @@ namespace dj_endpoint.Controllers.Admin
             return Ok(await _admin.addQuestionLesson(questionLessonRequest));
         }
         [HttpPost("updatepracticelesson")]
-        public async Task<IActionResult> updatePracticeLesson(int lessonId, PracticeLesson practiceLesson)
+        public async Task<IActionResult> updatePracticeLesson(int lessonId, dj_webdesigncore.Request.Lesson.PracticeLesson practiceLesson)
         {
             return Ok(await _admin.updatePracticeLesson(lessonId, practiceLesson));
         }
@@ -284,6 +286,34 @@ namespace dj_endpoint.Controllers.Admin
         public async Task<IActionResult> GetCourseProgress(int courseId, int userId)
         {
             return Ok(await _admin.GetCourseProgressUser(courseId, userId));
+        }
+        [HttpGet("lockorunlocklesson")]
+        public async Task<IActionResult> LockOrUnlockLesson(int userId, int lessonId)
+        {
+            return Ok(await _admin.lockOrUnlockLesson(userId, lessonId));
+        }
+        [HttpGet("getdonedata")]
+        public async Task<IActionResult> getDoneDataOfUser(int userId, int lessonId)
+        {
+            Lesson l = await _appContext.lesson.FindAsync(lessonId);
+            switch (l.LessonTypeId)
+            {
+                case 1:
+                    VideoLesson d = await _appContext.video_lesson.Where(x => x.LessonId == l.Id).FirstOrDefaultAsync();
+                    return Ok(await _admin.GetVideoDoneDataOfUser(userId, d.Id));
+                case 2:
+                    dj_webdesigncore.Entities.CourseEntity.PracticeLesson d1 = await _appContext.practice_lesson.Where(x => x.LessonId == l.Id).FirstOrDefaultAsync();
+                    return Ok(await _admin.GetPracDoneDataOfUser(userId, d1.Id));
+                case 3:
+                    QuestionLesson d2 = await _appContext.question_lesson.Where(x => x.LessonId == l.Id).FirstOrDefaultAsync();
+                    return Ok(await _admin.GetQuesDoneDataOfUser(userId, d2.Id));
+                default: return BadRequest("Không tìm thấy");
+            }
+        }
+        [HttpGet("getusershow")]
+        public async Task<IActionResult> GetUserShow(int userId)
+        {
+            return Ok(await _admin.GetUserShow(userId));
         }
     }
 }
