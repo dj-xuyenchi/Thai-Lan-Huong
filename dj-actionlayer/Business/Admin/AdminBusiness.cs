@@ -1968,24 +1968,27 @@ namespace dj_actionlayer.Business.Admin
 
         public async Task<VideoDoneData> GetVideoDoneDataOfUser(int userId, int videoLessonId)
         {
-            return await _context.video_done_data.Include(x => x.VideoLesson).Where(x => x.UserId == userId && x.VideoLessonId == videoLessonId).FirstOrDefaultAsync();
+            return await _context.video_done_data.Include(x => x.VideoLesson).ThenInclude(x => x.Lesson).Where(x => x.UserId == userId && x.VideoLessonId == videoLessonId).FirstOrDefaultAsync();
         }
 
         public async Task<PracticeDoneData> GetPracDoneDataOfUser(int userId, int pracId)
         {
-            return await _context.practice_done_data.Include(x => x.PracticeLesson).Where(x => x.UserId == userId && x.PracticeLessonId == pracId).FirstOrDefaultAsync();
+            return await _context.practice_done_data.Include(x => x.PracticeLesson).ThenInclude(x => x.Lesson).Include(x => x.PracticeLesson).ThenInclude(x => x.testCases).Where(x => x.UserId == userId && x.PracticeLessonId == pracId).FirstOrDefaultAsync();
         }
 
         public async Task<QuestionDoneData> GetQuesDoneDataOfUser(int userId, int quesId)
         {
-            return await _context.question_done_data.Include(x => x.QuestionLesson).Where(x => x.UserId == userId && x.QuestionLessonId == quesId).FirstOrDefaultAsync();
+            return await _context.question_done_data.Include(x => x.QuestionLesson).ThenInclude(x => x.Lesson).Where(x => x.UserId == userId && x.QuestionLessonId == quesId).FirstOrDefaultAsync();
         }
 
         public async Task<UserShowDTO> GetUserShow(int userId)
         {
             User u = await _context.user.FindAsync(userId);
             UserShowDTO result = new UserShowDTO();
-            result.BirthDay = u.Birthday.Value.Day + "-" + u.Birthday.Value.Month + "-" + u.Birthday.Value.Year;
+            if (result.BirthDay != null)
+            {
+                result.BirthDay = u.Birthday.Value.Day + "-" + u.Birthday.Value.Month + "-" + u.Birthday.Value.Year;
+            }
             result.Address = u.AddressNow;
             Gender g = await _context.gender.FindAsync(u.GenderId);
             result.Gender = g.GenderName;

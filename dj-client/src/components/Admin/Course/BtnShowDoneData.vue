@@ -13,23 +13,28 @@
         </template>
         <v-card>
           <v-card-title class="text-h5"> Bài làm của học viên </v-card-title>
-          <v-card-text
-            >Sếp có chắc muốn xóa học phần này sau khi xóa sẽ không thể khôi
-            phục lại.</v-card-text
+          <span style="margin-left: 12px" v-if="!data"
+            >Học viên chưa hoàn thành</span
           >
+          <VideoDoneData
+            v-if="lessonTypeId == 1 && data"
+            :item="data.videoLesson.lesson"
+            :url="data.videoLesson.lessonLinkUrl"
+            :doneTime="data.doneTime"
+          />
+          <QuestionDoneData
+            v-if="lessonTypeId == 3 && data"
+            :item="data.questionLesson.lesson"
+            :dataItem="data.questionLesson"
+            :doneTime="data.doneTime"
+          />
           <v-card-actions>
             <v-spacer></v-spacer>
+
             <v-btn
               color="green-darken-1"
               variant="text"
               @click="dialog = false"
-            >
-              Hủy
-            </v-btn>
-            <v-btn
-              color="green-darken-1"
-              variant="text"
-              @click="deleteCourseChapter()"
             >
               Đồng ý
             </v-btn>
@@ -49,8 +54,11 @@
 </template>
 <script>
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
+import VideoDoneData from "./VideoDoneData";
+import QuestionDoneData from "./QuestionDoneData";
 export default {
   name: "BtnShowDoneData",
+  components: { VideoDoneData, QuestionDoneData },
   data() {
     return {
       dialog: false,
@@ -74,6 +82,16 @@ export default {
   props: {
     userId: Number,
     lessonId: Number,
+    lessonTypeId: Number,
+    list: Array,
+  },
+  watch: {
+    list: {
+      immediate: true,
+      handler() {
+        this.getData();
+      },
+    },
   },
 };
 </script>

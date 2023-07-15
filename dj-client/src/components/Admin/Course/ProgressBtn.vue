@@ -21,14 +21,14 @@
             >
           </v-card-title>
           <div
-            v-for="(item, index) in list"
+            v-for="(element, index) in list"
             :key="index"
             style="margin-bottom: 20px"
           >
             <span style="margin-left: 8px">
               Tên học phần:
               <span style="font-size: 16px; font-weight: 700">
-                {{ item.name }}
+                {{ element.name }}
               </span>
             </span>
             <v-table>
@@ -45,7 +45,7 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="(item1, index) in item.lessonProgressDTOs"
+                  v-for="(item1, index) in element.lessonProgressDTOs"
                   :key="index"
                 >
                   <td style="max-width: 40px" class="text-left">
@@ -104,6 +104,8 @@
                     <BtnShowDoneData
                       :userId="userId"
                       :lessonId="item1.lessonId"
+                      :lessonTypeId="item1.lessonTypeId"
+                      :list="list"
                     />
                     <BtnLockOrUnlockLesson
                       :userId="userId"
@@ -150,7 +152,7 @@ export default {
     dialog: false,
     btnLoading: false,
     text: "",
-    list: [],
+    list: null,
     userId: 0,
     chapterName: [],
     snackbar: false,
@@ -175,6 +177,15 @@ export default {
   created() {
     this.getCourseProgress();
   },
+  // watch: {
+  //   deep: true,
+  //   list: {
+  //     handler(newValue) {
+  //       const clonedValue = newValue.slice();
+  //       this.list = [...clonedValue];
+  //     },
+  //   },
+  // },
 };
 </script>
 

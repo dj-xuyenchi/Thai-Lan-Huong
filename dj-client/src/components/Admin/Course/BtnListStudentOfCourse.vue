@@ -29,18 +29,23 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in list" :key="index">
+              <tr v-for="(element, index) in list" :key="index">
                 <td>{{ index + 1 }}</td>
                 <td
                   style="display: flex; align-items: center; height: 74px"
                   class="user-detail"
                 >
-                  <UserDetail :item="item" />
+                  <UserDetail
+                    :userId="element.studentId"
+                    :avatar="element.studentAvatar"
+                    :isKYC="element.isKYC"
+                    :name="element.studentName"
+                  />
                 </td>
-                <td>{{ item.thisProcess }}</td>
-                <td>{{ item.evalute }}</td>
+                <td>{{ element.thisProcess }}</td>
+                <td>{{ element.evalute }}</td>
                 <td>
-                  <ProgressBtn :item="item" :courseId="courseId" />
+                  <ProgressBtn :item="element" :courseId="item.courseId" />
                 </td>
               </tr>
             </tbody>
@@ -80,15 +85,9 @@ export default {
     btnLoading: false,
     text: "",
     list: [],
-    dialogDetail: false,
-    courseId: 0,
     snackbar: false,
-    opt: false,
   }),
   methods: {
-    changeDialogDetail() {
-      this.dialogDetail = false;
-    },
     async getData(page) {
       const data = await AdminAPI.getStudentOfCourse(
         this.item.courseId,
@@ -99,7 +98,6 @@ export default {
     },
   },
   created() {
-    this.courseId = this.item.courseId;
     this.getData(1);
   },
 };

@@ -21,5 +21,6 @@ namespace dj_webdesigncore.Entities.CourseEntity
         public bool? IsSupportMultiLangue { get; set; }
         public int? LangueDefaultId { get; set; }
         public Langue? LangueDefault { get; set; }
+        public IEnumerable<TestCase> testCases { get; set; }
     }
 }
