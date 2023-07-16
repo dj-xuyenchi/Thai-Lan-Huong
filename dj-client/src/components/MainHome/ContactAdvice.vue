@@ -13,14 +13,18 @@
     </span>
     <div style="display: flex; justify-content: center">
       <div class="course-list">
-        <div style="width: 50%; float: left">
+        <div style="width: 50%; float: left" class="img-left">
           <img
             src="https://res.cloudinary.com/dushydq6r/image/upload/v1688031377/how-to-contact-binance-support_boxn5s.jpg"
             alt="Hình ảnh"
             style="height: 400px; width: 100%"
           />
         </div>
-        <div style="width: 50%; float: left" id="input-group">
+        <div
+          style="width: 50%; float: left"
+          id="input-group"
+          class="content-right"
+        >
           <v-text-field
             v-model="fullName"
             label="Họ và tên"
@@ -184,5 +188,24 @@ export default {
   cursor: pointer;
   text-decoration: underline;
   color: #eb5353;
+}
+
+@media screen and (max-width: 739px) {
+  .img-left {
+    display: none;
+  }
+  .content-right {
+    margin-top: 24px;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+  .img-left {
+    display: none;
+  }
+  .content-right {
+    margin-top: 24px;
+    width: 100%;
+  }
 }
 </style>

@@ -19,5 +19,6 @@ namespace dj_webdesigncore.Business.Lobby
         Task<ResponData<List<CourseListDTO>>> CourseListContent();
         Task<ResponData<ActionStatus>> AdviceMentor(AdviceMentorRequest adviceMentorRequest);
         Task<ResponData<TakeCertificateDTO>> TakeCertificate(int courseId, int userId);
+        Task<TryCodeHome> TryCodeHome(string source);
     }
 }

@@ -1,4 +1,5 @@
-﻿using dj_actionlayer.Business.YoutubeAPIv3;
+﻿using dj_actionlayer.Business.Compilerrrrrr;
+using dj_actionlayer.Business.YoutubeAPIv3;
 using dj_webdesigncore.Business.Lobby;
 using dj_webdesigncore.DTOs;
 using dj_webdesigncore.DTOs.Lobby;
@@ -9,6 +10,7 @@ using dj_webdesigncore.Entities.UserEntity;
 using dj_webdesigncore.Enums.ApiEnums;
 using dj_webdesigncore.Request.Course;
 using dj_webdesigncore.Request.SomeThingElse;
+using Google.Apis.SearchConsole.v1.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -331,6 +333,27 @@ namespace dj_actionlayer.Business.Lobby
             result.Status = dj_webdesigncore.Enums.ApiEnums.ActionStatus.SECCESSFULLY;
             result.Data = data;
             result.Messenger = "Lấy dữ liệu thành công!";
+            return result;
+        }
+
+        public async Task<TryCodeHome> TryCodeHome(string source)
+        {
+            if (source == null || source.Length == 0)
+            {
+                return null;
+            }
+            TryCodeHome result = new TryCodeHome();
+            var runCodeResult = await CompileUserCode.RunCSharpCode(source);
+            if (!runCodeResult.success)
+            {
+                result.Error = 2;
+                result.Result = runCodeResult.exeption;
+            }
+            if (runCodeResult.success)
+            {
+                result.Error = 1;
+                result.Result = runCodeResult.result;
+            }
             return result;
         }
 

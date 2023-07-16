@@ -55,5 +55,16 @@ class HomeAPI {
         });
     });
   }
+  tryCodeHome(tryCode: object): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.post(`/lobby/trycodehome`, tryCode)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }
 export default new HomeAPI();

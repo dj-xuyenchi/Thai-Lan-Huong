@@ -6,6 +6,7 @@
       :studentStudyed="studentStudyed"
       :studentStudying="studentStudying"
     />
+    <CodeHome />
     <ContactAdvice />
     <PostList :postList="postList" />
     <BlogList :blogList="blogList" />
@@ -17,6 +18,7 @@ import HeaderSlider from "./HeaderSlider.vue";
 import CourseList from "./CourseList.vue";
 import PostList from "./PostList.vue";
 import BlogList from "./BlogList.vue";
+import CodeHome from "./CodeHome.vue";
 import ContactAdvice from "./ContactAdvice.vue";
 import HomeAPI from "../../apis/APIHome/HomeAPI";
 import { mapMutations } from "vuex";
@@ -29,6 +31,7 @@ export default {
     PostList,
     BlogList,
     ContactAdvice,
+    CodeHome,
   },
   data: () => {
     return {

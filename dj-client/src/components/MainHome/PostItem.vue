@@ -157,4 +157,86 @@ export default {
 .react-info .react-icon {
   font-size: 16px;
 }
+@media screen and (max-width: 739px) {
+  .post-item {
+    height: 260px;
+  }
+  .post-item img {
+    height: 260px;
+  }
+  .author-info {
+    width: 100%;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .author-info .kyc {
+    height: 16px;
+    width: 16px;
+    margin-left: -4px;
+  }
+  .author-info img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  .author-info span {
+    margin: 0 8px 0 8px;
+    color: #242424;
+    font-size: 14px;
+    font-weight: 500;
+    font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+  .react-info {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    justify-content: flex-end;
+    height: 32px;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+  .post-item {
+    height: 260px;
+  }
+  .post-item img {
+    height: 260px;
+  }
+  .author-info {
+    width: 100%;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .author-info .kyc {
+    height: 16px;
+    width: 16px;
+    margin-left: -4px;
+  }
+  .author-info img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  .author-info span {
+    margin: 0 8px 0 8px;
+    color: #242424;
+    font-size: 14px;
+    font-weight: 500;
+    font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+  .react-info {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    justify-content: flex-end;
+    height: 32px;
+    align-items: center;
+  }
+}
 </style>

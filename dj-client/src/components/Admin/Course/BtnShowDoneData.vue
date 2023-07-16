@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-row>
-      <v-dialog v-model="dialog" persistent width="1024">
+      <v-dialog
+        v-model="dialog"
+        persistent
+        :width="lessonTypeId == 2 ? `80vw` : `1024`"
+      >
         <template v-slot:activator="{ props }">
           <v-btn
             color="green"
@@ -25,7 +29,12 @@
           <QuestionDoneData
             v-if="lessonTypeId == 3 && data"
             :item="data.questionLesson.lesson"
-            :dataItem="data.questionLesson"
+            :dataItem="data"
+            :doneTime="data.doneTime"
+          />
+          <PracDoneData
+            v-if="lessonTypeId == 2 && data"
+            :dataItem="data"
             :doneTime="data.doneTime"
           />
           <v-card-actions>
@@ -56,9 +65,10 @@
 import AdminAPI from "../../../apis/APIAdmin/AdminAPI.ts";
 import VideoDoneData from "./VideoDoneData";
 import QuestionDoneData from "./QuestionDoneData";
+import PracDoneData from "./PracDoneData";
 export default {
   name: "BtnShowDoneData",
-  components: { VideoDoneData, QuestionDoneData },
+  components: { VideoDoneData, QuestionDoneData, PracDoneData },
   data() {
     return {
       dialog: false,

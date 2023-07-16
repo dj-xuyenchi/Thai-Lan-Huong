@@ -38,14 +38,12 @@ export default {
 }
 @media screen and (max-width: 1023px) and (min-width: 740px) {
   .search-input {
-    width: 360px !important;
-    margin-left: 76px;
+    display: none;
   }
 }
 @media screen and (max-width: 739px) {
   .search-input {
-    width: 46% !important;
-    margin-left: 62px;
+    display: none;
   }
 }
 </style>

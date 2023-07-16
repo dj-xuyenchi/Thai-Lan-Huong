@@ -60,5 +60,10 @@ namespace dj_endpoint.Controllers.HomeAPIs
         {
             return Ok(await _lobby.TakeCertificate(courseId,userId));
         }
+        [HttpPost("trycodehome")]
+        public async Task<IActionResult> TryCodeHome(TryCodeRequest tryCodeRequest)
+        {
+            return Ok(await _lobby.TryCodeHome(tryCodeRequest.Code));
+        }
     }
 }

@@ -166,6 +166,14 @@ export default {
     },
   },
   props: { avatar: String, name: String, isKYC: Boolean, userId: Number },
+  watch: {
+    userId: {
+      immediate: true,
+      handler() {
+        this.getUserShow();
+      },
+    },
+  },
 };
 </script>
 

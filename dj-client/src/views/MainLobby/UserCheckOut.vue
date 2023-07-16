@@ -344,4 +344,9 @@ export default {
 ::-webkit-scrollbar {
   width: 0.5em;
 }
+
+@media screen and (max-width: 739px) {
+}
+@media screen and (max-width: 1023px) and (min-width: 740px) {
+}
 </style>

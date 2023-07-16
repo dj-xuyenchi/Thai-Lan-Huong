@@ -907,7 +907,7 @@ namespace dj_actionlayer.Business.Study
                     }
                 }
                 //
-           
+
                 isExist.DoneData = sendPracticeRequest.Code;
                 await _context.SaveChangesAsync();
                 result.Data = ActionStatus.EXIST;
@@ -1052,7 +1052,7 @@ namespace dj_actionlayer.Business.Study
                     }
                 }
                 //
-               
+
                 await _context.SaveChangesAsync();
                 result.Data = ActionStatus.SECCESSFULLY;
                 result.Messenger = "Lấy dữ liệu thành công!";

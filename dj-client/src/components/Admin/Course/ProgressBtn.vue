@@ -177,15 +177,14 @@ export default {
   created() {
     this.getCourseProgress();
   },
-  // watch: {
-  //   deep: true,
-  //   list: {
-  //     handler(newValue) {
-  //       const clonedValue = newValue.slice();
-  //       this.list = [...clonedValue];
-  //     },
-  //   },
-  // },
+  watch: {
+    deep: true,
+    item: {
+      handler() {
+        this.getCourseProgress();
+      },
+    },
+  },
 };
 </script>
 

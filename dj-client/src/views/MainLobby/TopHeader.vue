@@ -144,7 +144,7 @@ h4:hover {
     justify-content: unset !important;
   }
   .user-check {
-    width: 35% !important;
+    width: 45% !important;
   }
 }
 @media screen and (max-width: 1023px) and (min-width: 740px) {

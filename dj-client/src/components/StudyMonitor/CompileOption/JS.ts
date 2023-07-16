@@ -53,7 +53,6 @@ export const fixCodeJS = (code: string, callTest: string) => {
 
   return code;
 };
-
 export const runCode = (code: string, variable: string) => {
   code = code.replace("variable", variable);
   let logOutput = "";

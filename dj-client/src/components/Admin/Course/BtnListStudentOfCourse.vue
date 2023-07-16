@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-dialog v-model="dialog" persistent width="1024" height=" 70vh">
+      <v-dialog v-model="dialog" persistent width="1024" height="70vh">
         <template v-slot:activator="{ props }">
           <v-btn
             color="green"
@@ -50,6 +50,22 @@
               </tr>
             </tbody>
           </v-table>
+          <div class="text-center" @click="getData(page)">
+            <v-container>
+              <v-row justify="center">
+                <v-col cols="4">
+                  <v-container class="max-width">
+                    <v-pagination
+                      v-model="page"
+                      class="my-2"
+                      length="10"
+                      rounded="circle"
+                    ></v-pagination>
+                  </v-container>
+                </v-col>
+              </v-row>
+            </v-container>
+          </div>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
@@ -83,6 +99,7 @@ export default {
   data: () => ({
     dialog: false,
     btnLoading: false,
+    page: 1,
     text: "",
     list: [],
     snackbar: false,

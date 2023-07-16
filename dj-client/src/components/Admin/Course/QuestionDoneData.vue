@@ -97,7 +97,6 @@ export default {
   data() {
     return {};
   },
-
   props: {
     item: Object,
     dataItem: Object,
