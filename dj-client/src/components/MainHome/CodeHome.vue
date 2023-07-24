@@ -13,7 +13,7 @@
     >
       Học lập trình trực tuyến thực hành với các bài tập test case!
     </h4>
-    <v-col cols="1" sm="1" md="1">
+    <v-col style="width: 160px">
       <v-select
         label="Ngôn ngữ"
         :items="listLangueActive"
@@ -39,7 +39,13 @@
         :theme="'chrome'"
         :options="option"
         @input="onInput"
-        style="height: 400px; margin-top: 24px; width: 40vw; float: left"
+        style="
+          height: 400px;
+          margin-top: 24px;
+          width: 40vw;
+          float: left;
+          z-index: 0;
+        "
       />
       <div style="float: left; width: 50vw; height: 400px">
         <v-text-field

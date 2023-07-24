@@ -218,6 +218,17 @@ export default {
     item: Object,
     option: [],
   },
+  watch: {
+    item: {
+      immediate: true,
+      handler(newItem) {
+        this.opt2 = newItem.postStatus;
+        this.content = newItem.postData;
+        this.dataImage = newItem.postAvatar;
+        this.title = newItem.postTitle;
+      },
+    },
+  },
 };
 </script>
 

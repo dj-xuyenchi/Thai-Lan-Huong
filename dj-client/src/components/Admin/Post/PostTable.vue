@@ -23,24 +23,21 @@
             />
           </td>
           <td>{{ fixString(item.postTitle) }}</td>
-          <td>
-            <img
-              :src="item.userCreate.userAvatarData40x40"
-              alt="Hình ảnh"
-              style="height: 40px; width: 40px; border-radius: 50%; float: left"
-            />
-            <span style="float: left; line-height: 40px; margin-left: 8px">
-              {{
+
+          <td
+            style="display: flex; align-items: center; height: 74px"
+            class="user-detail"
+          >
+            <!-- sửa api trả thêm id -->
+            <UserDetail
+              :userId="item.userCreate.id"
+              :avatar="item.userCreate.userAvatarData40x40"
+              :isKYC="item.userCreate.isKYC"
+              :name="
                 item.userCreate.userFisrtName +
-                " " +
+                ` ` +
                 item.userCreate.userLastName
-              }}
-            </span>
-            <img
-              v-if="item.userCreate.isKYC"
-              :src="require('../../../assets/kyc.png')"
-              alt="Hình ảnh"
-              class="kyc"
+              "
             />
           </td>
           <td>{{ fixDate(item.createPost) }}</td>
@@ -60,10 +57,11 @@
 </template>
 
 <script>
+import UserDetail from "../CommonComponent/UserDetail.vue";
 import BtnPreviewPost from "./BtnPreviewPost";
 export default {
   name: "PostTable",
-  components: { BtnPreviewPost },
+  components: { BtnPreviewPost, UserDetail },
   data() {
     return {
       itemsPerPage: 15,
@@ -101,5 +99,8 @@ export default {
   position: relative;
   top: 9px;
   left: 4px;
+}
+.user-detail:hover {
+  cursor: pointer;
 }
 </style>

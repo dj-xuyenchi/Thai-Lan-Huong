@@ -15,20 +15,26 @@
       <tbody>
         <tr v-for="(item, index) in tableData" :key="index">
           <td>{{ index + 1 }}</td>
-          <td>
-            <img
-              :src="item.senderImg"
-              alt="Hình ảnh"
-              style="height: 30px; width: 30px; border-radius: 50%; float: left"
+          <td
+            style="display: flex; align-items: center; height: 74px"
+            class="user-detail"
+          >
+            <UserDetail
+              :userId="69"
+              :avatar="item.senderImg"
+              :isKYC="item.senderKYC"
+              :name="item.senderName"
             />
-            <span style="float: left; line-height: 30px; margin-left: 8px">{{
-              item.senderName
-            }}</span>
-            <img
-              v-if="item.senderKYC"
-              :src="require('../../../assets/kyc.png')"
-              alt="Hình ảnh"
-              class="kyc"
+          </td>
+          <td
+            style="display: flex; align-items: center; height: 74px"
+            class="user-detail"
+          >
+            <UserDetail
+              :userId="69"
+              :avatar="item.senderImg"
+              :isKYC="item.senderKYC"
+              :name="item.senderName"
             />
           </td>
           <td>
@@ -65,9 +71,11 @@
 
 <script>
 import ConfirmDenounce from "./ConfirmDenounce.vue";
+
+import UserDetail from "../CommonComponent/UserDetail.vue";
 export default {
   name: "UserTable",
-  components: { ConfirmDenounce },
+  components: { ConfirmDenounce, UserDetail },
   data() {
     return {
       itemsPerPage: 15,
