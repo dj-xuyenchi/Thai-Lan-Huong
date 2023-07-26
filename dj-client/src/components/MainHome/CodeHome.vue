@@ -48,7 +48,7 @@
         "
       />
       <div style="float: left; width: 50vw; height: 400px">
-        <v-text-field
+        <v-textarea
           variant="outlined"
           :loading="loading"
           readonly
@@ -59,9 +59,10 @@
               ? `color:green`
               : `color:red`
           "
-          style="height: 820px; width: 90%; margin-left: 12px"
-          >{{ result.result }}</v-text-field
-        >
+          style="width: 90%; margin-left: 12px"
+          rows="15"
+          v-model="result.result"
+        ></v-textarea>
       </div>
     </div>
   </div>
