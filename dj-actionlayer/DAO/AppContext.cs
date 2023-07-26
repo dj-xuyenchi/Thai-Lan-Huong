@@ -94,7 +94,7 @@ namespace dj_actionlayer.DAO
             //  optionsBuilder.UseSqlServer(Settings.DBConnectHostingRemote());
             //  optionsBuilder.UseSqlServer(Settings.DBConnect());
             //   optionsBuilder.UseSqlServer(Settings.DBConnectVPS());
-            optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
+           optionsBuilder.UseSqlServer(Settings.DBConnectDeploy());
         }
     }
 }

@@ -930,11 +930,13 @@ namespace dj_actionlayer.Business.Admin
                     denounceReportADMIN.cmtDenounceContent = cmtP.Comment;
                 }
                 User sender = await _context.user.FindAsync(item.UserSendId);
+                denounceReportADMIN.senderId = sender.Id;
                 denounceReportADMIN.senderImg = sender.UserAvatarData40x40;
                 denounceReportADMIN.senderName = sender.UserFisrtName + " " + sender.UserLastName;
                 denounceReportADMIN.senderKYC = (bool)sender.IsKYC;
                 User vio = await _context.user.FindAsync(item.UserViolationId);
                 denounceReportADMIN.vioImg = vio.UserAvatarData40x40;
+                denounceReportADMIN.vioId = vio.Id;
                 denounceReportADMIN.vioKYC = (bool)vio.IsKYC;
                 denounceReportADMIN.vioName = vio.UserFisrtName + " " + vio.UserLastName;
                 denounceReportADMIN.sendTime = item.SendTime.Day + " - " + item.SendTime.Month + " - " + item.SendTime.Year;
@@ -1630,7 +1632,7 @@ namespace dj_actionlayer.Business.Admin
             cateNewUser.Category = "Người dùng mới";
             int[] dataWeek = new int[7];
             int index = 0;
-            var listNewUser = _context.user.Where(x => x.CreateAccount.Value.Year == DateTime.Now.Year && x.CreateAccount.Value.Month == DateTime.Now.Month).ToList();
+            var listNewUser = _context.user.Where(x => x.CreateAccount.Value.Year == DateTime.Now.Year && x.CreateAccount.Value.Month == DateTime.Now.Month && x.UserStatusId == 1).ToList();
             for (int i = DateTime.Now.Day; i > DateTime.Now.Day - 7; i--)
             {
                 dataWeek[index] = listNewUser.Where(x => x.CreateAccount.Value.Day == i).Count();

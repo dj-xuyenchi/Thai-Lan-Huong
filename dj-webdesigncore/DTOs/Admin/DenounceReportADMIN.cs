@@ -9,6 +9,7 @@ namespace dj_webdesigncore.DTOs.Admin
     public class DenounceReportADMIN
     {
         public int denounceId { get; set; }
+        public int senderId { get; set; }
         public string senderImg { get; set; }
         public string senderName { get; set; }
         public bool senderKYC { get; set; }

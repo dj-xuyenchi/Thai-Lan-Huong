@@ -343,6 +343,12 @@ namespace dj_actionlayer.Business.Lobby
                 return null;
             }
             TryCodeHome result = new TryCodeHome();
+            if (source.Contains("Directory") || source.Contains("File") || source.Contains("FileInfo"))
+            {
+                result.Error = 2;
+                result.Result = "Security Protect!";
+                return result;
+            }
             var runCodeResult = await CompileUserCode.RunCSharpCode(source);
             if (!runCodeResult.success)
             {

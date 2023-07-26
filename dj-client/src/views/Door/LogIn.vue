@@ -143,7 +143,6 @@ export default {
         Password: SHA512(this.password).toString(),
       };
       const login = await AuthApis.getLogin(requestLogin);
-      console.log("this.$store.state :>> ", this.$store.state);
       if (login.success == 1) {
         this.loginStatus = "Tài khoản hoặc mật khẩu không chính xác.";
         this.dialog = false;

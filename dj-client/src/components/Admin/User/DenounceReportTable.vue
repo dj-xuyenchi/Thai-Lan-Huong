@@ -15,42 +15,20 @@
       <tbody>
         <tr v-for="(item, index) in tableData" :key="index">
           <td>{{ index + 1 }}</td>
-          <td
-            style="display: flex; align-items: center; height: 74px"
-            class="user-detail"
-          >
+          <td class="user-detail">
             <UserDetail
-              :userId="69"
+              :userId="item.senderId"
               :avatar="item.senderImg"
               :isKYC="item.senderKYC"
               :name="item.senderName"
             />
           </td>
-          <td
-            style="display: flex; align-items: center; height: 74px"
-            class="user-detail"
-          >
+          <td class="user-detail">
             <UserDetail
-              :userId="69"
-              :avatar="item.senderImg"
-              :isKYC="item.senderKYC"
-              :name="item.senderName"
-            />
-          </td>
-          <td>
-            <img
-              :src="item.vioImg"
-              alt="Hình ảnh"
-              style="height: 30px; width: 30px; border-radius: 50%; float: left"
-            />
-            <span style="float: left; line-height: 30px; margin-left: 8px">{{
-              item.vioName
-            }}</span>
-            <img
-              v-if="item.vioKYC"
-              :src="require('../../../assets/kyc.png')"
-              alt="Hình ảnh"
-              class="kyc"
+              :userId="item.vioId"
+              :avatar="item.vioImg"
+              :isKYC="item.vioKYC"
+              :name="item.vioName"
             />
           </td>
           <td>{{ fixCmt(item.cmtDenounceContent) }}</td>
@@ -105,5 +83,8 @@ export default {
   position: relative;
   top: 4px;
   left: 4px;
+}
+.user-detail:hover {
+  cursor: pointer;
 }
 </style>

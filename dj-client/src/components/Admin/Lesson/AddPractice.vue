@@ -69,6 +69,14 @@
                     v-model="callTestCode"
                   ></v-text-field>
                 </v-col>
+                <v-col cols="12">
+                  <v-textarea
+                    counter
+                    label="Giải thích*"
+                    hint="Giải thích ví dụ"
+                    v-model="explainCode"
+                  ></v-textarea>
+                </v-col>
                 <v-col cols="6">
                   <v-text-field
                     label="Case mặc định giải thích tham số"
@@ -101,14 +109,6 @@
                     hint="Output test case ví dụ"
                     :rules="rules"
                     v-model="outputExemple"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    label="Giải thích*"
-                    hint="Giải thích ví dụ"
-                    :rules="rules"
-                    v-model="explainCode"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">

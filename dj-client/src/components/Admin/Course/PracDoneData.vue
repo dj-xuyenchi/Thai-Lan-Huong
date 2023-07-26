@@ -125,7 +125,6 @@ export default {
   created() {
     this.userCode = this.dataItem.doneData;
     this.testCase = this.dataItem.practiceLesson.testCases;
-    console.log(this.testCase);
   },
 };
 </script>

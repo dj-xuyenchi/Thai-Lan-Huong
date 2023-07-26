@@ -387,8 +387,11 @@ namespace dj_actionlayer.Business.Study
 
         public async Task<ResponData<TryTestCaseResultDTO>> TryTestCase(CodeRequest codeRequest)
         {
-
             ResponData<TryTestCaseResultDTO> result = new ResponData<TryTestCaseResultDTO>();
+            TryTestCaseResultDTO tryTestCaseResultDTO = new TryTestCaseResultDTO();
+                List<TryTestCaseDTO> listTest = new List<TryTestCaseDTO>();
+            string codeContent = codeRequest.Code;
+            
             if (codeRequest.Code == null)
             {
                 result.Messenger = "Lấy dữ liệu thất bại không nhận được code!";
@@ -404,8 +407,6 @@ namespace dj_actionlayer.Business.Study
             try
             {
                 var listTestCase = _context.test_case.Where(x => x.PracticeLessonId == codeRequest.PracticeLessonId).OrderBy(x => x.SortNumber).ToList();
-                TryTestCaseResultDTO tryTestCaseResultDTO = new TryTestCaseResultDTO();
-                List<TryTestCaseDTO> listTest = new List<TryTestCaseDTO>();
                 dj_webdesigncore.Entities.CourseEntity.PracticeLesson practiceLesson = await _context.practice_lesson.FindAsync(codeRequest.PracticeLessonId);
                 if (practiceLesson.Input == null)
                 {
@@ -413,6 +414,14 @@ namespace dj_actionlayer.Business.Study
                     {
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
+                        if (codeContent.Contains("Directory") || codeContent.Contains("File") || codeContent.Contains("FileInfo"))
+                        {
+                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.EXCEPTION;
+                            testDTO.Output = "Security Protect!";
+                            testDTO.RunTimeTotal = "Lỗi! không tính được";
+                            listTest.Add(testDTO);
+                            continue;
+                        }
                         var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code);
                         testDTO.Input = "Không có";
                         testDTO.ExpectOutput = item.ExpectOutput;
@@ -451,6 +460,14 @@ namespace dj_actionlayer.Business.Study
                         TryTestCaseDTO testDTO = new TryTestCaseDTO();
                         testDTO.LockTestCase = item.LockTestCase;
                         callTestCode = callTestCode.Replace("variable", item.Input);
+                        if (codeContent.Contains("Directory") || codeContent.Contains("File") || codeContent.Contains("FileInfo"))
+                        {
+                            testDTO.Result = dj_webdesigncore.Enums.CourseEnums.TestCaseEnum.EXCEPTION;
+                            testDTO.Output = "Security Protect!";
+                            testDTO.RunTimeTotal = "Lỗi! không tính được";
+                            listTest.Add(testDTO);
+                            continue;
+                        }
                         var runCodeResult = await CompileUserCode.RunCSharpCode(codeRequest.Code + callTestCode);
                         callTestCode = practiceLesson.CallTestCode;
                         testDTO.Input = item.Input;
