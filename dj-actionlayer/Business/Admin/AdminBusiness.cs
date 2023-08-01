@@ -1743,14 +1743,18 @@ namespace dj_actionlayer.Business.Admin
             return await _context.advice_contact.FindAsync(adviceId);
         }
 
-        public async Task<CourseAnaDTO> getCourseAna()
+        public async Task<CourseAnaDTO> getCourseAna(int type = -1)
         {
             CourseAnaDTO result = new CourseAnaDTO();
             List<string> ListCourse = new List<string>();
             List<int> Total = new List<int>();
             List<int> Learning = new List<int>();
             List<int> Done = new List<int>();
-            var list = _context.course.Where(x => x.Id != 13).ToList();
+            var list = _context.course.Where(x => x.Id != 13).AsNoTracking();
+            if (type != -1)
+            {
+                list = list.Where(x => x.CourseTypeId == type);
+            }
             foreach (var item in list)
             {
                 ListCourse.Add(item.CourseCode);

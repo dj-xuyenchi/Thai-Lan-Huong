@@ -113,11 +113,14 @@ export default {
   },
   components: { BarLabelRotationAdvice },
   mounted() {
-    this.getCourseAna();
+    this.getCourseAna(-1);
   },
   methods: {
-    async getCourseAna() {
-      const data = await AdminAPI.getCourseAna(localStorage.getItem("token"));
+    async getCourseAna(type) {
+      const data = await AdminAPI.getCourseAna(
+        type,
+        localStorage.getItem("token")
+      );
       this.courseAna = data;
     },
   },

@@ -273,9 +273,9 @@ namespace dj_endpoint.Controllers.Admin
             return Ok(await _admin.getAdviceDetail(adviceId));
         }
         [HttpGet("getcourseana")]
-        public async Task<IActionResult> GetCourseAna()
+        public async Task<IActionResult> GetCourseAna(int type = -1)
         {
-            return Ok(await _admin.getCourseAna());
+            return Ok(await _admin.getCourseAna(type));
         }
         [HttpGet("getliststudentofcourse")]
         public async Task<IActionResult> GetStudentOfCourse(int courseId, int page)

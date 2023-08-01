@@ -866,9 +866,9 @@ class AdminAPI {
         });
     });
   }
-  getCourseAna(token: string): Promise<any> {
+  getCourseAna(type: number, token: string): Promise<any> {
     return new Promise<any>((resolve: any, reject: any) => {
-      HTTP.get(`/admin/getcourseana`, {
+      HTTP.get(`/admin/getcourseana?type=${type}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
