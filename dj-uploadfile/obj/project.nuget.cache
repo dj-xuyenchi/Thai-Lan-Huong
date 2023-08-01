@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "rKPGjtWPXroUCEC8OsFEB6XcBxhfGKS4OWaM1o9sVF/LCldE9b4TnE+o9iXSmZ4KkG42fStYutFwVHyNIi9+6Q==",
+  "dgSpecHash": "DbeAhCvscKPxBFqZLCsdJVoI1eBchDe5v/dSugbe1MY3I8nE1aB5ysYE+WvXcvQrClSuWRHrluFSgQwnLue0QQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LTS\\Source\\Repos\\Thai-Lan-Huong\\dj-uploadfile\\dj-uploadfile.csproj",
+  "projectFilePath": "C:\\Users\\DJ\\Documents\\Thai-Lan-Huong\\dj-uploadfile\\dj-uploadfile.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\LTS\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\system.memory\\4.5.1\\system.memory.4.5.1.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.1\\system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
+    "C:\\Users\\DJ\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\system.memory\\4.5.1\\system.memory.4.5.1.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.1\\system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }
