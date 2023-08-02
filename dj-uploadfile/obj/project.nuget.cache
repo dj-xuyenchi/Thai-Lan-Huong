@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l9Q7wrNK4bmFJyoNF1dlalfanE4KxflIVZRDeDlH6x852bPRixr0yhih/0ekW2Ixp6q6F13Xu1tklJlJVqRPaQ==",
+  "dgSpecHash": "54OEDA2Kenc+T/lcsokFLtbJSvO7z7/PZryuT7Z2duD+Mnk7OrjnWpvrBebmSBJ3iIXXODjuYkOqiBdSc7V8AQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-uploadfile\\dj-uploadfile.csproj",
   "expectedPackageFiles": [
@@ -14,5 +14,12 @@
     "C:\\Users\\LTS\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.1\\system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-uploadfile\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

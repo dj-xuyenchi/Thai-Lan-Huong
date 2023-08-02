@@ -51,6 +51,7 @@ export default {
     handleOpen(params) {
       this.dialog = true;
       this.chartData = {
+        data: {},
         title: this.title[5],
       };
       console.log(params);

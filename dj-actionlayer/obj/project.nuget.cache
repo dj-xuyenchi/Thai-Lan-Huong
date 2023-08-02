@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "r0SaRhcCf4EtNK4csTcv0aIXFL2Pk26EBebMp9dSHMbCoMgx2zVaMV30YdfOEJZGMz9Ux1a1RW6E32wFx64dTw==",
+  "dgSpecHash": "i6XZEykYpyQSAccLcqnTDAdh18cffMwJicA7wq+thpi2vJT8cAWHIE6drLr4nEmH1uWcnzmPqFocR/+d6aGILg==",
   "success": true,
   "projectFilePath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
   "expectedPackageFiles": [
@@ -67,5 +67,12 @@
     "C:\\Users\\LTS\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-actionlayer\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

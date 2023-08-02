@@ -124,7 +124,7 @@
         "projectName": "dj-uploadfile",
         "projectPath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-uploadfile\\dj-uploadfile.csproj",
         "packagesPath": "C:\\Users\\LTS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\LTS\\Source\\Repos\\Thai-Lan-Huong\\dj-uploadfile\\obj\\",
+        "outputPath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-uploadfile\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "90gldoe3FIN2kU7DkA8h7RSRGSJtqBh2LUgie/WVdE3fofnqFxkoAzjAsViSd3BlawQtvHT513yawWJc3SA5JQ==",
+  "dgSpecHash": "x1EfBEagCqwa9V0P1DPpYHhKNgkzr0zwGoAKbp8sfGmA1aRpail4l2dUmcAFkVC044gttZ6mMnGUW7RjnsNoDw==",
   "success": true,
   "projectFilePath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
   "expectedPackageFiles": [
@@ -72,5 +72,12 @@
     "C:\\Users\\LTS\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-endpoint\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
