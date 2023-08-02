@@ -20,6 +20,7 @@ using dj_webdesigncore.Request.SomeThingElse;
 using Google.Apis.AnalyticsReporting.v4.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -2006,6 +2007,25 @@ namespace dj_actionlayer.Business.Admin
             result.IsKYC = (bool)u.IsKYC;
             UserRole ur = await _context.user_role.FindAsync(u.UserRoleId);
             result.Role = ur.UserRoleName;
+            return result;
+        }
+
+        public async Task<List<AdviceByItemDTO>> GetAdviceAna(int opt = 1)
+        {
+            List<AdviceByItemDTO> result = new List<AdviceByItemDTO>();
+            var list = _context.advice_contact.AsNoTracking();
+            if (opt == 1)
+            {
+                for (int i = DateTime.Now.Day; i > DateTime.Now.Day - 7; i--)
+                {
+                    AdviceByItemDTO abi = new AdviceByItemDTO();
+              
+                }
+            }
+            if (opt == 2)
+            {
+                list.Where(x => x.SendRequest < DateTime.Now.AddDays(-7)).AsNoTracking();
+            }
             return result;
         }
     }

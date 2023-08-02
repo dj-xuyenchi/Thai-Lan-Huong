@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rKPGjtWPXroUCEC8OsFEB6XcBxhfGKS4OWaM1o9sVF/LCldE9b4TnE+o9iXSmZ4KkG42fStYutFwVHyNIi9+6Q==",
+  "dgSpecHash": "l9Q7wrNK4bmFJyoNF1dlalfanE4KxflIVZRDeDlH6x852bPRixr0yhih/0ekW2Ixp6q6F13Xu1tklJlJVqRPaQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LTS\\Source\\Repos\\Thai-Lan-Huong\\dj-uploadfile\\dj-uploadfile.csproj",
+  "projectFilePath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-uploadfile\\dj-uploadfile.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LTS\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

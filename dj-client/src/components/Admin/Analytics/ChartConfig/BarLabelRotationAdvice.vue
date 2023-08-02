@@ -213,6 +213,24 @@ export default {
             },
             data: this.courseAna.done,
           },
+          {
+            name: this.title[3],
+            type: "bar",
+            label: labelOption,
+            emphasis: {
+              focus: "series",
+            },
+            data: this.courseAna.done,
+          },
+          {
+            name: this.title[4],
+            type: "bar",
+            label: labelOption,
+            emphasis: {
+              focus: "series",
+            },
+            data: this.courseAna.done,
+          },
         ],
       };
 

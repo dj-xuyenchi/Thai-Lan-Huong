@@ -25,19 +25,21 @@ export default defineComponent({
   },
   methods: {
     renderChart() {
-      const labels = ["Red", "Orange", "Yellow", "Green", "Blue"];
+      const labels = ["Tổng số học viên", "Đang học", "Đã học xong"];
       const data = {
         labels: labels,
         datasets: [
           {
             label: "Dataset 1",
-            data: [1, 5, 7, 8, 2],
+            data: [
+              this.chartData.data.total,
+              this.chartData.data.learning,
+              this.chartData.data.done,
+            ],
             backgroundColor: [
               "rgba(255, 99, 132,0.5)",
               "rgba(75, 192, 192,0.5)",
               "rgba(255, 205, 86,0.5)",
-              "rgba(201, 203, 207,0.5)",
-              "rgba(54, 162, 235,0.5)",
             ],
           },
         ],

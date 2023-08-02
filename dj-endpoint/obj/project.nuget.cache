@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t+3/pRoJE+1AQa2Kdmbj5wgL0ZAZogPsFOoqFUG3ol3337gnQBGB0iw73H3G78EnwMJVTGnaLa6im69Ryy1Z0g==",
+  "dgSpecHash": "90gldoe3FIN2kU7DkA8h7RSRGSJtqBh2LUgie/WVdE3fofnqFxkoAzjAsViSd3BlawQtvHT513yawWJc3SA5JQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LTS\\Source\\Repos\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
+  "projectFilePath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-endpoint\\dj-endpoint.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LTS\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\google.apis\\1.60.0\\google.apis.1.60.0.nupkg.sha512",

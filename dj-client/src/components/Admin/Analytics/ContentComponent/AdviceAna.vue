@@ -15,32 +15,6 @@
           style="margin: 20px 0 0 8px; width: 20%; float: left"
           @update:modelValue="changeOpt()"
         ></v-select>
-        <v-select
-          v-model="optTuVan"
-          label="Bộ lọc"
-          :items="listOptTuVan"
-          variant="outlined"
-          item-title="name"
-          persistent-hint
-          return-object
-          item-value="id"
-          density="compact"
-          style="margin: 20px 0 0 8px; width: 20%; float: left"
-          @update:modelValue="changeBoLoc()"
-        ></v-select>
-        <v-select
-          v-model="optTrangThai"
-          label="Trạng thái"
-          :items="listOptTrangThai"
-          variant="outlined"
-          item-title="name"
-          persistent-hint
-          return-object
-          item-value="id"
-          density="compact"
-          style="margin: 20px 0 0 8px; width: 20%; float: left"
-          @update:modelValue="changeBoLoc2()"
-        ></v-select>
       </div>
       <div style="height: 40px; position: relative" v-if="opt.id == 3">
         <div style="position: absolute; left: 10px">
@@ -122,6 +96,9 @@ export default {
         localStorage.getItem("token")
       );
       this.courseAna = data;
+    },
+    changeOpt() {
+      console.log();
     },
   },
   watch: {

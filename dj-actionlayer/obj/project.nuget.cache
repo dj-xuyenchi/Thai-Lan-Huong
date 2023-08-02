@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qnrS/v/j07zDEtYBWi5hVm7xNiVTyGloUyWOdkUNmBrz5SPr0zqZ0TqfNSnrWapWMXWN43jkIxGO10iUJfPVZQ==",
+  "dgSpecHash": "r0SaRhcCf4EtNK4csTcv0aIXFL2Pk26EBebMp9dSHMbCoMgx2zVaMV30YdfOEJZGMz9Ux1a1RW6E32wFx64dTw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LTS\\Source\\Repos\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
+  "projectFilePath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-actionlayer\\dj-actionlayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LTS\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
     "C:\\Users\\LTS\\.nuget\\packages\\google.apis\\1.60.0\\google.apis.1.60.0.nupkg.sha512",

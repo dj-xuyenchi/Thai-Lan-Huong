@@ -71,7 +71,7 @@
     </v-card>
     <CourseAna />
     <br />
-    <AdviceAna style="margin-bottom: 24px" />
+    <!-- <AdviceAna style="margin-bottom: 24px" /> -->
   </div>
   <v-snackbar v-model="snackbar">
     {{ text }}
@@ -95,7 +95,7 @@ import { mapMutations } from "vuex";
 export default {
   name: "AnalyticsApp",
   components: {
-    AdviceAna,
+    // AdviceAna,
     CourseAna,
     LineChart,
     StackedHorizontalBar,
