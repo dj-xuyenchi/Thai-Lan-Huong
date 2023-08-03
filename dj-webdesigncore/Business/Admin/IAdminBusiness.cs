@@ -79,5 +79,6 @@ namespace dj_webdesigncore.Business.Admin
         Task<QuestionDoneData> GetQuesDoneDataOfUser(int userId, int quesId);
         Task<UserShowDTO> GetUserShow(int userId);
         Task<List<AdviceByItemDTO>> GetAdviceAna(int opt = 1);
+        Task<List<ListStudentOfCourse>> GetCourseAnaType(int courseId, int page, int opt = 1);
     }
 }

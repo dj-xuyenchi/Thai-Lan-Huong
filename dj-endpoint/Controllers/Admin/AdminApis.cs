@@ -315,5 +315,10 @@ namespace dj_endpoint.Controllers.Admin
         {
             return Ok(await _admin.GetUserShow(userId));
         }
+        [HttpGet("courseanatype")]
+        public async Task<IActionResult> GetCourseAnaType(int courseId, int page, int opt = 1)
+        {
+            return Ok(await _admin.GetCourseAnaType(courseId, page, opt));
+        }
     }
 }

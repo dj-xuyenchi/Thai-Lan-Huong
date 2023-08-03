@@ -22,9 +22,7 @@
           <p>
             Khóa học <span style="color: red">{{ coursename }}</span>
           </p>
-          <v-btn color="green-darken-1" variant="text" @click="dialog = false">
-            Danh sách tất cả học viên
-          </v-btn>
+          <CourseAnaType />
           <v-btn color="green-darken-1" variant="text" @click="dialog = false">
             Danh sách học viên đang học
           </v-btn>
@@ -47,9 +45,9 @@
 <script>
 import * as echarts from "echarts";
 import PolarAreaChart from "../ChartJsConfig/PolarAreaChart.vue";
-
+import CourseAnaType from "./CourseAnaType";
 export default {
-  components: { PolarAreaChart },
+  components: { PolarAreaChart, CourseAnaType },
   mounted() {
     this.renderChart();
   },

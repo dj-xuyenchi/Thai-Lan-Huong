@@ -1,4 +1,5 @@
 ﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using DJ_UploadFile.Services;
 using dj_webdesigncore.Business.Admin;
 using dj_webdesigncore.DTOs;
@@ -2019,12 +2020,76 @@ namespace dj_actionlayer.Business.Admin
                 for (int i = DateTime.Now.Day; i > DateTime.Now.Day - 7; i--)
                 {
                     AdviceByItemDTO abi = new AdviceByItemDTO();
-              
+
                 }
             }
             if (opt == 2)
             {
                 list.Where(x => x.SendRequest < DateTime.Now.AddDays(-7)).AsNoTracking();
+            }
+            return result;
+        }
+        public async Task<List<ListStudentOfCourse>> GetCourseAnaType(int courseId, int page, int opt = 1)
+        {
+            List<ListStudentOfCourse> result = new List<ListStudentOfCourse>();
+            var userCourse = _context.user_course.Where(x => x.CourseId == courseId).OrderByDescending(x => x.ResisterDateTime).AsNoTracking();
+            if (opt == 1)
+            {
+                userCourse = userCourse.Skip((page - 1) * 15).Take(15);
+            }
+            if (opt == 2)
+            {
+                userCourse = userCourse.Where(x => x.isDone == false).Skip((page - 1) * 15).Take(15);
+            }
+            if (opt == 3)
+            {
+                userCourse = userCourse.Where(x => x.isDone == true).Skip((page - 1) * 15).Take(15);
+            }
+            foreach (var item in userCourse)
+            {
+                ListStudentOfCourse data = new ListStudentOfCourse();
+                data.StudentId = (int)item.UserId;
+                User user = await _context.user.FindAsync(item.UserId);
+                data.StudentName = user.UserFisrtName + " " + user.UserLastName;
+                data.StudentAvatar = user.UserAvatarData40x40;
+                data.IsKYC = (bool)user.IsKYC;
+                Course course = await _context.course.FindAsync(courseId);
+                if (item.isDone)
+                {
+                    data.ThisProcess = "Đã hoàn thành";
+                    data.Evalute = course.LessonCount + "/" + course.LessonCount + " bài học hoàn thành!";
+                }
+                else
+                {
+                    Lesson l = await _context.lesson.FindAsync(item.LessonProcessId);
+                    if (l != null)
+                    {
+                        data.ThisProcess = l.LessonName;
+                        ChapterLesson cl = await _context.chapter_lesson.Where(x => x.LessonId == item.LessonProcessId).FirstOrDefaultAsync();
+                        CourseChapter cc = await _context.course_chapter.FindAsync(cl.CourseChapterId);
+                        if (cc.SortNumber == 1)
+                        {
+                            data.Evalute = cl.SortNumber + "/" + course.LessonCount + " bài học hoàn thành!";
+                        }
+                        else
+                        {
+                            var lstCourseChapter = _context.course_chapter.Where(x => x.CourseId == courseId && x.SortNumber < cc.SortNumber);
+                            int total = 0;
+                            foreach (var item1 in lstCourseChapter)
+                            {
+                                total += item1.ChapterLessonCount;
+                            }
+                            total += cl.SortNumber;
+                            data.Evalute = total + "/" + course.LessonCount + " bài học hoàn thành!";
+                        }
+                    }
+                    else
+                    {
+                        data.ThisProcess = "Dữ liệu chưa cập nhật!";
+                        data.Evalute = "Dữ liệu chưa cập nhật!";
+                    }
+                }
+                result.Add(data);
             }
             return result;
         }
