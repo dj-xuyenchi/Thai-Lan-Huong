@@ -1752,6 +1752,7 @@ namespace dj_actionlayer.Business.Admin
             List<int> Total = new List<int>();
             List<int> Learning = new List<int>();
             List<int> Done = new List<int>();
+            List<int> CourseId = new List<int>();
             var list = _context.course.Where(x => x.Id != 13).AsNoTracking();
             if (type != -1)
             {
@@ -1759,12 +1760,14 @@ namespace dj_actionlayer.Business.Admin
             }
             foreach (var item in list)
             {
+                CourseId.Add(item.Id);
                 ListCourse.Add(item.CourseCode);
                 Total.Add(_context.user_course.Where(x => x.CourseId == item.Id).Count());
                 Learning.Add(_context.user_course.Where(x => x.CourseId == item.Id && x.isDone == false).Count());
                 Done.Add(_context.user_course.Where(x => x.CourseId == item.Id && x.isDone == true).Count());
             }
             result.ListCourse = ListCourse;
+            result.CourseId = CourseId;
             result.Total = Total;
             result.Learning = Learning;
             result.Done = Done;

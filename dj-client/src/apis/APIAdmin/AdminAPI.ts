@@ -983,5 +983,29 @@ class AdminAPI {
         });
     });
   }
+  getCourseAnaType(
+    courseId: number,
+    page: number,
+    opt: number,
+    token: string
+  ): Promise<any> {
+    return new Promise<any>((resolve: any, reject: any) => {
+      HTTP.get(
+        `/admin/courseanatype?courseId=${courseId}&page=${page}&opt=${opt}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          Error(error);
+          reject(error);
+        });
+    });
+  }
 }
 export default new AdminAPI();

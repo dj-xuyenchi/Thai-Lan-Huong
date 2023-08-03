@@ -86,3 +86,25 @@ C:\Users\DJ\Documents\Thai-Lan-Huong\dj-uploadfile\obj\Release\net6.0\refint\dj-
 C:\Users\DJ\Documents\Thai-Lan-Huong\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.pdb
 C:\Users\DJ\Documents\Thai-Lan-Huong\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.genruntimeconfig.cache
 C:\Users\DJ\Documents\Thai-Lan-Huong\dj-uploadfile\obj\Release\net6.0\ref\dj-uploadfile.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\dj-uploadfile.exe
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\dj-uploadfile.deps.json
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\dj-uploadfile.runtimeconfig.json
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\dj-uploadfile.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\dj-uploadfile.pdb
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\CloudinaryDotNet.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\Microsoft.AspNetCore.Html.Abstractions.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\Microsoft.AspNetCore.Http.Abstractions.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\bin\Release\net6.0\Newtonsoft.Json.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.csproj.AssemblyReference.cache
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.AssemblyInfoInputs.cache
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.AssemblyInfo.cs
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.csproj.CoreCompileInputs.cache
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.csproj.CopyComplete
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\refint\dj-uploadfile.dll
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.pdb
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\dj-uploadfile.genruntimeconfig.cache
+C:\Users\DJ\source\repos\New folder\dj-uploadfile\obj\Release\net6.0\ref\dj-uploadfile.dll

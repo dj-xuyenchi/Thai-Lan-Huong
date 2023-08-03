@@ -19,16 +19,24 @@
       <v-card>
         <v-card-title class="text-h5"> </v-card-title>
         <v-card-text>
-          <p>
+          <p style="margin-bottom: 12px">
             Khóa học <span style="color: red">{{ coursename }}</span>
           </p>
-          <CourseAnaType />
-          <v-btn color="green-darken-1" variant="text" @click="dialog = false">
-            Danh sách học viên đang học
-          </v-btn>
-          <v-btn color="green-darken-1" variant="text" @click="dialog = false">
-            Danh sách đã học xong
-          </v-btn>
+          <CourseAnaType
+            :courseId="courseId"
+            :opt="1"
+            :coursename="`Danh sách tất cả học viên ` + coursename"
+          />
+          <CourseAnaType
+            :courseId="courseId"
+            :opt="2"
+            :coursename="`Danh sách học viên đang học ` + coursename"
+          />
+          <CourseAnaType
+            :courseId="courseId"
+            :opt="3"
+            :coursename="`Danh sách học viên đã học xong ` + coursename"
+          />
           <PolarAreaChart :chartData="chartData" />
         </v-card-text>
         <v-card-actions>
@@ -56,6 +64,7 @@ export default {
       dialog: false,
       chartData: {},
       coursename: "",
+      courseId: 0,
     };
   },
   props: {
@@ -73,6 +82,7 @@ export default {
           learning: this.courseAna.learning[params.dataIndex],
         },
       };
+      this.courseId = this.courseAna.courseId[params.dataIndex];
       this.coursename = this.courseAna.listCourse[params.dataIndex];
     },
     renderChart() {

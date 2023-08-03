@@ -7,16 +7,14 @@
             color="green-darken-1"
             v-bind="props"
             variant="text"
-            @click="dialog = false"
+            @click="dialog = true"
           >
-            Danh sách tất cả học viên
+            {{ coursename }}
           </v-btn>
         </template>
         <v-card style="overflow: scroll">
           <v-card-title>
-            <span class="text-h5"
-              >Danh sách học viên {{ item.courseName }}</span
-            >
+            <span class="text-h5">{{ coursename }}</span>
           </v-card-title>
           <v-table>
             <thead>
@@ -45,7 +43,7 @@
                 <td>{{ element.thisProcess }}</td>
                 <td>{{ element.evalute }}</td>
                 <td>
-                  <ProgressBtn :item="element" :courseId="item.courseId" />
+                  <ProgressBtn :item="element" :courseId="courseId" />
                 </td>
               </tr>
             </tbody>
@@ -87,14 +85,16 @@
 </template>
 
 <script>
-import AdminAPI from "../../../apis/APIAdmin/AdminAPI";
-import ProgressBtn from "./ProgressBtn.vue";
-import UserDetail from "../CommonComponent/UserDetail.vue";
+import AdminAPI from "../../../../apis/APIAdmin/AdminAPI.ts";
+import ProgressBtn from "../../Course/ProgressBtn.vue";
+import UserDetail from "../../CommonComponent/UserDetail.vue";
 export default {
   name: "BtnListStudentOfCourse",
   components: { ProgressBtn, UserDetail },
   props: {
-    item: Object,
+    courseId: Number,
+    opt: Number,
+    coursename: String,
   },
   data: () => ({
     dialog: false,
@@ -106,16 +106,17 @@ export default {
   }),
   methods: {
     async getData(page) {
-      const data = await AdminAPI.getStudentOfCourse(
-        this.item.courseId,
+      const data = await AdminAPI.getCourseAnaType(
+        this.courseId,
         page,
+        this.opt,
         localStorage.getItem("token")
       );
       this.list = data;
     },
   },
   created() {
-    this.getData(1);
+    this.getData(1, 1, this.opt);
   },
 };
 </script>

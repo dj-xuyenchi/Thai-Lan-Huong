@@ -1,19 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "5UPFlDF01TYZtGxh2pp0rT9klDeufPwFQxnHuxH/1GFfI3uydbokbsJmiBjMP7//huOZ+leAD9jX9OCJpOI7Fw==",
+  "dgSpecHash": "3k7CSwlzIdszizBmm52H0XwGkputbhBvBjlIgKI+KTN8Tmx3qYDOzsqxRywbPws0aMkNpT1KyS2YW2VLZB69Bg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-webdesigncore\\dj-webdesigncore.csproj",
+  "projectFilePath": "C:\\Users\\DJ\\source\\repos\\New folder\\dj-webdesigncore\\dj-webdesigncore.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\LTS\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
-    "C:\\Users\\LTS\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+    "C:\\Users\\DJ\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\DJ\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\LTS\\source\\repos\\Thai-Lan-Huong\\dj-webdesigncore\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
